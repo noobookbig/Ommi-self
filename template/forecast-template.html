@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — single-page wrapper for forecast.md
+  Theme palette extracted from /home/big/.paperclip/instances/default/.../1783225172954.jpg
+  (Cloudly SaaS landing template, cyan→magenta gradient with deep purple accents).
+
+  Theme CSS custom properties (kept here for offline use, override per forecast):
+    --bg:           #32dbfc  (dominant cyan from top-left of reference)
+    --bg-soft:      #e6f8ff  (soft cyan tint for card surfaces)
+    --fg:           #1a1a2e  (deep ink for body text)
+    --accent-1:     #8a2be2  (deep purple — chakra 1, mission)
+    --accent-2:     #4169e1  (royal blue — chakra 2)
+    --accent-3:     #20b2aa  (teal — chakra 3)
+    --accent-4:     #9acd32  (lime — chakra 4)
+    --accent-5:     #ffd700  (gold — chakra 5)
+    --accent-6:     #ff8c00  (orange — chakra 6)
+    --accent-7:     #dc143c  (crimson — chakra 7)
+    --accent-magenta:#f63375 (magenta accent from reference corner)
+
+  Fonts (loaded via <link> in <head> only):
+    Headings:  Kanit            (Google Fonts — Thai + Latin)
+    Body:      Inter            (Google Fonts — highly readable Latin sans)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — {{person_name}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #32dbfc;
+    --bg-soft: #e6f8ff;
+    --fg: #1a1a2e;
+    --muted: #4a4a6a;
+    --accent-1: #8a2be2;
+    --accent-2: #4169e1;
+    --accent-3: #20b2aa;
+    --accent-4: #9acd32;
+    --accent-5: #ffd700;
+    --accent-6: #ff8c00;
+    --accent-7: #dc143c;
+    --accent-magenta: #f63375;
+    --card-radius: 14px;
+    --page-max: 1280px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    height: 100%;
+  }
+
+  body {
+    background: linear-gradient(135deg, var(--bg) 0%, var(--accent-2) 45%, var(--accent-1) 100%);
+    padding: 16px;
+  }
+
+  .page {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    background: #fff;
+    border-radius: var(--card-radius);
+    padding: 24px 28px;
+    box-shadow: 0 10px 40px rgba(20, 16, 60, 0.25);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Kanit', 'Inter', sans-serif;
+    margin: 0 0 8px 0;
+    color: var(--fg);
+  }
+  h1 {
+    grid-column: 1 / -1;
+    font-size: 26px;
+    font-weight: 700;
+    border-bottom: 3px solid var(--accent-1);
+    padding-bottom: 8px;
+  }
+  h2 {
+    grid-column: 1 / -1;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent-1);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card {
+    background: var(--bg-soft);
+    border-radius: var(--card-radius);
+    padding: 14px 16px;
+    border-left: 4px solid var(--accent-1);
+    overflow: hidden;
+  }
+  .card.full { grid-column: 1 / -1; }
+  .card.accent-1 { border-left-color: var(--accent-1); }
+  .card.accent-2 { border-left-color: var(--accent-2); }
+  .card.accent-3 { border-left-color: var(--accent-3); }
+  .card.accent-4 { border-left-color: var(--accent-4); }
+  .card.accent-5 { border-left-color: var(--accent-5); }
+  .card.accent-6 { border-left-color: var(--accent-6); }
+  .card.accent-7 { border-left-color: var(--accent-7); }
+
+  .card p { margin: 0 0 6px 0; }
+  .card ul { margin: 4px 0 4px 18px; padding: 0; }
+  .card li { margin: 2px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 4px;
+  }
+  th, td {
+    text-align: left;
+    padding: 4px 6px;
+    border-bottom: 1px solid #cfe7f4;
+  }
+  th {
+    font-family: 'Kanit', sans-serif;
+    background: var(--accent-1);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  tr:nth-child(even) td { background: #f0f8ff; }
+
+  .mermaid {
+    background: #fff;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 320px;
+    overflow: auto;
+  }
+
+  .footer {
+    grid-column: 1 / -1;
+    text-align: right;
+    color: var(--muted);
+    font-size: 11px;
+    border-top: 1px solid #d4e6f0;
+    padding-top: 6px;
+  }
+
+  /* One-page fit: prefer ≤ 110vh on desktop 1280px wide */
+  @media (min-width: 1024px) {
+    body { padding: 12px; }
+    .page { padding: 20px 24px; gap: 14px 18px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 14px; }
+    .card { padding: 10px 12px; }
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+  <main class="page" id="page">
+    <h1>Forecast — {{person_name}} <span style="color: var(--accent-magenta);">·</span> {{dob}}</h1>
+
+    <section class="card full accent-1">
+      <h2>Section 0 — Summary</h2>
+      <p><strong>Person-year window:</strong> {{person_year_start}} → {{person_year_end}}</p>
+      <p><strong>Headline reading:</strong> {{headline_reading}}</p>
+      <p>{{summary_paragraph}}</p>
+    </section>
+
+    <section class="card accent-1">
+      <h2>Section 1 — Octagram</h2>
+      <div class="mermaid" data-mermaid="octagram">
+flowchart LR
+    classDef ch1 fill:#8a2be2,stroke:#fff,color:#fff,stroke-width:2px
+    classDef ch2 fill:#4169e1,stroke:#fff,color:#fff,stroke-width:2px
+    classDef ch3 fill:#20b2aa,stroke:#fff,color:#fff,stroke-width:2px
+    classDef ch4 fill:#9acd32,stroke:#fff,color:#000,stroke-width:2px
+    classDef ch5 fill:#ffd700,stroke:#fff,color:#000,stroke-width:2px
+    classDef ch6 fill:#ff8c00,stroke:#fff,color:#000,stroke-width:2px
+    classDef ch7 fill:#dc143c,stroke:#fff,color:#fff,stroke-width:2px
+    classDef center fill:#fff,stroke:#222,color:#222,stroke-width:2px
+
+    subgraph HUB["HUB"]
+        direction TB
+        C["11<br/>center"]:::center
+    end
+    subgraph TOP["top"]
+        direction TB
+        S1["1<br/>Sahasrara<br/>20y"]:::ch1
+    end
+    subgraph TOPR["top-right"]
+        direction TB
+        S2["13<br/>Ajna<br/>30y"]:::ch2
+    end
+    subgraph RIGHT["right"]
+        direction TB
+        S3["12<br/>Vissudha<br/>25y"]:::ch3
+    end
+    subgraph BOTR["bottom-right"]
+        direction TB
+        S4["5<br/>Anahata<br/>50y"]:::ch4
+    end
+    subgraph BOT["bottom"]
+        direction TB
+        S5["21<br/>Manipura<br/>60y"]:::ch5
+    end
+    subgraph BOTL["bottom-left"]
+        direction TB
+        S6["17<br/>Svadhisthana<br/>45y"]:::ch6
+    end
+    subgraph LEFT["left"]
+        direction TB
+        S7["6<br/>Muladhara<br/>40y"]:::ch7
+    end
+    subgraph TOPL["top-left"]
+        direction TB
+        S8["16<br/>Common<br/>70y"]:::ch1
+    end
+
+    C --- S1
+    C --- S2
+    C --- S3
+    C --- S4
+    C --- S5
+    C --- S6
+    C --- S7
+    C --- S8
+    S1 --- S2
+    S2 --- S3
+    S3 --- S4
+    S4 --- S5
+    S5 --- S6
+    S6 --- S7
+    S7 --- S8
+    S8 --- S1
+      </div>
+    </section>
+
+    <section class="card accent-2">
+      <h2>Section 2 — Matrix</h2>
+      <div class="mermaid" data-mermaid="matrix">
+flowchart LR
+    classDef zone fill:#f5f5f5,stroke:#222,color:#222
+    Z["Common energy<br/>12 / 10 / 4"]:::zone
+    P["Physics"]:::zone
+    E["Energy"]:::zone
+    M["Emotions"]:::zone
+    Z --> P
+    Z --> E
+    Z --> M
+      </div>
+      <div class="mermaid" data-mermaid="matrix-rows">
+flowchart TB
+    classDef row fill:#fafafa,stroke:#bbb,color:#222
+    R1["Sahasrara — Mission — 21 / 1 / 22"]:::row
+    R2["Ajna — Destiny — 8 / 13 / 21"]:::row
+    R3["Vissudha — Destiny — 5 / 12 / 17"]:::row
+    R4["Anahata — Relationships — 16 / 5 / 21"]:::row
+    R5["Manipura — Status — 11 / 11 / 22"]:::row
+    R6["Svadhisthana — Joy — 17 / 21 / 11"]:::row
+    R7["Muladhara — Body — 6 / 10 / 16"]:::row
+    R1 --> R2 --> R3 --> R4 --> R5 --> R6 --> R7
+      </div>
+    </section>
+
+    <section class="card accent-3">
+      <h2>Section 3 — Career Years</h2>
+      <ul>
+        <li><strong>{{career_year_1}}</strong> — {{career_year_1_label}}</li>
+        <li><strong>{{career_year_2}}</strong> — {{career_year_2_label}}</li>
+        <li><strong>{{career_year_3}}</strong> — {{career_year_3_label}}</li>
+        <li><strong>{{career_year_4}}</strong> — {{career_year_4_label}}</li>
+        <li><strong>{{career_year_5}}</strong> — {{career_year_5_label}}</li>
+      </ul>
+    </section>
+
+    <section class="card accent-5 full">
+      <h2>Section 4 — Health Card</h2>
+      <table>
+        <thead>
+          <tr><th>Chakra</th><th>Physics</th><th>Energy</th><th>Emotions</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Sahasrara · Mission</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
+          <tr><td>Ajna · Destiny</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
+          <tr><td>Vissudha · Destiny</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
+          <tr><td>Anahata · Relationships</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
+          <tr><td>Manipura · Status</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
+          <tr><td>Svadhisthana · Joy</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
+          <tr><td>Muladhara · Body</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
+          <tr><td><strong>Common energy</strong></td><td>{{hc_result_phys}}</td><td>{{hc_result_eng}}</td><td>{{hc_result_emo}}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="footer">
+      Template v{{template_version}} · Generated {{generated_at}}
+    </div>
+  </main>
+
+  <script src="vendor/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof mermaid === 'undefined') {
+        console.error('mermaid runtime not loaded');
+        return;
+      }
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#ffffff',
+          primaryTextColor: '#1a1a2e',
+          primaryBorderColor: '#8a2be2',
+          lineColor: '#4169e1',
+          fontFamily: 'Inter, system-ui, sans-serif'
+        },
+        flowchart: { curve: 'basis', htmlLabels: true },
+        securityLevel: 'loose'
+      });
+    });
+  </script>
+</body>
+</html>

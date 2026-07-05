@@ -1,539 +1,1122 @@
 <!DOCTYPE html>
 <!--
-  forecast-template.html — single-page wrapper for forecast.md
-  Theme palette extracted from /home/big/.paperclip/instances/default/.../1783225172954.jpg
-  (Cloudly SaaS landing template, cyan→magenta gradient with deep purple accents).
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
 
-Theme CSS custom properties (kept here for offline use, override per forecast):
-    --bg:           #32dbfc  (dominant cyan from top-left of reference)
-    --bg-soft:      #e6f8ff  (soft cyan tint for card surfaces)
-    --fg:           #1a1a2e  (deep ink for body text)
-    --accent-1:     #8a2be2  (deep purple — slot 1 + slot 8)
-    --accent-2:     #4169e1  (royal blue — slot 2)
-    --accent-3:     #20b2aa  (teal — slot 3)
-    --accent-4:     #9acd32  (lime — slot 4)
-    --accent-5:     #ffd700  (gold — slot 5)
-    --accent-6:     #ff8c00  (orange — slot 6)
-    --accent-7:     #dc143c  (crimson — slot 7)
-    --accent-magenta:#f63375 (magenta accent from reference corner)
-
-  Fonts (loaded via <link> in <head> only):
-    Headings:  Kanit            (Google Fonts — Thai + Latin, bold weight)
-    Body:      Inter            (Google Fonts — highly readable Latin sans)
-
-  Sections covered (Project Omni-Self, 10-section skeleton per MET-447):
-    §0 Summary (6 lenses)    §5 Relationships + Generation Lines
-    §1 Cosmic Synergy        §6 Health Card + Chakras
-    §2 Natalia Square 3x3    §7 Life Stages + Year-by-Year
-    §3 Talent + Karmic Tail  §8 Actionable Protocols
-    §4 Career + Roles        §9 Ultimate Synthesis
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
 -->
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forecast — {{person_name}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #32dbfc;
-    --bg-soft: #e6f8ff;
-    --fg: #1a1a2e;
-    --muted: #4a4a6a;
-    --accent-1: #8a2be2;
-    --accent-2: #4169e1;
-    --accent-3: #20b2aa;
-    --accent-4: #9acd32;
-    --accent-5: #ffd700;
-    --accent-6: #ff8c00;
-    --accent-7: #dc143c;
-    --accent-magenta: #f63375;
-    --card-radius: 6px;
-    --page-max: 1280px;
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
   }
 
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 9px;
-    line-height: 1.2;
-    height: 100%;
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
   }
 
   body {
-    background: linear-gradient(135deg, var(--bg) 0%, var(--accent-2) 45%, var(--accent-1) 100%);
-    padding: 1px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
   .page {
+    position: relative;
+    z-index: 1;
     max-width: var(--page-max);
     margin: 0 auto;
-    background: #fff;
-    border-radius: var(--card-radius);
-    padding: 3px 5px;
-    box-shadow: 0 10px 40px rgba(20, 16, 60, 0.25);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: minmax(0, auto);
-    gap: 1px 3px;
+    padding: 48px 32px 96px;
   }
 
-  h1, h2, h3, h4 {
-    font-family: 'Kanit', 'Inter', sans-serif;
-    margin: 0 0 0 0;
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
     color: var(--fg);
   }
-  h1 {
-    grid-column: 1 / -1;
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
     font-size: 12px;
-    font-weight: 700;
-    border-bottom: 1px solid var(--accent-1);
-    padding-bottom: 0;
-    line-height: 1.05;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
   }
-  h2 {
-    grid-column: 1 / -1;
-    font-size: 8px;
-    font-weight: 700;
-    color: var(--accent-1);
-    margin-top: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.2px;
-    line-height: 1.05;
-  }
-  h3 {
-    font-size: 8px;
-    font-weight: 700;
-    color: var(--accent-2);
-    margin: 0 0 0 0;
-  }
-
-  .card {
-    background: var(--bg-soft);
-    border-radius: var(--card-radius);
-    padding: 1px 3px;
-    border-left: 3px solid var(--accent-1);
-    overflow: hidden;
-  }
-  .card.full { grid-column: 1 / -1; }
-  .card.accent-1 { border-left-color: var(--accent-1); }
-  .card.accent-2 { border-left-color: var(--accent-2); }
-  .card.accent-3 { border-left-color: var(--accent-3); }
-  .card.accent-4 { border-left-color: var(--accent-4); }
-  .card.accent-5 { border-left-color: var(--accent-5); }
-  .card.accent-6 { border-left-color: var(--accent-6); }
-  .card.accent-7 { border-left-color: var(--accent-7); }
-
-  .card p { margin: 0 0 0 0; font-size: 8px; line-height: 1.15; }
-  .card ul { margin: 0 0 0 12px; padding: 0; font-size: 8px; }
-  .card li { margin: 0 0; }
+  .pill.dim { color: var(--fg-muted); }
 
   .lens-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0 3px;
-    margin-top: 0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
   }
   .lens {
-    background: #fff;
-    border-radius: 3px;
-    padding: 0 3px;
-    border-left: 2px solid var(--accent-2);
-    font-size: 7.5px;
-    line-height: 1.1;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
   }
-  .lens strong { font-family: 'Kanit', sans-serif; color: var(--accent-1); font-weight: 700; }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
 
-  /* 6-lens analysis block — compact 3x2 grid at the bottom of each section.
-     Uses table-like layout so very short entries stack tightly. */
-  .analysis {
-    margin-top: 1px;
-    padding-top: 1px;
-    border-top: 1px dashed rgba(138, 43, 226, 0.35);
+  .natalia {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 3px;
-    row-gap: 0;
-    font-size: 6px;
-    line-height: 1.05;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
   }
   .analysis .a-row {
-    display: flex;
-    gap: 1px;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
     align-items: baseline;
-    overflow: hidden;
-    padding: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
   }
-  .analysis .a-row .a-name {
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
     font-family: 'Kanit', sans-serif;
-    color: var(--accent-1);
-    font-weight: 700;
-    white-space: nowrap;
-    flex: 0 0 auto;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
   }
-  .analysis .a-row .a-text {
-    color: var(--fg);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: 0;
-  }
-  .analysis-header {
-    grid-column: 1 / -1;
-    font-family: 'Kanit', sans-serif;
-    color: var(--accent-1);
-    font-weight: 700;
-    font-size: 6px;
-    margin: 0 0 0 0;
-    text-transform: uppercase;
-    letter-spacing: 0.2px;
-  }
+  .analysis .a-text { color: var(--fg); }
 
-  table {
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
     width: 100%;
     border-collapse: collapse;
-    font-size: 7px;
-    margin-top: 0;
-    line-height: 1.05;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
   }
-  th, td {
+  table.roles th {
     text-align: left;
-    padding: 0 2px;
-    border-bottom: 1px solid #cfe7f4;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
   }
-  th {
-    font-family: 'Kanit', sans-serif;
-    background: var(--accent-1);
-    color: #fff;
-    font-weight: 600;
-    font-size: 7px;
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
   }
-  tr:nth-child(even) td { background: #f0f8ff; }
+  table.roles tr:last-child td { border-bottom: none; }
 
-  .mermaid {
-    background: #fff;
-    border-radius: 3px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 38px;
-    min-height: 28px;
-    overflow: hidden;
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
   }
-  .mermaid svg { max-height: 38px; width: auto !important; max-width: 100%; }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
 
-  .footer {
-    grid-column: 1 / -1;
-    text-align: right;
-    color: var(--muted);
-    font-size: 8px;
-    border-top: 1px solid #d4e6f0;
-    padding-top: 1px;
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
   }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
 
-  /* Compress further on wider desktop viewports to keep 1-page fit */
-  @media (min-width: 1024px) {
-    body { padding: 1px; }
-    .page { padding: 2px 4px; gap: 1px 3px; }
-    h1 { font-size: 11px; }
-    h2 { font-size: 7.5px; }
-    .card { padding: 1px 3px; }
-    .mermaid, .mermaid svg { max-height: 38px; min-height: 28px; }
-  }
   @media print {
-    body { background: #fff; padding: 0; }
-    .page { box-shadow: none; }
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
   }
 </style>
 </head>
 <body>
-  <main class="page" id="page">
-    <h1>Forecast — {{person_name}} <span style="color: var(--accent-magenta);">·</span> {{dob}}</h1>
 
-    <!-- Section 0 — Summary (6 lenses) -->
-    <section class="card full accent-1">
-      <h2>Section 0 — บทสรุป 6 มุมมอง (Summary)</h2>
-      <p><strong>Person-year window:</strong> {{person_year_start}} → {{person_year_end}} · <strong>Headline:</strong> {{headline_reading}}</p>
-      <div class="lens-grid">
-        <div class="lens"><strong>Jung:</strong> {{lens_jung_persona}} / {{lens_jung_shadow}}</div>
-        <div class="lens"><strong>LoA:</strong> {{lens_law_of_attraction_freq}}</div>
-        <div class="lens"><strong>Kybalion:</strong> {{lens_kybalion_rhythm}}</div>
-        <div class="lens"><strong>MBTI:</strong> {{lens_mbti_type}} · lead {{lens_mbti_lead}} · grip {{lens_mbti_grip}}</div>
-        <div class="lens"><strong>Age 60:</strong> {{lens_age60_role}}</div>
-        <div class="lens"><strong>BaZi/Period 9:</strong> DM {{lens_bazi_day_master}} · bal {{lens_bazi_balance}}</div>
-      </div>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_0_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_0_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_0_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_0_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_0_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_0_suyuhong}}</span></div>
-      </div>
-    </section>
+<div class="page">
 
-    <!-- Section 1 — Cosmic Synergy -->
-    <section class="card full accent-2">
-      <h2>Section 1 — จุดเชื่อมโยงปรัชญาและวัฏจักร (Cosmic Synergy)</h2>
-      <p><strong>Kybalion:</strong> {{synergy_kybalion}} · <strong>LoA:</strong> {{synergy_loa}} · <strong>Matrix:</strong> {{synergy_matrix}}</p>
-      <p><strong>Proof:</strong> {{synergy_proof}}</p>
+  <header class="hero">
+    <h1>Forecast &mdash; {{person_name}}</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>{{dob}}</span>
+      <span><strong>Window</strong>{{person_year_start}} &rarr; {{person_year_end}}</span>
+      <span><strong>Headline</strong>{{headline_reading}}</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>{{lens_jung_persona}} / {{lens_jung_shadow}}</div>
+      <div class="lens"><strong>LoA</strong>{{lens_law_of_attraction_freq}}</div>
+      <div class="lens"><strong>Kybalion</strong>{{lens_kybalion_rhythm}}</div>
+      <div class="lens"><strong>MBTI</strong>{{lens_mbti_type}} &middot; lead {{lens_mbti_lead}} &middot; grip {{lens_mbti_grip}}</div>
+      <div class="lens"><strong>Age 60</strong>{{lens_age60_role}}</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM {{lens_bazi_day_master}} &middot; bal {{lens_bazi_balance}}</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_0_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_0_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_0_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_0_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_0_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_0_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> {{synergy_kybalion}}</p>
+    <p><strong>LoA:</strong> {{synergy_loa}}</p>
+    <p><strong>Matrix:</strong> {{synergy_matrix}}</p>
+    <p><strong>Proof:</strong> {{synergy_proof}}</p>
+
+    <div class="mermaid-wrap">
       <div class="mermaid" data-mermaid="synergy">
 flowchart LR
-    classDef engine fill:#f5f5f5,stroke:#222,color:#222
-    K["Kybalion<br/>Rhythm"]:::engine
-    L["LoA<br/>Vibration"]:::engine
-    M["Matrix<br/>Loop"]:::engine
-    K --> L --> M --> K
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
       </div>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_1_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_1_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_1_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_1_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_1_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_1_suyuhong}}</span></div>
-      </div>
-    </section>
+    </div>
 
-    <!-- Section 2 — Natalia Square 3x3 -->
-    <section class="card full accent-3">
-      <h2>Section 2 — โปรแกรมชีวิตและแกนหลัก (Natalia Square 3×3)</h2>
-      <p><strong>Top axis (ความคิด):</strong> {{natalia_top_axis_value}} ({{natalia_top_token}}) · <strong>Mid axis (การงาน):</strong> {{natalia_mid_cycle}} ({{natalia_mid_token}}) · <strong>Base (ฐานราก):</strong> {{natalia_base_drive}} / mask {{natalia_base_mask}} · <strong>Echo:</strong> {{natalia_echo_numbers}} — {{natalia_echo_influence}}</p>
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_1_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_1_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_1_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_1_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_1_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_1_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> {{natalia_top_axis_value}} ({{natalia_top_token}})</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> {{natalia_mid_cycle}} ({{natalia_mid_token}})</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> {{natalia_base_drive}} / mask {{natalia_base_mask}}</span>
+      <span class="pill"><strong>Echo</strong> {{natalia_echo_numbers}} &mdash; {{natalia_echo_influence}}</span>
+    </p>
+
+    <div class="mermaid-wrap">
       <div class="mermaid" data-mermaid="natalia">
 flowchart LR
-    classDef corner fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
-    classDef edge   fill:#f0f8ff,stroke:#20b2aa,color:#1a1a2e
-    classDef center fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
-    classDef echo   fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e
-    A["A"]:::corner
-    B["B"]:::edge
-    C["C"]:::corner
-    D["D"]:::edge
-    C2["center"]:::center
-    E["E"]:::edge
-    F["F"]:::corner
-    G["G"]:::edge
-    H["H"]:::corner
-    I["I"]:::corner
-    A --- B --- C
-    A --- D --- C2 --- E --- C
-    C --- F --- C
-    D --- G --- E
-    F --- H --- I
-    I --- G --- F
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
       </div>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_2_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_2_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_2_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_2_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_2_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_2_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 3 — Talent & Karmic Tail -->
-    <section class="card full accent-4">
-      <h2>Section 3 — พรสวรรค์ ศักยภาพ และอดีตชาติ (Talent & Karmic Tail)</h2>
-      <p><strong>3.1 Primary gift:</strong> {{talent_primary}} · <strong>Latent:</strong> {{talent_latent}}</p>
-      <p><strong>3.2 Recurring pattern:</strong> {{karmic_pattern}} · <strong>Lesson to unlock:</strong> {{karmic_lesson}}</p>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_3_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_3_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_3_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_3_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_3_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_3_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 4 — Career & Role -->
-    <section class="card full accent-5">
-      <h2>Section 4 — การเงิน ความสำเร็จ และบทบาทเชิงลึก (Career & Role)</h2>
-      <p><strong>Industry fit:</strong> {{career_industry}} · <strong>Income pattern:</strong> {{career_income_pattern}} · <strong>Peak window:</strong> {{career_peak_window}}</p>
-      <table>
-        <thead>
-          <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Boss (ผู้นำ)</td><td>{{role_boss}}</td><td>{{role_boss_token}}</td></tr>
-          <tr><td>Subordinate (ผู้ตาม/ทีมเวิร์ค)</td><td>{{role_sub}}</td><td>{{role_sub_token}}</td></tr>
-          <tr><td>Active hand (มือขวา — รุก)</td><td>{{role_active}}</td><td>{{role_active_token}}</td></tr>
-          <tr><td>Receptive hand (มือซ้าย — รับ)</td><td>{{role_receptive}}</td><td>{{role_receptive_token}}</td></tr>
-        </tbody>
-      </table>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_4_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_4_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_4_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_4_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_4_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_4_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 5 — Relationships & Lines -->
-    <section class="card full accent-6">
-      <h2>Section 5 — สายสัมพันธ์ ความรัก และครอบครัว (Relationships & Lines)</h2>
-      <p><strong>5.1 Pattern:</strong> {{love_pattern}} · <strong>Inner-circle pull:</strong> {{love_pull}} · <strong>Blind spot:</strong> {{love_blind_spot}}</p>
-      <p><strong>5.2 Paternal line:</strong> {{line_father}} · <strong>Maternal line:</strong> {{line_mother}}</p>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_5_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_5_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_5_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_5_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_5_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_5_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 6 — Health Card & Chakras -->
-    <section class="card full accent-7">
-      <h2>Section 6 — สุขภาพและจุดอ่อน (Health Card & Chakras)</h2>
-      <table>
-        <thead>
-          <tr><th>#</th><th>Chakra</th><th>Axis A (Physical)</th><th>Axis B (Energy)</th><th>Axis C (Emotional)</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Crown (Sahasrara)</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
-          <tr><td>2</td><td>Third Eye (Ajna)</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
-          <tr><td>3</td><td>Throat (Vishuddha)</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
-          <tr><td>4</td><td>Heart (Anahata)</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
-          <tr><td>5</td><td>Solar Plexus (Manipura)</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
-          <tr><td>6</td><td>Sacral (Svadhisthana)</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
-          <tr><td>7</td><td>Root (Muladhara)</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
-          <tr><td><strong>Σ</strong></td><td><strong>Zone value</strong></td><td><strong>{{hc_result_phys}}</strong></td><td><strong>{{hc_result_eng}}</strong></td><td><strong>{{hc_result_emo}}</strong></td></tr>
-        </tbody>
-      </table>
-      <p><strong>Watch:</strong> {{health_watch}} · <strong>Balance ritual:</strong> {{health_balance}}</p>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_6_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_6_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_6_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_6_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_6_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_6_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 7.1 — 5 Stages of Evolution -->
-    <section class="card full accent-1">
-      <h2>Section 7.1 — ไทม์ไลน์ 5 ช่วงวัย (5 Stages of Evolution, before age 60)</h2>
-      <table>
-        <thead>
-          <tr><th>#</th><th>Stage</th><th>Age band</th><th>Theme</th><th>Marker</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>ปฐมบทและการสร้างเข็มทิศ</td><td>วัยเยาว์ – ต้น 20</td><td>{{stage_1_theme}}</td><td>{{stage_1_marker}}</td></tr>
-          <tr><td>2</td><td>การสำรวจและขยายอาณาเขต</td><td>กลาง 20 – ต้น 30</td><td>{{stage_2_theme}}</td><td>{{stage_2_marker}}</td></tr>
-          <tr><td>3</td><td>การปะทะและจุดวิกฤต</td><td>กลาง 30 – ต้น 40</td><td>{{stage_3_theme}}</td><td>{{stage_3_marker}}</td></tr>
-          <tr><td>4</td><td>การบูรณาการและปรับขั้วพลังงาน</td><td>กลาง 40 – ต้น 50</td><td>{{stage_4_theme}}</td><td>{{stage_4_marker}}</td></tr>
-          <tr><td>5</td><td>การตกผลึกและส่งมอบ</td><td>กลาง 50 – 59</td><td>{{stage_5_theme}}</td><td>{{stage_5_marker}}</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Section 7.2 — Year-by-Year Career Forecast -->
-    <section class="card full accent-2">
-      <h2>Section 7.2 — พยากรณ์อาชีพรายปี (Year-by-Year, อายุปัจจุบัน → 60)</h2>
-      <table>
-        <thead>
-          <tr><th>Year (CE)</th><th>Age</th><th>Lead energy</th><th>Career situation</th><th>Strategy</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>{{career_year_1}}</td><td>{{career_year_1_age}}</td><td>{{career_year_1_energy}}</td><td>{{career_year_1_situation}}</td><td>{{career_year_1_strategy}}</td></tr>
-          <tr><td>{{career_year_2}}</td><td>{{career_year_2_age}}</td><td>{{career_year_2_energy}}</td><td>{{career_year_2_situation}}</td><td>{{career_year_2_strategy}}</td></tr>
-          <tr><td>{{career_year_3}}</td><td>{{career_year_3_age}}</td><td>{{career_year_3_energy}}</td><td>{{career_year_3_situation}}</td><td>{{career_year_3_strategy}}</td></tr>
-          <tr><td>{{career_year_4}}</td><td>{{career_year_4_age}}</td><td>{{career_year_4_energy}}</td><td>{{career_year_4_situation}}</td><td>{{career_year_4_strategy}}</td></tr>
-          <tr><td>{{career_year_5}}</td><td>{{career_year_5_age}}</td><td>{{career_year_5_energy}}</td><td>{{career_year_5_situation}}</td><td>{{career_year_5_strategy}}</td></tr>
-        </tbody>
-      </table>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses (timeline + year-by-year)</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_7_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_7_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_7_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_7_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_7_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_7_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 8 — Actionable Protocols -->
-    <section class="card full accent-3">
-      <h2>Section 8 — คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols)</h2>
-      <p><strong>Daily:</strong> {{protocol_daily}}</p>
-      <p><strong>Weekly:</strong> {{protocol_weekly}}</p>
-      <p><strong>Monthly:</strong> {{protocol_monthly}}</p>
-      <p><strong>Crisis Mastery:</strong> {{protocol_crisis}}</p>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses (why each ritual works)</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_8_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_8_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_8_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_8_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_8_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_8_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <!-- Section 9 — Ultimate Synthesis -->
-    <section class="card full accent-5">
-      <h2>Section 9 — บทสรุปแห่งสัจธรรม (Ultimate Synthesis)</h2>
-      <p><strong>9.1 Interconnectedness:</strong> {{synthesis_interconnectedness}}</p>
-      <p><strong>9.2 Ultimate Truth:</strong> {{synthesis_ultimate_truth}}</p>
-      <div class="analysis">
-        <div class="analysis-header">บทวิเคราะห์ — 6 Lenses (closing read)</div>
-        <div class="a-row"><span class="a-name">Jung:</span><span class="a-text">{{analysis_9_jung}}</span></div>
-        <div class="a-row"><span class="a-name">Myers:</span><span class="a-text">{{analysis_9_myers}}</span></div>
-        <div class="a-row"><span class="a-name">Blavatsky:</span><span class="a-text">{{analysis_9_blavatsky}}</span></div>
-        <div class="a-row"><span class="a-name">Ladini:</span><span class="a-text">{{analysis_9_ladini}}</span></div>
-        <div class="a-row"><span class="a-name">Initiates:</span><span class="a-text">{{analysis_9_initiates}}</span></div>
-        <div class="a-row"><span class="a-name">Su Yu Hong:</span><span class="a-text">{{analysis_9_suyuhong}}</span></div>
-      </div>
-    </section>
-
-    <div class="footer">
-      Template v{{template_version}} · Sections 0–9 (Project Omni-Self) · Generated {{generated_at}}
     </div>
-  </main>
 
-  <script src="vendor/mermaid.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      if (typeof mermaid === 'undefined') {
-        console.error('mermaid runtime not loaded');
-        return;
-      }
-      mermaid.initialize({
-        startOnLoad: true,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: '#ffffff',
-          primaryTextColor: '#1a1a2e',
-          primaryBorderColor: '#8a2be2',
-          lineColor: '#4169e1',
-          fontFamily: 'Inter, system-ui, sans-serif'
-        },
-        flowchart: { curve: 'basis', htmlLabels: true },
-        securityLevel: 'loose'
-      });
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">{{natalia_A}}</span><span class="token">{{natalia_A_token}}</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">{{natalia_B}}</span><span class="token">{{natalia_B_token}}</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">{{natalia_C}}</span><span class="token">{{natalia_C_token}}</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">{{natalia_D}}</span><span class="token">{{natalia_D_token}}</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">{{natalia_E}}</span><span class="token">{{natalia_E_token}}</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">{{natalia_F}}</span><span class="token">{{natalia_F_token}}</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">{{natalia_G}}</span><span class="token">{{natalia_G_token}}</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">{{natalia_H}}</span><span class="token">{{natalia_H_token}}</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">{{natalia_I}}</span><span class="token">{{natalia_I_token}}</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>{{natalia_echo_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_2_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_2_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_2_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_2_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_2_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_2_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> {{talent_primary}}</p>
+    <p><strong>Latent:</strong> {{talent_latent}}</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> {{karmic_pattern}}</p>
+    <p><strong>Lesson to unlock:</strong> {{karmic_lesson}}</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่อดีตชาติทิ้งร่องรอยไว้</strong></summary>
+      <p>{{karmic_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_3_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_3_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_3_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_3_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_3_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_3_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น</p>
+
+    <p>
+      <span class="pill"><strong>Industry fit</strong> {{career_industry}}</span>
+      <span class="pill"><strong>Income pattern</strong> {{career_income_pattern}}</span>
+      <span class="pill"><strong>Peak window</strong> {{career_peak_window}}</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>{{role_boss}}</td>
+          <td>{{role_boss_token}}</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>{{role_sub}}</td>
+          <td>{{role_sub_token}}</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>{{role_active}}</td>
+          <td>{{role_active_token}}</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>{{role_receptive}}</td>
+          <td>{{role_receptive_token}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_4_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_4_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_4_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_4_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_4_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_4_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> {{love_pattern}}</p>
+    <p><strong>Inner-circle pull:</strong> {{love_pull}}</p>
+    <p><strong>Blind spot:</strong> {{love_blind_spot}}</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal line:</strong> {{line_father}}</p>
+    <p><strong>Maternal line:</strong> {{line_mother}}</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>{{relationships_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_5_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_5_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_5_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_5_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_5_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_5_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>{{hc_result_phys}}</strong></td><td><strong>{{hc_result_eng}}</strong></td><td><strong>{{hc_result_emo}}</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> {{health_watch}}</span>
+      <span class="pill"><strong>Balance ritual</strong> {{health_balance}}</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>{{health_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_6_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_6_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_6_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_6_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_6_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_6_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (ก่อน 60)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">วัยเยาว์ &ndash; ต้น 20</div>
+        <p class="stage-theme">{{stage_1_theme}}</p>
+        <p class="stage-marker"><strong>Marker:</strong> {{stage_1_marker}}</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและขยายอาณาเขต</div>
+        <div class="stage-band">กลาง 20 &ndash; ต้น 30</div>
+        <p class="stage-theme">{{stage_2_theme}}</p>
+        <p class="stage-marker"><strong>Marker:</strong> {{stage_2_marker}}</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การปะทะและจุดวิกฤต</div>
+        <div class="stage-band">กลาง 30 &ndash; ต้น 40</div>
+        <p class="stage-theme">{{stage_3_theme}}</p>
+        <p class="stage-marker"><strong>Marker:</strong> {{stage_3_marker}}</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">กลาง 40 &ndash; ต้น 50</div>
+        <p class="stage-theme">{{stage_4_theme}}</p>
+        <p class="stage-marker"><strong>Marker:</strong> {{stage_4_marker}}</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">กลาง 50 &ndash; 59</div>
+        <p class="stage-theme">{{stage_5_theme}}</p>
+        <p class="stage-marker"><strong>Marker:</strong> {{stage_5_marker}}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุปัจจุบัน &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">{{career_year_1}}</span>
+        <span class="age">อายุ {{career_year_1_age}}</span>
+        <span class="lead">{{career_year_1_energy}}</span>
+        <span class="situation">{{career_year_1_situation}}</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> {{career_year_1_strategy}}</p>
+        <p>{{career_year_1_detail}}</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">{{career_year_2}}</span>
+        <span class="age">อายุ {{career_year_2_age}}</span>
+        <span class="lead">{{career_year_2_energy}}</span>
+        <span class="situation">{{career_year_2_situation}}</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> {{career_year_2_strategy}}</p>
+        <p>{{career_year_2_detail}}</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">{{career_year_3}}</span>
+        <span class="age">อายุ {{career_year_3_age}}</span>
+        <span class="lead">{{career_year_3_energy}}</span>
+        <span class="situation">{{career_year_3_situation}}</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> {{career_year_3_strategy}}</p>
+        <p>{{career_year_3_detail}}</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">{{career_year_4}}</span>
+        <span class="age">อายุ {{career_year_4_age}}</span>
+        <span class="lead">{{career_year_4_energy}}</span>
+        <span class="situation">{{career_year_4_situation}}</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> {{career_year_4_strategy}}</p>
+        <p>{{career_year_4_detail}}</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">{{career_year_5}}</span>
+        <span class="age">อายุ {{career_year_5_age}}</span>
+        <span class="lead">{{career_year_5_energy}}</span>
+        <span class="situation">{{career_year_5_situation}}</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> {{career_year_5_strategy}}</p>
+        <p>{{career_year_5_detail}}</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_7_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_7_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_7_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_7_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_7_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_7_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>{{protocol_daily}}</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>{{protocol_weekly}}</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>{{protocol_monthly}}</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต</h3>
+    <p>{{protocol_crisis}}</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p>{{protocol_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_8_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_8_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_8_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_8_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_8_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_8_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>{{synthesis_interconnectedness}}</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p>{{synthesis_ultimate_truth}}</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p>{{synthesis_extended}}</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">{{analysis_9_jung}}</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">{{analysis_9_myers}}</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">{{analysis_9_blavatsky}}</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_9_ladini}}</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_9_initiates}}</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_9_suyuhong}}</span></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v{{template_version}} &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated {{generated_at}}
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>

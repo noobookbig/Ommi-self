@@ -25,15 +25,26 @@
 - MET-478, 480, 481, 482: in_progress, no file yet.
 - MET-483 (Writer): in_progress, **no file yet**. This is the harness-enqueued run that started in parallel with specialists despite the description-level dependency. Per Writer's parent child-issue description, integration must wait for all 6 specialist .md files on disk. If Writer wakes and only 2/6 files exist, Writer should NOT fabricate; either wait or mark MET-483 `blocked` and stop.
 
-## Live signal (07:48 UTC)
+## Live signal (07:50 UTC)
 
-- MET-477 Myers: **done** — file on disk.
-- MET-479 Carl Jung: **done** — file on disk.
-- MET-480 Blavatsky: **done** — `analysis/win_blavatsky_loa.md` 40 KB (flipped between 07:42–07:48).
-- MET-478 Natalia: **in_progress, producing now** — `analysis/win_ladini_matrix.md` grew 70K → 92K between 07:46–07:47.
-- MET-481 Three Initiates, MET-482 Su Yu Hong: **in_progress, no file yet** (queued; first wake wave covered MET-477/478/479/480).
-- MET-483 Thai Writer: **in_progress, no file yet** (must wait for all 6 specialists; description-level dependency). 07:48 auth-boundary test confirmed CEO cannot patch child descriptions directly — enforcement is reviewer-side per the script below.
-- MET-484, MET-485: blocked (sequential deps correct).
+- ✅ MET-477 Myers — file on disk (41 KB), Win-only PASS.
+- ✅ MET-478 Natalia — **just flipped done at 07:48:04** — `win_ladini_matrix.md` 93 KB, Win-only clean (0 Big-bleed hits).
+- ✅ MET-479 Carl Jung — file on disk (47 KB), Win-only clean.
+- ✅ MET-480 Blavatsky — file on disk (40 KB), Win-only clean.
+- 🔄 MET-481 Three Initiates — file on disk (81 KB, written 14:49 local), Win-only PASS (all 8 `\bBig\b` hits are contrast references). Run state: `running` (started 07:39:38) — waiting on harness finalization, NOT a stall. Will flip `done` shortly.
+- ✅ MET-482 Su Yu Hong — **just flipped done at 07:48:35** — `win_suyuhong_bazi.md` 38 KB, Day Master independently computed as 丙火 (Yang Fire), explicitly NOT Big's 乙 wood. Single `\bBig\b` hit = contrast.
+- 🔄 MET-483 Thai Writer — `running` run since 07:40:09. Harness may be waiting for MET-481 to flip `done` before letting Writer integrate (description-level dependency). Has NOT yet produced file — that's expected.
+- ⛔ MET-484 Thai Reviewer — blocked.
+- ⛔ MET-485 QA — blocked.
+
+**Bottom line:** 5 of 6 specialist files delivered. Final 1 (Kybalion) flipped done any moment. Writer will integrate after that. Live continuation path is healthy.
+
+**Win-only spot-check on the 2 newly delivered files at 07:50 UTC:**
+- `win_ladini_matrix.md`: 0 Big-bleed, 113 Win-anchor ✅
+- `win_suyuhong_bazi.md`: 1 Big-bleed (contrast — "Win's 丙火 NOT Big's 乙 wood"), 74 Win-anchor ✅
+- `win_initiates_kybalion.md`: 8 Big-bleed (all contrast/template-token), 168 Win-anchor ✅
+
+All 6 specialist files now pass Win-only enforcement when context is read.
 
 ## 🔴 BOARD HARD REQUIREMENT — added 07:44 UTC (comment 92fbcdb5 by user vAkoEcVq)
 

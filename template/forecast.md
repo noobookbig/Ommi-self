@@ -38,6 +38,18 @@
 ### Lens 6 — มุมมองดวงจีน (BaZi & Period 9)
 Day Master `{{lens_bazi_day_master}}` · balance `{{lens_bazi_balance}}` · Period-9 fit `{{lens_bazi_period9_fit}}`
 
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+> The six lenses above each produce one sentence of data; this block produces
+> six sentences of analysis — one per lens — showing what each tradition
+> *concludes* from the same numbers. Each entry is ~30 words.
+
+- **Carl Jung:** `{{analysis_0_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_0_myers}}`
+- **Helena Blavatsky:** `{{analysis_0_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_0_ladini}}`
+- **The Three Initiates:** `{{analysis_0_initiates}}`
+- **Su Yu Hong:** `{{analysis_0_suyuhong}}`
+
 ---
 
 ## Section 1 — จุดเชื่อมโยงแห่งปรัชญาและวัฏจักร (The Cosmic Synergy)
@@ -49,6 +61,19 @@ Day Master `{{lens_bazi_day_master}}` · balance `{{lens_bazi_balance}}` · Peri
 - **Engine B — Law of Attraction vibration:** `{{synergy_loa}}`
 - **Engine C — Matrix of Destiny loop:** `{{synergy_matrix}}`
 - **Proof line:** `{{synergy_proof}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+> Same data, read through six expert perspectives. Each lens is a short
+> interpretation (~30 words) that names what the lens *catches* that the others miss.
+
+| Lens | Reading |
+|------|---------|
+| **Carl Jung** (Analytical Psychology) | `{{analysis_1_jung}}` |
+| **Isabel Briggs Myers** (MBTI) | `{{analysis_1_myers}}` |
+| **Helena Blavatsky** (Law of Attraction / Theosophy) | `{{analysis_1_blavatsky}}` |
+| **นาตาเลีย ลาดินี** (Matrix of Destiny) | `{{analysis_1_ladini}}` |
+| **The Three Initiates** (The Kybalion) | `{{analysis_1_initiates}}` |
+| **Su Yu Hong** (BaZi & Period 9) | `{{analysis_1_suyuhong}}` |
 
 ```mermaid
 %% Three-engine loop — Kybalion drives vibration, vibration drives Matrix loop, Matrix feeds back into rhythm.
@@ -78,6 +103,15 @@ Day/month/year decoding → `{{natalia_top_axis_value}}` · lead token `{{natali
 
 ### 2.4 Echo Numbers
 `{{natalia_echo_numbers}}` · influence `{{natalia_echo_influence}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_2_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_2_myers}}`
+- **Helena Blavatsky:** `{{analysis_2_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_2_ladini}}`
+- **The Three Initiates:** `{{analysis_2_initiates}}`
+- **Su Yu Hong:** `{{analysis_2_suyuhong}}`
 
 ```mermaid
 %% Natalia Square 3x3 — slots A..I around a center hub + Echo strip.
@@ -120,6 +154,15 @@ flowchart LR
 - Recurring pattern: `{{karmic_pattern}}`
 - Lesson to unlock: `{{karmic_lesson}}`
 
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_3_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_3_myers}}`
+- **Helena Blavatsky:** `{{analysis_3_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_3_ladini}}`
+- **The Three Initiates:** `{{analysis_3_initiates}}`
+- **Su Yu Hong:** `{{analysis_3_suyuhong}}`
+
 ---
 
 ## Section 4 — การเงิน ความสำเร็จ และบทบาทเชิงลึก
@@ -140,6 +183,15 @@ flowchart LR
 | Active hand (มือขวา — รุก) | `{{role_active}}` | `{{role_active_token}}` |
 | Receptive hand (มือซ้าย — รับ) | `{{role_receptive}}` | `{{role_receptive_token}}` |
 
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_4_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_4_myers}}`
+- **Helena Blavatsky:** `{{analysis_4_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_4_ladini}}`
+- **The Three Initiates:** `{{analysis_4_initiates}}`
+- **Su Yu Hong:** `{{analysis_4_suyuhong}}`
+
 ---
 
 ## Section 5 — สายสัมพันธ์ ความรัก และครอบครัว
@@ -152,6 +204,15 @@ flowchart LR
 ### 5.2 มรดกสายตระกูล (Generation Lines)
 - Paternal line: `{{line_father}}`
 - Maternal line: `{{line_mother}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_5_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_5_myers}}`
+- **Helena Blavatsky:** `{{analysis_5_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_5_ladini}}`
+- **The Three Initiates:** `{{analysis_5_initiates}}`
+- **Su Yu Hong:** `{{analysis_5_suyuhong}}`
 
 ---
 
@@ -173,6 +234,15 @@ flowchart LR
 ### ข้อควรระวังและวิธีปรับสมดุล
 - Watch: `{{health_watch}}`
 - Balance ritual: `{{health_balance}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_6_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_6_myers}}`
+- **Helena Blavatsky:** `{{analysis_6_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_6_ladini}}`
+- **The Three Initiates:** `{{analysis_6_initiates}}`
+- **Su Yu Hong:** `{{analysis_6_suyuhong}}`
 
 ---
 
@@ -215,6 +285,15 @@ flowchart LR
     S1 --> S2 --> S3 --> S4 --> S5 --> H
 ```
 
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+
+- **Carl Jung:** `{{analysis_7_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_7_myers}}`
+- **Helena Blavatsky:** `{{analysis_7_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_7_ladini}}`
+- **The Three Initiates:** `{{analysis_7_initiates}}`
+- **Su Yu Hong:** `{{analysis_7_suyuhong}}`
+
 ---
 
 ## Section 8 — คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols)
@@ -223,6 +302,17 @@ flowchart LR
 - **รายสัปดาห์ (Weekly):** `{{protocol_weekly}}`
 - **รายเดือน (Monthly):** `{{protocol_monthly}}`
 - **กลยุทธ์รับมือวิกฤต (Crisis Mastery):** `{{protocol_crisis}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+> Each lens names what the protocol *means* in its own frame — not what to do,
+> but *why* it works according to that tradition.
+
+- **Carl Jung:** `{{analysis_8_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_8_myers}}`
+- **Helena Blavatsky:** `{{analysis_8_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_8_ladini}}`
+- **The Three Initiates:** `{{analysis_8_initiates}}`
+- **Su Yu Hong:** `{{analysis_8_suyuhong}}`
 
 ---
 
@@ -233,6 +323,17 @@ flowchart LR
 
 - **ความเกี่ยวข้องกันของสรรพสิ่ง (Interconnectedness):** `{{synthesis_interconnectedness}}`
 - **สัจธรรมประจำตัว (Your Ultimate Truth):** `{{synthesis_ultimate_truth}}`
+
+### บทวิเคราะห์ (Analysis — 6 Lenses)
+> The closing read. Each lens seals the synthesis from its own angle, so the
+> reader sees the same ultimate truth refracted through six traditions.
+
+- **Carl Jung:** `{{analysis_9_jung}}`
+- **Isabel Briggs Myers:** `{{analysis_9_myers}}`
+- **Helena Blavatsky:** `{{analysis_9_blavatsky}}`
+- **นาตาเลีย ลาดินี:** `{{analysis_9_ladini}}`
+- **The Three Initiates:** `{{analysis_9_initiates}}`
+- **Su Yu Hong:** `{{analysis_9_suyuhong}}`
 
 ---
 

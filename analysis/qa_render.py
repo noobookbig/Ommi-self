@@ -169,7 +169,80 @@ SAMPLE = {
     "career_year_3_label": "Ship — public launch, market entry.",
     "career_year_4_label": "Scale — second act, partnerships.",
     "career_year_5_label": "Settle — operating cadence, mentors.",
-    "template_version": "2.0",
+    # บทวิเคราะห์ — 6 Lenses (10 sections × 6 experts = 60 tokens).
+    # Token schema: analysis_<section>_<expert>, expert ∈ jung/myers/blavatsky/ladini/initiates/suyuhong.
+    # Each entry is short (≤70 chars) so it fits on one ellipsised line in the .analysis row.
+    # Section 0 — Summary
+    "analysis_0_jung": "persona+shadow hinge on control — individuation loosens grip",
+    "analysis_0_myers": "Te-Ni loop reinforced; inferior Fi surfaces only under pressure",
+    "analysis_0_blavatsky": "vibration peaks mid-morning + equinox; low-band is emotional",
+    "analysis_0_ladini": "11/22 echo → karmic thread of vision-vs-responsibility",
+    "analysis_0_initiates": "rhythm-thought = rhythm-lived; 7-yr alignment is the master key",
+    "analysis_0_suyuhong": "Yang Wood needs Water+Earth; Period 9 fire amplifies output",
+    # Section 1 — Cosmic Synergy
+    "analysis_1_jung": "engines: unconscious, ego-syntonic, archetypal — let all run",
+    "analysis_1_myers": "Ni gathers / Te expresses / Fi seals; lowers are passengers",
+    "analysis_1_blavatsky": "law satisfied when intent+emotion+action share frequency",
+    "analysis_1_ladini": "3×3 with master centre = phase-lock loop; honour the centre",
+    "analysis_1_initiates": "rhythm precedes vibration precedes form — inner moves outer",
+    "analysis_1_suyuhong": "2030 Metal-year couples all three engines into one climax",
+    # Section 2 — Natalia Square 3x3
+    "analysis_2_jung": "top=vision base=instinct; mask is calm operator, drive is teacher",
+    "analysis_2_myers": "Ni-Te top/mid, Fi base: stack maps onto spatial axes",
+    "analysis_2_blavatsky": "3×3 is frequency lattice; centre cell is carrier wave",
+    "analysis_2_ladini": "11/22 in centre = double-master amplifier; echo doubles lesson",
+    "analysis_2_initiates": "square embodies gender principle; centre is balance point",
+    "analysis_2_suyuhong": "Wood-Fire-Earth top-mid-base: productive cycle; P9 = fire↑",
+    # Section 3 — Talent & Karmic Tail
+    "analysis_3_jung": "latent=rejected, primary=hero; individuation needs both",
+    "analysis_3_myers": "primary=Te, latent=Se or Fi; stack tires → tertiary surfaces",
+    "analysis_3_blavatsky": "karmic pattern = low-freq vibration; raise via daily practice",
+    "analysis_3_ladini": "over-responsibility = shadow of master-centre; delegate the act",
+    "analysis_3_initiates": "past-cause returns; unlock by re-seeding at higher octave",
+    "analysis_3_suyuhong": "favourable elements = talent; clashes = karmic tail, drain via ritual",
+    # Section 4 — Career & Roles
+    "analysis_4_jung": "boss=persona, sub=shadow; pick consciously, no autopilot",
+    "analysis_4_myers": "boss=Te, sub=Fe (only when trust), active/receptive=E/I lead",
+    "analysis_4_blavatsky": "industry fit = vibration match, not credential; income follows resonance",
+    "analysis_4_ladini": "four roles = four cardinal cells; peak = centre holds all four",
+    "analysis_4_initiates": "role-at-work = universe rehearsing larger self (as above)",
+    "analysis_4_suyuhong": "Ed-tech fits Yang Wood; 2029 Metal-year burns, receptive restores",
+    # Section 5 — Relationships & Lines
+    "analysis_5_jung": "inner pull = anima; blind spot = inferior Fi projected onto partner",
+    "analysis_5_myers": "long-fuse-deep-burn = Te-Ni intimacy; rescue = inferior Fi",
+    "analysis_5_blavatsky": "love = vibration duet; re-tune, don't re-pick",
+    "analysis_5_ladini": "paternal/maternal lines = inherited corners; current = centre integrating",
+    "analysis_5_initiates": "love = correspondence; pull = rhythm seeking octave; rescue = cause-confusion",
+    "analysis_5_suyuhong": "spouse-star should complement: Yang Wood ↔ Water or Earth, not Fire/Metal",
+    # Section 6 — Health Card & Chakras
+    "analysis_6_jung": "7 chakras = 7 archetypes; Σ-row = ego's relation to body",
+    "analysis_6_myers": "phys=Se, eng=Ni, emo=Fi; low totals = starved stack",
+    "analysis_6_blavatsky": "chakras = fixed vibration; imbalance = dissonance between two",
+    "analysis_6_ladini": "health card = 3×3 on body; Σ = over-amp or balanced",
+    "analysis_6_initiates": "body = densest octave; solar plexus = where cause enters soma",
+    "analysis_6_suyuhong": "chakra ↔ element; solar over-heat = Fire↑; forest = Wood+Water drain",
+    # Section 7 — Timeline + Year-by-Year
+    "analysis_7_jung": "5 stages = 5 individuation cycles; S3 = dark night, S4 = integrate",
+    "analysis_7_myers": "stages rotate lead: Ni/Te/Fi/Se/balanced; year-strategy picks function",
+    "analysis_7_blavatsky": "coherence ↑ S1-S2, peak S3→S4, settle S5; year = dominant freq",
+    "analysis_7_ladini": "5 stages = 5 master cycles; year-by-year = matrix at full resolution",
+    "analysis_7_initiates": "5×12=60 convergence; crisis mastery = polarity applied to overwhelm",
+    "analysis_7_suyuhong": "stage-element = luck-pillar flow; year = Personal# + annual stem",
+    # Section 8 — Protocols
+    "analysis_8_jung": "daily=ego↔body, weekly=ego↔Self, monthly=ego↔collective",
+    "analysis_8_myers": "walk=Se feed, call=Te-Ni, retreat=Ni dive, breath=Fi-grip override",
+    "analysis_8_blavatsky": "daily raises, weekly stabilises, monthly resets, crisis = emergency",
+    "analysis_8_ladini": "daily=cell, weekly=row, monthly=centre, crisis=full-square reset",
+    "analysis_8_initiates": "practice = conscious rhythm; without it rhythm runs you",
+    "analysis_8_suyuhong": "walk=Wood, forest=Wood+Water, retreat=Earth, breath=Metal dispersal",
+    # Section 9 — Synthesis
+    "analysis_9_jung": "school=Self's first expression; company=persona supporting it",
+    "analysis_9_myers": "all 4 integrated: Ni sees, Te builds, Fi protects, Se engages",
+    "analysis_9_blavatsky": "school = highest freq; company = carrier wave; coherence = truth",
+    "analysis_9_ladini": "11/22 = school-key handed; build school first, company is side-effect",
+    "analysis_9_initiates": "school = mind's highest octave; company = working octave — same mind",
+    "analysis_9_suyuhong": "P9 Yang Wood = teacher-years; teach (school) > structure (company)",
+    "template_version": "2.1",
     "generated_at": "2026-07-05",
 }
 

@@ -8,6 +8,11 @@ logic. Meaning is filled in by downstream agents (MET-447-B/C/D).
 > Updated in **MET-458** — the skeleton now spans the full **10 sections** of Project
 > Omni-Self Forecast. Section 0 (summary) is preserved as the umbrella; Sections 1–10
 > mirror the canonical Output Structure (MET-457).
+>
+> Updated in **MET-457-A** — each section now ends with a **บทวิเคราะห์ (Analysis —
+> 6 Lenses)** block: the same data re-read through six expert traditions
+> (Carl Jung / Isabel Briggs Myers / Helena Blavatsky / Natalia Ladini / The Three
+> Initiates / Su Yu Hong). 60 new `analysis_<n>_<expert>` tokens total.
 
 ## Files
 
@@ -108,6 +113,43 @@ logic. Meaning is filled in by downstream agents (MET-447-B/C/D).
 
 - `{{template_version}}`, `{{generated_at}}`
 
+### บทวิเคราะห์ — 6 Lenses (per-section, 60 tokens)
+
+> Added in **MET-457-A** in response to reviewer feedback ("ขาดบทวิเคราะห์ที่
+> มองผ่านมุมต่างๆ"). Every section §0..§9 carries an **analysis block** at the
+> bottom — a tight 3×2 grid showing the same data read through six expert lenses.
+> Each entry is a short interpretation (~10–15 words) that names what *that*
+> tradition catches that the others miss.
+>
+> Token schema: `analysis_<section>_<expert_short>`, where:
+> - `<section>` = `0..9` (matches the section number)
+> - `<expert_short>` = one of:
+>   - `jung` — **Carl Jung** (Analytical Psychology)
+>   - `myers` — **Isabel Briggs Myers** (MBTI)
+>   - `blavatsky` — **Helena Blavatsky** (Law of Attraction / Theosophy)
+>   - `ladini` — **นาตาเลีย ลาดินี** (Natalia Ladini, Matrix of Destiny)
+>   - `initiates` — **The Three Initiates** (The Kybalion)
+>   - `suyuhong` — **Su Yu Hong** (BaZi & Period 9)
+>
+> In the HTML, the analysis block uses class `.analysis` with 3-col grid + ellipsis;
+> in the .md, each section ends with a `### บทวิเคราะห์ (Analysis — 6 Lenses)` table.
+
+| Section | Tokens (6 each) |
+|---|---|
+| §0 Summary | `analysis_0_jung`, `analysis_0_myers`, `analysis_0_blavatsky`, `analysis_0_ladini`, `analysis_0_initiates`, `analysis_0_suyuhong` |
+| §1 Cosmic Synergy | `analysis_1_jung`, `analysis_1_myers`, `analysis_1_blavatsky`, `analysis_1_ladini`, `analysis_1_initiates`, `analysis_1_suyuhong` |
+| §2 Natalia Square 3×3 | `analysis_2_jung`, `analysis_2_myers`, `analysis_2_blavatsky`, `analysis_2_ladini`, `analysis_2_initiates`, `analysis_2_suyuhong` |
+| §3 Talent & Karma | `analysis_3_jung`, `analysis_3_myers`, `analysis_3_blavatsky`, `analysis_3_ladini`, `analysis_3_initiates`, `analysis_3_suyuhong` |
+| §4 Career & Roles | `analysis_4_jung`, `analysis_4_myers`, `analysis_4_blavatsky`, `analysis_4_ladini`, `analysis_4_initiates`, `analysis_4_suyuhong` |
+| §5 Relationships + Lineage | `analysis_5_jung`, `analysis_5_myers`, `analysis_5_blavatsky`, `analysis_5_ladini`, `analysis_5_initiates`, `analysis_5_suyuhong` |
+| §6 Health & Chakras | `analysis_6_jung`, `analysis_6_myers`, `analysis_6_blavatsky`, `analysis_6_ladini`, `analysis_6_initiates`, `analysis_6_suyuhong` |
+| §7 Timeline + Year-by-Year | `analysis_7_jung`, `analysis_7_myers`, `analysis_7_blavatsky`, `analysis_7_ladini`, `analysis_7_initiates`, `analysis_7_suyuhong` |
+| §8 Protocols | `analysis_8_jung`, `analysis_8_myers`, `analysis_8_blavatsky`, `analysis_8_ladini`, `analysis_8_initiates`, `analysis_8_suyuhong` |
+| §9 Ultimate Synthesis | `analysis_9_jung`, `analysis_9_myers`, `analysis_9_blavatsky`, `analysis_9_ladini`, `analysis_9_initiates`, `analysis_9_suyuhong` |
+
+**Total: 60 analysis tokens** (10 sections × 6 experts). Each entry is rendered as
+`<expert-name>: <short reading>` in a 3-column compact row.
+
 ## How to author a new forecast
 
 1. Copy `forecast.md` to your forecast folder (typically `analysis/<person-slug>.md`).
@@ -173,3 +215,4 @@ changes in a backward-incompatible way.
 |---|---|---|
 | (MET-447) | initial | 5-section skeleton (Section 0..4) |
 | (MET-458) | expansion | 10-section skeleton (§0..§9, mapping 1:1 to MET-457 ส่วนที่ 1..10); added 6-lens tokens, Natalia 3×3 cells, 7-chakra table, 5 stages, year-by-year rows, crisis 5-step |
+| (MET-457-A) | analysis | added **บทวิเคราะห์ (6 Lenses)** block at the bottom of every section — 10 sections × 6 expert lenses (Carl Jung / Isabel Briggs Myers / Helena Blavatsky / Natalia Ladini / The Three Initiates / Su Yu Hong) = 60 new `analysis_<n>_<expert>` tokens. CSS tightened to keep one-page 1280×800 fit (heightVhRatio 1.03). |

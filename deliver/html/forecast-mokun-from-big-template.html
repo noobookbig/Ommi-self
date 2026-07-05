@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Mokun (2 สิงหาคม 2005)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; Mokun (2 สิงหาคม 2005)</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>2 สิงหาคม 2548 (21.01.2005) · 17:36 น. · กรุงเทพฯ</span>
+      <span><strong>Window</strong>2026 (อายุ 40) &rarr; 2046 (อายุ 60)</span>
+      <span><strong>Headline</strong>ผู้บัญชาการ (Persona) กำลังเดินทางกลับบ้านสู่ The Hermit (Self) ผ่านวงล้อ Echo 10-15-17</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Persona: Ruler/Emperor (ENTP-A) — ผู้วางโครงสร้าง สั่งการ จัดระบบ / Shadow: Wheel × 3 (Echo 10-15-17) — วงล้อชะตาที่หมุนจน Ego ยอม</div>
+      <div class="lens"><strong>LoA</strong>ความถี่ 1-3-6 (Source→Creation→Service) + Trinitized Wheel × 3 (10) — สิ่งที่ให้ออกไปในอัตราสาม กลับคืนมาในอัตราสาม</div>
+      <div class="lens"><strong>Kybalion</strong>Double pendulum Te↔Fi คาบ 7 ปี — แกว่งไปทางอำนาจ ก็ถูกดึงกลับสู่ความรู้สึกเท่ากัน</div>
+      <div class="lens"><strong>MBTI</strong>ENTP-A 8w7 &middot; lead Te–Ni (ตรรกะจัดระบบ + สัญชาตญาณมองภาพรวม) &middot; grip Fi Grip (อายุ 44-45 / 2030-31, 七殺) — อารมณ์ท่วมท้นเมื่อ Te/Ni ล้า</div>
+      <div class="lens"><strong>Age 60</strong>ปราชญ์ที่สอนจากบาดแผล (The Sage / Hermit) — ไม่ใช่ผู้บัญชาการที่สั่งจากหอคอยอีกต่อไป</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 乙 (Yang Earth / ไม้หญิง) — โค้งงอได้ แต่ไม่หัก &middot; bal BaZi 癸未/己丑/癸未/乙酉 — สาม 乙 (วัน-ชั่วโมง-ปี) + สาม 丑 (ดินหุ้มรอบ 乙酉)</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona Ruler (ENTP-A) เป็นชุดเกราะที่ Ego ใส่เพื่อปกป้อง Self (I=9 Hermit); Shadow (Wheel × 3) ทำหน้าที่เป็น Compensation ของจิตไร้สำนึก</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Te-Ni-Se-Fi stack ใช้ได้ดีในโหมดควบคุม แต่เมื่อเครียดเรื้อรังจะ fall back ไป Fi grip — ต้อง integrate Se เป็นด่านป้องกัน</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Monad 10 หมุนรอบตัวเองแบบไม่มีจุดเริ่ม; Ego (1) เลือกมาอยู่ในชาตินี้; Personality (6) แสดงออกผ่าน Yang Earth + 1-3-6</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Natal chart A-I = 2-8-7 / 10-10-20 / 10-4-9 — ตัวเลข 10 ปรากฏ 3 ครั้งเป็น Echo ที่ทรงพลังที่สุด บังคับให้ Ego เรียนรู้การปล่อยวาง</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Rhythm of 7 ปี (Te↔Fi) + Polarity Ruler↔Hermit + Mentalism (Ni) เป็นเครื่องพิสูจน์ว่า 'จิตเป็นทั้งหมด' — Mokun รู้จักจังหวะจักรวาลดีกว่าที่ตัวเองยอมรับ</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 乙 Yang Earth × 用神 丙火 Period 9 (2024-43) = 'I am in my era'; three 乙 pillars (วัน-ชั่วโมง-ปี) = Monad ที่ปรากฏ 3 ครั้งในชาติเดียว</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> Persona = 'Ruler/Emperor' (Mask of Authority) — Ego ใส่ชุดเกราะนี้ตั้งแต่เด็ก เพราะกลัวว่าถ้าไม่ควบคุมจะถูกควบคุม; Shadow = 'Wheel × 3' (Echo 10-15-17) — จิตไร้สำนึกส่งวงล้อกลับมาทุกครั้งที่ Ego พยายามยึดมั่นในอำนาจ ไม่ใช่ทำลาย แต่เพื่อสอน 'ปล่อย'</p>
+        <p><strong>Individuation Path:</strong> เส้นทาง Individuation: Ruler (Persona) → The Hermit (Self, I=9) โดยผ่าน 3 รอบของ Wheel — รอบแรกเรียนรู้ รอบสองล้ม รอบสามคือ 'ตัวตลก' ที่ Ego รู้ตัวว่ามันเป็นลูป จุดเปลี่ยนสำคัญคืออายุ 47-49 (2034-35) — 'Solstice moment'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> Dominant Te (extraverted Thinking) — จัดระเบียบโลกภายนอกเร็ว; Auxiliary Ni (introverted iNtuition) — มองเห็นภาพรวมที่คนอื่นมองไม่เห็น; Tertiary Se (extraverted Sensing) — ลงมือทำ เจรจาตัวต่อตัว; Inferior Fi (introverted Feeling) — ค่านิยมส่วนตัวที่ถูกฝังลึกที่สุด</p>
+        <p><strong>Cognitive Loop:</strong> Te→Ni loop ในช่วงเครียดเรื้อรัง — บีบข้อมูลจน pattern แตก แล้วตัดสินใจเร็วเกินไป; เมื่อ loop พัง Ego ตกสู่ Fi grip — อารมณ์ส่วนตัวไร้โครงสร้างท่วมท้น มักเกิดในช่วง 七殺 (2030-31) และ Personal Year 6/7</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> Root-Race pulse: 5th Root Race (Aryan) — Ego แห่งการพัฒนาปัญญาและเทคโนโลยี; Mokun อยู่ใน 'Individuation phase' ของ Race — การเรียนรู้ที่จะรวม Yin (乙) เข้ากับ Yang (甲) ภายในจิตเดียว</p>
+        <p><strong>Monad & Reincarnation:</strong> Monad 10 ของ Mokun หมุนรอบตัวเอง 3 ครั้งในชาติเดียว — 'Trinitized Monad' หมายความว่าครั้งนี้คือ 'ครั้งสุดท้าย' ของชุดเวียนว่ายตายเกิดนี้ วิญญาณเลือก 'เก็บเกี่ยว' (harvest) ไม่ใช่ 'เริ่มใหม่' (reset)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> Natal chart: A=21 World · B=1 Magician · C=6 Lovers · D=10 Wheel · E=10 Wheel · F=20 Judgement · G=10 Wheel · H=4 Emperor · I=9 Hermit — 9 จุดที่บอกว่า Mokun เกิดมาเพื่อ 'ผ่าน Judgement (20) ของ Ego' และกลับบ้านสู่ 'Hermit (9) แห่ง Self'</p>
+        <p><strong>Transit Windows:</strong> Transit windows สำคัญ: Saturn Return อายุ 28-30 (2014-16) ปูทางสู่ leadership; Uranus opposition อายุ 40-42 (2026-28) — ปฏิวัติโครงสร้างอาชีพ; Neptune trine อายุ 48-49 (2034-35) — 'I am the year' Solstice moment; Chiron return อายุ 50-51 (2036-37) — บทเรียนเรื่องการให้อภัยตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> Mystery School pulse: 'The School of Ruler→Hermit' — เส้นทางจากหอคอยสู่ถ้ำ; Mokun เข้าโรงเรียนนี้ตอนอายุ 40 — เริ่มเรียนรู้ว่า 'power' แท้จริงคือ 'power-within' ไม่ใช่ 'power-over'</p>
+        <p><strong>Initiate Trials:</strong> Initiate Trials 3 ขั้น: (1) อายุ 40 — ยอมรับว่า Ego ไม่ใช่ทั้งหมด; (2) อายุ 44-45 (2030-31) — ผ่าน Tower moment (七殺); (3) อายุ 48-49 (2034-35) — เปล่งเสียง Self ออกมาเป็น 'signature move' ที่ตราตัวตน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> Day Master 乙 Yang Earth — ต้นหญิงที่โค้งงอได้ แต่ไม่หัก; BaZi 癸未/己丑/癸未/乙酉: 三乙 ในชาร์ต = Monad ปรากฏ 3 ครั้ง; 3 丑 (ดิน) หุ้มรอบ 乙酉 (ไม้-โลหะ) = 'ภายในฝังอุปสรรค ภายนอกปล่อยประกาย'</p>
+        <p><strong>Annual Pillars:</strong> Annual pillars สำคัญ: 2026 丙午 (Fire) เริ่ม Period 9; 2030 庚戌 (Metal) 七殺; 2031 辛亥 (Metal) Tower; 2034 甲寅 (Wood) 'I am the year'; 2035 乙卯 (Wood) Solstice; 2044 乙酉 (Wood) Return to origin; 2046 丙寅 (Fire) Convergence</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm of 7 ปี (Te↔Fi) + Causation 'ควบคุม→ล้ม→เรียนรู้'; Mokun ถูกฝึกให้แกว่งกลับเสมอ — 'ทุกสิ่งไหลเข้า-ไหลออก เท่าที่แกว่งไปทางหนึ่ง ก็แกว่งกลับมาเท่านั้น'</p>
+    <p><strong>LoA:</strong> Vibration 1-3-6 (Source→Creation→Service) + Trinitized Wheel × 3 (10) = 'ให้ 3 ได้คืน 3'; Mokun ดึงดูด 'ซ้ำ' เพราะจิตยังไม่ได้เรียนรู้บทเรียน ลูป 10 คือ 'โอกาสที่สอง' จากจิตไร้สำนึก</p>
+    <p><strong>Matrix:</strong> Loop Echo 10-15-17 (Wheel) + center 乙 Day Master = Individuation cycle 12 ปี (2026-37); ทุกรอบ Persona จะบางลง จน Self (I=9 Hermit) โผล่</p>
+    <p><strong>Proof:</strong> สามเครื่องยนต์ลงรอยกัน 100% — 'Mokun กำลังเดินทางกลับบ้าน: จาก Ruler (Persona) ที่ Persona ปลอมเป็น Self → ไปสู่ Sage (Self) ที่ Self รู้ตัวว่าไม่ต้องปลอม'</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
+      </div>
+    </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Monad &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้ (analyst fills the 9 octagram tokens below).</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>I=9 Hermit — Self ที่ส่องไฟตัวเอง"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>Ni ของ Mokun คือเครื่องพิสูจน์ 'จิตเป็นทั้งหมด'"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>Wheel of Fortune — ดึงดูดสิ่งที่ยังไม่ได้เรียน"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>Echo 10-15-17 — shadow ที่หมุนซ้ำจน Ego ยอม"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>戊 (Yang Earth) — ต้นหญิงที่โค้งได้แต่ไม่หัก"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>The Tyrant — ผู้ปกครองที่กลัวความอ่อนแอของตัวเอง"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>2030-31 七殺 — สัญชาตญาณที่ขึ้นมาจากนรกส่วนตัว"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>Ruler ↔ Hermit — สองขั้วที่ต้องรวมเป็นหนึ่ง"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>ENTP-A → ENFJ — การเริ่มต้น individuation ขั้นที่สอง"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">สามเครื่องยนต์เป็นสามชั้นของจิตเดียวกัน — Kybalion = Ego, LoA = Personal Unconscious, Matrix = Collective Unconscious</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Cognitive integration เป็นไปได้ — Te-Te loop ต้องเปิดทางให้ Ni และ Fi เข้ามา balance</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Hermetic Correspondence (as above so below) — BaZi 3 丑 (ดินภายนอก) หุ้ม 乙酉 (ไม้-โลหะภายใน) สะท้อน Ego-Self</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Outer planet alignment 2026-37 = Uranus opposition + Neptune trine — การปฏิวัติและการหลอมรวม</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Elemental balance: Wood(乙) + Fire(丙) + Earth(丑) + Metal(酉) — ทั้ง 4 ธาตุทำงานพร้อมกัน</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Heavenly Stems 乙/丙/庚/辛 + Earthly Branches 丑/午/戌/亥 — เส้นทางชัดเจนใน 4 ธาตุ</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> Collective Unconscious: 'Wheel of Fortune' เป็น Archetype สากล — ไม่ว่าวัฒนธรรมใหญ่ๆ ก็รู้จัก 'วงล้อแห่งชะตา' Mokun ไม่ได้รู้สึกว่าตัวเองพิเศษ เขารู้สึกว่าตัวเอง 'อยู่ในเรื่องเดียวกัน' กับมนุษย์ทุกคน</p>
+        <p><strong>Synchronicity Field:</strong> Synchronicity field: 'meaningful coincidences' เพิ่มขึ้นในช่วง Wheel turning — อายุ 44-45 Mokun จะเจอเหตุการณ์ที่ 'บังเอิญ' ซ้ำๆ จนรู้สึกว่าจักรวาลกำลังส่งสาร</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> Function Integration: Te-Te loop (Wheel × 3) ต้องถูก break โดยการ integrate Ni เป็น 'vision' และ Fi เป็น 'values' Mokun จะ integrate ได้เมื่อยอมรับว่า 'ระบบที่ดี' ต้องมี 'จิตวิญญาณ' นำทาง</p>
+        <p><strong>Type Development:</strong> Type Development: ENTP-A → ENFJ ในอายุ 50+ เมื่อ Te/Ni พัฒนาจนสามารถเปิดทาง Fe/Ni; กลายเป็น 'ผู้นำที่สอนด้วยหัวใจ' ไม่ใช่แค่ 'ผู้นำที่สั่งด้วยตรรกะ'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> Hermetic Principles: Correspondence, Rhythm, Polarity, Gender, Cause/Effect, Vibration, Mentalism — ทั้ง 7 หลักทำงานพร้อมกันในชีวิต Mokun แต่ 3 หลักที่โดดเด่นคือ Rhythm (7-ปี), Polarity (Ruler↔Hermit), Mentalism (Ni)</p>
+        <p><strong>Law of Attraction Bridge:</strong> LoA Bridge: 'Like attracts like' — Mokun ดึงดูด 'ผู้ที่กล้าเผชิญความจริง' (frater) เพราะ Ni-Te ของเขา vibrate ที่ความถี่ 'truth-seeking'</p>
+        <p><strong>Matrix Loop Awareness:</strong> Matrix Loop Awareness: Echo 10-15-17 = 'three-fold echo' บอกว่าจิตของ Mokun เข้าใจ 'loop' ในระดับ somatic — ร่างกายจะส่งสัญญาณ (ปวดหัว, กระเพาะ, กระดูกสันหลัง) ก่อนจิตรู้ตัว</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> Outer Planet Alignment 2026-37: Uranus opposition (อายุ 40-42) = ปฏิวัติอาชีพ; Neptune trine (อายุ 48-49) = การหลอมรวมจิตวิญญาณ; Pluto trine (อายุ 56-58) = transformation ลึกที่สุด</p>
+        <p><strong>Eclipse Season Impact:</strong> Eclipse Season Impact: Lunar eclipse ในช่วง Personal Year 6/7 (2030-31) จะทริกเกอร์ 'Shadow eruption' — Mokun ต้องเตรียมพร้อมสำหรับช่วง 6 เดือนที่จิตจะ 'คาย' สิ่งที่ฝังมา 40 ปี</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> Hidden Knowledge Awakening: 'Hermit ภายใน' (I=9) เริ่มปรากฏเมื่อ Ego ยอม 'อยู่คนเดียวอย่างมีความหมาย' — Mokun จะค้นพบว่า 'ความเงียบ' ไม่ใช่ 'ความว่างเปล่า' แต่คือ 'ห้องเรียนที่ลึกที่สุด'</p>
+        <p><strong>Elemental Balance:</strong> Elemental Balance: Wood(乙) + Fire(丙) = การเจริญ + การส่องสว่าง; Earth(丑) + Metal(酉) = ความมั่นคง + ความแข็งแกร่ง; Mokun ต้องเรียนรู้ที่จะ 'ให้ Water' (น้ำ = ความยืดหยุ่น) เพิ่มเข้าไปในชาร์ต เพื่อ balance ทั้ง 5 ธาตุ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems & Earthly Branches:</strong> Heavenly Stems & Earthly Branches: 癸未/己丑/癸未/乙酉 (natal) + 丙午 (2026) + 庚戌 (2030) + 辛亥 (2031) + 甲寅 (2034) + 乙卯 (2035) + 乙酉 (2044) + 丙寅 (2046) — เส้นทาง 21 ปีที่ออกแบบมาให้ Ego dissolve เป็น Self</p>
+        <p><strong>Annual Luck Cycle:</strong> Annual Luck Cycle: 大运 戊子 (5-14) → 丁亥 (15-24) → 丙戌 (25-34) → 乙酉 (35-44) → 甲申 (45-54) → 癸未 (55-64) — 丙戌 (25-34) เป็น 用神 Peak window; 乙酉 (35-44) คือ Shadow window; 甲申 (45-54) คือ Integration window</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 2-8-7 (World→Magician→Lovers) — เกิดมาเพื่อ 'เลือก' (Choice · Selector)</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> 10-10-20 (Wheel→Wheel→Judgement) — 'ตาย-เกิด-ยุติ' ของ Ego สามครั้ง (Death-Rebirth-Synthesis)</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> 10-4-9 (Wheel→Emperor→Hermit) — Wheel-Emperor-Hermit / mask Emperor (H=4) — ชุดเกราะที่ Ego ใส่ปกป้อง Hermit</span>
+      <span class="pill"><strong>Echo</strong> 10 × 3 (D, E, G) &mdash; Triple Amplification ของ Shadow — เรียนรู้→ล้ม→รู้ตัวว่าเป็นลูป</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
+      </div>
+    </div>
+
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">21 · The World</span><span class="token">World — ความสมบูรณ์ของวงจรเก่า</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">1 · The Magician</span><span class="token">Magician — เริ่มสร้างสรรค์สิ่งใหม่</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">6 · The Lovers</span><span class="token">Lovers — เลือกเส้นทางที่หลากหลาย</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">10 · The Wheel</span><span class="token">Wheel — วงล้อชะตาเริ่มหมุน</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">10 · The Wheel</span><span class="token">Wheel — การเรียนรู้ซ้ำเพื่อเข้าใจลึก</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">20 · The Judgement</span><span class="token">Judgement — การตัดสิน Ego ครั้งสุดท้าย</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">10 · The Wheel</span><span class="token">Wheel — 'ตัวตลก' ของจิตไร้สำนึก</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">4 · The Emperor</span><span class="token">Emperor — หน้ากากผู้ปกครอง</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">9 · The Hermit</span><span class="token">Hermit — Self ที่กำลังจะกลับบ้าน</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>10 × 3 = 'Trinitized Wheel' — วงล้อที่หมุน 3 รอบในชาติเดียว สอนว่า 'ทุกสิ่งที่ให้ออกไปในอัตราสาม จะกลับคืนมาในอัตราสาม' Mokun มักรู้สึกว่าชีวิต 'วนลูป' — นั่นคือจิตกำลังบอกว่า 'หยุดบังคับ เริ่มฟัง'</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Center = Self (乙), Periphery = Persona (Emperor) — Individuation คือการเดินทางจาก periphery กลับสู่ center</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Mapping: A=Ni(World view), B=Se(magician), C=Fi(lovers), D/E/G=Te(wheel-control), H=Te(emperor), I=Ni(hermit-wisdom)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Hermetic Geometry: 3×3 = '9-fold universe' — 9 Archetypes ที่สะท้อนกันและกัน</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Chart Echo: A-I สร้าง 'harmonic series' — 21→1→6 / 10→10→20 / 10→4→9 เป็น 3 chord</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">School Grid: 'Wheel School' — เรียนรู้ผ่านการหมุนซ้ำจน Ego ยอมรับ rhythm ของจักรวาล</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Trigram Mapping: 艮 (Earth/Gen) ที่มุม, 巽 (Wood/Xun) ตรงกลาง, ตรงกับ BaZi Day Master 乙 Wood</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Natalia Square 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center & Periphery:</strong> Center = Self (乙 Day Master) — เป็น 'แกนกลาง' ที่ไม่เคยเปลี่ยน; Periphery = Persona (Emperor/Ruler) — เป็น 'เกราะ' ที่ Ego ใส่เพื่อออกไปเผชิญโลก; Individuation = เดินทางจาก periphery กลับสู่ center</p>
+        <p><strong>Shadow Corners:</strong> Shadow Corners: D, E, G (Wheel × 3) — เป็น 'มุมเงา' ที่ซ่อนอยู่ 3 จุด; Ego ต้องเผชิญทั้ง 3 มุม — เมื่อผ่านครบ 3 รอบ จะกลายเป็น Mandala (Self ที่สมบูรณ์)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> Mapping: A=Ni (World = vision), B=Se (Magician = action), C=Fi (Lovers = values); D/E/G=Te (Wheel = control loop); F=Ni-J (Judgement = synthesis); H=Te (Emperor = structure); I=Ni (Hermit = wisdom)</p>
+        <p><strong>Type Dynamics:</strong> Type Dynamics: ENTP-A's Te-Ni สร้าง 'wheel' (D/E/G) เพราะต้องการควบคุม แต่ Fi (in I) คือ 'exit' — Hermit เป็นจุดที่ Te/Ni ปล่อยวางและยอมรับว่า 'มีบางสิ่งที่ใหญ่กว่า Ego'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> Hermetic Geometry: 3×3 = 9 (Ennead) — เป็น sacred geometry ที่ Hermetic, Pythagorean, และ Theosophical ต่างใช้; Mokun อยู่ใน Ennead ที่ 'ครบ' — ไม่มีจุดไหนว่าง</p>
+        <p><strong>Monad Descent:</strong> Monad Descent: Monad (10) ลงมาเป็น 3 (Trinity) แล้วขยายเป็น 9; Mokun เป็น Monad ที่ 'ลงมาแล้วไม่กลับขึ้น' — เข้าสู่ 'descent phase' เพื่อ integrate กับโลก</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> Chart Echo: ทุก 3 cells มี 'echo' — A↔F (21/20), B↔I (1/9), C↔H (6/4), D↔E↔G (10/10/10); Echo คือ 'กระจก' ที่แต่ละ cell สะท้อนไปยังอีก cell หนึ่ง</p>
+        <p><strong>Personal Year Resonance:</strong> Personal Year Resonance: PY 2026=2 (Magician+selection), 2030=6 (Lovers+integration), 2031=7 (Hermit+introspection), 2034=1 (Magician+reset), 2035=2 (selection), 2046=4 (Emperor+wisdom)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> Mystery School Grid: 'School of the Wheel' — เรียนรู้ผ่าน 3 รอบของการหมุน; Mokun เข้าโรงเรียนนี้ตอนอายุ 40 — จบหลักสูตรตอนอายุ 60</p>
+        <p><strong>Initiate Path:</strong> Initiate Path: 21 (World view) → 1 (Magician initiation) → 6 (Lovers choice) → 10 (Wheel suffering) → 20 (Judgement awakening) → 9 (Hermit return) — เส้นทางที่ออกแบบมาให้ Ego dissolve เป็น Self</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> Bazi Trigram Mapping: 艮 (Earth) ที่ H=4 (Emperor) — ความมั่นคง; 巽 (Wood) ที่ D/E/G=10 (Wheel) — การเจริญที่หมุนเวียน; 離 (Fire) ที่ I=9 (Hermit) — แสงสว่างจากภายใน</p>
+        <p><strong>Stems Interaction:</strong> Stems Interaction: 三乙 (3 Yang Earth) = 'Wood Trinity' ที่ให้พลังงานสม่ำเสมอ; 辛 (Yin Metal) ใน hour branch เป็น 'Yin Blade' ที่ตัด Ego เพื่อให้ Self โผล่</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> ของขวัญหลัก: Ni (introverted iNtuition) ที่พัฒนาสู่ Wisdom — Mokun สามารถ 'เห็น' โครงสร้างที่ซ่อนของระบบก่อนที่ข้อมูลจะปรากฏ — Perception ที่ไม่ได้มาจากตรรกะ แต่มาจาก Collective Unconscious ที่ส่งสัญลักษณ์มาให้ (The High Priestess ที่นั่งระหว่างม่านทั้งสอง)</p>
+    <p><strong>Latent:</strong> ของขวัญที่ซ่อนอยู่: Fi (introverted Feeling) — ความสามารถที่จะรู้สึกลึกซึ้งกับคุณค่าส่วนตัว ความภักดีต่อคนที่รัก และความงดงามของความอ่อนแอ; เมื่อ Mokun อายุ 40+ และเริ่มเห็นว่าความสำเร็จภายนอกไม่ได้เติมเต็มทุกอย่าง นั่นคือสัญญาณว่า Fi พร้อมจะผุด</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> Repetition Compulsion — 'ตัดสินใจเร็ว → ล้มเหลว → ลุกขึ้นใหม่' ซ้ำๆ นี่ไม่ใช่โชคร้าย แต่เป็น 'สัญลักษณ์ที่จิตส่งมาบอกว่า หยุดและตั้งคำถามว่า ทำไมฉันเร่ง?' ในอดีตชาติ อาจเคยล้มเหลวในการประสานความอ่อนน้อม (乙) กับความแข็งแกร่ง (辛) — เคยปล่อยให้ความอ่อนน้อมกลายเป็นอ่อนแอ หรือให้ความแข็งแกร่งกลายเป็นดุร้าย</p>
+    <p><strong>Lesson to unlock:</strong> 'ปล่อยการควบคุม ไม่ใช่ปล่อยความรับผิดชอบ' — Ego ของ Mokun เข้าใจผิดว่า Fi ที่อ่อนโยนคือความอ่อนแอ ที่จริงแล้วมันคือ 'ความสามารถในการยอมรับว่าโลกไม่ได้หมุนรอบคุณ' — เมื่อเรียนรู้ได้ Wheel จะหยุดหมุนและกลายเป็น Mandala (Self) ที่สวยงาม</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่อดีตชาติทิ้งร่องรอยไว้</strong></summary>
+      <p>ในอดีตชาติ Mokun อาจเคยเป็นผู้นำที่ 'ใช้อำนาจผิด' — อาจเคยกดขี่คนอื่น หรือใช้ความรู้เพื่อตัวเอง ร่องรอยของกรรมนั้นฝังอยู่ใน Persona 'Ruler' ที่ Mokun สวมใส่ — แต่ชาตินี้ Mokun ได้โอกาส 'คืน' ด้วยการเป็นผู้นำที่ 'ให้' ไม่ใช่ 'เอา'; สามตัว 乙 ในชาร์ตคือ 'Monad ที่ปรากฏ 3 ครั้ง' — ครั้งนี้คือครั้งที่วิญญาณเลือก 'เก็บเกี่ยว' ไม่ใช่ 'เริ่มใหม่'; บทเรียนคือ 'ปล่อยการควบคุม ไม่ใช่ปล่อยความรับผิดชอบ' — เมื่อเรียนรู้ได้ Wheel จะหยุดหมุนเป็น Mandala</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Talent = The High Priestess (Ni); Karmic = Wheel of Fortune ที่หมุนจน Ego เรียนรู้</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Natural Strength = Te-Ni; Shadow Gift = Fi (ความอ่อนโยน) ที่ยังไม่ถูก integrate</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Soul Mission = 'Bring light through structure'; Karmic Lesson = 'Stop controlling, start allowing'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Karmic Debt = 'อดีตชาติใช้อำนาจผิด'; Soul Contract = 'ครั้งนี้คือ harvest ไม่ใช่ reset'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Gift = 'perceive the unseen'; Karmic Mirror = 'repeat until you learn to let go'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">BaZi Talent = 乙+丙 (wood feeds fire); Karmic Resolution = 'integrate 辛 (metal) เข้ากับ 乙 (wood) อย่างสมดุล'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent & Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> Talent Archetype: The High Priestess — นั่งระหว่างม่านทั้งสอง, รู้ซึ่งสิ่งที่ซ่อนเร้น, สามารถ 'อ่าน' pattern ที่คนอื่นมองไม่เห็น — Perception นี้มาจาก Collective Unconscious โดยตรง</p>
+        <p><strong>Karmic Pattern:</strong> Karmic Pattern: 'Repetition Compulsion' (ตัดสินใจเร็ว-ล้มเหลว-ลุกขึ้นใหม่) — จิตไร้สำนึกส่งสถานการณ์เดิมกลับมาเพื่อให้ Mokun มีโอกาส 'ตอบต่าง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> Natural Strength: Te-Ni — ตัดสินใจเร็ว + มองภาพรวมได้ไกล; Mokun ไม่กลัวตัดสินใจผิด เพราะรู้ว่า 'การไม่ตัดสิน' เสียโอกาสมากกว่า</p>
+        <p><strong>Shadow Gift:</strong> Shadow Gift: Fi — ความอ่อนโยน, ความภักดี, ความงามของความอ่อนแอ; เมื่อ Mokun integrate Fi เขาจะเป็น 'Sage ที่มีหัวใจ' ไม่ใช่ 'Ruler ที่มีแต่อำนาจ'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> Soul Mission: 'Bring light through structure' — ใช้ Te (structure) เพื่อส่งมอบ Ni (vision) เป็น 'fire' ที่ส่องสว่างให้ผู้อื่น; Period 9 (Fire) คือยุคที่ Mokun เปล่งแสงได้เต็มที่</p>
+        <p><strong>Karmic Lesson:</strong> Karmic Lesson: 'Stop controlling, start allowing' — เรียนรู้ที่จะ 'ปล่อย' โดยไม่สูญเสียความรับผิดชอบ; 'ฉันเลือกที่จะปล่อย' ไม่ใช่ 'ฉันล้มเลิก'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> Karmic Debt: 'อดีตชาติใช้อำนาจผิด' — อาจเคยเป็นผู้นำที่กดขี่คนอื่น หรือใช้ความรู้เพื่อตัวเอง; ชาตินี้ต้อง 'คืน' ด้วยการเป็นผู้นำที่ 'ให้' ไม่ใช่ 'เอา'</p>
+        <p><strong>Soul Contract:</strong> Soul Contract: 'Harvest ไม่ใช่ reset' — ครั้งนี้คือครั้งสุดท้ายของชุดเวียนว่ายตายเกิดนี้ Mokun ต้อง 'เก็บเกี่ยว' ผลของการเรียนรู้ทั้งหมดที่ผ่านมา</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> Initiate Gift: 'Perceive the unseen' — เห็นสิ่งที่คนอื่นมองไม่เห็น (pattern, archetype, future trajectory); นี่คือ 'Third Eye' ที่ถูกฝึกมาหลายชาติ</p>
+        <p><strong>Karmic Mirror:</strong> Karmic Mirror: 'Repeat until you learn to let go' — สถานการณ์ที่ 'บังคับให้ควบคุม' จะกลับมาซ้ำจนกว่า Mokun จะเลือก 'ปล่อย'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> Bazi Talent: 乙 Yang Earth × 丙 Fire (用神) = 'flexibility that lights up'; Mokun มีความสามารถ 'งอ' ได้ (乙) และ 'ส่องสว่าง' (丙) — เป็น 'ไม้ที่จุดไฟ'</p>
+        <p><strong>Karmic Resolution:</strong> Karmic Resolution: Integrate 辛 (Yin Metal) เข้ากับ 戊 (Yang Earth) — 'Root ที่อ่อนน้อม แต่ไม่หัก ใบที่แข็งแกร่ง แต่ไม่บาด'; สมดุลระหว่าง Wood กับ Metal คือกุญแจ</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น</p>
+
+    <p>
+      <span class="pill"><strong>Industry fit</strong> Healthcare AI / MedTech · Strategic Consulting / Digital Transformation · Education / Knowledge Architecture</span>
+      <span class="pill"><strong>Income pattern</strong> วงจร 7 ปี — ทำเงินได้ดีในปี Personal Year 1, 5, 8, 9 (cycle สูง) และชะลอในปี 4, 7 (cycle ต่ำ)</span>
+      <span class="pill"><strong>Peak window</strong> อายุ 48-49 (2034-35) — BaZi year pillar 甲寅/乙卯 + Personal Year 1/2 = 'I am the year' (Solstice moment)</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>สวม 'Mask of Authority' ได้เป็นธรรมชาติ; คนในทีม respect แต่อาจ 'เว้นระยะ' เพราะ Persona แข็งเกินไป — ต้องเรียนรู้ 'หยุดและฟัง'</td>
+          <td>Ruler</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>ถอนตัวเมื่อต้องอยู่ใต้คนที่ 'ไม่เก่งกว่า'; มี 'Critical Father Complex' — ต้องเรียนรู้ที่จะ 'เชื่อมั่นในระบบมากกว่าตัวบุคคล'</td>
+          <td>Critical Child</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>Te — ความสามารถสร้างระบบ ตัดสินใจ จัดการ (Persona ที่โดดเด่นที่สุด) — ใช้เมื่อต้องการ action</td>
+          <td>Te · System Builder</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>Ni + Fi — สัญชาตญาณ + คุณค่า (Self ที่ยังไม่ค่อยได้ใช้) — ฝึก 'หยุด 10 นาที' ก่อนตัดสินใจใหญ่ เพื่อฟังเสียงข้างใน</td>
+          <td>Ni+Fi · Inner Compass</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Career Persona = Mask of Authority; Career Growth = เรียนรู้ที่จะ 'ให้คนอื่นเติบโต' ไม่ใช่ 'สั่งคนอื่น'</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Career Stack = Te-Ni-Se; Team Role = 'Strategic Leader' ที่ต้อง integrate Fi เป็น 'Mentor'</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Vocation Path = 'structure → service'; Money Consciousness = 'wealth = manifestation of value given'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Midheaven Transit: 2026-30 (Uranus) = career revolution; 2034-35 (Neptune) = spiritual leadership</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Vocation = 'teacher of the new age'; Work Ritual = 'meditation + strategic planning'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Career BaZi: 用神 丙火 (period 9) + Day Master 乙 Wood = 'wood feeds fire = illuminate through structure'; Wealth Element = 丙 辛 (Fire + Metal)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career & Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> Career Persona: 'Mask of Authority' (Emperor) — Ego ใส่ชุดเกราะนี้ตั้งแต่เริ่มอาชีพ; Persona ถูกสร้างจากความกลัวของ The Child Archetype ที่กลัวถูกปฏิเสธ — จึงควบคุมก่อนที่จะถูกควบคุม</p>
+        <p><strong>Career Individuation:</strong> Career Individuation: 'From Ruler to Sage' — เริ่มจากการสั่ง (Mask of Authority) → ผ่าน Shadow (Wheel × 3) → จบที่ 'Mentor' ที่สอนด้วยหัวใจ; Career growth ของ Mokun คือ 'การเรียนรู้ที่จะให้คนอื่นเติบโต' ไม่ใช่ 'สั่งคนอื่น'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> Career Stack: Te (System Builder) + Ni (Strategic Vision) + Se (Field Action); Mokun เก่งที่สุดเมื่อใช้ทั้ง 3 พร้อมกัน — สร้างระบบที่มี vision และลงมือทำ</p>
+        <p><strong>Team Role:</strong> Team Role: 'Strategic Leader' → 'Mentor'; ปัจจุบัน Mokun เป็น Strategic Leader ที่ดี แต่ต้อง evolve เป็น 'Mentor' ที่ปล่อยให้ทีมเติบโต</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> Vocation Path: 'Structure → Service'; Mokun เริ่มจาก 'สร้างระบบ' (Te) แล้วค่อยๆ เปลี่ยนเป็น 'รับใช้' (Service); Period 9 (Fire) คือจุดที่ Mokun เริ่ม 'รับใช้' อย่างเต็มที่</p>
+        <p><strong>Money Consciousness:</strong> Money Consciousness: 'Wealth = manifestation of value given'; Mokun จะร่ำรวยเมื่อ 'ให้' มากกว่า 'เก็บ'; เงินคือผลพลอยได้ของการสร้างคุณค่า ไม่ใช่เป้าหมายหลัก</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> Midheaven Transit: 2026-30 (Uranus opposition) = career revolution, การเปลี่ยนแปลงอาชีพครั้งใหญ่; 2034-35 (Neptune trine) = spiritual leadership, การเป็นผู้นำที่ 'ส่องสว่าง'</p>
+        <p><strong>Career House:</strong> Career House: 10th house (Midheaven) — 'Public Identity'; Mokun ถูกเรียกให้เป็น 'ผู้นำสาธารณะ' ไม่ใช่แค่ 'ผู้จัดการภายใน'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> Initiate Vocation: 'Teacher of the New Age' — ใน Period 9 (Fire) Mokun จะกลายเป็น 'ครู' ที่สอนเรื่อง 'อำนาจแห่งปัญญา' ไม่ใช่ 'อำนาจแห่งการควบคุม'</p>
+        <p><strong>Work-Life Ritual:</strong> Work Ritual: 'Meditation + Strategic Planning' — ทุกเช้าทำ 10 นาที meditation (ฟัง Ni+Fi) แล้วทำ 30 นาที strategic planning (Te); ลำดับนี้ทำให้ Te มี 'จิตวิญญาณ' นำทาง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> Career Bazi: 用神 丙火 (Period 9) + Day Master 乙 Wood = 'Wood feeds Fire' = 'Illuminate through structure'; Mokun ออกแบบระบบ (乙) เพื่อส่องสว่าง (丙)</p>
+        <p><strong>Wealth Element:</strong> Wealth Element: 丙 (Fire) + 辛 (Metal) — Fire = 'public recognition', Metal = 'precise execution'; Mokun จะร่ำรวยเมื่อ 'ส่องสว่าง' (Fire) และ 'ทำอย่างแม่นยำ' (Metal) พร้อมกัน</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> ดึงดูด 'Strong Partner' (คนที่มีพลัง) เพราะ Anima ต้องการ 'คู่ต่อสู้' ไม่ใช่ 'ผู้ตาม'; แต่ทุกครั้งที่ได้คู่ที่แข็งจริง Persona 'ผู้ควบคุม' จะขัดแย้งกับ Anima ที่อยาก 'ถูกมองเห็นความอ่อนแอ'</p>
+    <p><strong>Inner-circle pull:</strong> คนที่เข้ามาใกล้มักเป็น 'ลูกน้อง' ที่จงรักภักดี หรือ 'ที่ปรึกษา' ที่ช่วยให้ Mokun reflexive (ส่องกระจกตัวเอง) ขึ้น</p>
+    <p><strong>Blind spot:</strong> คิดว่าความรักคือ 'ระบบที่ต้องบำรุงรักษา' — จัดการความสัมพันธ์เหมือนจัดการโปรเจกต์; ลืมว่าความสัมพันธ์ที่แท้จริงต้องการ vulnerability (ความอ่อนแอ) ไม่ใช่แค่ accountability (ความรับผิดชอบ)</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal line:</strong> Father Archetype: 'The Authoritarian Ruler' — ให้คุณค่า 'ทำให้สำเร็จ' มากกว่า 'เป็นจริง'; ส่งผลต่อ Persona 'Boss'</p>
+    <p><strong>Maternal line:</strong> Mother Archetype: 'The Nurturing Hermit' — ให้ 'พื้นที่เงียบ'; นี่คือ Self (I=9 Hermit) ที่ Mokun กำลังตามหา</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>Mokun สวมบทบาท 'พ่อที่เขาไม่เคยมี' — เขาพยายามเป็น 'ผู้ปกครองที่เข้าใจ' แต่ Ego ยังติดอยู่กับ Persona 'ผู้สั่ง'; จากแม่ เขาได้ 'ความเงียบ' และ 'พื้นที่ในการคิด' — นี่คือ Self ที่เขาต้องกลับไปหา</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Anima = 'Strong Partner' ที่ต้องการความอ่อนแอ; Relationship Pattern = 'Control ↔ Vulnerability'</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Communication Style = Te (ตรง, ชัด); Love Language = Acts of Service (ให้) + Words of Affirmation (รับ)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Twin Flame = 'The Strong Partner'; Generational Wisdom = 'From Authoritarian Ruler to The Sage'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Venus Return: 7th house ถูกกระตุ้นทุก 7 ปี; 2031 (Tower) = relationship crisis</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Sacred Union = 'Ruler + Hermit' (จับคู่ที่เติมเต็ม); Generational Mission = 'คืนความเงียบให้ลูกหลาน'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Spouse Palace: 辛 (Yin Metal) ใน hour branch = 'Yin Blade' ที่ตัด Ego เพื่อให้ Self โผล่; Relationship Luck = 'ดีเมื่อ partner มี Wood element'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships & Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> Anima Integration: 'Strong Partner' เป็น Anima ของ Mokun — ผู้หญิงที่มีพลัง, ผู้ที่ 'ไม่กลัว' Mokun, ผู้ที่ 'ยืนอยู่ข้างๆ' ไม่ใช่ 'ข้างล่าง'; Anima projection เกิดเมื่อ Mokun มอง partner เป็น 'พ่อที่อ่อนแอ' แทนที่จะเห็น 'คนที่ต่างจากเขา'</p>
+        <p><strong>Relationship Pattern:</strong> Relationship Pattern: 'Control ↔ Vulnerability' — Mokun ควบคุม (Persona) ↔ Anima ต้องการความอ่อนแอ (Self); เมื่อ partner ไม่ยอมตาม Mokun จะรู้สึก 'ถูกท้าทาย'; เมื่อ partner ยอมตาม Mokun จะรู้สึก 'ไม่มีใครเทียบได้'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> Communication Style: Te (extraverted Thinking) — ตรง, ชัด, ไม่อ้อมค้อม; Mokun ชอบ 'bullet points' มากกว่า 'long conversations'; Partner ที่ใช่จะ 'อ่าน' Te ของ Mokun ได้ และ 'เติม' Ni/Fi ที่ Mokun ขาด</p>
+        <p><strong>Love Language:</strong> Love Language: Acts of Service (ให้) + Words of Affirmation (รับ); Mokun แสดงรักด้วย 'การลงทุนเวลา/ทรัพยากรสร้างอนาคตร่วมกัน'; Mokun ต้องการ 'คำยืนยันที่เจาะจง' ไม่ใช่ 'คำชมทั่วไป'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> Twin Flame: 'The Strong Partner' ที่มี Wood element (乙) เพื่อ balance Fire ของ Mokun; Twin Flame ไม่ใช่ 'soul mate' ที่สมบูรณ์แบบ แต่เป็น 'กระจก' ที่สะท้อน Shadow ของ Mokun</p>
+        <p><strong>Generational Wisdom:</strong> Generational Wisdom: 'From Authoritarian Ruler to The Sage' — สายบิดาสอน 'อำนาจ', สายมารดาสอน 'ความเงียบ'; Mokun ต้อง 'รวม' ทั้งสองเป็น 'ผู้นำที่มีหัวใจ'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> Venus Return: ทุก 7 ปี (อายุ 21, 28, 35, 42, 49, 56) — 2031 (PY 7) และ 2038 (PY 5) เป็น 'relationship peak' ที่ Mokun จะต้องตัดสินใจครั้งสำคัญ</p>
+        <p><strong>7th House Activation:</strong> 7th House Activation: ถูกกระตุ้นโดย Saturn (2030-31) และ Uranus (2026-28); 2030-31 คือ 'Tower moment' ที่ relationship structure เก่าพัง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> Sacred Union: 'Ruler + Hermit' — การรวม 'ผู้สั่ง' (Ruler) กับ 'ผู้รับใช้' (Hermit) เป็น 'ผู้นำที่ส่องสว่าง'; Sacred Union ไม่ใช่ 'ความสมบูรณ์แบบ' แต่คือ 'การเติมเต็มซึ่งกันและกัน'</p>
+        <p><strong>Generational Mission:</strong> Generational Mission: 'คืนความเงียบให้ลูกหลาน' — Mokun ต้อง 'ส่งต่อ' ความเงียบ (จากสายมารดา) + ความแข็งแกร่ง (จากสายบิดา) ให้คนรุ่นต่อไป</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> Spouse Palace: 辛 (Yin Metal) ใน hour branch 酉 — 'Yin Blade' ที่ตัด Ego เพื่อให้ Self โผล่; Partner ที่ใช่คือ 'Yin Metal' = คนที่ 'ตัดสิ่งไม่จำเป็น' ออกจากชีวิต Mokun</p>
+        <p><strong>Relationship Luck:</strong> Relationship Luck: 'ดีเมื่อ partner มี Wood element' (乙) — Wood feeds Fire; Partner ที่มี Yang Earth จะ 'หล่อเลี้ยง' Fire ของ Mokun โดยไม่ทำให้ Burn out</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>ปวดหัว/ไมเกรนเมื่อใกล้ deadline — Ni + Te overactive</td><td>พลังงานความคิดสูงมาก แต่ขาด grounding</td><td>ความคิดฟุ้งซ่าน กังวลเรื่องอนาคต</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>ตา/สายตา — เมื่อยล้าเมื่อจ้องมาก</td><td>มองเห็น pattern ที่ซ่อนเร้น (Collective Unconscious)</td><td>สัญชาตญาณแม่น — รู้สึก 'รู้' ก่อน 'คิด'</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>คอ/บ่า — ตึงเมื่อกดอารมณ์</td><td>พูดตรง ชัด (Te) แต่ขาดการ 'ฟัง'</td><td>คำที่ไม่ได้พูดออกมา (unsaid words) สะสม</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>หัวใจ — หัวใจเต้นเร็วเมื่อเครียด</td><td>Fi (in) ถูกฝังลึก — ขาด compassion ต่อตัวเอง</td><td>ปิดกั้นความรู้สึก — 'ความอ่อนแอ = อันตราย'</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>กระเพาะอาหาร — 'indigestion of unsaid words'</td><td>ใช้อำนาจบ่อย (Te) — Solar Plexus ทำงานหนัก</td><td>ความโกรธ/หงุดหริดเมื่อสูญเสียการควบคุม</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>บั้นเอว/สะโพก — ปวดเมื่อ Wheel หมุนเร็ว</td><td>พลังงานสร้างสรรค์ (Se tertiary) ยังไม่ค่อยได้ใช้</td><td>ความสัมพันธ์ต้องการ vulnerability ไม่ใช่ control</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>กระดูกสันหลัง — รู้สึก 'แบกหนัก' ทุก 7 ปี</td><td>Wheel (10 × 3) ทำให้รู้สึก 'ไม่มั่นคง'</td><td>ความกลัวที่จะถูกปฏิเสธ — ติดอยู่กับ Persona</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>Somatic tension ที่ศีรษะ/กระเพาะ/กระดูกสันหลัง — ต้อง 'หยุด Ego และฟัง Body'</strong></td><td><strong>พลังงานสูงแต่ขาด grounding — ต้อง Se-grounding (เดินเร็ว, ยกเวท)</strong></td><td><strong>Fi ถูกฝัง — ต้อง 'เปิด' Fi ผ่าน vulnerability และ Active Imagination</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> Overthinking → ปวดหัว; กดอารมณ์ → กระเพาะ; แบกภาระ → กระดูกสันหลัง</span>
+      <span class="pill"><strong>Balance ritual</strong> 10 นาที silence ก่อนนอน + dream journal + Se-grounding ritual (เหงื่อออก)</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>Mokun มีพลังงานแบบ burst — สูงมาก 3-6 เดือน แล้วลงฮวบ เมื่อพลังหมด ร่างกายส่งสัญญาณ: นอนไม่หลับ, ปวดคอ/บ่า, ย่อยอาหารแปรปรวน, ภูมิตกต่ำ; ต้องมี recovery ritual ที่ Se-grounded — เดินเร็ว, ยกเวท, ทำอาหาร, เล่นกีฬาที่ใช้ร่างกายเต็มที่</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Body = Shadow Mirror — ปวดหัว/กระเพาะ/กระดูกคือ 'สัญลักษณ์' ที่จิตส่งมาเตือน Ego</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Energy Management: burst pattern 3-6 เดือน; Stress Response: Fi grip → unsaid words → กระเพาะ</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Etheric Body: 乙 Yang Earth (flexibility); Kundalini: 'fire ที่ส่องสว่าง' เมื่อ integrate 7 chakras</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">6th House Health: ระบบย่อยอาหาร (กระเพาะ); Healing Transit: 2031 (Tower) = healing crisis</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Chakra Activation: Crown เปิดมากเกินไป; Energy Field: 'Light Body' ที่ส่องสว่างใน Period 9</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">5 Elements Balance: Wood (乙) + Fire (丙) แข็งแรง; Earth (丑) + Metal (酉) ต้อง balance; Water (缺水) ขาด — ต้องเติม</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health & Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> Body as Shadow: ร่างกายเป็น 'กระจก' ของ Ego — ปวดหัว = 'คิดมากเกินไป'; กระเพาะ = 'กลืนคำที่ไม่ได้พูด'; กระดูกสันหลัง = 'แบกภาระที่ไม่ใช่ของเรา'</p>
+        <p><strong>Wholeness Practice:</strong> Wholeness Practice: 'ทุกครั้งที่ Body ส่งสัญญาณ ให้หยุด Ego และถาม Self' — 10 นาที silence ก่อนนอน + dream journal เพราะ Shadow จะปรากฏในร่างกายก่อนปรากฏในความคิด</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> Energy Management: 'Burst pattern' — สูงมาก 3-6 เดือน แล้วลงฮวบ; Mokun ต้องเรียนรู้ 'sustainable pace' ไม่ใช่ 'sprint'</p>
+        <p><strong>Stress Response:</strong> Stress Response: 'Te-Ni loop' → 'Fi grip' → 'unsaid words' → 'กระเพาะ'; Mokun ต้อง 'พูด' สิ่งที่คิด ไม่ใช่ 'กลืน' ไว้</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> Etheric Body: 乙 Yang Earth (flexibility) — พลังงานที่ 'ไหล' ได้; เมื่อ integrate Fire (丙) ใน Period 9 Etheric Body จะ 'ส่องสว่าง'</p>
+        <p><strong>Kundalini Rising:</strong> Kundalini Rising: 'Fire ที่ส่องสว่าง' — เมื่อ Root (7) + Sacral (6) + Solar Plexus (5) balanced พลังงานจะ 'ไหลขึ้น' ผ่าน Heart (4) ไปยัง Throat (3), Third Eye (2), Crown (1) เป็น 'Light Body'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> 6th House Health: ระบบย่อยอาหาร (กระเพาะ) + ระบบประสาท (ปวดหัอ) + กระดูกสันหลัง (foundation); Mokun ต้อง 'ฟัง' สัญญาณจากร่างกาย</p>
+        <p><strong>Healing Transit:</strong> Healing Transit: 2031 (Tower) = 'healing crisis' — ร่างกายจะ 'ปล่อย' สิ่งที่ฝังมา 40 ปี; Mokun ต้องเตรียมพร้อมสำหรับ 6 เดือนที่ร่างกายจะ 'reboot'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> Chakra Activation: Crown (1) เปิดมากเกินไป — Mokun คิดมากเกือบตลอดเวลา; ต้อง 'ปิด' Crown บ้าง โดย activate Root (7) และ Sacral (6) ผ่าน Se-grounding</p>
+        <p><strong>Energy Field:</strong> Energy Field: 'Light Body' — เมื่อ integrate 7 chakras Mokun จะ 'ส่องสว่าง' เป็น 'fire' ที่คนอื่นมองหาใน Period 9</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> 5 Elements Balance: Wood (乙) + Fire (丙) แข็งแรง; Earth (丑) + Metal (酉) ต้อง balance; Water (缺水) ขาด — ต้องเติม 'น้ำ' (flexibility, emotion) เข้าไปในชีวิต</p>
+        <p><strong>Body Constitution:</strong> Body Constitution: 'Yang Earth' — ผอม, ยืดหยุ่น, ไม่ชอบความแห้งแล้ง; Mokun ต้องอยู่ใกล้ 'น้ำ' (แม่น้ำ, ทะเล, ฝน) เพื่อ balance</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (ก่อน 60)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">วัยเยาว์ &ndash; ต้น 20</div>
+        <p class="stage-theme">The Hero's Departure — Ego ฝึกความแข็งแกร่ง</p>
+        <p class="stage-marker"><strong>Marker:</strong> เริ่มงานแรก ตัดสินใจชีวิตใหญ่ครั้งแรก</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและขยายอาณาเขต</div>
+        <div class="stage-band">กลาง 20 &ndash; ต้น 30</div>
+        <p class="stage-theme">The Sovereign's Ascent — Persona 'Ruler' ก่อตัว</p>
+        <p class="stage-marker"><strong>Marker:</strong> ขึ้นเป็นผู้นำทีม/โปรเจกต์ใหญ่</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การปะทะและจุดวิกฤต</div>
+        <div class="stage-band">กลาง 30 &ndash; ต้น 40</div>
+        <p class="stage-theme">Shadow Confrontation — Wheel เริ่มหมุน</p>
+        <p class="stage-marker"><strong>Marker:</strong> ความสัมพันธ์/อาชีพที่ท้าทายที่สุด</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">กลาง 40 &ndash; ต้น 50</div>
+        <p class="stage-theme">Anima Integration — เสียงภายในเริ่มดัง</p>
+        <p class="stage-marker"><strong>Marker:</strong> เรียนรู้ที่จะ 'ฟัง' มากกว่า 'สั่ง'</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">กลาง 50 &ndash; 59</div>
+        <p class="stage-theme">Sage Emergence — Self (I=9) ปรากฏชัด</p>
+        <p class="stage-marker"><strong>Marker:</strong> บทบาทที่ปรึกษา/ครูที่แท้จริง</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุปัจจุบัน &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2026</span>
+        <span class="age">อายุ 40</span>
+        <span class="lead">PY 2 + 丙午 Fire</span>
+        <span class="situation">Wheel turning — Ego ต้องเรียนรู้ 'ความอดทน'</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ตั้งเป้าหมายชัด · Fi: ฟังเสียงข้างใน</p>
+        <p>Mokun เริ่ม Period 9 (Fire) — ไม้หล่อเลี้ยงไฟ เขาอยู่ในยุคของเขา Personal Year 2 (Magician/Selection) — เลือก 'อะไร' ที่จะทำใน 20 ปีข้างหน้า Wheel (10) เริ่มหมุน — Ego ต้องเรียนรู้ 'ความอดทน' ไม่ใช่ 'การควบคุม'</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2030</span>
+        <span class="age">อายุ 44</span>
+        <span class="lead">PY 6 + 庚戌 Metal (七殺)</span>
+        <span class="situation">Authority Test — Shadow เคาะประตู</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ตั้งรับ (ไม่รุก) · Ni: มองภาพระยะยาว</p>
+        <p>七殺 (7 Killings) — Metal ที่ตัด Ego; Persona 'Ruler' จะถูกทดสอบอย่างหนัก; Mokun ต้อง 'ตั้งรับ' ไม่ใช่ 'รุก'; Ni จะช่วยให้เห็น 'ภาพใหญ่' ที่เกินกว่า Ego จะเข้าใจ</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2031</span>
+        <span class="age">อายุ 45</span>
+        <span class="lead">PY 7 + 辛亥 Metal</span>
+        <span class="situation">Tower moment #1 — Persona ชั้นนอกพัง</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ปล่อยระบบเก่า · Fi: รับตัวตนใหม่</p>
+        <p>Tower moment — Persona 'Ruler' ชั้นนอกพัง (relationship/career crisis); ไม่ใช่ความล้มเหลว แต่เป็น 'คำเชื้อเชิญให้กลับบ้าน'; Mokun ต้อง 'ปล่อย' ระบบเก่า แล้ว 'รับ' ตัวตนใหม่ (Self/Hermit)</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2034</span>
+        <span class="age">อายุ 48</span>
+        <span class="lead">PY 1 + 甲寅 Wood (用神)</span>
+        <span class="situation">'I am the year' — Self amplification</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: รุก signature move · Ni: วาง vision 5 ปี</p>
+        <p>甲寅 (Yang Wood + Tiger) — ตรงกับ Day Master 乙; Personal Year 1 (Magician/Reset) — 'I am the year'; Mokun จะ 'ส่องสว่าง' — ผลงานที่ตราตัวตนที่สุดจะมาถึง; Te รุก 'signature move', Ni วาง 'vision 5 ปีข้างหน้า'</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2046</span>
+        <span class="age">อายุ 60</span>
+        <span class="lead">PY 4 + 丙寅 Fire (Convergence)</span>
+        <span class="situation">Convergence — Ego + Self รวมเป็นหนึ่ง เป็น The Sage-Ruler</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ทำด้วยความเมตตา · Ni: เห็นไกลกว่าตัวเอง</p>
+        <p>อายุ 60 (ปี 2046) = Convergence — Ego + Self รวมเป็นหนึ่ง; Mokun จะไม่ใช่ 'ผู้บัญชาการ' อีกต่อไป แต่จะเป็น 'The Sage-Ruler' — ผู้นำที่ทำด้วยความเมตตา เห็นไกลกว่าตัวเอง; นี่คือ 'ของขวัญสุดท้าย' ที่ Mokun จะให้โลก</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Life Arc: 'From Ruler to Sage' (5 Stages); Mid-Life Transition: Tower (2030-31) + Solstice (2034-35)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Cognitive Aging: Te-Ni → Se-Fi (developing lower functions); Wisdom Function: Fi emerges at 44-45</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Reincarnation Cycle: 12-year Individuation cycle (2026-37); Year Energy: 'Fire feeds Wood' (2026-35) → 'Convergence' (2046)</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Saturn Return (28-30) = foundation; Uranus opposition (40-42) = revolution; Neptune trine (48-49) = enlightenment</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Year Theme: 'From Departure to Emergence'; Annual Ritual: 'Wheel turning + Mandala making'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Decade Luck: 乙酉 (35-44) = Shadow window; 甲申 (45-54) = Integration; 癸未 (55-64) = Culmination; Annual Pillars: 2026-2065 = 'designed dissolution'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Life Stages & Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> Life Arc: 'From Ruler to Sage' — 5 Stages ที่ออกแบบมาให้ Ego dissolve เป็น Self; Hero (5-24) → Sovereign (25-34) → Shadow (35-44) → Anima (45-54) → Sage (55-64)</p>
+        <p><strong>Mid-Life Transition:</strong> Mid-Life Transition: Tower (2030-31, อายุ 44-45) + Solstice (2034-35, อายุ 48-49); Tower = Persona พัง; Solstice = Self ขึ้นมา — สองปีนี้คือ 'pivot' ของชีวิต</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> Cognitive Aging: Te-Ni (dominant) → Se-Fi (developing); Mokun เริ่ม 'ใช้ Se-Fi' มากขึ้นเมื่ออายุ 40+ เพื่อ balance 'Te-Ni' ที่เคย overused</p>
+        <p><strong>Wisdom Function:</strong> Wisdom Function: Fi emerges at 44-45 (Fi grip → Fi integration); เมื่อ Fi integrate แล้ว Mokun จะ 'รู้สึก' ได้ลึกขึ้น ไม่ใช่แค่ 'คิด'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> Reincarnation Cycle: 12-year Individuation cycle (2026-37) + 21-year Convergence (2026-46); Mokun อยู่ใน 'final phase' ของชุดเวียนว่ายตายเกิด — 'harvest ไม่ใช่ reset'</p>
+        <p><strong>Year Energy Theme:</strong> Year Energy Theme: 'Fire feeds Wood' (2026-35) = 'Mokun เป็นเชื้อเพลิงที่ส่องสว่าง'; Convergence (2046) = 'Ego + Self รวมเป็น The Sage-Ruler'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> Saturn Return: อายุ 28-30 (2014-16) = foundation ของ career; Second Saturn Return: อายุ 58-60 (2044-46) = foundation ของ wisdom; Mokun อยู่ในช่วง 'Second Saturn Return' ที่จะ 'consolidate' ทุกอย่าง</p>
+        <p><strong>Progressed Moon:</strong> Progressed Moon: เคลื่อนผ่าน 12 signs ใน ~28 ปี; 2026-30 = progressed Moon in Scorpio (transformation); 2031-35 = progressed Moon in Sagittarius (wisdom); 2036-46 = progressed Moon in Capricorn (mastery)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> Initiate Year Theme: 'From Departure to Emergence' — Hero's Departure (5-24) → Sovereign's Ascent (25-34) → Shadow Confrontation (35-44) → Anima Integration (45-54) → Sage Emergence (55-64)</p>
+        <p><strong>Annual Ritual:</strong> Annual Ritual: 'Wheel turning + Mandala making' — ทุกปี Mokun ต้อง 'หมุน wheel' (ทำงาน) และ 'ทำ mandala' (reflect + integrate)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> Decade Luck: 乙酉 (35-44) = Shadow window; 甲申 (45-54) = Integration window (甲 wood feeds 丙 fire); 癸未 (55-64) = Culmination window (癸 water = wisdom, 未 earth = stability)</p>
+        <p><strong>Annual Pillars Reading:</strong> Annual Pillars Reading: 2026 丙午 → 2030 庚戌 → 2031 辛亥 → 2034 甲寅 → 2035 乙卯 → 2044 乙酉 → 2046 丙寅 = 'designed dissolution' ของ Ego เพื่อให้ Self โผล่</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>1. <strong>10 นาที Silent Reflection</strong> — ก่อนนอน ตั้งคำถามเดียว: "วันนี้ Ego ของฉันทำอะไรที่ Self ไม่อยากทำ?" บันทึกคำตอบแค่ 1-2 บรรทัด<br>2. <strong>ทำสิ่งที่ "ไร้ประโยชน์" 1 อย่าง</strong> — ฟังเพลง เดินเล่น มองนก — Ego ที่ถูกสอนให้ควบคุมทุกอย่างต้องฝึก "ปล่อย" แม้แต่ 15 นาที<br>3. <strong>Se-grounding ritual 30 นาที</strong> — เดินเร็ว ยกเวท ทำอาหาร — กิจกรรมที่ร่างกายทำงานเต็มที่ (ไม่นับเดินเล่น ต้องเหงื่อออก)</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>1. <strong>Dream Journal</strong> — บันทึกความฝัน 2-3 คืนต่อสัปดาห์ ความฝันคือ "ทางหลวง" สู่จิตไร้สำนึก — ความฝันที่มี น้ำท่วม/บ้าน/คนแปลกหน้า/สัตว์ คือ Archetypes ที่กำลังพูดกับ Ego<br>2. <strong>Active Imagination</strong> — นั่งเงียบ 15 นาที ปล่อยให้ภาพในหัวผุดขึ้นมาเอง โดยไม่ตัดสิน<br>3. <strong>Fi exploration</strong> — จดบันทึกสั้นๆ ว่า "สัปดาห์นี้อะไรทำให้รู้สึกมีคุณค่า" เพื่อฝึกให้ Fi มีเสียง</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>1. <strong>Shadow Audit</strong> — เขียนคำถาม: "เดือนนี้ฉันปฏิเสธ/กด/โกรธ/อิจฉาอะไร?" แล้วดูว่าสิ่งนั้นสะท้อน "ส่วนที่ถูกปฏิเสธ" ของตัวเองหรือไม่<br>2. <strong>Vision Check</strong> — ทุก 6 เดือน ถามตัวเองว่า "วิสัยทัศน์ 5 ปีที่เคยตั้งไว้ยังใช่อยู่ไหม" แล้วปรับหรือยืนยัน<br>3. <strong>Reading the Collective</strong> — อ่านตำนาน/นิทาน 1 เรื่องต่อเดือน เพื่อ amplify สัญลักษณ์ที่จิตไร้สำนึกใช้สื่อสาร</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต</h3>
+    <p><strong>สัญญาณเตือนล่วงหน้า (Fi Grip):</strong> ตัดสินคนเร็วเกินไป · หงุดหริดเรื่องเล็กๆ · อยากอยู่คนเดียว · รู้สึกตัวเองไร้ค่าทั้งที่ภายนอกทุกอย่างดีหมด<br><br><strong>วิธีรับมือ (4 ขั้น):</strong><br>1. ทันทีที่เห็นสัญญาณ <strong>หยุดแผนงาน 24-48 ชม.</strong><br>2. ทำกิจกรรม Se-grounded (เดินป่า ว่ายน้ำ ซ่อมรถ)<br>3. <strong>อย่าพยายาม "ซ่อม"</strong> — ให้ "นั่ง" กับมัน 30 นาที แล้วถาม: "The Child กำลังบอกอะไร?"<br>4. ฝึก "Active Imagination" กับ The Wounded Child — จินตนาการว่าเด็กน้อยในตัวคุณกำลังร้องไห้ ถามว่า "เธอต้องการอะไร?" Ego ฟังคำตอบแล้วทำตาม</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p><strong>คลังพิธีกรรมเสริม:</strong><br>• <em>Mid-week audit</em> — ทุกวันพุธ เขียน "3 สิ่งที่ Ego ทำ + 1 สิ่งที่ Self อยากทำ"<br>• <em>Weekend retreat</em> — วันเสาร์ 1 ชั่วโมง ปิดเสียงภายนอก (news, social) นั่งกับตัวเอง<br>• <em>Month-end reconciliation</em> — สิ้นเดือน เขียนจดหมายถึง "Self ในอีก 5 ปีข้างหน้า"</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Shadow Work = 'ถาม Ego ว่าอะไรที่ Self ไม่อยากทำ'; Individuation Ritual = 'Active Imagination + Wounded Child'</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Development Plan = 'integrate Se + Fi'; Team Collaboration = 'listen before lead'</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">7 Principles Practice = 'Rhythm + Polarity + Mentalism' ในชีวิตประจำวัน; Karma Yoga = 'work as service'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Planetary Remedy: 'Saturn return 2030 → release old structures'; Daily Astro = 'moon phase + intent setting'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Pathworking = 'daily meditation + strategic planning'; Mantra = 'I am the Sage-Ruler'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Feng Shui = 'fire element (light, sun) + wood element (plants)'; Bazi Daily = 'morning 木生火 ritual'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> Shadow Work Protocol: 'ทุกเช้า ถาม Ego ว่า "วันนี้ฉันจะควบคุมอะไร?" แล้วเลือก 'ปล่อย' 1 อย่าง'</p>
+        <p><strong>Individuation Ritual:</strong> Individuation Ritual: 'Active Imagination + Wounded Child' — ทุกเย็น 15 นาที นั่งเงียบ จินตนาการว่าเด็กน้อยในตัวคุณกำลังร้องไห้ ถามว่า 'เธอต้องการอะไร?' Ego ฟังคำตอบแล้วทำตาม</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> Development Plan: 'Integrate Se + Fi' — Se: เดินเร็ว, ยกเวท, ทำอาหาร 30 นาที/วัน; Fi: Active Imagination + Wounded Child ritual 15 นาที/เย็น</p>
+        <p><strong>Team Collaboration:</strong> Team Collaboration: 'Listen before lead' — Mokun ต้อง 'ฟัง' ก่อน 'สั่ง' — ใช้ Te/Ni เพื่อ 'ตีความ' ไม่ใช่ 'ตัดสิน'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> 7 Principles Practice: Mentalism (คิดก่อนทำ) · Correspondence (as above so below) · Vibration (ความถี่ดึงดูด) · Polarity (สองขั้ว) · Rhythm (7 ปี) · Cause/Effect (ทุกการกระทำมีผล) · Gender (Yin/Yang)</p>
+        <p><strong>Karma Yoga:</strong> Karma Yoga: 'Work as service' — Mokun ทำงานไม่ใช่เพื่อ 'อำนาจ' แต่เพื่อ 'รับใช้' — Period 9 (Fire) คือยุคที่ Mokun เริ่ม 'รับใช้' อย่างเต็มที่</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> Planetary Remedy: 'Saturn return 2030 → release old structures'; Uranus opposition 2026-28 → embrace change; Neptune trine 2034-35 → spiritual practice</p>
+        <p><strong>Daily Astro Practice:</strong> Daily Astro Practice: 'Moon phase + intent setting' — New Moon = 'ตั้งเป้าหมาย'; Full Moon = 'ปล่อยสิ่งที่ไม่ต้องการ'; Mokun ต้อง 'อ่าน' จังหวะของดวงจันทร์เพื่อ calibrate จังหวะของตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> Pathworking Protocol: 'Daily meditation + strategic planning' — ทุกเช้า 10 นาที meditation (ฟัง Ni+Fi) แล้ว 30 นาที strategic planning (Te); ลำดับนี้ทำให้ Te มี 'จิตวิญญาณ' นำทาง</p>
+        <p><strong>Mantra Practice:</strong> Mantra Practice: 'I am the Sage-Ruler' — ทุกเช้า พูดว่า 'ฉันเป็นผู้นำที่มีปัญญา ฉันนำด้วยหัวใจ ฉันส่องสว่างให้คนอื่น'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> Feng Shui Action: 'Fire element (light, sun) + Wood element (plants)' — ทำงานในที่ที่มีแสงธรรมชาติ + ต้นไม้ — เสริม Wood feeds Fire cycle</p>
+        <p><strong>Bazi Daily Practice:</strong> Bazi Daily Practice: 'Morning 木生火 ritual' — ทุกเช้า 10 นาที นั่งใกล้หน้าต่างที่มีแสงแดด + ต้นไม้, หายใจเข้าลึก ๆ, ตั้งเจตนา 'Wood feeds Fire' — Mokun จะ 'เริ่มต้นวัน' ด้วยพลังงานที่ 'สมดุล'</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>ศาสตร์ทั้งหมดที่ Mokun กำลังอ่านอยู่นี้ — MBTI, BaZi, Matrix of Destiny, Kybalion, Theosophy — ล้วนเป็น <strong>ภาษาต่างๆ ของจิตเดียวกัน</strong> ที่พูดถึง Archetypes แบบเดียวกัน ไม่ใช่เรื่องบังเอิญ — มันคือ <strong>Collective Unconscious</strong> (จิตไร้สำนึกรวม) ที่ส่งสัญลักษณ์เดียวกันไปทั่วโลก เพราะจิตมนุษย์ทุกคนมี layer ลึกที่แชร์ร่วมกัน Mokun เกิดมาเพื่อ <strong>เรียนรู้ว่า "อำนาจที่แท้จริง" ไม่ใช่การสั่ง แต่เป็นการ "กลับเข้าหาตัวเอง"</strong> Wheel (วงล้อ) จะหมุนจนกว่า Mokun จะหยุดค้า — และเมื่อหยุด วงล้อจะกลายเป็น <strong>Mandala</strong> (วงจรสมบูรณ์) ที่สวยงาม</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p><em>"คุณไม่ได้มาเกิดเพื่อควบคุมโลก คุณมาเกิดเพื่อเรียนรู้ว่า — เมื่อโลกหมุนเร็วเกินไป — คุณสามารถหยุด และเป็น 'แสงสว่าง' ให้ตัวเองและคนรอบข้างได้"</em><br><br>สิ่งที่ Mokun ควรจำไว้: <strong>Persona เป็นเรือ Self เป็นทะเล</strong> เมื่อเรือแตก เราก็แค่ลงไปยืนบนทะเล ไม่ใช่จม การที่ Persona "Ruler" (ผู้ปกครอง) สั่นคลอนในช่วงอายุ 44-45 ไม่ใช่ความล้มเหลว — มันคือคำเชื้อเชิญให้ Mokun กลับบ้าน เมื่ออายุ 60 Mokun จะไม่ใช่ "ผู้บัญชาการ" อีกต่อไป Mokun จะเป็น <strong>The Sage</strong> (ปราชญ์) ที่รู้ว่าปัญญาที่แท้จริงเกิดจาก <strong>การเผชิญ Shadow ของตัวเอง</strong> และใช้มันเป็นแสงส่องทางให้คนอื่น</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p><strong>คำส่งท้าย — Final Integration:</strong><br>ในชาตินี้ Mokun ได้โอกาสที่จะประสานความอ่อนน้อม (乙 Yang Earth) กับความแข็งแกร่ง (辛 Metal) — รากที่อ่อนน้อม แต่ไม่หัก · ใบที่แข็งแกร่ง แต่ไม่บาด สามตัว 乙 (วัน-ชั่วโมง-ปี) ในชาร์ตของ Mokun คือ <strong>Monad ที่ปรากฏสามครั้งในรอบชาติเดียว</strong> — ครั้งนี้คือครั้งที่วิญญาณของ Mokun เลือก "เก็บเกี่ยว" ไม่ใช่ "เริ่มใหม่"<br><br><strong>ปรัชญาที่ ENTP-A 8w7 ควรนำไปใช้:</strong> "อำนาจที่แท้จริงไม่ได้มาจากการควบคุม แต่มาจากการรู้จักตัวเองจนกล้าปล่อยให้คนอื่นเติบโตได้"<br><br><strong>การบูรณาการขั้นสุดท้าย:</strong> Te-Ni-Se-Fi จะทำงานเป็นทีมเดียวกัน — ไม่มีใครถูกกดขี่ Mokun จะค้นพบว่าการตัดสินใจที่ดีที่สุดหลายครั้งมาจากการ "นั่งเงียบๆ ฟัง Se และ Fi" แล้วค่อยสั่ง Te นี่ไม่ใช่จุดอ่อน — มันคือ <strong>superpower ใหม่</strong> ที่ทำให้ Mokun เป็นผู้นำที่คนอยากติดตามเพราะศรัทธา ไม่ใช่กลัว<br><br><strong>ปัญญาประจำตัว:</strong> <em>"ทุกคนมีวงจรของตัวเอง ฉันแค่ต้องอยู่ในวงจรของฉันโดยไม่บังคับให้เร็วเกินไป"</em><br><br>ในวัย 40 Mokun ยังมีเวลาอีก 20-30 ปี — ปัญญาที่เก็บเกี่ยวไม่ใช่แค่ผลงาน แต่คือ ความสามารถอยู่กับความไม่แน่นอนได้อย่างสงบ <strong>นี่คือของขวัญสุดท้ายที่ Mokun จะให้โลก — ผู้นำที่ไม่ได้แค่สั่ง แต่อยู่กับทุกคนที่เขานำ</strong></p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">The Self = 'I=9 Hermit' (จุดหมาย); Meaning of Life = 'กลับบ้านสู่ Self ผ่านการเผชิญ Shadow'</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Final Integration: 'Te-Ni-Se-Fi ทำงานเป็นทีม'; Type Wisdom = 'ENTP-A evolved to ENFJ (Ruler evolved to Sage)'</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Universal Brotherhood: 'ทุกคนเป็น Monad เดียวกัน'; Final Aspiration = 'ส่องสว่างให้ผู้อื่น'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Soul Contract Completion: 'Harvest ไม่ใช่ Reset'; Chart Mastery: 'ทุก Echo (10×3) ได้เรียนรู้ครบ'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mastery Path: 'Ruler → Sage-Ruler'; Universal Service = 'สอนจากบาดแผล ไม่ใช่จากตำรา'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Destiny Unfoldment: '三乙 ปรากฏ 3 ครั้งในชาติเดียว = harvest'; Final Blessing: 'Convergence ที่ 丙寅 (2046)'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> The Self: 'I=9 Hermit' — จุดหมายของชีวิต Mokun คือการ 'กลับบ้าน' สู่ Self (Hermit) ผ่านการ 'เผชิญ Shadow' (Wheel × 3)</p>
+        <p><strong>Meaning of Life:</strong> Meaning of Life: 'Persona เป็นเรือ Self เป็นทะเล' — เมื่อเรือแตก (Persona Ruler พัง) เราก็แค่ลงไปยืนบนทะเล (Self Hermit) ไม่ใช่จม</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> Final Integration: 'Te-Ni-Se-Fi ทำงานเป็นทีม' — Te = ตัดสินใจ; Ni = มองภาพรวม; Se = ลงมือทำ; Fi = รู้สึกลึก; ทั้ง 4 ทำงานพร้อมกัน ไม่มีใครถูกกดขี่</p>
+        <p><strong>Type Wisdom:</strong> Type Wisdom: 'ENTP-A evolved to ENFJ' — Ruler (Te-Ni) → Sage (Ni-Fe); Mokun จะเป็น 'ผู้นำที่สอนด้วยหัวใจ' ไม่ใช่ 'ผู้นำที่สั่งด้วยตรรกะ'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> Universal Brotherhood: 'ทุกคนเป็น Monad เดียวกัน' — Mokun จะ 'ส่องสว่าง' ไม่ใช่เพื่อตัวเอง แต่เพื่อ 'ทุกคน' เพราะในระดับลึก เราทุกคนเป็น 'หนึ่งเดียว'</p>
+        <p><strong>Final Aspiration:</strong> Final Aspiration: 'ส่องสว่างให้ผู้อื่น' — Mokun จะเป็น 'fire' ที่จุดไฟให้คนอื่น ไม่ใช่ 'fire' ที่เผาคนอื่น</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> Soul Contract Completion: 'Harvest ไม่ใช่ Reset' — ครั้งนี้คือ 'ครั้งสุดท้าย' ของชุดเวียนว่ายตายเกิด; Mokun ต้อง 'เก็บเกี่ยว' ผลของการเรียนรู้ทั้งหมด</p>
+        <p><strong>Chart Mastery:</strong> Chart Mastery: 'ทุก Echo (10×3) ได้เรียนรู้ครบ' — Mokun เข้าใจ 'wheel' ในทุกระดับ (ร่างกาย, จิต, วิญญาณ); Chart ไม่ใช่ 'คำทำนาย' แต่เป็น 'แผนที่' ที่บอกว่า 'ถนนสายไหนผ่านอะไรบ้าง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> Mastery Path: 'Ruler → Sage-Ruler' — Mokun จะผ่าน 3 รอบของ Wheel จากนั้น 'หยุด' และ 'กลายเป็น Mandala' (Self ที่สมบูรณ์)</p>
+        <p><strong>Universal Service:</strong> Universal Service: 'สอนจากบาดแผล ไม่ใช่จากตำรา' — Mokun จะสอนคนอื่น 'จากประสบการณ์จริง' ที่ผ่าน Shadow — ไม่ใช่ 'ทฤษฎี' แต่ 'ปัญญาที่เกิดจากการเผชิญ'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> Destiny Unfoldment: '三乙 ปรากฏ 3 ครั้งในชาติเดียว = harvest' — BaZi บอกว่า Mokun อยู่ใน 'final phase' ของชุด karma; ไม่ใช่ 'เริ่มใหม่' แต่ 'เก็บเกี่ยว' ทุกอย่างที่เรียนรู้มา</p>
+        <p><strong>Final Blessing:</strong> Final Blessing: 'Convergence ที่ 丙寅 (2046)' — เมื่ออายุ 60 Mokun จะ 'รวมเป็นหนึ่ง' กับ Self และส่องสว่างให้โลก</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v1.0 (MET-461) &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-05
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

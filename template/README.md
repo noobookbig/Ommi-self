@@ -9,6 +9,16 @@ logic. Meaning is filled in by downstream agents (MET-447-B/C/D).
 > Omni-Self Forecast. Section 0 (summary) is preserved as the umbrella; Sections 1–10
 > mirror the canonical Output Structure (MET-457).
 >
+> Updated in **MET-461-A** — added **บทวิเคราะห์เชิงลึก — Deep Dive** block under each
+> section's existing 6-lens analysis. 121 new `analysis_deep_<sec>_<lens>_<topic>`
+> placeholders (10 sections × 6 lenses × ~2 topics each). HTML renders these as
+> `.lens-card` elements inside a `.lens-deep` block. **Placeholders only** — the
+> analyst fills in actual analysis per user.
+>
+> Updated in **MET-461-B** — §1 Cosmic Synergy gained an **Octagram** diagram
+> (Monad center + 8 cosmic forces around an octagonal ring). 9 new `{{octagram_*}}`
+> placeholders.
+>
 > Updated in **MET-457-A** — each section now ends with a **บทวิเคราะห์ (Analysis —
 > 6 Lenses)** block: the same data re-read through six expert traditions
 > (Carl Jung / Isabel Briggs Myers / Helena Blavatsky / Natalia Ladini / The Three
@@ -150,6 +160,45 @@ logic. Meaning is filled in by downstream agents (MET-447-B/C/D).
 **Total: 60 analysis tokens** (10 sections × 6 experts). Each entry is rendered as
 `<expert-name>: <short reading>` in a 3-column compact row.
 
+### บทวิเคราะห์เชิงลึก — Deep Dive (per-section, 121 tokens)
+
+> Long-form analysis per expert lens, per section. Each topic is its own placeholder —
+> analysts fill in the actual reading per user. **This is the canonical analysis surface**;
+> the compact `analysis_<n>_<lens>` tokens above are short summaries.
+>
+> Token schema: `analysis_deep_<section>_<lens_short>_<topic>`
+> - `<section>` = `0..9` (matches section number)
+> - `<lens_short>` = `jung` | `myers` | `blavatsky` | `ladini` | `initiators` | `suyuhong`
+> - `<topic>` = per-section, per-lens topic slug (e.g. `persona_shadow`, `initiate_path`)
+>
+> HTML renders each topic as `<p><strong>Heading:</strong> {{token}}</p>` inside a `.lens-card`
+> element with neon border + glow, grouped under a `.lens-deep` block per section.
+
+| Section | Topics per section | Total tokens |
+|---|---|---|
+| §0 Summary | 2 each | 12 |
+| §1 Cosmic Synergy | 2-3 each | 13 |
+| §2 Natalia Square | 2 each | 12 |
+| §3 Talent & Karmic | 2 each | 12 |
+| §4 Career & Roles | 2 each | 12 |
+| §5 Relationships | 2 each | 12 |
+| §6 Health & Chakras | 2 each | 12 |
+| §7 Life Stages | 2 each | 12 |
+| §8 Protocols | 2 each | 12 |
+| §9 Ultimate Synthesis | 2 each | 12 |
+
+**Total: 121 deep-analysis tokens.**
+
+### Octagram (cosmic forces, 9 tokens)
+
+§1 Cosmic Synergy carries an octagram — Monad at center, 8 cosmic forces around the
+octagonal ring. Mermaid TD-layout.
+
+- Center: `{{octagram_center}}`
+- 8 directions: `{{octagram_n}}`, `{{octagram_ne}}`, `{{octagram_e}}`, `{{octagram_se}}`,
+  `{{octagram_s}}`, `{{octagram_sw}}`, `{{octagram_w}}`, `{{octagram_nw}}`
+
+
 ## How to author a new forecast
 
 1. Copy `forecast.md` to your forecast folder (typically `analysis/<person-slug>.md`).
@@ -216,3 +265,4 @@ changes in a backward-incompatible way.
 | (MET-447) | initial | 5-section skeleton (Section 0..4) |
 | (MET-458) | expansion | 10-section skeleton (§0..§9, mapping 1:1 to MET-457 ส่วนที่ 1..10); added 6-lens tokens, Natalia 3×3 cells, 7-chakra table, 5 stages, year-by-year rows, crisis 5-step |
 | (MET-457-A) | analysis | added **บทวิเคราะห์ (6 Lenses)** block at the bottom of every section — 10 sections × 6 expert lenses (Carl Jung / Isabel Briggs Myers / Helena Blavatsky / Natalia Ladini / The Three Initiates / Su Yu Hong) = 60 new `analysis_<n>_<expert>` tokens. CSS tightened to keep one-page 1280×800 fit (heightVhRatio 1.03). |
+| (MET-461) | neon + deep dive + octagram | Reworked **forecast-template.html** to futuristic-neon dark theme with Kanit font, inline `<style>`, scrollable layout, no horizontal overflow at 1280px. Added **บทวิเคราะห์เชิงลึก — Deep Dive** block per section (121 new `analysis_deep_<s>_<lens>_<topic>` placeholders, no static text — analyst fills them per user). Added **Octagram** mermaid to §1 Cosmic Synergy (9 `{{octagram_*}}` placeholders). |

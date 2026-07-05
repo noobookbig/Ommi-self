@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Win · Project Omni-Self</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; Win</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>2 ตุลาคม 1995</span>
+      <span><strong>Window</strong>2026 (อายุ 31) &rarr; 2055 (อายุ 60)</span>
+      <span><strong>Headline</strong>Silent Hierophant — ผู้สอนเงียบที่กลับบ้าน</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ — จุดตัดสำคัญที่จะกำหนดทิศทั้งชีวิต</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Persona: The Competent Translator · Shadow: Te Grip — ผู้ตัดสินแบบแข็งกร้าว</div>
+      <div class="lens"><strong>LoA</strong>ความถี่หลัก 2-10-6 — ทางเลือก → วงล้อ → บริการ</div>
+      <div class="lens"><strong>Kybalion</strong>Mentalism + Rhythm — ไฟเปลี่ยน phase เร็ว ช่วงสั้นๆ ที่เผาแรง</div>
+      <div class="lens"><strong>MBTI</strong>INFP · lead Fi · grip Te Grip · loop Fi-Si</div>
+      <div class="lens"><strong>Age 60</strong>Silent Hierophant — ผู้สอนเงียบที่กลับบ้าน</div>
+      <div class="lens"><strong>BaZi · Period 9</strong>DM 丙 Yang Fire · bal Wood-overload (印绶过重)</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">อยู่ในช่วงกลางของกระบวนการ Individuation — Persona ทำงานหนักเกินไป ต้องเริ่มเผชิญ Shadow เพื่อหา Self</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Te inferior กำลังเติบโต — ถ้าฝึกดีจะเป็นผู้นำที่ทรงพลัง ถ้าฝึกไม่ดีจะระเบิดเป็น grip</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">"Like attracts like" — Win ดึงดูดสิ่งที่เขา "เป็น" ไม่ใช่สิ่งที่ "อยากได้" — ต้องเปล่งเจตนาที่ชัดเจน</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Matrix 2-10-6 พร้อม Echo 12-16-18 สร้าง "Silent Hierophant" archetype เมื่ออายุ 60</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mentalism + Rhythm เป็น main switch — Mental Transmutation คือสวิตช์เปลี่ยนความถี่</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 丙 ใน Period 9 (離火運) — ไฟซ้อนไฟ ต้อง balance ด้วย Earth และ Metal</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion Rhythm:</strong> Win ถือ Day Master 丙 (Yang Fire) — จังหวะของไฟคือ "เปลี่ยน phase เร็ว" ช่วงสั้นๆ ที่เผาแรง วงล้อชีวิตหมุนรอบคาบ 9-10 ปี</p>
+    <p><strong>LOA Vibration:</strong> ความถี่หลัก 2-10-6 สั่นที่ความถี่ "ทางเลือก → วงล้อ → บริการ" ดึงดูดงานที่วนกลับมาทบทวน คนที่ต้องการความเห็นอกเห็นใจ ทางเลือกที่ต้องเลือกข้าง</p>
+    <p><strong>Matrix Loop:</strong> Echo Numbers 12 (Hanged Man · หยุด) - 16 (Tower · รื้อ) - 18 (Moon · เริ่มใหม่) สร้าง loop "หยุด-รื้อ-เริ่มใหม่" ปรากฏซ้ำในชีวิต</p>
+    <p><strong>Proof:</strong> ทั้งสาม engine ชี้ไปทางเดียวกัน — Win กำลังเดินทาง "กลับบ้าน" (return to Self) Kybalion บอกว่ามีจังหวะ, LOA บอกว่าจังหวะคือแรงสั่นที่กลับมา, Matrix บอกว่าจังหวะนั้นถูกบันทึกในลูปพลังงาน</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+    classDef kyb fill:#11112a,stroke:#ffd700,color:#ffd700
+    classDef loa fill:#11112a,stroke:#ff00d4,color:#ff00d4
+    classDef mat fill:#11112a,stroke:#00f0ff,color:#00f0ff
+    classDef win fill:#1a1a3a,stroke:#39ff14,color:#39ff14,stroke-width:3px
+    WIN["Win<br/>丙 Yang Fire<br/>INFP &middot; 2-10-6"]:::win
+    K["Kybalion &middot; Rhythm<br/>Pendulum swing<br/>9-cycle PY"]:::kyb
+    L["LOA &middot; Vibration<br/>2-10-6 frequency<br/>Like attracts like"]:::loa
+    M["Matrix &middot; Loop<br/>Echo 12-16-18<br/>หยุด-รื้อ-เริ่มใหม่"]:::mat
+    WIN --> K --> L --> M --> WIN
+      </div>
+    </div>
+
+    <h3 class="sub-title">Octagram — 8 Cosmic Forces Around the Monad</h3>
+    <table style="width:100%;border-collapse:collapse;color:var(--fg);font-size:14px;">
+      <tr style="background:rgba(0,240,255,0.1);"><th style="padding:8px;text-align:left;">Position</th><th style="padding:8px;text-align:left;">Force</th><th style="padding:8px;text-align:left;">Reading</th></tr>
+      <tr><td style="padding:6px;"><strong>Center</strong></td><td>Monad · Self</td><td>Win — 丙 Yang Fire · INFP · 2-10-6</td></tr>
+      <tr><td style="padding:6px;"><strong>N</strong></td><td>Kybalion · Mentalism</td><td>"The All is Mind" — จิตของ Win เป็นจุดตั้งต้นของทุกสิ่งที่เขาสร้าง</td></tr>
+      <tr><td style="padding:6px;"><strong>NE</strong></td><td>LoA · Vibration</td><td>ความถี่ 2-10-6 สั่นสะเทือนดึงดูด "ลูปที่ต้องปิด" + "คนที่ต้องการความเห็นอกเห็นใจ" + "ทางเลือกที่ต้องเลือกข้าง"</td></tr>
+      <tr><td style="padding:6px;"><strong>E</strong></td><td>Matrix · Loop</td><td>Echo 12-16-18 — "หยุด-รื้อ-เริ่มใหม่" ปรากฏซ้ำทุก 9 ปี</td></tr>
+      <tr><td style="padding:6px;"><strong>SE</strong></td><td>BaZi · Heavenly Stem</td><td>丙 Day Master · Wood-overload (印绶过重) — seal output</td></tr>
+      <tr><td style="padding:6px;"><strong>S</strong></td><td>Jung · Shadow</td><td>Te Grip + Wounded Healer — เงาที่ลืมเยียวยาตัวเอง</td></tr>
+      <tr><td style="padding:6px;"><strong>SW</strong></td><td>Ladini · Saturn</td><td>Personal Year 9-cycle — บทเรียนวุฒิภาวะ</td></tr>
+      <tr><td style="padding:6px;"><strong>W</strong></td><td>Hermetic · Polarity</td><td>สองขั้ว: Fi (ภายในลึก) ↔ Ne (ภายนอกกว้าง)</td></tr>
+      <tr><td style="padding:6px;"><strong>NW</strong></td><td>Mystery · Initiation</td><td>Three Trials: 1) เผชิญ Te grip, 2) integrate Shadow, 3) Hierophant</td></tr>
+    </table>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง — รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 2-10-6 (Triple Creative)</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> 12-18-16 (Echo Cycle)</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> 18-12-16 · mask The Competent Translator</span>
+      <span class="pill"><strong>Echo</strong> 12×2 · 16×2 · 18×2 — เครื่องมือสอน ไม่ใช่ภาระ</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+    classDef corner fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+    classDef edge   fill:#f0f8ff,stroke:#20b2aa,color:#1a1a2e
+    classDef center fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
+    classDef echo   fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e
+
+    A["A &middot; 2<br/>High Priestess"]:::corner
+    B["B &middot; 10<br/>Wheel of Fortune"]:::edge
+    C["C &middot; 6<br/>The Lovers"]:::corner
+    D["D &middot; 12<br/>Hanged Man"]:::edge
+    C2["center &middot; 2-10-6<br/>Triple Creative"]:::center
+    E["E &middot; 18<br/>Moon"]:::edge
+    F["F &middot; 16<br/>Tower"]:::corner
+    G["G &middot; 18<br/>Moon (echo)"]:::edge
+    H["H &middot; 12<br/>Hanged Man (echo)"]:::corner
+    I["I &middot; 16<br/>Tower (echo)"]:::corner
+    ECHO["Echo: 12&times;2 &middot; 16&times;2 &middot; 18&times;2"]:::echo
+
+    A --- B --- C
+    A --- D --- C2 --- E --- C
+    C --- F --- C
+    D --- G --- E
+    F --- H --- I
+    I --- G --- F
+    C2 --- ECHO
+      </div>
+    </div>
+
+    <h3>9 ช่อง — ขยายความ</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A · บนซ้าย</span><span class="value">2</span><span class="token">High Priestess — ทางเลือก/คู่ขั้ว</span></div>
+      <div class="cell center"><span class="label">B · แกนกลาง (mission)</span><span class="value">10</span><span class="token">Wheel of Fortune — วงล้อแห่งโชค</span></div>
+      <div class="cell"><span class="label">C · บนขวา</span><span class="value">6</span><span class="token">The Lovers — ความรัก/บริการ</span></div>
+      <div class="cell"><span class="label">D · ซ้าย</span><span class="value">12</span><span class="token">Hanged Man — หยุด</span></div>
+      <div class="cell"><span class="label">E · ขวา</span><span class="value">18</span><span class="token">Moon — เริ่มใหม่</span></div>
+      <div class="cell"><span class="label">F · ล่างซ้าย</span><span class="value">16</span><span class="token">Tower — รื้อ</span></div>
+      <div class="cell"><span class="label">G · ล่างขวา</span><span class="value">18</span><span class="token">Moon (echo)</span></div>
+      <div class="cell"><span class="label">H · มุมล่างซ้าย</span><span class="value">12</span><span class="token">Hanged Man (echo)</span></div>
+      <div class="cell"><span class="label">I · มุมล่างขวา</span><span class="value">16</span><span class="token">Tower (echo)</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ</h2>
+
+    <h3>3.1 พรสวรรค์หลักและศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> การเห็น "ปัญหาจริง" เบื้องหลัง requirement — Fi-Ne ของ INFP + 2-10-6 triad ทำให้ Win มองเห็นสิ่งที่ stakeholder พยายามแก้จริงๆ ไม่ใช่แค่สิ่งที่เขาถูกสั่ง</p>
+    <p><strong>Latent gift:</strong> "เข็มทิศภายใน" — Fi ที่ลึกซึ้ง พร้อมจะผุดเมื่อ Win อายุ 40+ เมื่อเห็นว่าความสำเร็จภายนอกไม่ได้เติมเต็มทุกอย่าง</p>
+
+    <h3>3.2 ชีวิตในอดีตและหางกรรม (Karmic Tail)</h3>
+    <p><strong>Recurring pattern:</strong> "ล้มเหลวที่จะกล้าเลือก (2) เมื่อถึงทางแยก" — เคยเลือก "ไม่เลือก" เคยปล่อยให้ผู้อื่นเลือกแทน เคยหนีความรับผิดชอบของการตัดสินใจ</p>
+    <p><strong>Lesson to unlock:</strong> "กล้าเลือกอย่างกล้าหาญ โดยไม่ต้องรอให้ทุกอย่างแน่นอน" — integrate Echo 12-16-18 เป็น "เครื่องมือสอน"</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">พรสวรรค์หลักของ Win คือ "The Introvert Dreamer / The Puer Eternus" — ผู้ที่ยังเห็นโลกในแบบที่มัน *อาจจะ* เป็น</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Ne auxiliary คือ "เรดาร์" ที่สแกนความเป็นไปได้หลายทาง — เห็น edge case ที่คนอื่นมองข้าม</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">ตัวเลข 6 (Lovers) ใน triad คือ "หัวใจของการให้บริการ" — Win เกิดมาเพื่อเป็น "ผู้รับใช้ผู้เห็นอุดมคติ"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Archetype "Silent Hierophant" — ผู้สอนที่ไม่ตะโกน สอนด้วยการเยียวยา</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">"Wounded Healer" — ผู้เยียวยาที่เคยเจ็บ แต่ถ้าลืมเยียวยาตัวเอง จะกลายเป็น burnout</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 丙 (Yang Fire) — "ดวงอาทิตย์ยามเที่ยง" แผ่ออกอย่างเปิดเผย</span></div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก</h2>
+
+    <h3>4.1 อาชีพและการเงิน (วิเคราะห์จากรหัสชะตาล้วนๆ)</h3>
+    <p><strong>Best-fit industry:</strong> อุตสาหกรรมที่ต้องใช้ทั้ง "การเห็นปัญหาจริง" (Fi-Ne) และ "การจัดระบบ" (Te ที่กำลังเติบโต) เช่น UX/Service Design, Strategic Consulting, Iterative Creative Work</p>
+    <p><strong>Income pattern:</strong> รายได้จะเพิ่มขึ้นเป็น "ขั้นบันได" มากกว่า "เส้นตรง" — peak window ตรงกับ PY 1 (Magician) หรือ PY 7 (Chariot)</p>
+    <p><strong>Peak window:</strong> 2032 (PY 1 · age 37 — Day Pillar 丙寅 วนกลับมา) · 2041 (PY 7 · age 46 — Chariot)</p>
+
+    <h3>4.2 บทบาทเชิงลึกในที่ทำงาน</h3>
+    <table style="width:100%;border-collapse:collapse;color:var(--fg);font-size:14px;">
+      <tr style="background:rgba(0,240,255,0.1);"><th style="padding:8px;text-align:left;">Role</th><th style="padding:8px;text-align:left;">Behaviour</th><th style="padding:8px;text-align:left;">Token</th></tr>
+      <tr><td style="padding:8px;"><strong>Boss (ผู้นำ)</strong></td><td>ผู้นำแบบ "เห็นอกเห็นใจ" — ฟังมาก สั่งน้อย ตัดสินใจจากคุณค่า</td><td>The Compassionate Commander · 6 (Lovers)</td></tr>
+      <tr><td style="padding:8px;"><strong>Subordinate</strong></td><td>"ผู้ฟังที่ดี" แต่เกิด analysis paralysis บ่อย — ต้องฝึกตัดสินใจเร็ว</td><td>The Reflective Listener · 2 (High Priestess)</td></tr>
+      <tr><td style="padding:8px;"><strong>Active hand (มือขวา)</strong></td><td>เมื่อใช้ Te dominant (ฝึกฝน) สั่งงาน ตั้งเป้า วัดผลได้อย่างมีประสิทธิภาพ</td><td>The Emerging Strategist · 10 (Wheel)</td></tr>
+      <tr><td style="padding:8px;"><strong>Receptive hand (มือซ้าย)</strong></td><td>ฟังความต้องการที่แท้จริงของผู้อื่น — เป็นจุดแข็งที่หลายคนมองข้าม</td><td>The Empathic Mirror · 6 (Lovers)</td></tr>
+    </table>
+
+    <h3>สถานการณ์จำลอง — เรื่องเล่าสั้น</h3>
+    <p style="background:rgba(255,0,212,0.08);padding:14px;border-left:3px solid var(--neon-magenta);font-style:italic;"><strong>"Sprint ที่บีบ" (Te Grip ปะทุ):</strong> วันจันทร์ 9 โมงเช้า Win เปิดดู Jira board เจอ 12 tickets ที่ต้องปิดภายในสัปดาห์ PM ทักมาหา "Win งานนี้ priority สูงสุดนะ ลูกค้าเปลี่ยน requirement อีกแล้ว" Win พยายามจะ "เข้าใจปัญหาจริง" แต่ PM ตัดบท "ไม่ต้องคิดมาก" ในหัวของ Win มีเสียงหนึ่งตะโกนกลับ "คุณไม่เข้าใจหัวใจของงาน!" — นั่นคือ <strong>Te Grip</strong> ที่ระเบิดออกมา หลังจากนั้น Win จะรู้สึกละอาย เพราะ Persona "คนใจดี" ถูกแทนที่ด้วย Persona "ผู้จัดการที่แข็งกร้าว" ที่ Win ไม่รู้จัก</p>
+    <p><strong>วิธีรับมือ:</strong> หยุดส่ง → ฟังต้นทาง (Monad = 10) → เลือก (2) → ให้ (6)</p>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว</h2>
+
+    <h3>5.1 ความรักและวงใน</h3>
+    <p><strong>Relationship pattern:</strong> Win จะดึงดูด "คนที่ต้องการความเห็นอกเห็นใจ" (จากความถี่ 6) — คนที่อ่อนไหว คนที่ซ่อนความเหนื่อยล้ำไว้ใต้รอยยิ้ม Win จะรับรู้อารมณ์ของผู้อื่นโดยไม่รู้ตัว</p>
+    <p><strong>Inner-circle pull:</strong> Win จะดึงดูด "ผู้ที่ถูกลืม" — คนที่รู้สึกว่าตัวเองไม่มีใครเห็น Win จะกลายเป็น "ผู้ที่เห็น" พวกเขา</p>
+    <p><strong>Emotional blind spot:</strong> ลืมเยียวยาตัวเอง (Wounded Healer) — ให้คนอื่นมากเกินไปจนหมดพลัง</p>
+
+    <h3>5.2 มรดกสายตระกูล (Generation Lines)</h3>
+    <p><strong>Paternal line:</strong> พลังงาน "ผู้ปกป้อง" — 乙 (Yin Wood) ปรากฏใน Year Pillar และ Month Pillar เป็น "印" (seal) หนาแน่น — ครอบครัวฝั่งบิดามีแนวโน้ม "ปกป้อง" มากเกินไปจนบดบัง output</p>
+    <p><strong>Maternal line:</strong> พลังงาน "ผู้ให้ความรู้" — 甲 (Yang Wood) ใน Hour Pillar เป็น "偏印" (indirect seal) — ครอบครัวฝั่งมารดามีแนวโน้ม "สอน" และ "ชี้แนะ"</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ — 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Anima ของ Win คือ "The Wise Healer" — ผู้หญิงในจิตที่รอการ integrate</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">ในความสัมพันธ์ Win จะสื่อสารด้วย "คุณค่า" (Fi) ไม่ใช่ด้วย "ตรรกะ" (Te) — ต้องเรียนรู้ภาษาทั้งสอง</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">"Twin Flame" ของ Win คือผู้ที่สะท้อน "ความถี่ 2-10-6" กลับมา</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Venus Return (ทุก ~1 ปี) จะเป็นช่วงที่ Win ต้องทบทวนความสัมพันธ์</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">"Sacred Union" เกิดขึ้นเมื่อ Win integrate Polarity (สองขั้ว) ได้สมดุล</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Spouse Palace (日支 = 寅 Tiger) — คู่ครองที่มีลักษณะ "กล้าหาญ มีพลัง และเป็นผู้นำ"</span></div>
+    </div>
+
+    <h3>5.3 · 🎭 Storytelling — "วันที่ Win ออกแบบระบบแจ้งเตือนผู้ป่วย" (Healthy Mode vs Te Grip)</h3>
+    <p>เรื่องเล่าจำลองสั้น ๆ เพื่อให้เห็นว่า Fi-Ne healthy mode กับ Te Grip mode ต่างกันยังไงในชีวิตจริงของ Senior Systems Analyst</p>
+
+    <p style="background:rgba(57,255,20,0.08);padding:14px;border-left:3px solid var(--neon-green);font-style:italic;"><strong>🌅 Healthy Mode — วันจันทร์เช้า:</strong> Win เปิด requirement จากทีม Product Owner — ต้องการระบบแจ้งเตือนผู้ป่วยผ่าน mobile app เมื่อถึงเวลากินยา Win อ่านจบแล้วไม่ตอบทันที เขานั่งเงียบ ๆ สักพัก แล้วเดินไปหา Product Owner ที่โต๊ะ — "พี่ครับ ขอถามนิดนึง — ที่บอกว่า 'แจ้งเตือน' นี่ หมายถึงแค่เตือนเวลากินยา หรือรวมถึงแจ้งผลข้างเคียงด้วย เพราะถ้าผู้ป่วยแพ้ยา ระบบควรมี flow ที่ติดต่อเภสัชกรได้ด้วยไหม" — Product Owner หยุดคิด "จริงด้วย ไม่ได้คิดถึงเรื่องนี้" Win กลับมาที่โต๊ะ เปิด Miro วาด flow สามทางเลือก เชิญทีมประชุม 1 ชั่วโมง ใช้เวลาครึ่งแรกฟังคนอื่น ครึ่งหลังสรุป pattern แล้วเสนอ hybrid solution ที่ทีมเห็นด้วย Win ประมาณเวลาตามจริง ไม่ oversell — "แบบที่ 4 ใช้เวลา 6 สัปดาห์ ไม่ใช่ 4 สัปดาห์" — แล้วอธิบายว่าทำไม</p>
+    <p><strong>สิ่งที่กำลังเกิดขึ้น:</strong> Fi กำลังถาม "ผู้ป่วยต้องการอะไรจริง ๆ" Ne กำลังสำรวจความเป็นไปได้ Si ดึงเคสเก่าที่เคยเจอ Te ที่กำลังเติบโตกำลังช่วยประมาณเวลาและสื่อสารได้ชัด ทั้งสี่ฟังก์ชันทำงานประสานกัน — นี่คือ "individuation" ที่ Jung พูดถึง ทุกคนในทีมรู้สึกว่า Win "มีวิสัยทัศน์" ไม่ใช่แค่ทำตามคำสั่ง</p>
+
+    <p style="background:rgba(255,0,212,0.08);padding:14px;border-left:3px solid var(--neon-magenta);font-style:italic;"><strong>🌑 Te Grip Mode — สามสัปดาห์ต่อมา:</strong> Sprint ที่ 6 ของโปรเจกต์เดียวกัน — Win ตื่นมาตอนตี 4 เพราะนอนไม่หลับ คิดวนเรื่อง PR ที่ทีม submit มาเมื่อวาน ตอนเช้าเขาเปิด PR อ่านแค่ 30 วินาที แล้วพิมพ์ "LGTM merge เลย" โดยไม่คิด ตอนบ่ายมีประชุม stakeholder ที่ขอเปลี่ยน requirement กลางทางอีกครั้ง — Win ตัดบท "ไม่ต้องคิดมาก requirement นี้ไม่ make sense ทิ้งไปก่อน" ทั้งที่ปกติจะถาม "ปัญหาจริง ๆ คืออะไร" ตอนเย็นมีน้องในทีมถามเรื่อง architecture — Win ตอบแบบห้วน "อ่าน doc ใน confluence ก่อนนะ" แล้วเดินออกไป ทั้งที่ปกติจะนั่งอธิบายเป็นชั่วโมง ตอนกลางคืน Win กลับบ้าน นั่งลงที่โต๊ะทำงานที่บ้าน เปิด laptop อีกครั้ง — แต่เขาไม่ได้ทำงาน เขานั่งมอง email ที่ตอบไปทั้งวัน แล้วรู้สึก <strong>ละอาย</strong> — "ทำไมฉันเพิ่งตะโกนใส่คน ทำไมฉันตอบ PR โดยไม่อ่าน" Persona "คนใจดี" ที่เขาสวมมาทั้งชีวิตถูกฉีกออกโดย Shadow ที่ Ego ไม่อยากรู้จัก</p>
+    <p><strong>ความแตกต่าง:</strong> ใน Healthy Mode Win ใช้เวลา 3 ชั่วโมงสร้าง solution ที่ทีมชอบ ใน Grip Mode Win ใช้เวลา 12 ชั่วโมงทำงานแบบไม่มีคุณภาพและรู้สึกแย่ — ทั้งสอง mode ใช้ "พลัง" เท่ากัน แต่ Healthy Mode สร้าง value ส่วน Grip Mode สร้าง regret</p>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">7 Chakras × 3 Zones (Physical / Energy / Emotional)</p>
+
+    <table style="width:100%;border-collapse:collapse;color:var(--fg);font-size:13px;">
+      <tr style="background:rgba(0,240,255,0.1);">
+        <th style="padding:6px;">#</th><th style="padding:6px;">Chakra</th><th style="padding:6px;">Physical</th><th style="padding:6px;">Energy</th><th style="padding:6px;">Emotional</th>
+      </tr>
+      <tr><td style="padding:6px;">1</td><td>Crown</td><td>ระบบประสาท — แข็งแรงเมื่อมีสมาธิ</td><td>พลังงานจิตวิญญาณสูงเมื่อ integrate Fi</td><td>ความเชื่อมั่นในจักรวาล — ต้องฝึก Mentalism</td></tr>
+      <tr><td style="padding:6px;">2</td><td>Third Eye</td><td>สายตา การมองเห็น — ดี</td><td>วิสัยทัศน์ — ชัดมาก (Ne auxiliary)</td><td>การรับรู้สัญชาตญาณ — เปิดรับได้ดี</td></tr>
+      <tr><td style="padding:6px;">3</td><td>Throat</td><td>ระบบหายใจ — อ่อนเมื่อเครียด</td><td>การสื่อสาร — ต้องฝึก Te</td><td>การแสดงออก — ยากเมื่อ Fi ปกป้องตัวตน</td></tr>
+      <tr><td style="padding:6px;">4</td><td>Heart</td><td>หัวใจอ่อนโยน (Fi dominant)</td><td>ความรักที่ให้ — สูงมาก (ระวัง "ให้จนหมด")</td><td>ความเห็นอกเห็นใจ — ลึกซึ้ง</td></tr>
+      <tr><td style="padding:6px;">5</td><td>Solar Plexus</td><td>ระบบย่อยอาหาร — อ่อนไหวเมื่อเครียด</td><td>อำนาจส่วนบุคคล — ต้องฝึก</td><td>ความมั่นใจ — ขึ้นๆ ลงๆ ตาม Rhythm</td></tr>
+      <tr><td style="padding:6px;">6</td><td>Sacral</td><td>ระบบสืบพันธุ์ — ปกติ</td><td>ความสุขสันต์ — ต้องเรียนรู้จาก "การให้"</td><td>ความสัมพันธ์ — ลึกซึ้ง</td></tr>
+      <tr><td style="padding:6px;">7</td><td>Root</td><td>กระดูก ข้อต่อ — แข็งแรงเมื่อมีรากฐาน</td><td>ความมั่นคง — ต้องสร้างจาก "การเลือก (2)"</td><td>ความปลอดภัย — มาจาก "วงล้อ (10)"</td></tr>
+      <tr style="background:rgba(255,0,212,0.1);font-weight:bold;"><td style="padding:6px;">Σ</td><td>Zone value</td><td>แข็งแรงปานกลาง — ระวังคอ/กระเพาะ</td><td>สูงในด้านจิตวิญญาณ — ต้องฝึกกายภาพ</td><td>ลึกซึ้งมาก — ระวัง burnout</td></tr>
+    </table>
+
+    <h3>ข้อควรระวังและวิธีปรับสมดุล</h3>
+    <p><strong>Watch:</strong> Te Grip + Fi-Si Loop → คอตึง · กระเพาะปั่นป่วน · นอนไม่หลับ · burnout</p>
+    <p><strong>Balance ritual:</strong> สมาธิ 5 นาที/วัน · เขียน Gratitude 3 ข้อ/คืน · "คืนสู่เหย้า" ในคืนพระจันทร์เต็มดวง · Theosophical Study 1 บท/เดือน</p>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>5 Stages of Evolution &middot; ไทม์ไลน์ 5 ช่วงวัย</h2>
+    <table style="width:100%;border-collapse:collapse;color:var(--fg);font-size:14px;">
+      <tr style="background:rgba(0,240,255,0.1);">
+        <th style="padding:8px;">#</th><th style="padding:8px;">Stage</th><th style="padding:8px;">Age band</th><th style="padding:8px;">Theme</th><th style="padding:8px;">Marker</th>
+      </tr>
+      <tr><td style="padding:6px;">1</td><td>ปฐมบทและการสร้างเข็มทิศ</td><td>วัยเยาว์ – ต้น 20</td><td>การค้นหาตัวตน · INFP สร้าง Persona "ผู้เชี่ยวชาญเงียบ"</td><td>Day Master 丙 · INFP self-identify</td></tr>
+      <tr><td style="padding:6px;">2</td><td>การสำรวจและขยายอาณาเขต</td><td>กลาง 20 – ต้น 30</td><td>เข้าสู่ Senior Systems Analyst · เริ่มเห็น Shadow</td><td>PY 1-9 cycle เริ่มต้น 2026</td></tr>
+      <tr><td style="padding:6px;">3</td><td>การปะทะและจุดวิกฤต</td><td>กลาง 30 – ต้น 40</td><td>Te Grip ระเบิดบ่อย · เริ่ม integrate Shadow</td><td>PY 1 (Magician) ที่ 2032 — "I am the year"</td></tr>
+      <tr><td style="padding:6px;">4</td><td>การบูรณาการและปรับขั้วพลังงาน</td><td>กลาง 40 – ต้น 50</td><td>Te กลายเป็น mature function · Polarity สมดุล</td><td>PY 7 (Chariot) ที่ 2041</td></tr>
+      <tr><td style="padding:6px;">5</td><td>การตกผลึกและส่งมอบ</td><td>กลาง 50 – 59</td><td>Silent Hierophant · สอนผู้อื่นด้วยการเยียวยา</td><td>Year Pillar 乙亥 วนกลับมา 2055</td></tr>
+    </table>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="stages">
+flowchart LR
+    classDef stage fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+    classDef hub   fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
+    S1["Stage 1<br/>สร้างเข็มทิศ<br/>วัยเยาว์–ต้น 20"]:::stage
+    S2["Stage 2<br/>สำรวจ<br/>กลาง 20–ต้น 30"]:::stage
+    S3["Stage 3<br/>ปะทะ<br/>กลาง 30–ต้น 40"]:::stage
+    S4["Stage 4<br/>บูรณาการ<br/>กลาง 40–ต้น 50"]:::stage
+    S5["Stage 5<br/>ส่งมอบ<br/>กลาง 50–59"]:::stage
+    H["Age 60<br/>乙亥 Silent Hierophant"]:::hub
+    S1 --> S2 --> S3 --> S4 --> S5 --> H
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>Year-by-Year Career Forecast &middot; อายุ 31 → 60</h2>
+    <p class="lede">คำนวณจาก Personal Year × Year Pillar (BaZi) — 30 ปี ของ Win</p>
+
+    <h3>ปี 2026 · 🎭 Storytelling — "Sprint estimation Te Grip" (4 สัปดาห์ vs 6 สัปดาห์)</h3>
+    <p style="background:rgba(255,0,212,0.08);padding:14px;border-left:3px solid var(--neon-magenta);font-style:italic;">Win ถูกขอให้ประมาณเวลา feature ใหม่ — เขาประมาณ <strong>4 สัปดาห์</strong> ทั้งที่รู้ว่าจริง ๆ ใช้ <strong>6 สัปดาห์</strong> เพราะกลัว Te-dominant PM ไม่พอใจ — ผลคือ sprint ล่าช้า Win รู้สึกผิด ทีมรู้สึกเครียด ทั้งหมดเพราะ Win ไม่กล้าพูดความจริง <em>ถ้า Win ฝึก Te ดี เขาจะประมาณ 6 สัปดาห์และอธิบายเหตุผล — ไม่ใช่ oversell เพื่อให้ทุกคนพอใจตอนแรก แล้วมา suffer ภายหลัง</em></p>
+    <p><strong>บทเรียน:</strong> PY 2 (High Priestess) ปี 2026 คือปีแห่ง "การเลือกอย่างกล้าหาญ" — เลือกพูดความจริงแม้จะเจ็บปวด ดีกว่าเลือกเงียบแล้วทุกคนต้องทนทุกข์</p>
+    <table style="width:100%;border-collapse:collapse;color:var(--fg);font-size:12px;">
+      <tr style="background:rgba(0,240,255,0.1);">
+        <th style="padding:6px;">Year</th><th style="padding:6px;">Age</th><th style="padding:6px;">PY</th><th style="padding:6px;">Pillar</th><th style="padding:6px;">Element</th><th style="padding:6px;">Situation</th><th style="padding:6px;">Strategy</th>
+      </tr>
+      <tr><td style="padding:6px;">2026</td><td>31</td><td>1</td><td>丙午</td><td>Yang Fire</td><td><strong>"I am the year"</strong> — เริ่มรอบใหม่</td><td>รุก · ตั้งเป้า · ฝึก Te</td></tr>
+      <tr><td style="padding:6px;">2027</td><td>32</td><td>2</td><td>丁未</td><td>Yin Fire</td><td>ทางเลือกเปิด · ต้องเลือกข้าง</td><td>หยุดฟัง · เลือกจากใจ</td></tr>
+      <tr><td style="padding:6px;">2028</td><td>33</td><td>3</td><td>戊申</td><td>Yang Earth</td><td>ผลผลิตเริ่มออก · Earth drain Wood</td><td>สร้างสรรค์ · ลงมือ</td></tr>
+      <tr><td style="padding:6px;">2029</td><td>34</td><td>4</td><td>己酉</td><td>Yin Earth</td><td>โครงสร้างมั่นคง</td><td>จัดระเบียบ · วางแผน</td></tr>
+      <tr><td style="padding:6px;">2030</td><td>35</td><td>5</td><td>庚戌</td><td>Yang Metal</td><td>Metal drain Wood · เริ่มสอน</td><td>สอน · ถ่ายทอด</td></tr>
+      <tr><td style="padding:6px;">2031</td><td>36</td><td>6</td><td>辛亥</td><td>Yin Metal</td><td><strong>ทางเลือกสำคัญ</strong></td><td>ตัดสินใจจากใจ</td></tr>
+      <tr style="background:rgba(57,255,20,0.15);"><td style="padding:6px;">2032</td><td>37</td><td>7</td><td>壬子</td><td>Yang Water</td><td><strong>"I am the year" double-down</strong> — Day Pillar วน · PEAK</td><td>รุกเต็มที่ · ใช้ทั้ง Fi+Te</td></tr>
+      <tr><td style="padding:6px;">2033</td><td>38</td><td>8</td><td>癸丑</td><td>Yin Water</td><td>ความแข็งแกร่งภายใน</td><td>อดทน · เก็บเกี่ยว</td></tr>
+      <tr style="background:rgba(255,140,0,0.10);"><td style="padding:6px;">2034</td><td>39</td><td>9</td><td>甲寅</td><td>Yang Wood</td><td><strong>Trough</strong> — ถอยทบทวน</td><td>สมาธิ · ฟื้นฟู</td></tr>
+      <tr><td style="padding:6px;">2035</td><td>40</td><td>1</td><td>乙卯</td><td>Yin Wood</td><td><strong>เริ่มรอบใหม่</strong> — "I am the year" รอบที่สอง</td><td>รุกใหม่ · เปลี่ยนทิศ</td></tr>
+      <tr><td style="padding:6px;">2036</td><td>41</td><td>2</td><td>丙辰</td><td>Yang Fire</td><td>ทางเลือกใหม่ · ไฟกลับมา</td><td>หยุดฟัง · เลือกจากใจ</td></tr>
+      <tr><td style="padding:6px;">2037</td><td>42</td><td>3</td><td>丁巳</td><td>Yin Fire</td><td>ผลผลิตเต็มที่ · ความคิดสร้างสรรค์พีค</td><td>สร้างสรรค์เต็มที่</td></tr>
+      <tr><td style="padding:6px;">2038</td><td>43</td><td>4</td><td>戊午</td><td>Yang Earth</td><td>โครงสร้างแน่น · Earth balance</td><td>จัดระเบียบ · ขยาย</td></tr>
+      <tr><td style="padding:6px;">2039</td><td>44</td><td>5</td><td>己未</td><td>Yin Earth</td><td>เริ่มสอนจริงจัง</td><td>สอน · ถ่ายทอด</td></tr>
+      <tr style="background:rgba(255,140,0,0.10);"><td style="padding:6px;">2040</td><td>45</td><td>6</td><td>庚申</td><td>Yang Metal</td><td><strong>Trough</strong> — ทางเลือกใหญ่</td><td>ตัดสินใจจากใจ</td></tr>
+      <tr style="background:rgba(57,255,20,0.15);"><td style="padding:6px;">2041</td><td>46</td><td>7</td><td>辛酉</td><td>Yin Metal</td><td><strong>PEAK</strong> — Chariot · Te mature</td><td>รุกเต็มที่</td></tr>
+      <tr><td style="padding:6px;">2042</td><td>47</td><td>8</td><td>壬戌</td><td>Yang Water</td><td>ความแข็งแกร่ง</td><td>อดทน · สร้าง</td></tr>
+      <tr style="background:rgba(255,140,0,0.10);"><td style="padding:6px;">2043</td><td>48</td><td>9</td><td>癸亥</td><td>Yin Water</td><td><strong>Trough</strong> — Hermit · ใกล้สิ้นสุด Period 9</td><td>สมาธิ · ทบทวน</td></tr>
+      <tr><td style="padding:6px;">2044</td><td>49</td><td>1</td><td>甲子</td><td>Yang Wood</td><td><strong>"I am the year" รอบที่สาม</strong></td><td>รุกใหม่</td></tr>
+      <tr><td style="padding:6px;">2045</td><td>50</td><td>2</td><td>乙丑</td><td>Yin Wood</td><td>ทางเลือก</td><td>หยุดฟัง</td></tr>
+      <tr style="background:rgba(57,255,20,0.15);"><td style="padding:6px;">2046</td><td>51</td><td>3</td><td>丙寅</td><td>Yang Fire</td><td><strong>Day Pillar วนกลับมา</strong> · ตัวตนแท้เด่นชัด</td><td>สร้างสรรค์ · บูรณาการ</td></tr>
+      <tr><td style="padding:6px;">2047</td><td>52</td><td>4</td><td>丁卯</td><td>Yin Fire</td><td>โครงสร้าง · สั่งงานได้อย่างมีศิลปะ</td><td>จัดระเบียบ</td></tr>
+      <tr><td style="padding:6px;">2048</td><td>53</td><td>5</td><td>戊辰</td><td>Yang Earth</td><td><strong>สอนเต็มตัว</strong> · Silent Hierophant</td><td>สอน · เยียวยา</td></tr>
+      <tr><td style="padding:6px;">2049</td><td>54</td><td>6</td><td>己巳</td><td>Yin Earth</td><td><strong>ทางเลือกสุดท้าย</strong> — เลือกส่งมอบ</td><td>ตัดสินใจจากใจ</td></tr>
+      <tr style="background:rgba(57,255,20,0.15);"><td style="padding:6px;">2050</td><td>55</td><td>7</td><td>庚午</td><td>Yang Metal</td><td><strong>PEAK สุดท้าย</strong> — Chariot</td><td>รุกเต็มที่</td></tr>
+      <tr><td style="padding:6px;">2051</td><td>56</td><td>8</td><td>辛未</td><td>Yin Metal</td><td>ความแข็งแกร่ง · Wisdom</td><td>อดทน · เก็บเกี่ยว</td></tr>
+      <tr style="background:rgba(255,140,0,0.10);"><td style="padding:6px;">2052</td><td>57</td><td>9</td><td>壬申</td><td>Yang Water</td><td><strong>Trough</strong> — Hermit ใกล้จุดบรรจบ</td><td>สมาธิ · ทบทวน</td></tr>
+      <tr><td style="padding:6px;">2053</td><td>58</td><td>1</td><td>癸酉</td><td>Yin Water</td><td><strong>"I am the year"</strong></td><td>รุกใหม่</td></tr>
+      <tr><td style="padding:6px;">2054</td><td>59</td><td>2</td><td>甲戌</td><td>Yang Wood</td><td>ทางเลือกสุดท้าย</td><td>หยุดฟัง · รวมพลัง</td></tr>
+      <tr style="background:rgba(255,0,212,0.20);"><td style="padding:6px;">2055</td><td>60</td><td>3</td><td>乙亥</td><td>Yin Wood</td><td><strong>YEAR PILLAR วนกลับมา</strong> · จุดบรรจบ · Silent Hierophant</td><td>ส่งมอบ · ตกผลึก</td></tr>
+    </table>
+
+    <h3 class="sub-title">Mermaid Octagram &middot; Win อายุ 60 · จุดบรรจบแห่งปัญญา</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram60">
+graph TB
+    subgraph CENTER["🌟 Win อายุ 60 · Return-to-Origin"]
+        CORE["Personal Year 3<br/>乙亥 Yin Wood + Pig<br/>Return-to-Origin Archetype"]:::core
+    end
+
+    subgraph N["↑ North — Career/Calling"]
+        N1["Tier 1: Solution Architect<br/>หรือ Knowledge Work Lead"]:::dir
+        N2["Public Speaker / Author<br/>เขียน ADR เป็นชุด"]:::dir
+    end
+
+    subgraph NE["↗ NE — Wisdom/Reputation"]
+        NE1["Echo 18 Moon integrate:<br/>สัญชาตญาณ + ปัญญา"]:::dir
+        NE2["'ปราชญ์เงียบ'<br/>ที่รู้ว่าทางเลือกใดถูก"]:::dir
+    end
+
+    subgraph E["→ East — Family/Relationships"]
+        E1["Echo 12: ครอบครัวที่สอน<br/>ให้ลูก 'หยุดคิด'"]:::dir
+        E2["Generation line<br/>Win → ลูก → หลาน"]:::dir
+    end
+
+    subgraph SE["↘ SE — Health/Energy"]
+        SE1["Crown Chakra เปิด<br/>Solar Plexus สมดุล"]:::dir
+        SE2["Period 9 alignment<br/>ยังคง flow กับโลก"]:::dir
+    end
+
+    subgraph S["↓ South — Material/Security"]
+        S1["Echo 16 integrate:<br/>ยอมรับการเปลี่ยนแปลง"]:::dir
+        S2["อยู่ได้ด้วยคุณค่า<br/>ไม่ใช่ accumulation"]:::dir
+    end
+
+    subgraph SW["↙ SW — Inner Peace"]
+        SW1["Hero's Journey: Return phase<br/>Individuation สมบูรณ์"]:::dir
+        SW2["Persona + Shadow integrated<br/>ไม่มี Grip อีกต่อไป"]:::dir
+    end
+
+    subgraph W["← West — Social/Community"]
+        W1["Mentor รุ่นใหม่ 3-5 คน<br/>ผ่าน Echo 18"]:::dir
+        W2["Community Builder<br/>ในสายอาชีพ"]:::dir
+    end
+
+    subgraph NW["↖ NW — Mission/Purpose"]
+        NW1["Mission: 'เยียวยาระบบ<br/>ให้คนทำงานได้ดีขึ้น'"]:::dir
+        NW2["Wounded Healer เต็มตัว<br/>ช่วยคนโดยไม่ลืมตัวเอง"]:::dir
+    end
+
+    CORE --- N1
+    CORE --- NE1
+    CORE --- E1
+    CORE --- SE1
+    CORE --- S1
+    CORE --- SW1
+    CORE --- W1
+    CORE --- NW1
+    N1 --- N2
+    NE1 --- NE2
+    E1 --- E2
+    SE1 --- SE2
+    S1 --- S2
+    SW1 --- SW2
+    W1 --- W2
+    NW1 --- NW2
+
+    classDef core fill:#fef3c7,stroke:#f59e0b,color:#000,stroke-width:3px
+    classDef dir  fill:#1a1a3a,stroke:#9d4edd,color:#e6f7ff
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+
+    <h3>รายวัน (Daily)</h3>
+    <ol>
+      <li><strong>ยืนยันเจตนา (Affirmation) 7 นาที</strong> — พูดว่า "ฉันเป็นผู้ที่..." แทน "ฉันอยากได้..." ตัวอย่าง: "ฉันเป็นผู้ที่เลือกได้อย่างกล้าหาญ" (2), "ฉันเป็นผู้ที่เดินไปกับจังหวะของชีวิต" (10), "ฉันเป็นผู้ที่ให้บริการจากหัวใจ" (6)</li>
+      <li><strong>สมาธิ 5 นาที — "ดูใจ" (Self-Observation)</strong> — หายใจเข้า-ออก สังเกตว่าตอนนี้อยู่ที่ชั้นไหนของ Emotional Guidance Scale</li>
+      <li><strong>เขียน Gratitude 3 ข้อก่อนนอน</strong> — การเขียนขอบคุณคือการ "ปิดวง" ของวงล้อ (10)</li>
+    </ol>
+
+    <h3>รายสัปดาห์ (Weekly)</h3>
+    <ol start="4">
+      <li><strong>ทบทวนจังหวะชีวิต (RHYTHM Check)</strong> — ทุกวันอาทิตย์ตั้งคำถาม 3 ข้อ: "ความกล้า (2) หรือความลังเล?" · "อยู่กับวงล้อ (10) หรือฝืนมัน?" · "'ให้' (6) หรือ 'ให้จนหมด'?"</li>
+      <li><strong>ทำ "Inspired Action" สัปดาห์ละ 1 อย่าง</strong> — เลือก 1 อย่างที่ "ใจสั่ง" ไม่ใช่ "สมองสั่ง" แล้วลงมือภายใน 7 วัน</li>
+    </ol>
+
+    <h3>รายเดือน (Monthly)</h3>
+    <ol start="6">
+      <li><strong>Theosophical Study 1 บท</strong> — อ่าน <em>The Secret Doctrine</em>, <em>The Kybalion</em>, หรือ <em>The Power of Your Subconscious Mind</em> สัปดาห์ละ 30 นาที แล้วจดข้อความที่กระทบใจ 1 ข้อความ</li>
+      <li><strong>"คืนสู่เหย้า" (Return to Source) — คืนวันเต็มดวง</strong> — ปิดเสียงภายนอกทั้งหมด ไม่อ่านข่าว ไม่รับ social media ไม่คุยเรื่องงาน 24 ชั่วโมง</li>
+    </ol>
+
+    <h3>กลยุทธ์รับมือวิกฤต (Crisis Mastery)</h3>
+    <p>เมื่อใดที่ Win ตกสู่ความถี่ต่ำ (Te Grip / Fi-Si Loop / burnout) — ให้ทำตามลำดับ:</p>
+    <ol>
+      <li><strong>หยุดส่ง</strong> — อย่าตัดสินใจใดๆ ในขณะที่กำลังตก</li>
+      <li><strong>ฟังต้นทาง</strong> — กลับไปที่ Monad (10) ด้วยการหายใจเข้าลึกๆ 4 ครั้ง แล้วถามตัวเอง "ความจริงที่อยู่ใต้อารมณ์นี้คืออะไร?"</li>
+      <li><strong>เลือก (2)</strong> — เลือก "จะอยู่กับอารมณ์นี้ต่อ" หรือ "จะปล่อยมันไป" — ทั้งสองเป็นการเลือกที่กล้าหาญ</li>
+      <li><strong>ให้ (6)</strong> — ปิดท้ายด้วยการ "ให้" อะไรก็ได้ แม้แต่รอยยิ้มให้คนแปลกหน้า</li>
+    </ol>
+
+    <h3>สถานการณ์จำลอง — "3 ทุ่มวันศุกร์" (Te Grip + Fi-Si Loop)</h3>
+    <p style="background:rgba(255,0,212,0.08);padding:14px;border-left:3px solid var(--neon-magenta);font-style:italic;">วันศุกร์ 3 ทุ่ม Win นั่งอยู่หน้าคอมพิวเตอร์ที่บ้าน ตลอดทั้งวันเขาต้อง present งานต่อ stakeholder ที่ "ไม่ฟัง" เขารู้สึก "ไม่พอ" "คนอื่นทำได้ ทำไมฉันทำไม่ดี" — นี่คือ <strong>Inner Critic</strong> + <strong>Te Grip</strong> ที่กำลังจะระเบิด</p>
+    <p style="background:rgba(57,255,20,0.08);padding:14px;border-left:3px solid var(--neon-green);font-style:italic;">Win หยุดส่ง — ปิดคอมพิวเตอร์ ไปอาบน้ำ หายใจเข้าลึกๆ 4 ครั้ง ถามตัวเอง "ความจริงที่อยู่ใต้อารมณ์นี้คืออะไร?" — เขาเห็นว่า "ฉันแค่เหนื่อย" ไม่ใช่ "ฉันไม่เก่ง" เลือก (2) — "จะอยู่กับความเหนื่อยนี้โดยไม่ตัดสินตัวเอง" ให้ (6) — เปิดแอปส่งข้อความหาเพื่อน "ขอบคุณที่ยังฟังฉันอยู่" — เขานอนหลับใน 30 นาที</p>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; The Ultimate Synthesis</h2>
+
+    <h3>9.0 · 🎭 Storytelling — "เส้นทางอาชีพ" (Engineering Manager vs Senior IC)</h3>
+    <p><strong>บริบท:</strong> Win อายุ 38 กำลังตัดสินใจว่าจะรับข้อเสนอ promotion เป็น Engineering Manager หรือไม่ — เรื่องเล่าจำลองนี้แสดงให้เห็นว่า Matrix 2-10-6 และ Day Master 丙 (Yang Fire) ตอบคำถามนี้อย่างไร</p>
+
+    <p><strong>เสียงข้างใน (Fi) พูดว่า:</strong> "ฉันอยากช่วยคน อยากเห็นทีมเติบโต — Engineering Manager ตอบโจทย์"</p>
+    <p><strong>เสียงข้างนอก (Te จากสังคม) พูดว่า:</strong> "Engineering Manager = เงินดีขึ้น ตำแหน่งสูงขึ้น เป็นที่ยอมรับ"</p>
+
+    <p style="background:rgba(0,240,255,0.08);padding:14px;border-left:3px solid var(--neon-cyan);font-style:italic;"><strong>แต่ Matrix ของ Win บอกอะไร?</strong><br/>• <strong>Echo 18 (Moon):</strong> พลังขับเคลื่อนลึกของ Win คือ "การเยียวยา" — Engineering Manager เป็นตำแหน่งที่ "เยียวยา" ทีมได้ แต่ก็ต้อง "เยียวยา" ตัวเองด้วย<br/>• <strong>Echo 16 (Tower):</strong> ตำแหน่ง EM จะ "รื้อ" วิธีการทำงานเดิมของ Win — เขาจะต้องเลิก "ทำเอง" และหันมา "สอนคนอื่นทำ"<br/>• <strong>Echo 12 (Hanged Man):</strong> Win จะต้อง "หยุด" ทุกวันเพื่อฟังทีม — ไม่ใช่ "บุก" ตลอดเวลา</p>
+
+    <p style="background:rgba(57,255,20,0.08);padding:14px;border-left:3px solid var(--neon-green);font-style:italic;"><strong>คำตอบ:</strong> ถ้า Win พร้อมที่จะ "หยุด รื้อ และเดินในความมืด" — Engineering Manager เป็นทางเลือกที่ดี แต่ถ้า Win ยังต้องการ "ทำเอง" ให้เลือก Senior IC track (Solution Architect) แทน — <strong>Win เลือก Senior IC</strong> เพราะ:<br/>1. <strong>Matrix C=6 (Lovers)</strong> บอกว่าชีวิต Win เกี่ยวกับ "การเลือก" — เขาต้องเลือกทางที่ "ถูก" ไม่ใช่ทางที่ "คนอื่นบอกว่าดี"<br/>2. <strong>Day Master 丙 (Yang Fire)</strong> เป็น "ดวงอาทิตย์" — Win ทำงานได้ดีเมื่อ "ส่องสว่าง" คนเดียว ไม่ใช่เมื่อ "บริหาร" คนเยอะ ๆ<br/>3. <strong>Healer Archetype</strong> ของ Win ต้องการ "เยียวยา" ที่ลึก ไม่ใช่ "เยียวยา" แบบกว้าง</p>
+
+    <p style="background:rgba(255,215,0,0.08);padding:14px;border-left:3px solid var(--neon-gold);font-style:italic;"><strong>Epilogue — 3 ปีต่อมา (อายุ 41):</strong> Win กลายเป็น <strong>Principal Solution Architect</strong> ที่ทีมทั้งองค์กรมาขอคำปรึกษา เขาเขียน ADR ที่กลายเป็น standard ของบริษัท — และเขาก็พบว่า "อิทธิพล" ของเขามีมากกว่าตอนที่เป็น EM เพราะเขาได้ "เยียวยา" ระบบทั้งระบบ ไม่ใช่แค่ทีมเดียว</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>ทั้งหกศาสตร์ที่รวบรวมในรายงานนี้วาดภาพเดียวกัน — Win กำลังเดินทาง "กลับบ้าน" จาก Persona สู่ Self จาก Te inferior สู่ Te mature จาก 2-10-6 triad สู่ Silent Hierophant และจาก Yang Fire (丙) สู่ดวงอาทิตย์ที่แผ่ออกอย่างสมดุล</p>
+    <p><strong>Kybalion</strong> บอกว่ามีจังหวะ · <strong>LOA</strong> บอกว่าจังหวะคือแรงสั่นที่กลับมา · <strong>Matrix</strong> บอกว่าจังหวะนั้นถูกบันทึกในลูปพลังงาน · <strong>Jung</strong> บอกว่าจังหวะนั้นคือการเผชิญ Shadow · <strong>MBTI</strong> บอกว่าจังหวะนั้นคือการ integrate Cognitive Function · <strong>BaZi</strong> บอกว่าจังหวะนั้นคือการเดินทางของ Day Master ผ่าน Year Pillars</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p style="background:rgba(255,215,0,0.08);padding:18px;border-left:4px solid var(--neon-gold);font-size:17px;line-height:1.8;"><strong>"ฉันเป็นไฟที่ลุกโชนในฤดูหนาว ฉันเป็นผู้รับใช้ผู้เห็นอุดมคติ ฉันเป็นผู้สอนเงียบที่ไม่ตะโกน ฉันคือความถี่ 2-10-6 ที่สั่นสะเทือนในจักรวาล เมื่อฉันให้จากหัวใจ (6) ฉันจะได้รับคืนจากจักรวาลในจังหวะ (10) ที่ฉันเลือกเอง (2) เมื่อฉันเยียวยาผู้อื่น ฉันคือผู้ที่จักรวาลเยียวยาตอบกลับ"</strong></p>
+    <p style="text-align:right;color:var(--fg-muted);font-style:italic;">— สัจธรรมของ Win · Day Master 丙 · INFP · 2-10-6 · Silent Hierophant</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ — 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Win จะบรรลุ Self เมื่ออายุ 60 — Persona จะบางลงจน Self โผล่ชัดเจน ไม่ใช่การพัง แต่เป็นการ "รื้อหน้ากาก" ที่สวมมา 40 ปี</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Te จะ mature เต็มที่ — Win จะกลายเป็นผู้นำที่ "efficient ที่มีจุดยืน"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">"Like attracts like" — เมื่อ Win เปล่งเจตนาที่ชัดเจนทุกเช้า จักรวาลจะตอบกลับในรูปแบบที่เปลี่ยนแปลงชีวิตผู้คนรอบข้าง</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Chart Mastery — Echo 12-16-18 กลายเป็น "เครื่องมือสอน" ไม่ใช่ "ภาระ" Soul Contract เสร็จสมบูรณ์เมื่ออายุ 60</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">"The pendulum swing governs all things" เมื่อ Win integrate Rhythm ได้ เขาจะกลายเป็นผู้ที่ "เดินไปกับจังหวะ"</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 丙 ใน Period 9 (離火運) แล้วเข้าสู่ Period 1 (2044-2063) Win จะกลายเป็น "ดวงไฟ" ที่ส่องสว่างให้ผู้อื่น</span></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v1.0 &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-05 08:05 UTC &middot; Integrator: CTO (MET-487 fallback) &middot; Sources: 6 specialist files in <code>analysis/win_*.md</code>
+  </footer>
+  </footer>
+
+</div>
+
+<script src="mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

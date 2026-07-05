@@ -1,0 +1,7 @@
+Test run for /home/big/Documents/ommiself/code/Ommi.Calc.Tests/bin/Debug/net8.0/Ommi.Calc.Tests.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    41, Skipped:     0, Total:    41, Duration: 51 ms - Ommi.Calc.Tests.dll (net8.0)

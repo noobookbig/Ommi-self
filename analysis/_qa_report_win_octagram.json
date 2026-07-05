@@ -1,0 +1,119 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "scrollHeight": 10412,
+  "bodyHeight": 10412,
+  "heightVhRatio": 13.015,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "mermaidBlocks": [
+    {
+      "id": "synergy",
+      "renderedSvg": true,
+      "svgWidth": 622,
+      "svgHeight": 133.578125
+    },
+    {
+      "id": "natalia",
+      "renderedSvg": true,
+      "svgWidth": 1140,
+      "svgHeight": 253.8125
+    },
+    {
+      "id": "stages",
+      "renderedSvg": true,
+      "svgWidth": 939,
+      "svgHeight": 96.0625
+    },
+    {
+      "id": "octagram60",
+      "renderedSvg": true,
+      "svgWidth": 1140,
+      "svgHeight": 235.65625
+    }
+  ],
+  "octagram60InS72": {
+    "w": 1140,
+    "h": 235.65625
+  },
+  "coreText": {
+    "hasPY3": true,
+    "hasYiHai": true,
+    "hasPig": true,
+    "hasReturnOrigin": true,
+    "hasYiMao": false,
+    "hasRabbit": false,
+    "hasPY6": false
+  },
+  "sections": [
+    {
+      "id": "s0",
+      "cls": "card slot-1",
+      "top": 332.3125,
+      "height": 564.609375
+    },
+    {
+      "id": "s1",
+      "cls": "card slot-2",
+      "top": 924.921875,
+      "height": 861.8125
+    },
+    {
+      "id": "s2",
+      "cls": "card slot-3",
+      "top": 1814.734375,
+      "height": 1055.328125
+    },
+    {
+      "id": "s3",
+      "cls": "card slot-4",
+      "top": 2898.0625,
+      "height": 533.546875
+    },
+    {
+      "id": "s4",
+      "cls": "card slot-5",
+      "top": 3459.609375,
+      "height": 717.9375
+    },
+    {
+      "id": "s5",
+      "cls": "card slot-6",
+      "top": 4205.546875,
+      "height": 1141.4375
+    },
+    {
+      "id": "s6",
+      "cls": "card slot-7",
+      "top": 5374.984375,
+      "height": 546.984375
+    },
+    {
+      "id": "s71",
+      "cls": "card slot-1",
+      "top": 5949.96875,
+      "height": 451.078125
+    },
+    {
+      "id": "s72",
+      "cls": "card slot-2",
+      "top": 6429.046875,
+      "height": 1588.171875
+    },
+    {
+      "id": "s8",
+      "cls": "card slot-3",
+      "top": 8045.21875,
+      "height": 913.359375
+    },
+    {
+      "id": "s9",
+      "cls": "card slot-5",
+      "top": 8986.578125,
+      "height": 1251.515625
+    }
+  ],
+  "screenshot": "/home/big/Documents/ommiself/analysis/_qa_render_win_octagram_1280x800.png"
+}

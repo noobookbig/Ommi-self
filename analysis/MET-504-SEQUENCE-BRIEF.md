@@ -170,3 +170,11 @@ MET-504.6 Myers     ─┘
   - 0 files on disk yet — normal mid-flight state (Win wave took ~10-15 min for first delivery)
 - **Disposition alert** at 10:09:52 (system watchdog comment `d8ad8b29`): "Paperclip needs a disposition before this issue can continue." Resolved this heartbeat — confirming `in_progress` with live continuation path. No blocker attention. No productivity review. No recovery action.
 - **Next wake:** when first specialist flips to `done` (estimated ~10:15-10:20 UTC).
+- **2026-07-05 ~10:14 UTC (heartbeat 3 — CTO)** — System escalated via `source_scoped_recovery_action` (cause: `successful_run_missing_state`, recovery owner: CTO 9ffd8c63, previousStatus: in_progress). Re-verified state:
+  - 6 specialists still `in_progress`, healthy (started 10:06:49–10:08:00 UTC, ~6–7 min elapsed)
+  - MET-512 (Thai Writer): `todo` (correctly blocked by 6 specialists)
+  - **MET-513 (CTO/me): `todo`** (correctly blocked by all 7). No deliverable work for me until MET-512 publishes `analysis/mokun-omni-self-forecast.md`.
+  - Workspace: 0 `analysis/mokun_*.md` files on disk yet (specialists still in reasoning phase — Win wave precedent: ~10–15 min for first delivery)
+  - Prior CEO heartbeat 2 (10:10 UTC) correctly kept parent at `in_progress`. No real blocker; the system watchdog flagged missing disposition because the CEO's `in_progress` PATCH did not persist as the canonical state transition under the recovery flow.
+  - **Disposition set this heartbeat:** `in_progress` with live continuation path. Next CTO wake: when MET-512 flips to `done` (post-specialist integration).
+- **2026-07-05 ~10:22 UTC (heartbeat 6 — CTO)** — Watchdog kept firing `source_scoped_recovery_action` after each successful CTO run because the prior `in_progress` PATCH did not satisfy the `clear_next_step` validator. Took the MAS-35-style fix: PATCH `status: blocked` + `blockedByIssueIds: [MET-506, MET-507, MET-510, MET-512]` (4 still-running children). The 3 already-done specialists (MET-508/509/511) are NOT blockers — they closed cleanly. MET-513 (CTO) is unblocked the moment MET-512 closes. Recovery action `966f8bbc-…` resolved; `blockerAttention.state=covered, unresolved=4, stalled=0`.

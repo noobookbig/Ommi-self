@@ -1,0 +1,59 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "docHeight": 10412,
+  "sectionCount": 11,
+  "mermaidSvgs": 4,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "scenarioCount": 9,
+  "scenarioList": [
+    {
+      "text": "\"Sprint ที่บีบ\" (Te Grip ปะทุ): วันจันทร์ 9 โมงเช้า Win เปิดดู Jira board เจอ 12",
+      "inSection": "s4"
+    },
+    {
+      "text": "🌅 Healthy Mode — วันจันทร์เช้า: Win เปิด requirement จากทีม Product Owner — ต้อ",
+      "inSection": "s5"
+    },
+    {
+      "text": "🌑 Te Grip Mode — สามสัปดาห์ต่อมา: Sprint ที่ 6 ของโปรเจกต์เดียวกัน — Win ตื่นมา",
+      "inSection": "s5"
+    },
+    {
+      "text": "Win ถูกขอให้ประมาณเวลา feature ใหม่ — เขาประมาณ 4 สัปดาห์ ทั้งที่รู้ว่าจริง ๆ ใช",
+      "inSection": "s72"
+    },
+    {
+      "text": "วันศุกร์ 3 ทุ่ม Win นั่งอยู่หน้าคอมพิวเตอร์ที่บ้าน ตลอดทั้งวันเขาต้อง present งา",
+      "inSection": "s8"
+    },
+    {
+      "text": "Win หยุดส่ง — ปิดคอมพิวเตอร์ ไปอาบน้ำ หายใจเข้าลึกๆ 4 ครั้ง ถามตัวเอง \"ความจริงท",
+      "inSection": "s8"
+    },
+    {
+      "text": "แต่ Matrix ของ Win บอกอะไร?• Echo 18 (Moon): พลังขับเคลื่อนลึกของ Win คือ \"การเย",
+      "inSection": "s9"
+    },
+    {
+      "text": "คำตอบ: ถ้า Win พร้อมที่จะ \"หยุด รื้อ และเดินในความมืด\" — Engineering Manager เป็",
+      "inSection": "s9"
+    },
+    {
+      "text": "Epilogue — 3 ปีต่อมา (อายุ 41): Win กลายเป็น Principal Solution Architect ที่ทีม",
+      "inSection": "s9"
+    }
+  ],
+  "storytellingHeadings": [
+    "สถานการณ์จำลอง — เรื่องเล่าสั้น",
+    "5.3 · 🎭 Storytelling — \"วันที่ Win ออกแบบระบบแจ้งเตือนผู้ป่วย\" (Healthy Mode vs Te Grip)",
+    "ปี 2026 · 🎭 Storytelling — \"Sprint estimation Te Grip\" (4 สัปดาห์ vs 6 สัปดาห์)",
+    "สถานการณ์จำลอง — \"3 ทุ่มวันศุกร์\" (Te Grip + Fi-Si Loop)",
+    "9.0 · 🎭 Storytelling — \"เส้นทางอาชีพ\" (Engineering Manager vs Senior IC)"
+  ],
+  "passesScenarios": true,
+  "passesZeroErrors": true
+}

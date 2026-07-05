@@ -1,0 +1,104 @@
+{
+  "variant": "template",
+  "viewport": {
+    "width": 1280,
+    "height": 800
+  },
+  "scrollHeight": 16438,
+  "bodyHeight": 16438,
+  "heightVhRatio": 20.547,
+  "passes_110vh": false,
+  "mermaidSvgs": [
+    {
+      "w": 449,
+      "h": 87.6875
+    },
+    {
+      "w": 812.75,
+      "h": 1114.875
+    },
+    {
+      "w": 587,
+      "h": 221.046875
+    }
+  ],
+  "overflowingCards": 0,
+  "placeholderCount": 0,
+  "titleText": "Forecast — Mokun",
+  "sections": [
+    {
+      "tag": "SECTION",
+      "cls": "card slot-1",
+      "top": 396.8125,
+      "height": 1300.84375
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-2",
+      "top": 1725.65625,
+      "height": 2603.328125
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-3",
+      "top": 4356.984375,
+      "height": 1964.390625
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-4",
+      "top": 6349.375,
+      "height": 1246.796875
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-5",
+      "top": 7624.171875,
+      "height": 1255.0625
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-6",
+      "top": 8907.234375,
+      "height": 1303.875
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-7",
+      "top": 10239.109375,
+      "height": 1458.703125
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-1",
+      "top": 11725.8125,
+      "height": 329.265625
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-2",
+      "top": 12083.078125,
+      "height": 1609.171875
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-3",
+      "top": 13720.25,
+      "height": 1316.390625
+    },
+    {
+      "tag": "SECTION",
+      "cls": "card slot-5",
+      "top": 15064.640625,
+      "height": 1199.40625
+    }
+  ],
+  "screenshot_1280x800": "/home/big/Documents/ommiself/analysis/_qa_render_mokun_1280x800.png",
+  "screenshot_full": "/home/big/Documents/ommiself/analysis/_qa_render_mokun_full.png",
+  "acceptance": {
+    "all_tokens_resolved": true,
+    "no_console_errors": true,
+    "mermaid_renders": true,
+    "screenshot_saved": true
+  }
+}

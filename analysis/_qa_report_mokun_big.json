@@ -1,0 +1,21 @@
+{
+  "variant": "from-big-template",
+  "html": "/home/big/Documents/ommiself/deliver/html/forecast-mokun-from-big-template.html",
+  "viewport": {"width": 1280, "height": 800},
+  "pageErrors": [],
+  "consoleErrors": [],
+  "mermaidSvgs": 3,
+  "placeholderCount": 0,
+  "overflowingCards": 0,
+  "titleText": "Forecast — Mokun (2 สิงหาคม 2005)",
+  "screenshot_1280x800": "/home/big/Documents/ommiself/analysis/_qa_render_mokun_big_1280x800.png",
+  "screenshot_full": "/home/big/Documents/ommiself/analysis/_qa_render_mokun_big_full.png",
+  "acceptance": {
+    "all_tokens_resolved": true,
+    "no_console_errors": true,
+    "mermaid_renders": true,
+    "screenshot_saved": true,
+    "title_mokun_specific": true
+  },
+  "notes": "Title doubled-replaced bug fixed (was 'Mokun (Mokun Mokun)' → now 'Mokun (2 สิงหาคม 2005)'). Mermaid script src corrected from 'mermaid.min.js' → 'vendor/mermaid.min.js'."
+}

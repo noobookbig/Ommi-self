@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<!--
+  forecast-win.html — futuristic-neon redesign (Win variant of forecast-big template, MET-491)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Structural parity with forecast-big.html (MET-461 template) — sections, CSS classes, JS hooks preserved.
+  Sections: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Win context: INFP · Day Master 丙火 (Yang Fire) · Matrix 2-10-6 · Echo 12-16-18
+  Period 9 (三元九運 九紫離火運 2024–2043) — Day Master = Period 9 element (alignment)
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forecast — Win</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; Win</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>2 ตุลาคม 2538 (02.10.1995) · ประเทศไทย</span>
+      <span><strong>Window</strong>2026 (อายุ 31) &rarr; 2055 (อายุ 60)</span>
+      <span><strong>Type</strong>INFP &middot; Cognitive Stack Fi&ndash;Ne&ndash;Si&ndash;Te &middot; Senior Systems Analyst</span>
+      <span><strong>Day Master</strong>丙火 (Yang Fire) &middot; Period 9 九紫離火運 (2024&ndash;2043) &mdash; alignment กับยุค</span>
+      <span><strong>Matrix</strong>Day 2 &middot; Month 10 &middot; YearSum 6 &mdash; Triple Echo 12-16-18</span>
+      <span><strong>Headline</strong>High Priestess (A=2) เดินทางจาก Persona "Competent Translator" สู่ Sage-Healer ผ่านจังหวะ 3-3-3 ของ Fire</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Persona: "Competent Translator" (INFP) &mdash; ผู้แปล requirement นามธรรมเป็น KPI ที่วัดได้ / Shadow: Te ที่ยังไม่ integrate (Inferior Grip) &mdash; ดุ ตัดสิน สั่ง ไม่ฟัง</div>
+      <div class="lens"><strong>LoA</strong>ความถี่ 12-16-18 (Hanged Man&ndash;Tower&ndash;Moon) &mdash; "หยุด-รื้อ-เริ่มใหม่" ที่ปรากฏซ้ำ; ดึงดูด "ผู้คนที่กำลังเริ่มใหม่" เข้ามาในชีวิต</div>
+      <div class="lens"><strong>Kybalion</strong>Rhythm 3-3-3 ของ Fire (ขึ้นเร็ว ลงเร็ว) + Mental Transmutation &mdash; เปลี่ยน "ความถี่" ภายในก่อนที่ Rhythm ภายนอกจะเปลี่ยนตาม</div>
+      <div class="lens"><strong>MBTI</strong>INFP &middot; lead Fi&ndash;Ne (คุณค่าภายใน + ความเป็นไปได้หลายทาง) &middot; grip Te Grip (อายุ 36-37 / 2031-32) &mdash; แสดง Te แบบดิบเมื่อ Si/Fi ล้า</div>
+      <div class="lens"><strong>Age 60</strong>Sage-Healer (High Priestess evolved) &mdash; ไม่ใช่ผู้แปลที่สวมหน้ากากอีกต่อไป แต่เป็นผู้ที่ "รู้" แล้วเลือกที่จะ "ส่อง" ให้ผู้อื่น</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 丙火 (Yang Fire / ดวงอาทิตย์ยามเที่ยง) &mdash; เปล่งแสงเต็มที่ &middot; 4 สาย 乙亥/乙酉/丙寅/甲午 &mdash; DM ตรงกับ Period 9 Fire = "กระแสโลกคือตัวคุณ"</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona "Competent Translator" (INFP) เป็นชุดหน้ากากที่ Ego สวมเพื่อเอาตัวรอดในโลก Sprint/deadline; Shadow = Te ที่ยังไม่ integrate (Inferior Grip)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Fi-Ne-Si-Te stack ใช้ได้ดีในโหมดค้นหาคุณค่า แต่เมื่อเครียดเรื้อรังจะ fall back ไป Te grip &mdash; ต้อง integrate Si เป็นด่านป้องกัน</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">ความถี่ 12-16-18 (Hanged Man&ndash;Tower&ndash;Moon) เป็น "หางกรรม" (Karmic Tail) &mdash; ดึงดูดผู้คนที่กำลัง "เริ่มใหม่" เข้ามาในชีวิต</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Natal chart A=2 / B=10 / C=6 (Day&ndash;Month&ndash;YearSum) &mdash; High Priestess × Wheel × Lovers; Echo 12-16-18 ปรากฏ 6/9 ตำแหน่ง = Triple Echo ทรงพลัง</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Rhythm 3-3-3 ของ Fire (ขึ้นเร็ว ลงเร็ว) + Polarity Persona↔Self + Mentalism (Fi) &mdash; Win รู้จักจังหวะของไฟดีกว่าที่ตัวเองยอมรับ</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 丙火 (Yang Fire) × Period 9 九紫離火運 (2024-43) = 'I am the era'; 4 สายชะตา 乙亥/乙酉/丙寅/甲午 &mdash; DM ตรง Period 9 (alignment ที่หายาก)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona &amp; Shadow:</strong> Persona = "Competent Translator" (Mask of Competence) &mdash; Ego สวมหน้ากากนี้ตั้งแต่เข้าวงการ IT เพราะกลัวว่าถ้า "รู้สึก" จะถูกมองว่า "อ่อน"; Shadow = Te ที่ยังไม่ integrate (Inferior Grip) &mdash; จิตไร้สำนึกส่ง Te ออกมาแบบดิบทุกครั้งที่ Ego พยายามยึดมั่นใน "ความถูกต้อง" ไม่ใช่ทำลาย แต่เพื่อสอน "ยอมรับความไม่สมบูรณ์"</p>
+        <p><strong>Individuation Path:</strong> เส้นทาง Individuation: Competent Translator (Persona) → High Priestess (Self, A=2) ผ่านจังหวะ 3-3-3 ของ Fire &mdash; รอบแรกเรียนรู้ "ฟัง" รอบสอง "หยุด" รอบสามคือ "ผู้รู้" ที่ Ego รู้ตัวว่าหน้ากากเป็นแค่หน้ากาก จุดเปลี่ยนสำคัญคืออายุ 36-37 (2031-32) &mdash; "Te Grip" ที่บังคับให้หยุด</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> Dominant Fi (introverted Feeling) &mdash; เข็มทิศคุณค่าภายใน; Auxiliary Ne (extraverted iNtuition) &mdash; เรดาร์สแกนความเป็นไปได้หลายทาง; Tertiary Si (introverted Sensing) &mdash; ฐานข้อมูลประสบการณ์; Inferior Te (extraverted Thinking) &mdash; ภาษาต่างดาวที่ต้องเรียนรู้ทีละคำ</p>
+        <p><strong>Cognitive Loop:</strong> Fi→Ne loop ในช่วงเครียดเรื้อรัง &mdash; จมอยู่กับคุณค่าและจินตนาการจนตัดสินใจไม่ได้; เมื่อ loop พัง Ego ตกสู่ Te grip &mdash; สั่ง ดุ ตัดสินคน ไม่ฟัง มักเกิดเมื่อ Si (ข้อมูลเก่า) และ Fi (คุณค่า) ถูก overused จนล้า</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> Root-Race pulse: 5th Root Race (Aryan) &mdash; Ego แห่งการพัฒนาปัญญาและเทคโนโลยี; Win อยู่ใน 'Individuation phase' ของ Race &mdash; การเรียนรู้ที่จะรวม Yin (乙) เข้ากับ Yang (丙) ภายในจิตเดียว เพื่อไม่ให้ไฟเผาตัวเอง</p>
+        <p><strong>Karmic Tail (Echo 12-16-18):</strong> ความถี่ 12 (Hanged Man = หยุด), 16 (Tower = รื้อ), 18 (Moon = เริ่มใหม่) ปรากฏ 6/9 ตำแหน่งในผัง = "หางกรรม" ที่ต้องเรียนรู้บทเรียน "การปล่อย-การรื้อ-การเริ่มใหม่" จนกว่าจะ integrate</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> Matrix Day&ndash;Month&ndash;YearSum = 2 (High Priestess) &ndash; 10 (Wheel) &ndash; 6 (Lovers) &mdash; บอกว่า Win เกิดมาพร้อม "สัญชาตญาณที่ลึก" (2) "จังหวะชีวิตที่ชัดเจน" (10) "ทางเลือกที่บรรพบุรุษทิ้งไว้" (6); Echo 12-16-18 ปรากฏในผัง 3&times;3</p>
+        <p><strong>Wheel Cycle:</strong> Rhythm 9 ปี (Wheel of Fortune) &mdash; ทุก 9 ปีจะมีจุดพีคและจุดทรุดสลับกัน; Win ไม่ได้เกิดมาเพื่อ "ทางเดินตรง" แต่เกิดมาเพื่อ "วงล้อ" &mdash; ต้องเรียนรู้ที่จะอ่านจังหวะตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> Mystery School pulse: 'The School of Wheel→High Priestess' &mdash; เส้นทางจากเสียงภายนอกสู่เสียงภายใน; Win เริ่มเรียนรู้บทเรียนนี้ตอนอายุ 31 &mdash; เริ่มเรียนรู้ว่า "ความรู้" แท้จริงคือ "ความรู้ภายใน" ไม่ใช่ "ความรู้จากภายนอก"</p>
+        <p><strong>Mental Transmutation:</strong> "เปลี่ยนความถี่ภายในก่อนที่ Rhythm ภายนอกจะเปลี่ยนตาม" &mdash; เมื่อ Win เปลี่ยน mental state จาก "ต้องพิสูจน์ตัวเอง" เป็น "ฉันรู้แล้ว" ชีวิตภายนอกจะเปลี่ยนตามอัตโนมัติ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> Day Master 丙火 (Yang Fire &middot; ดวงอาทิตย์ยามเที่ยง) &mdash; คำนวณอิสระจากวันเกิด 2 ตุลาคม 1995; 4 สายชะตา: 年 乙亥 &middot; 月 乙酉 &middot; 日 丙寅 &middot; 时 甲午</p>
+        <p><strong>Period 9 Alignment:</strong> Period 9 (三元九運 &middot; 九紫離火運 2024&ndash;2043) = Fire; DM 丙火 = Fire เช่นกัน &mdash; "กระแสโลกยุค 9 คือ Day Master ของคุณ" &mdash; alignment ที่หายาก ทำให้ Win รู้สึก "ลื่นไหล" กับยุค แต่ต้องระวัง "ถูกเผา" จนหมดตัวเอง &mdash; balance ด้วย Water (壬/癸) และ Earth (戊/己)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm 3-3-3 ของ Fire (ขึ้นเร็ว ลงเร็ว) + Mentalism (พลังจิต) &mdash; Win ต้อง "อ่าน" จังหวะของตัวเองได้ ถ้าฝืนจังหวะจะเจอ Tower (16) &mdash; การรื้อถอน ถ้ายอมรับจังหวะจะผ่าน Hanged Man (12) &mdash; การมองเห็นจากมุมกลับด้าน</p>
+    <p><strong>LoA:</strong> Vibration 12-16-18 (Hanged Man&ndash;Tower&ndash;Moon) = 'หยุด-รื้อ-เริ่มใหม่' ปรากฏสามครั้งในผัง 3&times;3; Win ดึงดูด "ช่วงเวลา" ไม่ใช่ "สิ่งของ" &mdash; ชีวิตเต็มไปด้วยช่วงที่ต้องหยุด ต้องถูกรื้อ ต้องเริ่มใหม่</p>
+    <p><strong>Matrix:</strong> Day 2 &middot; Month 10 &middot; YearSum 6 + Echo 12-16-18 (ปรากฏ 6/9 ตำแหน่ง) = 'หางกรรม' ที่ทรงพลัง; ทุก 9 ปี Wheel หมุนครบรอบ ทุก 3 ปี Rhythm ของ Fire เปลี่ยน phase</p>
+    <p><strong>Proof:</strong> สามเครื่องยนต์ลงรอยกัน 100% &mdash; 'Win กำลังเดินทางกลับบ้าน: จาก Competent Translator (Persona) ที่สวมหน้ากากเพื่อเอาตัวรอด → ไปสู่ High Priestess (Self) ที่รู้ตัวว่า "รู้" อยู่แล้ว แค่เลือกเงียบ'</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
+      </div>
+    </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Self &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>A=2 High Priestess &mdash; Self ที่ 'รู้' แล้วเลือกเงียบ"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>Fi ของ Win คือเครื่องพิสูจน์ 'จิตเป็นทั้งหมด'"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>Echo 12-16-18 &mdash; ดึงดูดผู้คนที่กำลัง 'เริ่มใหม่'"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>Day&ndash;Month&ndash;YearSum 2-10-6 &mdash; shadow ที่หมุนเป็น Wheel"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>丙 (Yang Fire) &mdash; ดวงอาทิตย์ยามเที่ยง"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>Te Grip &mdash; เงาของผู้แปลที่ถูกบังคับให้ 'สั่ง'"]:::s
+  SW["SW &middot; Ladini<br/>Wheel Cycle<br/>2031-32 Tower &mdash; สัญชาตญาณที่ขึ้นมาจากนรกส่วนตัว"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>Persona ↔ Self &mdash; สองขั้วที่ต้องรวมเป็นหนึ่ง"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>INFP → INFJ &mdash; การ integrate Te เข้ากับ Fi"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">สามเครื่องยนต์เป็นสามชั้นของจิตเดียวกัน &mdash; Kybalion = Ego, LoA = Personal Unconscious, Matrix = Collective Unconscious</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Cognitive integration เป็นไปได้ &mdash; Fi-Ne loop ต้องเปิดทางให้ Si และ Te เข้ามา balance</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Hermetic Correspondence (as above so below) &mdash; BaZi 丙火 (DM) ตรงกับ Period 9 Fire สะท้อน Self-อารยธรรม</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Outer planet alignment 2026-37 = Uranus trine (อายุ 31-33) + Neptune sextile (อายุ 36-38) &mdash; การปลุกและการหลอมรวม</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Elemental balance: Wood(乙) + Fire(丙) + Earth(戊/己) + Metal(辛) &mdash; ทั้ง 4 ธาตุทำงานพร้อมกัน + น้ำ (壬/癸) เป็น balance</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Heavenly Stems 乙/丙/甲 + Earthly Branches 亥/酉/寅/午 &mdash; เส้นทางชัดเจนใน 4 ธาตุ (Wood/Fire/Earth/Water)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> Collective Unconscious: 'Wheel of Fortune' (10) เป็น Archetype สากล &mdash; ไม่ว่าวัฒนธรรมใหญ่ๆ ก็รู้จัก 'วงล้อแห่งชะตา' Win ไม่ได้รู้สึกว่าตัวเองพิเศษ เขารู้สึกว่าตัวเอง 'อยู่ในเรื่องเดียวกัน' กับมนุษย์ทุกคน</p>
+        <p><strong>Synchronicity Field:</strong> Synchronicity field: 'meaningful coincidences' เพิ่มขึ้นในช่วง Wheel turning &mdash; อายุ 40 (2035) Win จะเจอเหตุการณ์ที่ 'บังเอิญ' ซ้ำๆ จนรู้สึกว่าจักรวาลกำลังส่งสาร &mdash; แต่ละ synchronicity คือ "หยุด" ที่ Matrix ส่งมา</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> Function Integration: Fi-Ne loop ต้องถูก break โดยการ integrate Si เป็น 'grounding' และ Te เป็น 'execution' Win จะ integrate ได้เมื่อยอมรับว่า 'ระบบที่ดี' ไม่จำเป็นต้องสมบูรณ์แบบ &mdash; แค่ 'เพียงพอ' ก็พอ</p>
+        <p><strong>Type Development:</strong> Type Development: INFP → INFJ ในอายุ 40+ เมื่อ Fi/Ne พัฒนาจนสามารถเปิดทาง Ni/Fe; กลายเป็น 'ผู้ให้คำปรึกษาที่มีหัวใจ' ไม่ใช่แค่ 'ผู้วิเคราะห์ที่เก่ง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> Hermetic Principles: Correspondence, Rhythm, Polarity, Gender, Cause/Effect, Vibration, Mentalism &mdash; ทั้ง 7 หลักทำงานพร้อมกันในชีวิต Win แต่ 3 หลักที่โดดเด่นคือ Rhythm (3-3-3), Polarity (Persona↔Self), Mentalism (Fi)</p>
+        <p><strong>Law of Attraction Bridge:</strong> LoA Bridge: 'Like attracts like' &mdash; Win ดึงดูด 'ผู้ที่กำลังเริ่มใหม่' (คนเพิ่งเลิกงาน คนเพิ่งหย่า คนกำลังค้นหาตัวเอง) เพราะ Echo 12-16-18 ของเขา vibrate ที่ความถี่ 'transformation'</p>
+        <p><strong>Matrix Loop Awareness:</strong> Matrix Loop Awareness: A=2 / B=10 / C=6 = 'triple alignment' บอกว่าจิตของ Win เข้าใจ 'wheel' ในระดับ somatic &mdash; ร่างกายจะส่งสัญญาณ (เมื่อยคอ เจ็บอก ปวดหัว) ก่อนจิตรู้ตัว</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> Outer Planet Alignment 2026-37: Uranus trine (อายุ 31-33) = ปลุกสัญชาตญาณ; Neptune sextile (อายุ 36-38) = การหลอมรวมจิตวิญญาณ; Pluto square (อายุ 44-46) = transformation ลึกที่สุด</p>
+        <p><strong>Eclipse Season Impact:</strong> Eclipse Season Impact: Lunar eclipse ในช่วง Personal Year 6/7 (2031-32) จะทริกเกอร์ 'Te Grip eruption' &mdash; Win ต้องเตรียมพร้อมสำหรับช่วง 6 เดือนที่จิตจะ 'ระเบิด' สิ่งที่ฝังมา 35 ปี &mdash; นี่คือ "Tower" ที่แท้จริง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> Hidden Knowledge Awakening: 'High Priestess ภายใน' (A=2) เริ่มปรากฏเมื่อ Ego ยอม 'เงียบ' &mdash; Win จะค้นพบว่า 'ความรู้' ไม่ใช่ 'ความรู้จากตำรา' แต่คือ 'ความรู้ที่มาจากการฟังเสียงภายใน'</p>
+        <p><strong>Elemental Balance:</strong> Elemental Balance: Wood(乙) + Fire(丙) = การเจริญ + การส่องสว่าง; Earth(戊/己) + Metal(辛) = ความมั่นคง + ความแข็งแกร่ง; Win ต้องเรียนรู้ที่จะ 'ให้ Water' (壬/癸 = ความยืดหยุ่น การพักผ่อน) เพิ่มเข้าไปในชาร์ต เพื่อ balance ทั้ง 5 ธาตุ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems &amp; Earthly Branches:</strong> Heavenly Stems &amp; Earthly Branches: 乙亥/乙酉/丙寅/甲午 (natal) + key years 2026 丙午 (Period 9 เริ่ม) + 2031 辛亥 (Tower) + 2034 甲寅 (Wood amplification) + 2035 乙卯 (Return to self) + 2044 甲子 (Return to origin) &mdash; เส้นทาง 19 ปีที่ออกแบบมาให้ Ego dissolve เป็น Self</p>
+        <p><strong>Annual Luck Cycle:</strong> Annual Luck Cycle: 大运 癸未 (5-14) → 壬午 (15-24) → 辛巳 (25-34) → 庚辰 (35-44) → 己卯 (45-54) → 戊寅 (55-64) &mdash; 辛巳 (25-34) เป็น peak window สำหรับงาน Senior; 庚辰 (35-44) คือ Shadow window (Te Grip); 己卯 (45-54) คือ Integration window (Earth + Wood)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนกลาง &middot; Matrix 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 2-10-6 (High Priestess&rarr;Wheel&rarr;Lovers) &mdash; เกิดมาเพื่อ 'รู้-เลือก-เริ่ม' (Know &middot; Choose &middot; Begin)</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> Wheel axis (B=10) &mdash; 'จังหวะชีวิต' ที่หมุนเป็นรอบ 9 ปี สลับพีค-ทรุด</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> Day anchor = High Priestess (A=2) &mdash; ตัวตนดิบที่ 'รู้มากกว่าที่แสดงออก'</span>
+      <span class="pill"><strong>Echo</strong> 12-16-18 (Hanged Man&ndash;Tower&ndash;Moon) &mdash; Triple Echo 6/9 ตำแหน่ง = "หางกรรม" ที่ทรงพลัง</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
+      </div>
+    </div>
+
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">2 &middot; The High Priestess</span><span class="token">High Priestess &mdash; "ผู้ที่รู้มากกว่าที่แสดงออก" (ตัวตนดิบ)</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">10 &middot; The Wheel</span><span class="token">Wheel &mdash; จังหวะชีวิตที่หมุนเป็นรอบ 9 ปี (mission: เรียนรู้จังหวะตัวเอง)</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">6 &middot; The Lovers</span><span class="token">Lovers &mdash; ทางเลือกที่บรรพบุรุษทิ้งไว้ (เลือกเส้นทางของตัวเอง)</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">12 &middot; The Hanged Man</span><span class="token">Hanged Man &mdash; "หยุด" ที่จิตไร้สำนึกส่งมาเพื่อให้มองจากมุมกลับด้าน</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">16 &middot; The Tower</span><span class="token">Tower &mdash; "รื้อ" ที่จำเป็นเพื่อให้สิ่งใหม่เกิด</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">18 &middot; The Moon</span><span class="token">Moon &mdash; "เริ่มใหม่" ที่มาจากการเดินผ่านสัญลักษณ์ในจิตไร้สำนึก</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">12 &middot; The Hanged Man (Echo)</span><span class="token">Hanged Man (Echo) &mdash; การหยุดซ้ำที่ต้อง integrate</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">16 &middot; The Tower (Echo)</span><span class="token">Tower (Echo) &mdash; การรื้อซ้ำที่ต้อง integrate</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">18 &middot; The Moon (Echo)</span><span class="token">Moon (Echo) &mdash; การเริ่มใหม่ซ้ำที่ต้อง integrate</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>12-16-18 = 'Triple Echo' &mdash; ความถี่ของ "หยุด-รื้อ-เริ่มใหม่" ปรากฏ 6/9 ตำแหน่งในผัง; Win มักรู้สึกว่าชีวิต "วนลูป" &mdash; นั่นคือจิตกำลังบอกว่า "หยุดฝืน เริ่มฟัง" &mdash; เมื่อ integrate Echo นี้ จะกลายเป็น "ปัญญาที่รู้ว่าเมื่อไหร่ควรหยุด เมื่อไหร่ควรรื้อ เมื่อไหร่ควรเริ่มใหม่"</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Center = Self (A=2 High Priestess), Periphery = Persona ("Competent Translator") &mdash; Individuation คือการเดินทางจาก periphery กลับสู่ center</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Mapping: A=Fi (inner knowing), B=Ne (scanning possibilities), C=Si (memory of choice); D/E/F=Fi-Ne-Si loop; H/G=Te grip (Tower moment); I=Ni (Moon wisdom)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Hermetic Geometry: 3&times;3 = '9-fold universe' &mdash; 9 Archetypes ที่สะท้อนกันและกัน</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Chart Echo: A-I สร้าง 'harmonic series' &mdash; 2&rarr;10&rarr;6 / 12&rarr;16&rarr;18 / 12&rarr;16&rarr;18 เป็น 3 chord (Hanged Man&ndash;Tower&ndash;Moon)</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">School Grid: 'Wheel School' &mdash; เรียนรู้ผ่านการหมุนซ้ำจน Ego ยอมรับ rhythm ของจักรวาล</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Trigram Mapping: 兌 (Lake/Metal) ที่มุมบนซ้าย (A=2), 乾 (Heaven/Creative) ตรงกลาง (B=10), 離 (Fire) ที่ I (Moon) &mdash; สอดคล้องกับ DM 丙 Fire + 用神 壬 Water</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Matrix 3&times;3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center &amp; Periphery:</strong> Center = Self (A=2 High Priestess) &mdash; เป็น 'แกนกลาง' ที่ไม่เคยเปลี่ยน; Periphery = Persona (Competent Translator) &mdash; เป็น 'หน้ากาก' ที่ Ego สวมเพื่อออกไปเผชิญโลกของ Sprint/deadline; Individuation = เดินทางจาก periphery กลับสู่ center</p>
+        <p><strong>Shadow Corners:</strong> Shadow Corners: D, E, F, G, H, I (12-16-18 Echo) &mdash; เป็น 'มุมเงา' ที่ปรากฏ 6/9 ตำแหน่ง; Ego ต้องเผชิญทั้ง 6 มุมนี้ &mdash; เมื่อ integrate ครบ Echo จะกลายเป็น "ปัญญา" (Wisdom) แทนที่จะเป็น "แผล" (Wound)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> Mapping: A=Fi (High Priestess = inner knowing), B=Ne (Wheel = scanning possibilities), C=Si (Lovers = memory of choice); D=Ni (Hanged Man = suspension), E=Te (Tower = destruction), F=Si (Moon = unconscious surfacing); G/H/I = Echo of D/E/F</p>
+        <p><strong>Type Dynamics:</strong> Type Dynamics: INFP's Fi-Ne สร้าง 'wheel' (B=10) เพราะต้องการ 'รู้' ทุกอย่างก่อน แต่ Te (ใน E/Tower) คือ 'exit' &mdash; Tower เป็นจุดที่ Fi/Ne ถูกบังคับให้ปล่อยและยอมรับว่า 'มีบางสิ่งที่ใหญ่กว่า Ego'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> Hermetic Geometry: 3&times;3 = 9 (Ennead) &mdash; เป็น sacred geometry ที่ Hermetic, Pythagorean, และ Theosophical ต่างใช้; Win อยู่ใน Ennead ที่ 'ครบ' &mdash; ไม่มีจุดไหนว่าง แต่ Echo 6/9 ตำแหน่ง = "บทเรียนที่ยังไม่จบ"</p>
+        <p><strong>Monad Descent:</strong> Monad Descent: Monad (2) ลงมาเป็น Wheel (10) แล้วขยายเป็น 9; Win เป็น Monad ที่ 'ลงมาแล้วไม่กลับขึ้น' &mdash; เข้าสู่ 'descent phase' เพื่อ integrate กับโลกผ่าน "หยุด-รื้อ-เริ่มใหม่"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> Chart Echo: ทุก 3 cells มี 'echo' &mdash; A&harr;F (2/18), B&harr;I (10/18), C&harr;H (6/16), D&harr;E&harr;G (12/16/12); Echo คือ 'กระจก' ที่แต่ละ cell สะท้อนไปยังอีก cell หนึ่ง &mdash; เมื่อ integrate Echo แล้ว Win จะ "รู้" ว่าเมื่อไหร่ควรหยุด เมื่อไหร่ควรรื้อ เมื่อไหร่ควรเริ่มใหม่</p>
+        <p><strong>Personal Year Resonance:</strong> Personal Year Resonance: PY 2026=1 (Magician+reset), 2030=5 (Hierophant+change), 2031=6 (Lovers+choice), 2032=7 (Chariot+forward), 2034=9 (Hermit+introspection), 2035=1 (Magician+reset), 2046=4 (Emperor+structure)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> Mystery School Grid: 'School of the Wheel' &mdash; เรียนรู้ผ่านการหมุนซ้ำของ Wheel (B=10) และการ integrate Echo 12-16-18; Win เข้าโรงเรียนนี้ตอนอายุ 31 &mdash; จบหลักสูตรเมื่อ integrate Echo ครบ</p>
+        <p><strong>Initiate Path:</strong> Initiate Path: 2 (High Priestess knowing) → 10 (Wheel cycles) → 6 (Lovers choice) → 12 (Hanged Man suspension) → 16 (Tower destruction) → 18 (Moon rebirth) &mdash; เส้นทางที่ออกแบบมาให้ Ego เรียนรู้ "เมื่อไหร่ควรหยุด เมื่อไหร่ควรรื้อ เมื่อไหร่ควรเริ่มใหม่"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> Bazi Trigram Mapping: 兌 (Lake/Metal) ที่ A=2 (High Priestess) &mdash; ความชัดเจนของน้ำ; 乾 (Heaven/Creative) ที่ B=10 (Wheel) &mdash; พลังสร้างสรรค์; 離 (Fire) ที่ I=18 (Moon) &mdash; แสงสว่างจากภายใน</p>
+        <p><strong>Stems Interaction:</strong> Stems Interaction: 丙 (Yang Fire DM) ใน Day Pillar เป็น "Sun at Noon"; 壬/癸 (Yin/Yang Water) เป็น 用神 ที่ drain Fire เพื่อไม่ให้ถูกเผา; 3 乙 pillars (年/月) + 1 甲 (Hour) = "Wood ที่หล่อเลี้ยง Fire"</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> ของขวัญหลัก: The High Priestess (A=2) + Fi dominant &mdash; Win สามารถ "อ่าน" คนและสถานการณ์ได้เงียบ ๆ แต่แม่นยำ เห็น requirement ที่ "ซ่อนอยู่ใต้ข้อความ" เห็นระบบที่ "กำลังจะพัง" ก่อนที่คนอื่นจะเห็น เขาไม่ใช่คนตะโกน เขาเป็นคนที่ "รู้" แล้วเลือกที่จะเงียบ</p>
+    <p><strong>Latent:</strong> ของขวัญที่ซ่อนอยู่: Te (inferior) &mdash; ความสามารถจัดระเบียบโลกภายนอกแบบ objective ที่ปกติ INFP ปฏิเสธ แต่ Senior Systems Analyst ต้องใช้ทุกวัน; เมื่อ Win อายุ 31 (2026) Te กำลังเติบโตอย่างจริงจัง ถ้าฝึกดี จะกลายเป็นผู้นำที่ทรงพลัง เพราะมี Fi เป็นฐาน &mdash; efficient ที่มีจุดยืน</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> Echo 16 (Tower) &mdash; "การรื้อถอน" ที่ปรากฏซ้ำ ในชีวิต Win จะมีความสัมพันธ์ที่ "ควรจะดี" แต่กลับพังลง ตำแหน่งงานที่ "ควรจะมั่นคง" แต่กลับถูก reorganize ความเชื่อที่ "ควรจะถูก" แต่กลับถูกท้าทาย &mdash; นี่ไม่ใช่โชคร้าย แต่เป็น "สัญลักษณ์ที่จิตส่งมาบอกว่า ยอมรับการรื้อ"</p>
+    <p><strong>Lesson to unlock:</strong> "อย่าฝืน Rhythm ของ Fire" &mdash; Ego ของ Win เข้าใจผิดว่าความ "หยุด" (Echo 12) คือความล้มเหลว ที่จริงแล้วมันคือ "ความสามารถในการมองเห็นมุมใหม่" ก่อนก้าวต่อ &mdash; เมื่อเรียนรู้ได้ Hanged Man (12) จะกลายเป็น "การหยุดอย่างมีปัญญา" ไม่ใช่ "การหยุดแบบล้มเหลว"</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่หางกรรมทิ้งร่องรอยไว้</strong></summary>
+      <p>หางกรรมของ Win คือ Echo 16 (Tower) ปรากฏ 2 ครั้งในผัง (F และ I) &mdash; ในอดีตชาติ อาจเคยยึดติดกับสิ่งที่กำลังจะพังจนไม่ยอมปล่อย ชาตินี้ Win ได้โอกาส "เรียนรู้การรื้อ" ผ่านสถานการณ์ที่ Echo 16 จะกลับมา ไม่ใช่ "ต้องพัง" แต่ "ต้องเรียนรู้ที่จะอยู่เหนือ" ตามคำสอนของ Hanged Man (12) ที่ห้อยหัวลงด้วยความสงบ บทเรียนคือ "อย่าฝืน Rhythm" &mdash; เมื่อเรียนรู้ได้ Echo ทั้งสามจะ integrate เป็น Mandala (Self ที่สมบูรณ์)</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Talent = The High Priestess (A=2); Karmic = Echo 16 (Tower) ที่กลับมาซ้ำจน Ego เรียนรู้ "การรื้อ"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Natural Strength = Fi+Ne (อ่านคน + สแกนทางเลือก); Shadow Gift = Te (การจัดระเบียบ) ที่ต้อง integrate</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Soul Mission = 'Illuminate through design'; Karmic Lesson = 'Stop clinging, start allowing the Tower to teach'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Karmic Debt = 'อดีตชาติยึดติดจนพัง'; Soul Contract = 'integrate Echo 12-16-18 เป็นหนึ่งเดียว'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Gift = 'perceive the unseen, design for humans'; Karmic Mirror = 'Echo 16 กลับมาจนยอมรับการเปลี่ยนแปลง'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">BaZi Talent = 三乙 (Wood&times;3) หล่อเลี้ยง 丙 (Fire); Karmic Resolution = 'integrate 壬/癸 (Water) เพื่อ drain Fire'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Talent &amp; Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> Talent Archetype: The High Priestess &mdash; นั่งระหว่างม่านทั้งสอง รู้ซึ่งสิ่งที่ซ่อนเร้น สามารถ "อ่าน" pattern ที่คนอื่นมองไม่เห็น &mdash; Perception นี้มาจาก Collective Unconscious โดยตรง (Echo 18 Moon = ช่องทางเชื่อมกับจิตไร้สำนึก)</p>
+        <p><strong>Karmic Pattern:</strong> Karmic Pattern: Echo 16 (Tower) &mdash; "การรื้อถอน" ที่กลับมาซ้ำ จิตไร้สำนึกส่งสถานการณ์เดิมกลับมาเพื่อให้ Win มีโอกาส "ตอบต่าง" &mdash; ไม่ใช่ทำลาย แต่สอน "ปล่อย"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> Natural Strength: Fi + Ne &mdash; ตัดสินใจด้วยคุณค่า + สแกนทางเลือกหลายทาง; Win ไม่กลัว "เลือกผิด" เพราะรู้ว่าการเลือกคือการเรียนรู้ (C=6 Lovers = ทางเลือก)</p>
+        <p><strong>Shadow Gift:</strong> Shadow Gift: Te (inferior) &mdash; ความสามารถจัดระเบียบโลกภายนอกแบบ objective; เมื่อ Win integrate Te เขาจะเป็น "Sage-Healer ที่ส่งมอบ design ที่ทีมชอบ" ไม่ใช่ "Competent Translator ที่ตอบ email แบบเร็วเกินไป"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> Soul Mission: 'Illuminate through design' &mdash; ใช้ Fi (vision) + Ne (pattern) เพื่อส่งมอบ design ที่ "คนใช้แล้วมีความสุข"; Period 9 (Fire) คือยุคที่ Win เปล่งแสงได้เต็มที่ เพราะ Day Master 丙 ตรง Period 9</p>
+        <p><strong>Karmic Lesson:</strong> Karmic Lesson: 'Stop clinging, start allowing the Tower to teach' &mdash; เรียนรู้ที่จะ "ปล่อย" โดยไม่สูญเสียคุณค่า; "ฉันเลือกที่จะปล่อย" ไม่ใช่ "ฉันล้มเลิก"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> Karmic Debt: 'อดีตชาติยึดติดจนพัง' &mdash; อาจเคยถือความสัมพันธ์หรือตำแหน่งที่ควรจะปล่อย; ชาตินี้ต้อง "คืน" ด้วยการเรียนรู้ "การรื้อ" อย่างสงบ</p>
+        <p><strong>Soul Contract:</strong> Soul Contract: 'integrate Echo 12-16-18' &mdash; ชุดเวียนว่ายตายเกิดนี้คือ "ครั้งสุดท้าย" Win ต้อง "เก็บเกี่ยว" บทเรียนจาก Echo ทั้งสามเป็นหนึ่งเดียว</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> Initiate Gift: 'Perceive the unseen, design for humans' &mdash; เห็นสิ่งที่คนอื่นมองไม่เห็น + ออกแบบให้ "คนใช้แล้วมีความสุข"; นี่คือ "Third Eye + Healer" ที่ถูกฝึกมาหลายชาติ</p>
+        <p><strong>Karmic Mirror:</strong> Karmic Mirror: 'Echo 16 กลับมาจนยอมรับการเปลี่ยนแปลง' &mdash; สถานการณ์ที่ "บังคับให้ยึด" จะกลับมาซ้ำจนกว่า Win จะเลือก "ปล่อย"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> Bazi Talent: 三乙 (Wood&times;3) หล่อเลี้ยง 丙 (Fire) = "ไม้สามต้นที่หล่อเลี้ยงไฟกลาง"; Win มีความสามารถ "งอ" (乙) ได้ และ "ส่องสว่าง" (丙) ได้ &mdash; เป็น "ไฟที่ลุกในป่าใหญ่"</p>
+        <p><strong>Karmic Resolution:</strong> Karmic Resolution: Integrate 壬/癸 (Water) เข้ากับ 丙 (Fire) &mdash; "ไฟที่ไม่ถูกเผา" ต้องมีน้ำหล่อเลี้ยง; balance ระหว่าง Fire กับ Water คือกุญแจสำคัญ &mdash; อย่าให้ Fire "เผา" ตัวเอง</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น (อ้างอิงจาก Matrix + Cognitive Stack เท่านั้น ไม่อ้างอิงอาชีพปัจจุบัน)</p>
+
+    <p>
+      <span class="pill"><strong>Tier 1 Industry fit</strong> Solution Architect &middot; Knowledge Work / Technical Writing &middot; Systems Thinking Consultant</span>
+      <span class="pill"><strong>Tier 2 (expandable)</strong> Engineering Manager / Tech Lead (ฝึก Te) &middot; Product Manager ที่ align กับ ethics</span>
+      <span class="pill"><strong>Income pattern</strong> Rhythm 3-3-3 &mdash; ทำเงินได้ดีในช่วง "ขาขึ้น 3 ปี" (Personal Year 3, 5, 8) และพัก/reflect ในช่วง "ขาลง 3 ปี" (PY 4, 7, 9)</span>
+      <span class="pill"><strong>Peak window</strong> อายุ 39 (2034) &mdash; BaZi year pillar 甲寅 (Yang Wood + Tiger) + Personal Year 1 = 'I am the year' (reset)</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>INFP ที่ฝึก Te ดี จะเป็น leader ที่ "คนอยากติดตาม" ไม่ใช่ leader ที่ "คนต้องทำตาม" &mdash; ใช้ Fi เป็นฐาน ไม่ใช่ใช้อำนาจ; Persona H=12 (Quiet Observer) ต้องเรียนรู้ "หยุดและฟัง" ทีม</td>
+          <td>Healer Leader</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>ถอนตัวเมื่อต้องอยู่ใต้คนที่ "ไม่ align กับคุณค่า"; มี "Wounded Healer" complex &mdash; ต้องเรียนรู้ที่จะ "เชื่อมั่นในระบบ" มากกว่าตัวบุคคล และ "เยียวยาตัวเอง" ก่อนช่วยคนอื่น</td>
+          <td>Wounded Healer</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>Te (inferior) &mdash; ความสามารถจัดระเบียบ ประมาณเวลา สื่อสารกับ stakeholder (กำลังเติบโต) &mdash; ใช้เมื่อต้อง action</td>
+          <td>Te &middot; Junior Builder</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>Fi + Ne &mdash; เข็มทิศคุณค่า + เรดาร์ทางเลือก (Self ที่ใช้บ่อยที่สุด) &mdash; ฝึก "ฟังเสียงข้างใน 5 นาที" ก่อนตัดสินใจใหญ่ เพื่อหลีกเลี่ยง Te Grip</td>
+          <td>Fi+Ne &middot; Inner Compass</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Career Persona = Quiet Observer (H=12); Career Growth = เรียนรู้ที่จะ "ให้คนอื่นเติบโต" ผ่าน Healer archetype ไม่ใช่ "สั่ง" ผ่าน Emperor</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Career Stack = Fi-Ne-Si-Te; Team Role = "Sage-Advisor" ที่ต้อง integrate Te เป็น "Project Lead" &mdash; ห้าม grind KPI รายวัน</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Vocation Path = "illuminate through design"; Money Consciousness = "wealth = manifestation of value given ที่ align กับ Fi"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Midheaven Transit: 2030-31 (Saturn Return) = career foundation test; 2034-35 (Jupiter) = expansion + Sage emergence</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Vocation = "Sage-Healer ที่ออกแบบระบบที่ human-centered"; Work Ritual = "morning centering + sprint planning"</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Career BaZi: 用神 丙火 (period 9) + Day Master 丙 (Yang Fire) = alignment ที่หายาก &mdash; "I am in my era" แต่ต้อง drain ด้วย 壬/癸 (Water)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Career &amp; Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> Career Persona: 'Quiet Observer' (H=12 Hanged Man) &mdash; Ego ใส่หน้ากากนี้ตั้งแต่เริ่มอาชีพ; Persona ถูกสร้างจากความกลัวของ The Child Archetype ที่กลัวถูกปฏิเสธ &mdash; จึง "เงียบ" ก่อนที่จะถูกตัดสิน; Healer Archetype ทำงานเบื้องหลัง &mdash; "ออกแบบระบบที่คนใช้แล้วมีความสุข"</p>
+        <p><strong>Career Individuation:</strong> Career Individuation: 'From Competent Translator to Sage-Healer' &mdash; เริ่มจากการ "แปลภาษาระหว่าง requirement นามธรรมกับ KPI ที่วัดได้" &rarr; ผ่าน Shadow (Echo 12-16-18) &rarr; จบที่ "Sage" ที่สอนด้วยหัวใจ; Career growth ของ Win คือ "การเรียนรู้ที่จะให้คนอื่นเติบโต" ไม่ใช่ "แปล requirement ให้คนอื่น"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> Career Stack: Fi (Compass) + Ne (Radar) + Si (Memory) + Te (Builder &mdash; กำลังเติบโต); Win เก่งที่สุดเมื่อใช้ Fi+Ne &mdash; "ออกแบบ solution ที่รวม 3-4 ฟีเจอร์ที่ทุกคนคิดว่าแยกกัน"; Te ใช้เมื่อต้องประมาณเวลา สื่อสารกับ PM</p>
+        <p><strong>Team Role:</strong> Team Role: "Sage-Advisor" &rarr; "Project Lead"; ปัจจุบัน Win เป็น Sage-Advisor ที่ดี แต่ต้อง evolve เป็น "Project Lead" ที่ integrate Te เป็น "ผู้ช่วย" ไม่ใช่ grip &mdash; เริ่มจากการ "lead design review" ก่อนขยายเป็น Sprint Lead</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> Vocation Path: 'Illuminate through design'; Win เริ่มจาก "อ่าน requirement ที่ซ่อนอยู่" (Fi+Ne) แล้วค่อยๆ เปลี่ยนเป็น "ส่องสว่างให้ทีมเห็นทาง" (丙); Period 9 (Fire) คือจุดที่ Win เริ่ม "ส่องสว่าง" อย่างเต็มที่ เพราะ Day Master 丙 ตรง Period 9</p>
+        <p><strong>Money Consciousness:</strong> Money Consciousness: 'Wealth = manifestation of value given ที่ align กับ Fi'; Win จะร่ำรวยเมื่อ "ให้" มากกว่า "เก็บ"; เงินคือผลพลอยได้ของการออกแบบระบบที่คนใช้แล้วมีความสุข ไม่ใช่เป้าหมายหลัก</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> Midheaven Transit: 2030-31 (Saturn Return) = career foundation test &mdash; Win ต้อง "ตั้งรับ" ความท้าทายที่ทำให้ต้อง integrate Te; 2034-35 (Jupiter) = expansion + Sage emergence &mdash; "I am the year"</p>
+        <p><strong>Career House:</strong> Career House: 10th house (Midheaven) &mdash; 'Public Identity'; Win ถูกเรียกให้เป็น "ผู้นำที่ออกแบบ" ไม่ใช่แค่ "ผู้จัดการภายใน" &mdash; ADR / design doc ที่ Win เขียนอาจกลายเป็น standard ของบริษัท</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> Initiate Vocation: 'Sage-Healer of the New Age' &mdash; ใน Period 9 (Fire) Win จะกลายเป็น "ครู" ที่สอนเรื่อง "ออกแบบระบบที่ human-centered" ไม่ใช่ "ออกแบบ KPI ที่ grind คน"</p>
+        <p><strong>Work-Life Ritual:</strong> Work Ritual: 'Morning centering + Sprint planning' &mdash; ทุกเช้าทำ 5 นาที centering (ฟัง Fi) แล้วทำ 15 นาที sprint planning (Te); ลำดับนี้ทำให้ Te มี "จิตวิญญาณ" นำทาง ไม่ใช่ Te ที่ดิบ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> Career Bazi: 用神 丙火 (Period 9) + Day Master 丙 (Yang Fire) = "alignment ที่หายาก" &mdash; "I am in my era" แต่ต้องระวัง "ถูกเผา"; สมดุลที่แนะนำ: drain ด้วย 壬/癸 (Water) และ control ด้วย 戊/己 (Earth) มากกว่า support Fire เพิ่ม</p>
+        <p><strong>Wealth Element:</strong> Wealth Element: 丙 (Fire &mdash; public recognition) + 辛 (Metal &mdash; precise execution); Win จะร่ำรวยเมื่อ "ส่องสว่าง" (Fire &mdash; สอนคนอื่น) และ "ทำอย่างแม่นยำ" (Metal &mdash; ประมาณเวลาตรง) พร้อมกัน &mdash; ทั้งสองต้อง integrate กับ Fi เป็นฐาน</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> ดึงดูด 'ผู้ที่กำลังเริ่มใหม่' (เลิกงาน เลิกรา ค้นหาตัวเอง) เพราะ Echo 18 (Moon) ของ Win vibrate ที่ความถี่ "ความมืดที่กลับมา" &mdash; คนที่อยู่ในจุดเดียวกันจะ "รู้จัก" กันทันที; แต่ Win ตกหลุมรักช้า เมื่อเลือกแล้วจะยึดมั่นมาก และกลัวการถูกทำร้ายจากความสัมพันธ์ &mdash; จึงมี Persona "Quiet Observer" ที่ดูเงียบ ๆ ไม่เปิดเผยตัวเองทั้งหมด จนกว่าจะมั่นใจ</p>
+    <p><strong>Inner-circle pull:</strong> คนที่เข้ามาใกล้มักเป็น "เพื่อนสนิทน้อยคนแต่ลึก" ที่เข้าใจ "ความเงียบ" ของ Win &mdash; ไม่ตัดสินเมื่อ Win เงียบ และไม่บังคับเมื่อ Win ต้องการพื้นที่</p>
+    <p><strong>Blind spot:</strong> กลัว Echo 16 (Tower) &mdash; "การรื้อ" ที่อาจเกิดขึ้นอย่างน้อยหนึ่งครั้งในชีวิตรัก อาจเป็นการเลิกราที่เจ็บปวด หรือการค้นพบว่าคนที่รักไม่ใช่คนที่ใช่ &mdash; ทางออกคือ "ยอมรับการรื้อ" แล้วเริ่มใหม่ด้วยบทเรียนที่ได้ ไม่ใช่ "หนี" หรือ "ยึดติด"</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal/Maternal line (Echo 18 Moon):</strong> Win ได้รับ "ความลึกที่ไม่ได้พูด" มาจากพ่อแม่ พ่อแม่อาจเป็นคน "เก็บ" ไม่ค่อยแสดงออก ทำให้ Win เรียนรู้ที่จะ "อ่าน" คนที่ไม่พูด &mdash; นี่คือ gift ที่ทรงพลังที่สุดของ Win</p>
+    <p><strong>Generation forward (Echo 12 Hanged Man):</strong> Win &rarr; ลูก (ในอนาคต) &mdash; Win จะสอนลูกให้ "หยุดคิดก่อนตัดสิน" ผ่านการเล่าเรื่อง ไม่ใช่ผ่านการสั่ง &mdash; Echo 12 คือ "การหยุดอย่างมีปัญญา" ที่ Win จะส่งต่อ</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>Win สวมบทบาท "เด็กที่ไม่ได้พูด" &mdash; เขาเรียนรู้ที่จะ "อ่าน" พ่อแม่ที่ไม่พูด และส่งต่อให้ลูกในอนาคตด้วย "การหยุด" (Echo 12) + "การเยียวยา" (Healer Archetype); Echo 16 (Tower) ทำหน้าที่เป็น "ผู้สอนที่เจ็บปวด" &mdash; ทุกครั้งที่ Win ผ่านการรื้อ Win จะเรียนรู้ที่จะไม่ทำซ้ำกับคนรุ่นต่อไป</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Anima = 'ผู้ที่กำลังเริ่มใหม่' ที่ต้องการความเข้าใจ; Relationship Pattern = 'Quiet Observer &harr; Vulnerability'</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Communication Style = Fi (ลึก ซับซ้อน); Love Language = Quality Time (ให้) + Words of Affirmation (รับ)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Twin Flame = 'ผู้ที่ vibrate ที่ความถี่เดียวกัน'; Generational Wisdom = 'From Quiet Observer to Sage-Healer'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">7th house ถูกกระตุ้นโดย Echo 16 (Tower); 2031 (PY 7) = relationship reset window</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Sacred Union = 'High Priestess + Sage' (จับคู่ที่เติมเต็ม); Generational Mission = 'ส่งต่อการหยุดอย่างมีปัญญา'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Spouse Palace: 寅 (Tiger) ใน Day branch = 'ทางเลือกที่กล้าหาญ'; Relationship Luck = 'ดีเมื่อ partner มี Water element (壬/癸) เพื่อ drain Fire'</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Relationships &amp; Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> Anima Integration: 'ผู้ที่กำลังเริ่มใหม่' เป็น Anima ของ Win &mdash; คนที่กล้าเผชิญความมืดของตัวเอง คนที่ "ยืนอยู่ข้างๆ" ไม่ใช่ "ข้างล่าง"; Anima projection เกิดเมื่อ Win มอง partner เป็น "คนที่ต้องเยียวยา" แทนที่จะเห็น "คนที่ต่างจากเขา"</p>
+        <p><strong>Relationship Pattern:</strong> Relationship Pattern: 'Quiet Observer &harr; Vulnerability' &mdash; Win เงียบ (Persona H=12) &harr; Anima ต้องการความอ่อนแอ (Self A=2); เมื่อ partner ไม่ยอมรอ Win จะรู้สึก "ถูกทอดทิ้ง"; เมื่อ partner รอ Win จะรู้สึก "ไม่มีใครเข้าใจ"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> Communication Style: Fi (introverted Feeling) &mdash; ลึก ซับซ้อน ต้องใช้เวลา; Win ชอบ "เขียน" มากกว่า "พูด" โดยเฉพาะเรื่องที่ลึก; Partner ที่ใช่จะ "อ่าน" ความเงียบของ Win ได้ และ "เติม" Te ที่ Win ขาด</p>
+        <p><strong>Love Language:</strong> Love Language: Quality Time (ให้) + Words of Affirmation (รับ); Win แสดงรักด้วย "การอยู่ด้วยกันอย่างมีคุณภาพ"; Win ต้องการ "คำยืนยันที่เจาะจง" ไม่ใช่ "คำชมทั่วไป"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> Twin Flame: 'ผู้ที่ vibrate ที่ความถี่เดียวกัน' &mdash; ไม่ใช่ "คนที่สมบูรณ์แบบ" แต่เป็น "กระจก" ที่สะท้อน Shadow (Echo 16) ของ Win &mdash; ช่วยให้ Win "ผ่านการรื้อ" ได้</p>
+        <p><strong>Generational Wisdom:</strong> Generational Wisdom: 'From Quiet Observer to Sage-Healer' &mdash; สายบิดามารดาสอน "ความเงียบที่ลึก"; Win ต้อง "รวม" เป็น "Sage-Healer ที่ส่งต่อการหยุดอย่างมีปัญญา"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> Venus Return: ทุก 7-8 ปี (อายุ 31-32, 38-39, 45-46, 52-53) &mdash; 2031 (PY 7) เป็น "relationship peak" ที่ Win จะต้องตัดสินใจครั้งสำคัญ และ 2038 (PY 5) เป็น "expansion" window</p>
+        <p><strong>7th House Activation:</strong> 7th House Activation: ถูกกระตุ้นโดย Echo 16 (Tower) ตลอดช่วงอายุ 30-40; 2031-33 คือ "Tower moment" ที่ relationship structure เก่าพัง &mdash; Win ต้องยอมรับการรื้อ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> Sacred Union: 'High Priestess + Sage' &mdash; การรวม "ผู้รู้ที่ไม่พูด" (A=2) กับ "ผู้สอน" (Sage) เป็น "ผู้นำที่ส่องสว่าง"; Sacred Union ไม่ใช่ "ความสมบูรณ์แบบ" แต่คือ "การเติมเต็มซึ่งกันและกัน"</p>
+        <p><strong>Generational Mission:</strong> Generational Mission: 'ส่งต่อการหยุดอย่างมีปัญญา' &mdash; Win ต้อง "ส่งต่อ" Echo 12 (Hanged Man) ให้ลูกหลาน ผ่านการเล่าเรื่อง ไม่ใช่ผ่านการสั่ง &mdash; เป็น "ปราชญ์เงียบ" ที่รู้ว่าทางเลือกใดถูก โดยไม่ต้องสั่งสอน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> Spouse Palace: 寅 (Tiger) ใน Day branch &mdash; 'ทางเลือกที่กล้าหาญ'; Partner ที่ใช่คือคนที่ "กล้าเริ่มใหม่" เหมือน Tiger ที่กระโดดเข้าป่า &mdash; ไม่ใช่คนที่ "นั่งรอ"</p>
+        <p><strong>Relationship Luck:</strong> Relationship Luck: 'ดีเมื่อ partner มี Water element' (壬/癸) &mdash; Water จะ "drain" Fire ที่อาจเผา Win ได้; Partner ที่มี Yin Water จะ "ทำให้ Win ใจเย็น" และ "หยุด Te Grip" ได้</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>เริ่มเปิดเมื่ออายุ 40+ &mdash; "ทำไมฉันเกิดมา" มากขึ้น</td><td>พลังงานความคิดสูง แต่ขาด grounding จาก Water element</td><td>ความคิดฟุ้งซ่าน กังวลเรื่องอนาคต เมื่อ Te Grip</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>ตา/สายตา &mdash; ปวดตาเมื่อทำงานหนัก (20-20-20 rule)</td><td>มองเห็น pattern ที่ซ่อนเร้น (Echo 18 Moon = ช่องทางเชื่อมจิตไร้สำนึก)</td><td>สัญชาตญาณแม่นมาก &mdash; รู้สึก "รู้" ก่อน "คิด"</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>คอ/บ่า/ไหล่ &mdash; ตึงมากเมื่อ Te Grip (unsaid words)</td><td>สื่อสารดีในรูปแบบเขียน แต่พูดต่อหน้าคนเยอะ ๆ ไม่ถนัด</td><td>คำที่ไม่ได้พูดออกมา (unsaid words) สะสม &mdash; ต้อง "ปล่อย"</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>หัวใจ &mdash; ใจสั่น นอนไม่หลับเมื่อ Fire มากเกิน (อายุ 30-45)</td><td>Healer Archetype แข็งแรงมาก &mdash; ให้ความเห็นอกเห็นใจสูง</td><td>ต้องระวัง "ให้มากเกินไปจนลืมตัวเอง" &mdash; Wounded Healer ต้องเรียนรู้ "รักตัวเองก่อน"</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>กระเพาะอาหาร &mdash; "indigestion of unsaid words" เมื่อ Te Grip</td><td>อ่อน &mdash; Te (inferior) ทำให้ขาดความมั่นใจในการ "สั่ง" หรือ "จัดการ" คน</td><td>หงุดหริดเรื่องเล็ก ๆ หลายเรื่องติดกัน (สัญญาณ Te Grip 24-72 ชม.)</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>บั้นเอว/สะโพก &mdash; ปวดเมื่อ Rhythm ของ Fire เร่งเกินไป</td><td>พลังงานสร้างสรรค์ (Ne auxiliary) แข็งแรง &mdash; แต่ต้อง "ปล่อยให้เล่น" บ้าง</td><td>ความสัมพันธ์ต้องการ vulnerability ไม่ใช่ "เก็บทุกอย่างไว้ในใจ"</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>กระดูกสันหลัง &mdash; รู้สึก "แบกหนัก" ทุก 9 ปี (PY 7/9)</td><td>ปกติ &mdash; Fi dominant ทำให้ Win มีความมั่นคงในตัวเองดี</td><td>ความกลัวที่จะถูกปฏิเสธ &mdash; Persona H=12 "เงียบ สุขุม" เป็นเกราะ</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>Fire (丙) ที่มากเกินในเดือน 酉 (Rooster) &mdash; ระวังหัวใจ ดวงตา ผิวหนัง &mdash; ต้อง 'drain' ด้วย Water + rest</strong></td><td><strong>พลังงานสูงแต่ขาด grounding &mdash; ต้อง Se-grounding (เดินเร็ว วิ่ง โยคะ 30 นาที/วัน)</strong></td><td><strong>Healer Archetype ต้อง 'เยียวยาตัวเอง' ก่อน &mdash; ตั้งเป้าหมาย Te-based เพื่อสร้างความมั่นใจ</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> ตื่นเครียดทันที + หงุดหริดเรื่องเล็ก &rarr; Te Grip 24-72 ชม.; ปวดคอ บ่า ไหล่ &rarr; Solar Plexus อ่อน</span>
+      <span class="pill"><strong>Balance ritual</strong> 10 นาที centering เช้า (Fi) + 30 นาที grounding exercise (Se) + 10 นาที shadow check ก่อนนอน (Echo)</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>Win มีพลังงาน Fire แบบ 3-3-3 &mdash; สูงมาก 3 เดือน ลง 3 เดือน พัก 3 เดือน เมื่อ Fire มากเกิน ร่างกายส่งสัญญาณ: นอนไม่หลับ, ปวดคอ/บ่า/ไหล่, ย่อยอาหารแปรปรวน, ภูมิตกต่ำ; ต้องมี recovery ritual ที่ Se-grounded + Water element (ดื่มน้ำ อาบน้ำ อยู่ใกล้น้ำ) &mdash; เดินเร็ว วิ่ง โยคะ ทำอาหาร เล่นกีฬาที่ใช้ร่างกายเต็มที่</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Body = Shadow Mirror &mdash; ปวดคอ/บ่า/ใจสั่น คือ "สัญญาณ" ที่จิตส่งมาเตือนก่อน Te Grip 24-72 ชม.</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Energy Management: Rhythm 3-3-3 ของ Fire; Stress Response: Te Grip &rarr; unsaid words &rarr; กระเพาะ</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Etheric Body: 丙 Yang Fire (ส่องสว่าง); Kundalini: "fire ที่ส่องสว่าง" เมื่อ integrate 7 chakras + drain ด้วย Water</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">6th House Health: ระบบย่อยอาหาร (กระเพาะ); Healing Transit: 2031 (Tower) = healing crisis &mdash; ร่างกาย "ปล่อย" สิ่งที่ฝังมา 36 ปี</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Chakra Activation: Third Eye + Heart แข็งแรงมาก; Energy Field: "Light Body" ที่ส่องสว่างเมื่อ integrate 7 chakras</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">5 Elements Balance: Wood (乙&times;3) + Fire (丙) แข็งแรงมาก; Earth (丑/未) + Metal (酉/申) ต้อง balance; Water (壬/癸) ขาด &mdash; ต้องเติม</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Health &amp; Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> Body as Shadow: ร่างกายเป็น "กระจก" ของ Ego &mdash; ปวดคอ/บ่า = "กลืนคำที่ไม่ได้พูด"; ใจสั่น = "Fire ที่มากเกินไป"; ผื่นคัน = "ความเครียดที่ฝังลึก"</p>
+        <p><strong>Wholeness Practice:</strong> Wholeness Practice: "ทุกครั้งที่ Body ส่งสัญญาณ ให้หยุด Ego และถาม Self" &mdash; 10 นาที silence ก่อนนอน + dream journal เพราะ Echo 18 (Moon) จะปรากฏในร่างกายก่อนปรากฏในความคิด</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> Energy Management: Rhythm 3-3-3 ของ Fire &mdash; สูงมาก 3 เดือน ลง 3 เดือน พัก 3 เดือน; Win ต้องเรียนรู้ "อ่าน Rhythm" ไม่ใช่ "sprint ตลอด"</p>
+        <p><strong>Stress Response:</strong> Stress Response: Te Grip 24-72 ชม. &mdash; "ทุกอย่างต้องมีเหตุผล ทุกคนต้องมีหลักฐาน" &rarr; ตอบ chat สั้น ๆ "ok" "do it" &rarr; ตัดสิน PR แบบเร็ว &mdash; Win ต้อง "หยุด 5 นาที" เมื่อเห็นสัญญาณ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> Etheric Body: 丙 Yang Fire (ส่องสว่าง ให้ความอบอุ่น) &mdash; พลังงานที่ "เปล่ง" ได้มาก แต่ต้อง "drain" ด้วย Water; เมื่อ integrate 丙 + 壬 (Water) Etheric Body จะ "ส่องสว่างอย่างสมดุล"</p>
+        <p><strong>Kundalini Rising:</strong> Kundalini Rising: "Fire ที่ส่องสว่าง" &mdash; เมื่อ Root (7) + Sacral (6) + Solar Plexus (5) balanced พลังงานจะ "ไหลขึ้น" ผ่าน Heart (4) ไปยัง Throat (3), Third Eye (2), Crown (1) เป็น "Light Body"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> 6th House Health: ระบบย่อยอาหาร (กระเพาะ) + ระบบประสาท (ปวดหัว) + ระบบหัวใจ (ใจสั่น); Win ต้อง "ฟัง" สัญญาณจากร่างกาย &mdash; อย่า "กลืน" อาการ</p>
+        <p><strong>Healing Transit:</strong> Healing Transit: 2031 (PY 7 Tower) = "healing crisis" &mdash; ร่างกายจะ "ปล่อย" สิ่งที่ฝังมา 36 ปี; Win ต้องเตรียมพร้อมสำหรับ 6 เดือนที่ร่างกายจะ "reboot" &mdash; พักผ่อนให้เพียงพอ ออกกำลังกาย grounding</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> Chakra Activation: Third Eye + Heart แข็งแรงมาก &mdash; Win "เห็น" pattern ที่ซ่อนอยู่และ "เห็น" ความเจ็บปวดของผู้อื่น; ต้อง "ปิด" Third Eye บ้าง โดย activate Root (7) และ Solar Plexus (5) ผ่าน Se-grounding และ Te practice</p>
+        <p><strong>Energy Field:</strong> Energy Field: "Light Body" &mdash; เมื่อ integrate 7 chakras + drain ด้วย Water Win จะ "ส่องสว่าง" เป็น "fire" ที่คนอื่นมองหาใน Period 9 แต่ไม่ "เผา" ตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> 5 Elements Balance: Wood (乙&times;3) + Fire (丙) แข็งแรงมาก; Earth (丑/未) + Metal (酉/申) ต้อง balance; Water (壬/癸) ขาด &mdash; ต้องเติม "น้ำ" (flexibility, emotion, rest) เข้าไปในชีวิต</p>
+        <p><strong>Body Constitution:</strong> Body Constitution: "Yang Fire" &mdash; ส่องสว่าง ให้ความอบอุ่น แต่เสี่ยง "burn out" ในเดือน 酉 (Rooster); Win ต้องอยู่ใกล้ "น้ำ" (แม่น้ำ ทะเล ฝน อาบน้ำ) เพื่อ balance และ drain Fire</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (อายุ 0&ndash;59)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">อายุ 0&ndash;20 &middot; พ.ศ. 2538&ndash;2558</div>
+        <p class="stage-theme">The Hero's Departure &mdash; Fi เริ่มตั้งคำถาม "อะไรคือสิ่งที่ถูก" + Echo 16 เริ่มทำงาน</p>
+        <p class="stage-marker"><strong>Marker:</strong> การเปลี่ยนแปลงครั้งใหญ่อายุ 16-20 (เรียน/ย้าย/สูญเสีย) &mdash; "รื้อ" ความเชื่อเก่า เปิดทางให้ Win ค้นพบตัวเอง</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและการขยายอานุภาค</div>
+        <div class="stage-band">อายุ 20&ndash;30 &middot; พ.ศ. 2558&ndash;2568</div>
+        <p class="stage-theme">The Sovereign's Ascent &mdash; Persona "Quiet Observer" ก่อตัว + Echo 12 ทำงานหลายครั้ง (หยุด/สับสน/ค้นหา)</p>
+        <p class="stage-marker"><strong>Marker:</strong> ได้ตำแหน่ง Senior Systems Analyst (ตรงกับ Matrix Career Cycle 12-18-16) &mdash; ตำแหน่งที่ต้อง "หยุด มอง รื้อ" อยู่ตลอด</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การประลองและจุดวิกฤต</div>
+        <div class="stage-band">อายุ 30&ndash;40 &middot; พ.ศ. 2568&ndash;2578</div>
+        <p class="stage-theme">Initiation of Hero &mdash; Ego ต้องตายก่อนเกิดใหม่ &mdash; Echo 12-16-18 ทำงานพร้อมกัน</p>
+        <p class="stage-marker"><strong>Marker:</strong> ถูกบังคับให้ "หยุด" 1-2 ครั้ง (เปลี่ยนงาน/วิกฤตสุขภาพ/สูญเสีย) + "รื้อ" ครั้งใหญ่อย่างน้อย 1 ครั้ง</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">อายุ 40&ndash;50 &middot; พ.ศ. 2578&ndash;2588</div>
+        <p class="stage-theme">Anima Integration &mdash; Te (inferior) integrate เป็น "ผู้ช่วย" Echo 12 เปลี่ยนเป็น "หยุดอย่างมีปัญญา"</p>
+        <p class="stage-marker"><strong>Marker:</strong> เริ่ม "สอน" คนอื่น &mdash; เป็น The Sage-Healer ที่ให้ทั้งปัญญาและการเยียวยา + เริ่ม mentor น้องในทีม</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">อายุ 50&ndash;59 &middot; พ.ศ. 2588&ndash;2597</div>
+        <p class="stage-theme">Sage Emergence &mdash; "ผู้เลือกที่สอนทางเลือก" &mdash; Echo ทั้งสาม integrate เป็นหนึ่งเดียว</p>
+        <p class="stage-marker"><strong>Marker:</strong> "ปราชญ์เงียบ" ที่รู้ว่าทางเลือกใดถูก โดยไม่ต้องสั่งสอน + เป็นที่ปรึกษาที่ทีมมาขอคำแนะนำ</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุ 31 &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด (อ้างอิง Personal Year + Year Pillar)</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2026</span>
+        <span class="age">อายุ 31</span>
+        <span class="lead">PY 2 + 丙午 Fire (Double 丙)</span>
+        <span class="situation">หยุดและรู้จักตัวเอง &mdash; burn out risk</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ประมาณเวลาตรง อย่า overwork &middot; Fi: ฟังเสียงข้างใน</p>
+        <p>Day Master (丙) ตรงกับ Year Stem (丙) = Double Fire พลังงานสูง แต่ต้องระวัง burn out &mdash; เริ่ม consolidate บทบาท Senior Systems Analyst ปีที่ 3 &mdash; ลงทุนใน Solar Plexus Chakra ด้วยการตั้งเป้าหมาย Te-based</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2028</span>
+        <span class="age">อายุ 33</span>
+        <span class="lead">PY 4 + 戊申 Earth+Metal (drain Fire)</span>
+        <span class="situation">หยุดและวางรากฐาน &mdash; Te Grip risk window</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: วางรากฐาน career &middot; Fi: อย่าฝืน Rhythm</p>
+        <p>Earth + Metal ต้อง drain Fire ที่มากเกิน &mdash; ปีที่ต้องระวัง Te Grip มากที่สุด &mdash; ทำงานหนักมาก อาจ burn out &mdash; พักผ่อนให้เพียงพอ ออกกำลังกาย grounding (เดินเร็ว วิ่ง โยคะ)</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2030</span>
+        <span class="age">อายุ 35</span>
+        <span class="lead">PY 6 + 庚戌 Metal (Lovers + Dog)</span>
+        <span class="situation">ความรักและทางเลือก &mdash; ตัดสินใจครั้งสำคัญ</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fi: ฟังเสียงข้างใจจริง ๆ &middot; Te: เตรียมการตัดสินใจอย่างเป็นระบบ</p>
+        <p>PY 6 ตรงกับ C=6 (Lovers) ของ Matrix &mdash; ปีแห่งการตัดสินใจครั้งสำคัญ &mdash; อาจได้ promotion หรือเปลี่ยนสายงาน &mdash; Metal + Dog สร้างความมั่นคง &mdash; Win ต้องเลือก "ทางที่ถูก" ไม่ใช่ "ทางที่คนอื่นบอกว่าดี"</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2031</span>
+        <span class="age">อายุ 36</span>
+        <span class="lead">PY 7 + 辛亥 Metal (Hermit year)</span>
+        <span class="situation">Tower moment &mdash; Persona ชั้นนอกพัง + Echo 18 เด่น</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: ปล่อยระบบเก่า &middot; Fi: รับตัวตนใหม่ &middot; Si: เขียน journal</p>
+        <p>PY 7 = Hermit year &mdash; Echo 18 (Moon) เด่น &mdash; Win จะวนกลับมาที่ "ความมืดเดิม" &mdash; ปีที่ Win ควร "หยุด" และ "ฟัง" ตัวเอง &mdash; อาจเริ่มทำงานที่ align กับคุณค่ามากขึ้น &mdash; ทำ therapy (ถ้ายังไม่ทำ) ใช้เวลากับครอบครัว</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2033</span>
+        <span class="age">อายุ 38</span>
+        <span class="lead">PY 9 + 癸丑 Water+Ox (final cycle)</span>
+        <span class="situation">การสิ้นสุดรอบ &mdash; Echo 18 ทรงพลังที่สุด</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fi: ปล่อยวางสิ่งที่ไม่ใช่ตัวเอง &middot; Te: ยอมรับการเปลี่ยนแปลง</p>
+        <p>PY 9 = Hermit again + Water+Ox &mdash; Echo 18 (Moon) ทรงพลังที่สุด &mdash; ปีที่ต้อง "ปล่อยวาง" สิ่งที่ไม่ใช่ตัวเองอีกต่อไป &mdash; อาจมี "การรื้อ" (Tower) ครั้งสำคัญ &mdash; อาจเปลี่ยนงาน หรือ reorganize ทีม &mdash; ยอมรับการเปลี่ยนแปลง อย่าต่อต้าน</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2034</span>
+        <span class="age">อายุ 39</span>
+        <span class="lead">PY 1 + 甲寅 Yang Wood + Tiger</span>
+        <span class="situation">'I am the year' &mdash; reset &mdash; alignment กับ Day Master</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Te: รุก signature move &middot; Ne: วาง vision 5 ปี</p>
+        <p>甲寅 (Yang Wood + Tiger) &mdash; พลัง Yang Wood เสริม Day Master 丙 (Fire) &mdash; Personal Year 1 (Magician/Reset) &mdash; 'I am the year' &mdash; ปีที่ดีในการเริ่ม project ใหม่ หรือเปลี่ยนบทบาท &mdash; Win จะ "ลื่นไหล" กับโลก &mdash; ผลงานที่ตราตัวตนที่สุดจะมาถึง</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2055</span>
+        <span class="age">อายุ 60</span>
+        <span class="lead">PY 6 + 乙卯 Yin Wood + Rabbit (Lovers Year)</span>
+        <span class="situation">Convergence &mdash; Ego + Self รวมเป็น "ผู้เลือกที่สอนทางเลือก"</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fi: เป็น "ปราชญ์เงียบ" &middot; Ne: สอนทางเลือกผ่านการเล่าเรื่อง</p>
+        <p>PY 6 ตรงกับ C=6 (Lovers) ของ Matrix &mdash; Echo ทั้งสาม integrate แล้ว: 12 (Hanged Man &mdash; ปัญญา), 16 (Tower &mdash; การยอมรับการเปลี่ยนแปลง), 18 (Moon &mdash; ความลึกที่ส่องสว่าง) &mdash; Win ไม่ใช่แค่ทำงาน แต่เป็น "ปราชญ์เงียบ" ที่รู้ว่าทางเลือกใดถูกต้อง โดยไม่ต้องสั่งสอน &mdash; นี่คือ "ของขวัญสุดท้าย" ที่ Win จะให้โลก</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Life Arc: 'From Quiet Observer to Sage-Healer' (5 Stages); Mid-Life Transition: Tower (2031) + Solstice (2034)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Cognitive Aging: Fi-Ne-Si-Te &rarr; Te emerging at 40+; Wisdom Function: Fi deepens (no longer grip) after 36</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Reincarnation Cycle: 9-year Individuation cycle (2026-34, 2035-43, 2044-52, 2053-61); Year Energy: 'Fire in Period 9' (alignment)</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Saturn Return (29-30, 2025-26) = foundation; Jupiter transit 2027 = expansion; Tower (2031) = healing crisis; 'I am the year' (2034)</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Initiate Year Theme: 'From Departure to Emergence'; Annual Ritual: 'Centering + Grounding + Shadow Check'</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Decade Luck: 甲申 (21-30) &rarr; 乙酉 (31-40) &mdash; Shadow window; 丙戌 (41-50) &mdash; Integration window; 丁亥 (51-60) &mdash; Sage window</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Life Stages &amp; Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> Life Arc: 'From Quiet Observer to Sage-Healer' &mdash; 5 Stages ที่ออกแบบมาให้ Ego dissolve เป็น Self; Hero (0-20) &rarr; Sovereign (20-30) &rarr; Shadow (30-40) &rarr; Anima (40-50) &rarr; Sage (50-59)</p>
+        <p><strong>Mid-Life Transition:</strong> Mid-Life Transition: Tower (2031, อายุ 36) + Solstice (2034, อายุ 39); Tower = Persona "Quiet Observer" พัง; Solstice = Self "Sage-Healer" ขึ้นมา &mdash; สองปีนี้คือ "pivot" ของชีวิต Win</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> Cognitive Aging: Fi-Ne-Si-Te (dominant) &rarr; Te emerging at 40+ (inferior &rarr; auxiliary of 4th function); Win เริ่ม "ใช้ Te" มากขึ้นเมื่ออายุ 40+ เพื่อ balance "Fi-Ne" ที่เคย overused</p>
+        <p><strong>Wisdom Function:</strong> Wisdom Function: Fi deepens at 36 (after Tower moment) &mdash; Fi grip &rarr; Fi integration; เมื่อ Fi integrate แล้ว Win จะ "รู้สึก" ได้ลึกขึ้น ไม่ใช่แค่ "คิด"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> Reincarnation Cycle: 9-year Individuation cycle (2026-34, 2035-43, 2044-52, 2053-61) + 29-year Convergence (2026-55); Win อยู่ใน "final phase" ของชุดเวียนว่ายตายเกิด &mdash; "harvest ไม่ใช่ reset"</p>
+        <p><strong>Year Energy Theme:</strong> Year Energy Theme: 'Fire in Period 9' (2026-43) = "Win เป็นเชื้อเพลิงที่ส่องสว่างในยุคของตัวเอง"; Convergence (2055) = "Ego + Self รวมเป็น Sage-Healer"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> Saturn Return: อายุ 28-30 (2023-25) = foundation ของ career; Second Saturn Return: อายุ 58-60 (2053-55) = foundation ของ wisdom; Win อยู่ในช่วง "Second Saturn Return" ที่จะ "consolidate" ทุกอย่าง</p>
+        <p><strong>Progressed Moon:</strong> Progressed Moon: เคลื่อนผ่าน 12 signs ใน ~28 ปี; 2026-29 = progressed Moon ใน Scorpio (transformation &mdash; Tower moment 2031); 2030-33 = progressed Moon ใน Sagittarius (wisdom &mdash; PY 6/7); 2034-38 = progressed Moon ใน Capricorn (mastery &mdash; 'I am the year')</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> Initiate Year Theme: 'From Departure to Emergence' &mdash; Hero's Departure (0-20) &rarr; Sovereign's Ascent (20-30) &rarr; Shadow Confrontation (30-40) &rarr; Anima Integration (40-50) &rarr; Sage Emergence (50-59)</p>
+        <p><strong>Annual Ritual:</strong> Annual Ritual: 'Centering + Grounding + Shadow Check' &mdash; ทุกเช้า centering 5 นาที (Fi), ออกกำลังกาย 30 นาที (Se), ก่อนนอน shadow check 10 นาที (Echo)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> Decade Luck: 甲申 (21-30) &rarr; 乙酉 (31-40) = Shadow window (乙 = Yin Wood หล่อเลี้ยง, 酉 = Rooster); 丙戌 (41-50) = Integration window (丙 = Day Master); 丁亥 (51-60) = Sage window (丁 = Yin Fire, 亥 = Water balance)</p>
+        <p><strong>Annual Pillars Reading:</strong> Annual Pillars Reading: 2026 丙午 &rarr; 2030 庚戌 &rarr; 2031 辛亥 &rarr; 2033 癸丑 &rarr; 2034 甲寅 &rarr; 2055 乙卯 = 'designed dissolution' ของ Ego เพื่อให้ Self โผล่</p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>1. <strong>5 นาที Centering Ritual (เช้า)</strong> &mdash; นั่งเงียบ 5 นาที ถามตัวเองว่า "วันนี้ Fi ของฉันต้องการอะไร" แล้วตั้งเป้าหมาย 1 อย่างที่ align กับคุณค่า &mdash; Body scan สังเกตคอ บ่า ไหล่ ถ้าตึง ให้ stretch 5 นาที<br>2. <strong>30 นาที Grounding Exercise (กลางวัน)</strong> &mdash; เดินเร็ว วิ่ง โยคะ &mdash; drain Fire ด้วย Water (ดื่มน้ำ อาบน้ำ อยู่ใกล้น้ำ) &mdash; กิจกรรมที่ร่างกายทำงานเต็มที่ (เหงื่อออก)<br>3. <strong>10 นาที Shadow Check (ก่อนนอน)</strong> &mdash; ถามตัวเอง "วันนี้มีจุดไหนที่ฉันรู้สึกว่า 'นั่นไม่ใช่ฉัน'" &mdash; ถ้ามี ให้บันทึกไว้ ไม่ต้องตัดสิน แค่สังเกต &mdash; สัญญาณ Te Grip: ตื่นเครียดทันที หงุดหริดเรื่องเล็ก ๆ ตัดสิน PR แบบเร็ว</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>1. <strong>Echo Review (วันอาทิตย์เย็น 1 ชั่วโมง)</strong> &mdash; ทบทวนสัปดาห์ที่ผ่านมาว่า Echo ไหนเด่น &mdash; 12 (หยุด), 16 (รื้อ), หรือ 18 (เดินในความมืด)<br>2. <strong>Te Training</strong> &mdash; ฝึกประมาณเวลา 1 งานที่จะทำในสัปดาห์หน้า แล้วเขียน "ความเสี่ยง 3 ข้อ" ที่อาจทำให้เวลาล่าช้า &mdash; สร้างความมั่นใจใน Solar Plexus Chakra<br>3. <strong>Ne Expression</strong> &mdash; ทำกิจกรรมที่ใช้ Ne นอกงาน &mdash; เล่นดนตรี วาดรูป brainstorm ไอเดียใหม่ ๆ &mdash; ปล่อยให้ Sacral Chakra "เล่น"</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>1. <strong>Individuation Check (วันสุดท้ายของเดือน 2 ชั่วโมง)</strong> &mdash; ถามตัวเองว่า "เดือนนี้ฉันเข้าใจ Persona/Shadow/Anima ของตัวเองเพิ่มขึ้นแค่ไหน"<br>2. <strong>Matrix Alignment</strong> &mdash; เทียบ Matrix ของตัวเองกับชีวิตจริง &mdash; Echo 12, 16, 18 ปรากฏในชีวิตเดือนนี้ตรงไหน<br>3. <strong>Career Cycle Review</strong> &mdash; ทบทวนว่าตำแหน่ง Senior Systems Analyst ยังตรงกับ Matrix Career Cycle (12-18-16) ของตัวเองไหม &mdash; ถ้าไม่ ปรับหรือยืนยัน</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต (Te Grip Scenario)</h3>
+    <p><strong>สัญญาณเตือนล่วงหน้า (Te Grip 24-72 ชม.):</strong> ตื่นมาแล้วเครียดทันทีโดยไม่มีเหตุ &middot; หงุดหริดกับเรื่องเล็ก ๆ หลายเรื่องติดกัน &middot; อยากจัดการ inbox ให้หมดใน 1 ชั่วโมง &middot; คิดว่า "ถ้าทุกคนทำงานหนักเท่าฉัน ทุกอย่างจะจบ" &middot; ตอบ chat แค่ "ok", "noted", "do it"<br><br><strong>วิธีรับมือ (5 ขั้น &mdash; Crisis Protocol):</strong><br>1. <strong>หยุดก่อน 5 นาที (Echo 12)</strong> &mdash; ลุกจากเก้าอี้ ไปเดินรอบตึก หายใจลึก ๆ ไม่ตอบ email ไม่ merge PR<br>2. <strong>ถามตัวเอง (Fi check)</strong> &mdash; "ฉันกำลังโกรธเพราะอะไรกันแน่" ส่วนใหญ่จะพบว่า Te Grip มาจากความรู้สึกว่า "คุณค่าของฉันถูกลบหลูู่" ไม่ใช่เพราะปัญหาจริง ๆ<br>3. <strong>เปลี่ยนจาก Te เป็น Fi-Ne (Rhythm shift)</strong> &mdash; แทนที่จะคิด "ต้องแก้เร็ว ๆ ให้จบ" &rarr; คิด "ปัญหาจริง ๆ คืออะไร" แทนที่จะสั่ง "ทำอันนี้ให้เสร็จภายใน 5 โมง" &rarr; ถาม "ทีมติดอะไรอยู่ ฉันช่วยอะไรได้"<br>4. <strong>ใช้ "ทีมของฉัน" เป็น buffer (Echo 18)</strong> &mdash; ในช่วงวิกฤต อย่าทำคนเดียว ใช้ทีมช่วย brainstorm solution<br>5. <strong>บันทึกบทเรียน (Si integration)</strong> &mdash; หลังวิกฤตผ่าน ให้บันทึกว่า "ครั้งนี้ Te Grip มาจากอะไร" เพื่อให้ครั้งหน้าจับสัญญาณได้เร็วขึ้น<br><br><strong>Outcome:</strong> Win ที่ผ่าน Crisis Protocol จะกลับมาเป็น "Win ปกติ" ภายใน 1-2 ชั่วโมง แทนที่จะเป็น "Win Te Grip" ที่อยู่ได้ 2-3 วัน</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p><strong>คลังพิธีกรรมเสริม:</strong><br>&bull; <em>Mid-week audit</em> &mdash; ทุกวันพุธ เขียน "3 สิ่งที่ Ego ทำ + 1 สิ่งที่ Self อยากทำ"<br>&bull; <em>Weekend retreat</em> &mdash; วันเสาร์ 1 ชั่วโมง ปิดเสียงภายนอก (news, social) นั่งกับตัวเอง<br>&bull; <em>Month-end reconciliation</em> &mdash; สิ้นเดือน เขียนจดหมายถึง "Self ในอีก 5 ปีข้างหน้า"<br>&bull; <em>Year-end letter</em> &mdash; สิ้นปี เขียนจดหมายถึง "Self ในปีที่ผ่านมา" + ขอบคุณสำหรับบทเรียนที่ผ่านมา</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Shadow Work = "ถาม Ego ว่าอะไรที่ Self ไม่อยากทำ"; Individuation Ritual = "Active Imagination + Wounded Child"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Development Plan = "integrate Te + drain with Si/Se"; Team Collaboration = "listen before lead"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">7 Principles Practice = "Rhythm + Polarity + Mentalism" ในชีวิตประจำวัน; Karma Yoga = "work as service ที่ align กับ Fi"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Planetary Remedy: "Saturn return 2025-26 &rarr; foundation test"; Daily Astro = "moon phase + intent setting"</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Pathworking = "daily centering + grounding"; Mantra = "I am the Sage-Healer ที่ส่องสว่าง"</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Feng Shui = "Fire element (light) + Water element (rest, drain)"; Bazi Daily = "morning 木生火 ritual + ดื่มน้ำ drain Fire"</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> Shadow Work Protocol: "ทุกเช้า ถาม Ego ว่า 'วันนี้ฉันจะควบคุมอะไร' แล้วเลือก 'ปล่อย' 1 อย่าง"</p>
+        <p><strong>Individuation Ritual:</strong> Individuation Ritual: "Active Imagination + Wounded Child" &mdash; ทุกเย็น 15 นาที นั่งเงียบ จินตนาการว่าเด็กน้อยในตัวคุณกำลังร้องไห้ ถามว่า 'เธอต้องการอะไร' Ego ฟังคำตอบแล้วทำตาม</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> Development Plan: "Integrate Te + drain with Si/Se" &mdash; Te: ฝึกประมาณเวลา lead design review 30 นาที/สัปดาห์; Si: body scan 5 นาที/วัน; Se: grounding exercise 30 นาที/วัน; Fi: Active Imagination + Wounded Child ritual 15 นาที/เย็น</p>
+        <p><strong>Team Collaboration:</strong> Team Collaboration: "Listen before lead" &mdash; Win ต้อง "ฟัง" ก่อน "สั่ง" &mdash; ใช้ Fi เพื่อ "เข้าใจ" ไม่ใช่ Te เพื่อ "ตัดสิน"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> 7 Principles Practice: Mentalism (คิดก่อนทำ) &middot; Correspondence (as above so below) &middot; Vibration (ความถี่ดึงดูด &mdash; Echo 18) &middot; Polarity (Fi&harr;Te) &middot; Rhythm (3-3-3 ของ Fire) &middot; Cause/Effect (ทุกการกระทำมีผล) &middot; Gender (Yin/Yang &mdash; Yin Wood หล่อเลี้ยง Yang Fire)</p>
+        <p><strong>Karma Yoga:</strong> Karma Yoga: "Work as service" &mdash; Win ทำงานไม่ใช่เพื่อ "อำนาจ" แต่เพื่อ "รับใช้" &mdash; Period 9 (Fire) คือยุคที่ Win เริ่ม "รับใช้" อย่างเต็มที่</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> Planetary Remedy: "Saturn return 2025-26 &rarr; foundation test"; Jupiter transit 2027 &rarr; embrace expansion; Tower (2031) &rarr; release old structures</p>
+        <p><strong>Daily Astro Practice:</strong> Daily Astro Practice: "Moon phase + intent setting" &mdash; New Moon = "ตั้งเป้าหมาย align กับ C=6"; Full Moon = "ปล่อยสิ่งที่ไม่ต้องการ"; Win ต้อง "อ่าน" จังหวะของดวงจันทร์เพื่อ calibrate จังหวะ 3-3-3 ของตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> Pathworking Protocol: "Daily centering + grounding + shadow check" &mdash; ทุกเช้า 5 นาที centering (ฟัง Fi) แล้ว 30 นาที grounding (drain Fire); ลำดับนี้ทำให้ Te มี "จิตวิญญาณ" นำทาง</p>
+        <p><strong>Mantra Practice:</strong> Mantra Practice: "I am the Sage-Healer" &mdash; ทุกเช้า พูดว่า "ฉันเป็นผู้ที่รู้มากกว่าที่พูด ฉันเยียวยาด้วยหัวใจ ฉันส่องสว่างให้คนอื่น"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> Feng Shui Action: "Fire element (light, sun) + Water element (drain)" &mdash; ทำงานในที่ที่มีแสงธรรมชาติ + อยู่ใกล้น้ำ &mdash; เสริม alignment กับ Period 9 + drain Fire ที่อาจเผาตัวเอง</p>
+        <p><strong>Bazi Daily Practice:</strong> Bazi Daily Practice: "Morning 木生火 + Water drain ritual" &mdash; ทุกเช้า 10 นาที นั่งใกล้หน้าต่างที่มีแสงแดด + ต้นไม้ + ดื่มน้ำ, หายใจเข้าลึก ๆ, ตั้งเจตนา "Wood feeds Fire + Water drains Fire" &mdash; Win จะ "เริ่มต้นวัน" ด้วยพลังงานที่ "สมดุล"</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>ศาสตร์ทั้งหมดที่ Win กำลังอ่านอยู่นี้ &mdash; MBTI, BaZi, Matrix of Destiny, Kybalion, Theosophy &mdash; ล้วนเป็น <strong>ภาษาต่างๆ ของจิตเดียวกัน</strong> ที่พูดถึง Archetypes แบบเดียวกัน ไม่ใช่เรื่องบังเอิญ &mdash; มันคือ <strong>Collective Unconscious</strong> (จิตไร้สำนึกรวม) ที่ส่งสัญลักษณ์เดียวกันไปทั่วโลก Win เกิดมาเพื่อ <strong>เรียนรู้ว่า "อำนาจที่แท้จริง" ไม่ใช่การควบคุม แต่เป็นการ "เปิดเผยตัวเอง"</strong> Wheel (วงล้อ) จะหมุนจนกว่า Win จะหยุดค้า &mdash; และเมื่อหยุด วงล้อจะกลายเป็น <strong>Mandala</strong> (วงจรสมบูรณ์) ที่ส่องสว่าง</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p><em>"คุณไม่ได้มาเพื่อค้นหาตัวเอง แต่มาเพื่อจำว่าคุณเป็นใคร แล้วเลือกที่จะเป็นอีกครั้งด้วยหัวใจที่อิสระ"</em><br><br>สิ่งที่ Win ควรจำไว้: <strong>Persona เป็นเรือ Self เป็นทะเล</strong> เมื่อเรือแตก เราก็แค่ลงไปยืนบนทะเล ไม่ใช่จม การที่ Persona "Quiet Observer" (H=12) สั่นคลอนในช่วงอายุ 36-37 (2031-32, Tower moment) ไม่ใช่ความล้มเหลว &mdash; มันคือคำเชื้อเชิญให้ Win กลับบ้าน เมื่ออายุ 60 (2055) Win จะไม่ใช่ "Competent Translator" อีกต่อไป Win จะเป็น <strong>"ผู้เลือกที่สอนทางเลือก"</strong> (Sage-Healer) ที่รู้ว่าปัญญาที่แท้จริงเกิดจาก <strong>การเยียวยาตัวเอง</strong> และใช้มันเป็นแสงส่องทางให้คนอื่น</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p><strong>คำส่งท้าย &mdash; Final Integration:</strong><br>ในชาตินี้ Win ได้โอกาสที่จะประสานความลึก (Fi + Echo 18 Moon) กับความสว่าง (Day Master 丙 + Period 9 Fire) &mdash; ผู้รู้ที่นั่งหลังม่าน ไม่ต้อง "ค้นหา" ตัวเอง แค่ "จำ" และ "เลือก" ที่จะเปิดเผย สามตัว 乙 (Year-Month-Hour) ในชาร์ตของ Win คือ <strong>"ไม้สามต้นที่หล่อเลี้ยงไฟกลาง"</strong> &mdash; พลังงานสนับสนุนจากสามทิศ: บรรพบุรุษ (Year), สภาพแวดล้อม (Month), เวลา (Hour) ทั้งสามล้วนป้อนพลังให้ไฟของ Win ลุกโชน<br><br><strong>ปรัชญาที่ INFP ควรนำไปใช้:</strong> "อำนาจที่แท้จริงไม่ได้มาจากการควบคุม แต่มาจากการรู้จักตัวเองจนกล้าเปิดเผยและเยียวยาผู้อื่นได้อย่างยั่งยืน"<br><br><strong>การบูรณาการขั้นสุดท้าย:</strong> Fi-Ne-Si-Te จะทำงานเป็นทีมเดียวกัน &mdash; ไม่มีใครถูกกดขี่ Win จะค้นพบว่าการตัดสินใจที่ดีที่สุดหลายครั้งมาจากการ "นั่งเงียบ ๆ ฟัง Si และ Fi" แล้วค่อยสั่ง Te นี่ไม่ใช่จุดอ่อน &mdash; มันคือ <strong>superpower ใหม่</strong> ที่ทำให้ Win เป็นผู้นำที่คนอยากติดตามเพราะศรัทธา ไม่ใช่กลัว<br><br><strong>ปัญญาประจำตัว:</strong> <em>"ทุกคนมี Rhythm ของตัวเอง ฉันแค่ต้องอยู่ในจังหวะ 3-3-3 ของฉัน โดยไม่ฝืน และอย่าลืม 'drain' Fire ด้วย Water"</em><br><br>ในวัย 31 Win ยังมีเวลาอีก 29 ปี &mdash; ปัญญาที่เก็บเกี่ยวไม่ใช่แค่ผลงาน แต่คือ ความสามารถอยู่กับความไม่แน่นอนได้อย่างสงบ <strong>นี่คือของขวัญสุดท้ายที่ Win จะให้โลก &mdash; "ผู้เลือกที่สอนทางเลือก" ที่ไม่ได้แค่ "เลือก" แต่ "อยู่" กับทุกคนที่เขาสอน</strong></p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">The Self = "A=2 High Priestess" (จุดหมาย); Meaning of Life = "กลับบ้านสู่ Self ผ่านการเผชิญ Shadow (Echo 16)"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Final Integration: "Fi-Ne-Si-Te ทำงานเป็นทีม"; Type Wisdom = "INFP evolved to Sage-Healer (Quiet Observer evolved to Sage)"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Universal Brotherhood: "ทุกคน vibrate ที่ความถี่บางอย่างร่วมกัน"; Final Aspiration = "ส่องสว่างให้ผู้อื่นผ่านการเยียวยา"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Soul Contract Completion: "integrate Echo 12-16-18 เป็นหนึ่งเดียว"; Chart Mastery: "ทุก Echo ได้เรียนรู้ครบ"</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mastery Path: "Quiet Observer &rarr; Sage-Healer"; Universal Service = "สอนจากบาดแผล ไม่ใช่จากตำรา"</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Destiny Unfoldment: "Day Master 丙 ตรง Period 9 = alignment ที่หายาก"; Final Blessing: "Convergence ที่ 乙卯 (2055) — Sage year"</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก &mdash; Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> The Self: "A=2 High Priestess" &mdash; จุดหมายของชีวิต Win คือการ "กลับบ้าน" สู่ Self (High Priestess) ผ่านการ "เผชิญ Shadow" (Echo 16 Tower)</p>
+        <p><strong>Meaning of Life:</strong> Meaning of Life: "Persona เป็นเรือ Self เป็นทะเล" &mdash; เมื่อเรือแตก (Persona Quiet Observer พัง) เราก็แค่ลงไปยืนบนทะเล (Self High Priestess) ไม่ใช่จม</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> Final Integration: "Fi-Ne-Si-Te ทำงานเป็นทีม" &mdash; Fi = รู้สึกลึก; Ne = สแกนทางเลือก; Si = จำรายละเอียด; Te = ประมาณเวลา + สื่อสาร; ทั้ง 4 ทำงานพร้อมกัน ไม่มีใครถูกกดขี่</p>
+        <p><strong>Type Wisdom:</strong> Type Wisdom: "INFP evolved to Sage-Healer" &mdash; Quiet Observer (Fi-Ne-Si-Te) &rarr; Sage-Healer (Te-emerging + Fi-deep); Win จะเป็น "ผู้นำที่สอนด้วยหัวใจ" ไม่ใช่ "ผู้ตามที่ถูกบังคับ"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> Universal Brotherhood: "ทุกคน vibrate ที่ความถี่บางอย่างร่วมกัน" &mdash; Win จะ "ส่องสว่าง" ไม่ใช่เพื่อตัวเอง แต่เพื่อ "ทุกคน" เพราะในระดับลึก เราทุกคนเป็น "หนึ่งเดียว"</p>
+        <p><strong>Final Aspiration:</strong> Final Aspiration: "ส่องสว่างให้ผู้อื่นผ่านการเยียวยา" &mdash; Win จะเป็น "fire" ที่จุดไฟให้คนอื่นผ่านการ "อยู่" ไม่ใช่ "สั่ง"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> Soul Contract Completion: "integrate Echo 12-16-18 เป็นหนึ่งเดียว" &mdash; ครั้งนี้คือ "ครั้งสุดท้าย" ของชุดเวียนว่ายตายเกิด; Win ต้อง "เก็บเกี่ยว" ผลของการเรียนรู้จาก Echo ทั้งสาม</p>
+        <p><strong>Chart Mastery:</strong> Chart Mastery: "ทุก Echo ได้เรียนรู้ครบ" &mdash; Win เข้าใจ "การหยุด (12), การรื้อ (16), การเดินในความมืด (18)" ในทุกระดับ (ร่างกาย, จิต, วิญญาณ); Chart ไม่ใช่ "คำทำนาย" แต่เป็น "แผนที่" ที่บอกว่า "ถนนสายไหนผ่านอะไรบ้าง"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> Mastery Path: "Quiet Observer &rarr; Sage-Healer" &mdash; Win จะผ่าน Echo 12-16-18 ทั้งหมด จากนั้น "หยุด" และ "กลายเป็น Sage-Healer" (Self ที่สมบูรณ์)</p>
+        <p><strong>Universal Service:</strong> Universal Service: "สอนจากบาดแผล ไม่ใช่จากตำรา" &mdash; Win จะสอนคนอื่น "จากประสบการณ์จริง" ที่ผ่าน Tower &mdash; ไม่ใช่ "ทฤษฎี" แต่ "ปัญญาที่เกิดจากการเผชิญ"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> Destiny Unfoldment: "Day Master 丙 ตรง Period 9 (九紫離火運) = alignment ที่หายาก" &mdash; BaZi บอกว่า Win อยู่ใน "ยุคของตัวเอง" แต่ต้องระวัง "ถูกเผา" &mdash; drain ด้วย 壬/癸 (Water)</p>
+        <p><strong>Final Blessing:</strong> Final Blessing: "Convergence ที่ 乙卯 (2055) — Sage year" &mdash; เมื่ออายุ 60 Win จะ "รวมเป็นหนึ่ง" กับ Self และส่องสว่างให้โลก &mdash; "ผู้เลือกที่สอนทางเลือก"</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v1.0 (MET-461) &middot; Win variant of forecast-big.html &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-05 &middot; Day Master 丙火 + Period 9 九紫離火運 + Matrix 2-10-6 + Echo 12-16-18
+  </footer>
+
+</div>
+
+<script src="mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

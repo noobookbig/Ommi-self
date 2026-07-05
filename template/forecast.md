@@ -50,6 +50,46 @@ Day Master `{{lens_bazi_day_master}}` · balance `{{lens_bazi_balance}}` · Peri
 - **The Three Initiates:** `{{analysis_0_initiates}}`
 - **Su Yu Hong:** `{{analysis_0_suyuhong}}`
 
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_0_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_0_jung_persona_shadow}}
+- {{analysis_deep_0_jung_individuation_path}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_0_myers_type_stack}}
+- {{analysis_deep_0_myers_cognitive_loop}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_0_blavatsky_root_race}}
+- {{analysis_deep_0_blavatsky_monad_reincarnation}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_0_ladini_natal_chart}}
+- {{analysis_deep_0_ladini_transit_windows}}
+
+#### The Three Initiates
+
+- {{analysis_deep_0_initiators_mystery_school}}
+- {{analysis_deep_0_initiators_initiate_trials}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_0_suyuhong_day_master}}
+- {{analysis_deep_0_suyuhong_annual_pillars}}
+
+
 ---
 
 ## Section 1 — จุดเชื่อมโยงแห่งปรัชญาและวัฏจักร (The Cosmic Synergy)
@@ -84,6 +124,105 @@ flowchart LR
     M["Matrix of Destiny<br/>Loop<br/>{{synergy_matrix}}"]:::engine
     K --> L --> M --> K
 ```
+
+### Octagram — 8 Cosmic Forces Around the Monad
+
+> Eight cosmic forces radiating from the central Monad. Each direction is a lens
+> of the universe acting on the persona in this period. Replace each token with
+> the analyst's reading.
+
+| Position | Force | Reading |
+|----------|-------|---------|
+| Center | Monad · Self | `{{octagram_center}}` |
+| N | Kybalion · Mentalism | `{{octagram_n}}` |
+| NE | LoA · Vibration | `{{octagram_ne}}` |
+| E | Matrix · Loop | `{{octagram_e}}` |
+| SE | BaZi · Heavenly Stem | `{{octagram_se}}` |
+| S | Jung · Shadow | `{{octagram_s}}` |
+| SW | Ladini · Saturn | `{{octagram_sw}}` |
+| W | Hermetic · Polarity | `{{octagram_w}}` |
+| NW | Mystery · Initiation | `{{octagram_nw}}` |
+
+```mermaid
+%% Octagram — Monad at center, 8 cosmic forces radiating outward, adjacent forces connect along the octagonal ring.
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>{{octagram_center}}"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>{{octagram_n}}"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>{{octagram_ne}}"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>{{octagram_e}}"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>{{octagram_se}}"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>{{octagram_s}}"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>{{octagram_sw}}"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>{{octagram_w}}"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>{{octagram_nw}}"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+```
+
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 13 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_1_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_1_jung_collective_unconscious}}
+- {{analysis_deep_1_jung_synchronicity}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_1_myers_function_integration}}
+- {{analysis_deep_1_myers_type_development}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_1_blavatsky_hermetic_principles}}
+- {{analysis_deep_1_blavatsky_loa_bridge}}
+- {{analysis_deep_1_blavatsky_matrix_loop}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_1_ladini_outer_planet}}
+- {{analysis_deep_1_ladini_eclipse_season}}
+
+#### The Three Initiates
+
+- {{analysis_deep_1_initiators_knowledge_awakening}}
+- {{analysis_deep_1_initiators_elemental_balance}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_1_suyuhong_stems_branches}}
+- {{analysis_deep_1_suyuhong_luck_cycle}}
+
 
 ---
 
@@ -142,6 +281,46 @@ flowchart LR
     C2 --- ECHO
 ```
 
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_2_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_2_jung_center_periphery}}
+- {{analysis_deep_2_jung_shadow_corners}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_2_myers_cognitive_mapping}}
+- {{analysis_deep_2_myers_type_dynamics}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_2_blavatsky_hermetic_geometry}}
+- {{analysis_deep_2_blavatsky_monad_descent}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_2_ladini_chart_echo}}
+- {{analysis_deep_2_ladini_personal_year}}
+
+#### The Three Initiates
+
+- {{analysis_deep_2_initiators_school_grid}}
+- {{analysis_deep_2_initiators_initiate_path}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_2_suyuhong_trigram_mapping}}
+- {{analysis_deep_2_suyuhong_stems_interaction}}
+
+
 ---
 
 ## Section 3 — พรสวรรค์ ศักยภาพ และอดีตชาติ
@@ -162,6 +341,46 @@ flowchart LR
 - **นาตาเลีย ลาดินี:** `{{analysis_3_ladini}}`
 - **The Three Initiates:** `{{analysis_3_initiates}}`
 - **Su Yu Hong:** `{{analysis_3_suyuhong}}`
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_3_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_3_jung_talent_archetype}}
+- {{analysis_deep_3_jung_karmic_pattern}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_3_myers_natural_strength}}
+- {{analysis_deep_3_myers_shadow_gift}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_3_blavatsky_soul_mission}}
+- {{analysis_deep_3_blavatsky_karmic_lesson}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_3_ladini_karmic_debt}}
+- {{analysis_deep_3_ladini_soul_contract}}
+
+#### The Three Initiates
+
+- {{analysis_deep_3_initiators_initiate_gift}}
+- {{analysis_deep_3_initiators_karmic_mirror}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_3_suyuhong_bazi_talent}}
+- {{analysis_deep_3_suyuhong_karmic_resolution}}
+
 
 ---
 
@@ -192,6 +411,46 @@ flowchart LR
 - **The Three Initiates:** `{{analysis_4_initiates}}`
 - **Su Yu Hong:** `{{analysis_4_suyuhong}}`
 
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_4_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_4_jung_career_persona}}
+- {{analysis_deep_4_jung_career_growth}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_4_myers_career_stack}}
+- {{analysis_deep_4_myers_team_role}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_4_blavatsky_vocation_path}}
+- {{analysis_deep_4_blavatsky_money_consciousness}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_4_ladini_midheaven_transit}}
+- {{analysis_deep_4_ladini_career_house}}
+
+#### The Three Initiates
+
+- {{analysis_deep_4_initiators_initiate_vocation}}
+- {{analysis_deep_4_initiators_work_ritual}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_4_suyuhong_career_bazi}}
+- {{analysis_deep_4_suyuhong_wealth_element}}
+
+
 ---
 
 ## Section 5 — สายสัมพันธ์ ความรัก และครอบครัว
@@ -213,6 +472,46 @@ flowchart LR
 - **นาตาเลีย ลาดินี:** `{{analysis_5_ladini}}`
 - **The Three Initiates:** `{{analysis_5_initiates}}`
 - **Su Yu Hong:** `{{analysis_5_suyuhong}}`
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_5_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_5_jung_anima_animus}}
+- {{analysis_deep_5_jung_relationship_pattern}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_5_myers_communication_style}}
+- {{analysis_deep_5_myers_love_language}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_5_blavatsky_twin_flame}}
+- {{analysis_deep_5_blavatsky_generational_wisdom}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_5_ladini_venus_return}}
+- {{analysis_deep_5_ladini_seventh_house}}
+
+#### The Three Initiates
+
+- {{analysis_deep_5_initiators_sacred_union}}
+- {{analysis_deep_5_initiators_generational_mission}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_5_suyuhong_spouse_palace}}
+- {{analysis_deep_5_suyuhong_relationship_luck}}
+
 
 ---
 
@@ -243,6 +542,46 @@ flowchart LR
 - **นาตาเลีย ลาดินี:** `{{analysis_6_ladini}}`
 - **The Three Initiates:** `{{analysis_6_initiates}}`
 - **Su Yu Hong:** `{{analysis_6_suyuhong}}`
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_6_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_6_jung_body_shadow}}
+- {{analysis_deep_6_jung_wholeness_practice}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_6_myers_energy_management}}
+- {{analysis_deep_6_myers_stress_response}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_6_blavatsky_etheric_body}}
+- {{analysis_deep_6_blavatsky_kundalini}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_6_ladini_sixth_house}}
+- {{analysis_deep_6_ladini_healing_transit}}
+
+#### The Three Initiates
+
+- {{analysis_deep_6_initiators_chakra_activation}}
+- {{analysis_deep_6_initiators_energy_field}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_6_suyuhong_five_elements}}
+- {{analysis_deep_6_suyuhong_body_constitution}}
+
 
 ---
 
@@ -294,6 +633,46 @@ flowchart LR
 - **The Three Initiates:** `{{analysis_7_initiates}}`
 - **Su Yu Hong:** `{{analysis_7_suyuhong}}`
 
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_7_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_7_jung_life_arc}}
+- {{analysis_deep_7_jung_midlife_transition}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_7_myers_cognitive_aging}}
+- {{analysis_deep_7_myers_wisdom_function}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_7_blavatsky_reincarnation_cycle}}
+- {{analysis_deep_7_blavatsky_year_energy}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_7_ladini_saturn_return}}
+- {{analysis_deep_7_ladini_progressed_moon}}
+
+#### The Three Initiates
+
+- {{analysis_deep_7_initiators_year_theme}}
+- {{analysis_deep_7_initiators_annual_ritual}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_7_suyuhong_decade_luck}}
+- {{analysis_deep_7_suyuhong_pillars_reading}}
+
+
 ---
 
 ## Section 8 — คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols)
@@ -313,6 +692,46 @@ flowchart LR
 - **นาตาเลีย ลาดินี:** `{{analysis_8_ladini}}`
 - **The Three Initiates:** `{{analysis_8_initiates}}`
 - **Su Yu Hong:** `{{analysis_8_suyuhong}}`
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_8_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_8_jung_shadow_work}}
+- {{analysis_deep_8_jung_individuation_ritual}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_8_myers_development_plan}}
+- {{analysis_deep_8_myers_team_collaboration}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_8_blavatsky_seven_principles}}
+- {{analysis_deep_8_blavatsky_karma_yoga}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_8_ladini_planetary_remedy}}
+- {{analysis_deep_8_ladini_daily_astro}}
+
+#### The Three Initiates
+
+- {{analysis_deep_8_initiators_pathworking}}
+- {{analysis_deep_8_initiators_mantra_practice}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_8_suyuhong_feng_shui}}
+- {{analysis_deep_8_suyuhong_bazi_daily}}
+
 
 ---
 
@@ -334,6 +753,46 @@ flowchart LR
 - **นาตาเลีย ลาดินี:** `{{analysis_9_ladini}}`
 - **The Three Initiates:** `{{analysis_9_initiates}}`
 - **Su Yu Hong:** `{{analysis_9_suyuhong}}`
+
+### บทวิเคราะห์เชิงลึก — Deep Dive (6 Lenses × 12 Topics)
+
+> Long-form analysis per expert lens. Each topic is its own placeholder
+> `{{analysis_deep_9_<lens>_<topic>}}` — analysts fill in actual reading.
+> Schema: `analysis_deep_<section>_<lens_short>_<topic>`.
+>
+> HTML renders each as a `<p><strong>Heading:</strong> {{token}}</p>` inside a
+> `.lens-card` element grouped under a `.lens-deep` block.
+
+#### Carl Jung
+
+- {{analysis_deep_9_jung_the_self}}
+- {{analysis_deep_9_jung_meaning_of_life}}
+
+#### Isabel Briggs Myers
+
+- {{analysis_deep_9_myers_final_integration}}
+- {{analysis_deep_9_myers_type_wisdom}}
+
+#### Helena Blavatsky
+
+- {{analysis_deep_9_blavatsky_universal_brotherhood}}
+- {{analysis_deep_9_blavatsky_final_aspiration}}
+
+#### นาตาเลีย ลาดินี
+
+- {{analysis_deep_9_ladini_contract_completion}}
+- {{analysis_deep_9_ladini_chart_mastery}}
+
+#### The Three Initiates
+
+- {{analysis_deep_9_initiators_mastery_path}}
+- {{analysis_deep_9_initiators_universal_service}}
+
+#### Su Yu Hong
+
+- {{analysis_deep_9_suyuhong_destiny_unfoldment}}
+- {{analysis_deep_9_suyuhong_final_blessing}}
+
 
 ---
 

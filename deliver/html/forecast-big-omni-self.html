@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Omni-Self Forecast — Big (Jitti Kunphruk)</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="mermaid.min.js"></script>
+<style>
+  :root {
+    --bg-0:#050514;
+    --bg-1:#0a0a1a;
+    --bg-2:#11112a;
+    --bg-3:#181833;
+    --line:rgba(0,240,255,0.18);
+    --line-strong:rgba(0,240,255,0.32);
+    --fg:#e6f7ff;
+    --fg-muted:#8a93b8;
+    --neon-cyan:#00f0ff;
+    --neon-magenta:#ff00d4;
+    --neon-violet:#9d4edd;
+    --neon-green:#39ff14;
+    --neon-gold:#ffd700;
+    --neon-orange:#ff8c00;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html { scroll-behavior:smooth; background:var(--bg-0); }
+  body {
+    margin:0; padding:0;
+    font-family:'Kanit',system-ui,-apple-system,'Segoe UI',sans-serif;
+    font-weight:400; font-size:16px; line-height:1.7;
+    color:var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0,240,255,0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255,0,212,0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157,78,221,0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size:48px 48px; z-index:0;
+  }
+  .page { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:48px 32px 96px; }
+  header.hero {
+    border:1px solid var(--line-strong); border-radius:10px;
+    padding:32px 36px; margin-bottom:32px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow: 0 0 0 1px rgba(0,240,255,0.08), 0 0 40px rgba(0,240,255,0.10), 0 0 80px rgba(255,0,212,0.08);
+  }
+  header.hero h1 { margin:0 0 8px 0; font-size:36px; font-weight:700; color:var(--neon-cyan); }
+  header.hero .meta { color:var(--fg-muted); font-size:14px; margin-top:12px; }
+  header.hero .meta code { color:var(--neon-gold); }
+  h1 { font-size:32px; font-weight:700; color:var(--neon-cyan); margin:36px 0 14px; border-bottom:1px solid var(--line-strong); padding-bottom:12px; }
+  h2 { font-size:24px; font-weight:500; color:var(--neon-magenta); margin:32px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--line); }
+  h3 { font-size:18px; font-weight:500; color:var(--neon-violet); margin:20px 0 8px; }
+  h4 { font-size:16px; font-weight:500; color:var(--neon-green); margin:14px 0 6px; }
+  p { margin:10px 0; }
+  blockquote {
+    border-left:3px solid var(--neon-cyan); padding:8px 18px; margin:14px 0;
+    background:rgba(0,240,255,0.04); color:var(--fg-muted); font-style:italic;
+  }
+  code { background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px; color:var(--neon-gold); font-family:'JetBrains Mono',monospace; font-size:0.92em; }
+  ul { padding-left:24px; }
+  li { margin:4px 0; }
+  table { width:100%; border-collapse:collapse; margin:14px 0; font-size:14px; }
+  th, td { padding:8px 12px; border:1px solid var(--line); text-align:left; }
+  th { background:rgba(0,240,255,0.08); color:var(--neon-cyan); font-weight:500; }
+  tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+  .mermaid {
+    background:rgba(0,0,0,0.3); border:1px solid var(--line-strong); border-radius:8px;
+    padding:24px; margin:24px 0; overflow-x:auto;
+    box-shadow:0 0 20px rgba(0,240,255,0.06);
+  }
+  hr { border:0; border-top:1px solid var(--line); margin:28px 0; }
+  strong { color:var(--neon-gold); font-weight:500; }
+  em { color:var(--neon-magenta); }
+  footer { text-align:center; color:var(--fg-muted); font-size:13px; padding:32px 0; border-top:1px solid var(--line); margin-top:64px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>🔮 Project Omni-Self Forecast — Big</h1>
+  <div class="meta">
+    <strong>ผู้รับ:</strong> Big (Jitti Kunphruk) · DOB 21 มกราคม 2529 (21.01.1986) · เวลา 17:36 (酉時) · Bangkok UTC+7<br>
+    <strong>อายุ:</strong> 40y 5m 14d @ eval 2026-07-05<br>
+    <strong>MBTI / Enneagram:</strong> <code>ENTJ-A · 8w7</code><br>
+    <strong>BaZi Day Master:</strong> <code>乙 (Yin Wood)</code> · <strong>Period 9 (離火運):</strong> 2024-2043<br>
+    <strong>Matrix of Destiny:</strong> <code>A=21 B=1 C=6 D=E=G=10 F=20 H=4 I=9</code><br>
+    <strong>Forecast window:</strong> 2026 (อายุ 40) → 2046 (อายุ 60)<br>
+    <strong>6 lenses:</strong> Carl Jung · Isabel Briggs Myers · นาตาเลีย ลาดินี · Helena Blavatsky · The Three Initiates · Su Yu Hong
+  </div>
+</header>
+
+<h1>พยากรณ์ชีวิตแบบองค์รวม — บิ๊ก (จิตติ กุลพฤกษ์)</h1>
+
+<blockquote>
+<p>**Project Omni-Self Forecast** — การวิเคราะห์ 6 มุมมองเชิงลึกที่อ่านชีวิตของคุณ</p>
+<p>&gt;</p>
+<p>**ผู้รับ:** บิ๊ก (จิตติ กุลพฤกษ์)</p>
+<p>**วันเกิด:** 21 มกราคม 2529 (21.01.1986) · เวลา 17:36 น. · กรุงเทพฯ</p>
+<p>**อายุ:** 40 ปี 5 เดือน 14 วัน (ณ วันที่วิเคราะห์ 5 กรกฎาคม 2569)</p>
+<p>**บุคลิกภาพ:** ENTJ-A · Enneagram 8w7</p>
+<p>**บริบทอาชีพ:** ผู้นำทีมและการจัดการโครงการในวงการเทคโนโลยี (Technology Team Leadership &amp; Project Management)</p>
+<p>**หมายเหตุ:** การวิเคราะห์อาชีพในรายงานนี้ใช้ &quot;รหัสชะตาและศักยภาพดั้งเดิม&quot; ล้วนๆ ไม่อ้างอิงอาชีพปัจจุบัน</p>
+<p>**ช่วงที่พยากรณ์:** 2026 (อายุ 40) → 2046 (อายุ 60)</p>
+</blockquote>
+
+<hr>
+
+<h2>Section 0 · บทสรุป 6 มุมมองเชิงลึกที่อ่านชีวิตคุณ</h2>
+
+<p>พยากรณ์นี้รวบรวมความรู้จากหกสำนักคิดที่ต่างกัน แต่ละสำนักมองเห็นคุณในมุมที่ไม่เหมือนกัน แต่เมื่อรวมกันจะได้ภาพที่ชัดเจนของใครคุณเป็น คุณกำลังไปที่ไหน และคุณจะเดินไปถึงที่นั่นได้อย่างไร</p>
+
+<h3>1. มุมมองจิตวิทยาเชิงลึก (Carl Jung)</h3>
+
+<p>คุณคือผู้นำที่สวมหน้ากากชื่อ &quot;ผู้บัญชาการ&quot; (Ruler) ออกมาให้โลกเห็น แต่ภายในลึกๆ คุณคือ &quot;ปราชญ์&quot; (The Hermit) ที่กำลังเดินทางกลับบ้าน</p>
+
+<p>จิตใต้สำนึกของคุณส่งสัญญาณผ่านตัวเลข 10 (The Wheel of Fortune) ที่ปรากฏสามครั้งในผังชะตา นี่คือ &quot;วงล้อแห่งชีวิต&quot; ที่บอกว่าทุกครั้งที่คุณพยายามควบคุมทุกอย่าง จักรวาลจะหมุนวงล้อกลับมา ไม่ใช่เพื่อทำลายคุณ แต่เพื่อสอนให้คุณ &quot;ปล่อยวาง&quot; — ปล่อยการควบคุม ไม่ใช่ปล่อยความรับผิดชอบ</p>
+
+<p><strong>จุดเปลี่ยนสำคัญ:</strong> อายุ 44-45 (2030-2031) คุณจะเจอจุดที่ Shadow (เงามืด) ขึ้นมาเคาะประตู ความรู้สึกที่ฝังลึกจะผุดขึ้นมา แต่อย่ากลัว — นี่คือช่วงที่คุณจะเริ่มเข้าใจ &quot;ตัวเองที่แท้จริง&quot; อายุ 48-49 (2034-2035) จะเป็นยอดเขาที่คุณยืนอยู่บน ผลงานที่ตราตัวตนที่สุดจะมาถึง</p>
+
+<h3>2. มุมมองบุคลิกภาพ (Isabel Briggs Myers — MBTI)</h3>
+
+<p>คุณเป็น ENTJ-A 8w7 — &quot;ผู้บัญชาการที่มีพลัง&quot; ที่ใช้ฟังก์ชันจิตสี่ชั้นในการมองโลก:</p>
+
+<ul>
+<li><strong>Te (Thinking หันออก)</strong> — คุณแปลงความคิดเป็นแผนที่จับต้องได้เร็วกว่าคนทั่วไป ต้องการ KPI วัดผลจริง ไม่พอใจคำพูดสวยหรูที่วัดไม่ได้</li>
+<li><strong>Ni (Intuition หันใน)</strong> — คุณมองเห็นภาพใหญ่และจุดจบของเรื่องก่อนคนอื่นหลายปี สามารถจับ pattern ที่ซ่อนอยู่ได้</li>
+<li><strong>Se (Sensing หันออก)</strong> — คุณชอบลงมือทำ ทดลอง เจรจาตัวต่อตัว ไม่ใช่ทฤษฎีลอยๆ</li>
+<li><strong>Fi (Feeling หันใน)</strong> — นี่คือจุดอ่อนที่ซ่อนเร้น ความรู้สึกลึกซึ้งและคุณค่าส่วนตัวถูกฝังไว้ใต้ภาพลักษณ์ผู้นำ</li>
+</ul>
+
+<p><strong>ของขวัญที่ซ่อนอยู่:</strong> Fi (ความรู้สึกภายใน) คือของขวัญที่คุณยังไม่ได้เปิด มันคือเข็มทิศภายในที่บอกว่าชีวิตนี้ควรเดินไปทางไหน ไม่ใช่แค่ &quot;อะไรทำเงินได้&quot; เมื่อคุณอายุ 40+ และเริ่มเห็นว่าความสำเร็จภายนอกไม่ได้เติมเต็มทุกอย่าง นั่นคือสัญญาณว่า Fi พร้อมจะผุด</p>
+
+<h3>3. มุมมองกฎแห่งการดึงดูด (Helena Blavatsky)</h3>
+
+<p>คุณเกิดมาพร้อมความถี่หลัก <strong>1-3-6</strong> ซึ่งเป็นบันไดแห่งการสร้างสรรค์:</p>
+<ul>
+<li><strong>1</strong> = ต้นกำเนิด (Source) — "ฉันคือผู้สร้าง"</li>
+<li><strong>3</strong> = การสร้างสรรค์ (Creation) — "ฉันสร้างสิ่งใหม่"</li>
+<li><strong>6</strong> = ความรักและการให้ (Service) — "ฉันให้ความรักออกไป"</li>
+</ul>
+
+<p>นี่คือรูปแบบของ &quot;Manifestation Loop&quot; — ความชัดเจน → การปรับให้สอดคล้อง → การสร้าง → การให้ → ความกตัญญู</p>
+
+<p><strong>Period 9 (ยุคไฟ 2024-2043):</strong> คุณเกิดมาเป็น Day Master 乙 (Yin Wood / ไม้หญิง) ซึ่งเป็นพลังงานที่หล่อเลี้ยงไฟ ในยุคนี้ &quot;ไม้&quot; ที่เขียวชอุ่มอย่างคุณจะกลายเป็นเชื้อเพลิงที่ดีที่สุด — คุณจะส่องสว่างและคนอื่นจะหันมาดู</p>
+
+<p><strong>วงล้อสามครั้ง:</strong> ตัวเลข 10 (Wheel of Fortune) ปรากฏสามครั้งในผังของคุณ นี่คือ &quot;Trinitized Wheel&quot; — วงล้อที่หมุนสามรอบ สอนว่า <em>ทุกสิ่งที่คุณให้ออกไปในอัตราสาม จะกลับคืนมาในอัตราสาม</em> นี่ไม่ใช่บังเอิญ แต่เป็นสัญญาณที่บอกว่าคุณต้องเลือก &quot;ให้อะไร&quot; ให้ดีตั้งแต่ต้น</p>
+
+<h3>4. มุมมองกฎธรรมชาติ (The Kybalion — Hermetic Principles)</h3>
+
+<p>ทั้งสามเครื่องยนต์ของชีวิต (จังหวะของ Kybalion → ความถี่ของ LoA → วงจรของ Matrix) ล้วนชี้ไปทางเดียวกัน — คุณกำลังเดินทาง &quot;กลับบ้าน&quot;</p>
+
+<ul>
+<li><strong>Kybalion rhythm</strong> — จังหวะชีวิตของคุณเป็นแบบ double pendulum ที่แกว่งระหว่างขั้วอำนาจ (Te) กับขั้วความรู้สึก (Fi) คาบ 7 ปี</li>
+<li><strong>Law of Attraction</strong> — คุณดึงดูดสิ่งที่ "ซ้ำ" เพราะจิตยังไม่ได้เรียนรู้บทเรียน ลูป 10 คือ "โอกาสที่สอง"</li>
+<li><strong>Matrix Loop</strong> — วงจร 12 ปี (2026-2037) ที่ทุกรอบ Persona จะบางลง จน Self โผล่</li>
+</ul>
+
+<p><strong>หลักความสอดคล้อง (As above, so below):</strong> สิ่งที่อยู่ภายในคุณจะสะท้อนออกมาภายนอก Chart ของคุณมีสาม 丑 (ดิน) หุ้มรอบ 乙酉 (ไม้-โลหะ) — ภายในคุณฝังอุปสรรคไว้ลึกๆ แต่ภายนอกคุณปล่อยประกายออกมา</p>
+
+<h3>5. มุมมองจุดบรรจบแห่งวัย (Age 60 Forecast)</h3>
+
+<p>อายุ 60 (ปี 2046) คือจุดที่ Ego (ตัวตน) และ Self (ตัวจริง) จะรวมเป็นหนึ่ง นี่ไม่ใช่การพัง แต่เป็นการ &quot;รื้อหน้ากาก&quot; ที่สวมมา 40 ปี เพื่อให้ Self (The Hermit) ปรากฏชัด</p>
+
+<p>บทบาทสูงสุดของคุณคือ <strong>&quot;ปราชญ์ที่สอนจากบาดแผล&quot;</strong> — ไม่ใช่ผู้บัญชาการที่สั่งจากหอคอยอีกต่อไป แต่เป็นครูที่สอนด้วยความเมตตา</p>
+
+<h3>6. มุมมองดวงจีน (BaZi &amp; Period 9)</h3>
+
+<p>Day Master ของคุณคือ <strong>乙 (Yin Wood / ไม้หญิง)</strong> — ต้นไม้ที่โค้งงอได้ แต่ไม่หัก นี่คือความยืดหยุ่น การเจรจา การมีอิทธิพลแบบทางอ้อม และการเติบโตที่มีราก</p>
+
+<p>Chart ของคุณมีสาม 乙 (วัน-ชั่วโมง-ปี) — <strong>&quot;Monad ที่ปรากฏสามครั้งในรอบชาติเดียว&quot;</strong> นี่หมายความว่าครั้งนี้คือครั้งที่วิญญาณของคุณเลือก &quot;เก็บเกี่ยว&quot; ไม่ใช่ &quot;เริ่มใหม่&quot;</p>
+
+<p><strong>Period 9 (Fire, 2024-2043):</strong> ไม้หล่อเลี้ยงไฟ (木生火) — คุณอยู่ในยุค <em>ของคุณ</em> อย่างแท้จริง ดวงอาทิตย์จะส่องแสงให้คุณ และคุณจะกลายเป็น &quot;ดวงไฟ&quot; ที่ผู้อื่นมองหา</p>
+
+<hr>
+
+<div class="mermaid">
+%% Cosmic Synergy — three-engine loop: Kybalion Rhythm → LoA Vibration → Matrix Loop
+flowchart LR
+classDef kyb fill:#11112a,stroke:#ffd700,color:#ffd700
+classDef loa fill:#11112a,stroke:#39ff14,color:#39ff14
+classDef matrix fill:#11112a,stroke:#ff00d4,color:#ff00d4
+K[&quot;Kybalion · Rhythm&lt;br/&gt;สองขั้ว Te↔Fi แกว่ง 7 ปี&quot;]:::kyb
+L[&quot;Law of Attraction · Vibration&lt;br/&gt;ความถี่ 1-3-6 + Wood feeds Fire&quot;]:::loa
+M[&quot;Matrix of Destiny · Loop&lt;br/&gt;D=E=G=10 + Individuation&quot;]:::matrix
+K --&gt; L --&gt; M --&gt; K
+</div>
+
+<h2>Section 1 · จุดเชื่อมโยงแห่งปรัชญาและวัฏจักร</h2>
+
+<p>สามเครื่องยนต์ของจักรวาลกำลังทำงานพร้อมกันในชีวิตคุณ และทั้งสามพูดเรื่องเดียวกัน</p>
+
+<h3>เครื่องยนต์ที่ 1 — จังหวะของ Kybalion (Rhythm)</h3>
+
+<p>จังหวะชีวิตของคุณไม่ใช่เส้นตรงที่ขึ้นเรื่อยๆ แต่เป็น &quot;ลูกตุ้มสองชั้น&quot; (double pendulum) ที่แกว่งระหว่างสองขั้ว</p>
+
+<ul>
+<li><strong>ขั้วที่ 1: อำนาจ (Te)</strong> — ช่วงที่คุณเป็นผู้นำ สั่งการ จัดระบบ ควบคุม</li>
+<li><strong>ขั้วที่ 2: ความรู้สึก (Fi)</strong> — ช่วงที่คุณต้องการความเงียบ ฟังเสียงภายใน ดูแลคุณค่าส่วนตัว</li>
+</ul>
+
+<p>คาบของการแกว่งคือ <strong>7 ปี</strong> — ทุกๆ 7 ปี จักรวาลจะดึงคุณกลับไปอีกขั้วหนึ่ง ถ้าคุณแกว่งไปทางขวา (อำนาจ) นาน จักรวาลจะดึงคุณกลับทางซ้าย (ความรู้สึก) ในอัตราเท่ากัน</p>
+
+<p>นี่คือหลัก <strong>Rhythm</strong> ของ The Kybalion: <em>&quot;ทุกสิ่งไหลเข้า-ไหลออก ขึ้น-ลง ซ้าย-ขวา เท่าที่แกว่งไปทางหนึ่ง ก็จะแกว่งกลับมาเท่านั้น&quot;</em></p>
+
+<h3>เครื่องยนต์ที่ 2 — ความถี่ของ Law of Attraction (Vibration)</h3>
+
+<p>ความถี่หลักของคุณคือ <strong>&quot;ซ้ำ&quot;</strong> (Repetition) — คุณดึงดูดสถานการณ์เดิมกลับมาซ้ำแล้วซ้ำเล่า เพราะจิตยังไม่ได้เรียนรู้บทเรียน</p>
+
+<p>ตัวเลข 10 (Wheel of Fortune) ที่ปรากฏสามครั้งในผังของคุณคือ &quot;ลูปแห่งการเรียนรู้&quot; — ทุกครั้งที่คุณพบสถานการณ์ที่คล้ายเดิม นั่นคือ <strong>โอกาสที่สองที่จิตไร้สำนึกให้</strong> เพื่อให้คุณทำต่างจากครั้งก่อน</p>
+
+<p>การเปลี่ยนความถี่ไม่ใช่เปลี่ยนการกระทำ แต่เปลี่ยน <strong>ความตั้งใจ</strong> ที่อยู่เบื้องหลัง:</p>
+<ul>
+<li>ถ้าคุณส่งจากช่อง <strong>1-3-6</strong> (ต้นกำเนิด → สร้างสรรค์ → รัก) สิ่งที่กลับมาจะสอดคล้อง 100%</li>
+<li>แต่ถ้าคุณส่งจากช่อง <strong>8-4-2</strong> (อำนาจ → ควบคุม → แลกเปลี่ยน) สิ่งที่กลับมาจะพลิกกลับตรงข้าม</li>
+</ul>
+
+<h3>เครื่องยนต์ที่ 3 — วงจรของ Matrix of Destiny (Loop)</h3>
+
+<p>Matrix Loop ของคุณคือ <strong>Individuation cycle</strong> (กระบวนการค้นหาตัวเอง) ที่จะใช้เวลา 12 ปี (2026-2037) เดินผ่านสาม Echo Numbers แล้วกลับมาที่เดิม</p>
+
+<p>ทุกรอบของวงจร Persona (หน้ากาก) จะบางลง จน Self (ตัวจริง) โผล่ออกมา</p>
+
+<p><strong>Proof line (หลักฐานที่สามศาสตร์ชี้เหมือนกัน):</strong></p>
+
+<p>&quot;คุณกำลังเดินทางกลับบ้าน — จาก Ruler (ผู้ปกครอง) ที่ Persona ปลอมเป็น Self → ไปสู่ Sage (ปราชญ์) ที่ Self รู้ตัวว่าไม่ต้องปลอม&quot;</p>
+
+<h3>Octagram — 8 พลังแห่งจักรวาลที่ล้อมรอบคุณ</h3>
+
+<table>
+<thead><tr><th>ทิศ</th><th>พลัง</th><th>ความหมาย</th></tr></thead>
+<tbody>
+<tr><td>**ศูนย์กลาง**</td><td>Monad · Self</td><td>I = 9 (The Hermit) — ปัญญาที่ส่องไฟตัวเอง</td></tr>
+<tr><td>**เหนือ (N)**</td><td>Kybalion · Mentalism</td><td>&quot;จิตเป็นทั้งหมด&quot; — Ni ของคุณคือเครื่องพิสูจน์</td></tr>
+<tr><td>**ตะวันออกเฉียงเหนือ (NE)**</td><td>LoA · Vibration</td><td>Wheel of Fortune — การดึงดูดสิ่งที่ยังไม่ได้เรียน</td></tr>
+<tr><td>**ตะวันออก (E)**</td><td>Matrix · Loop</td><td>D=E=G=10 — shadow ที่หมุนซ้ำจน Ego ยอม</td></tr>
+<tr><td>**ตะวันออกเฉียงใต้ (SE)**</td><td>BaZi · Heavenly Stem</td><td>乙 (Yin Wood) — ต้นหญิงที่โค้งได้แต่ไม่หัก</td></tr>
+<tr><td>**ใต้ (S)**</td><td>Jung · Shadow</td><td>The Tyrant — ผู้ปกครองที่กลัวความอ่อนแอของตัวเอง</td></tr>
+<tr><td>**ตะวันตกเฉียงใต้ (SW)**</td><td>Ladini · Saturn</td><td>2030-2031 七殺 — เวลาที่ Shadow ขึ้นมา</td></tr>
+<tr><td>**ตะวันตก (W)**</td><td>Hermetic · Polarity</td><td>Ruler ↔ Hermit — สองขั้วที่ต้องรวมเป็นหนึ่ง</td></tr>
+<tr><td>**ตะวันตกเฉียงเหนือ (NW)**</td><td>Mystery · Initiation</td><td>ENTJ → ENFJ — การเริ่มต้นครั้งที่สอง</td></tr>
+</tbody></table>
+
+<hr>
+
+<div class="mermaid">
+%% Natalia Square 3×3 — Big&#x27;s natal chart with Echo Numbers strip
+flowchart LR
+classDef corner fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+classDef edge fill:#f0f8ff,stroke:#20b2aa,color:#1a1a2e
+classDef center fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
+classDef echo fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e
+A[&quot;A=21 · World&quot;]:::corner
+B[&quot;B=1 · Magician&quot;]:::edge
+C[&quot;C=6 · Lovers&quot;]:::corner
+D[&quot;D=10 · Wheel&quot;]:::edge
+C2[&quot;center&lt;br/&gt;乙 Day Master&quot;]:::center
+E[&quot;E=10 · Wheel&quot;]:::edge
+F[&quot;F=20 · Judgement&quot;]:::corner
+G[&quot;G=10 · Wheel&quot;]:::edge
+H[&quot;H=4 · Emperor&quot;]:::corner
+I[&quot;I=9 · Hermit&quot;]:::corner
+ECHO[&quot;Echo: 10 × 3 (D,E,G) — Wheel of Fortune&quot;]:::echo
+A --- B --- C
+A --- D --- C2 --- E --- C
+C --- F --- C
+D --- G --- E
+F --- H --- I
+I --- G --- F
+C2 --- ECHO
+</div>
+
+<h2>Section 2 · โปรแกรมชีวิตและแกนหลัก (Natalia Square 3×3)</h2>
+
+<div class="mermaid">
+%% Natalia Square 3×3 — Big&#x27;s natal chart with Echo Numbers strip
+flowchart LR
+classDef corner fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+classDef edge fill:#f0f8ff,stroke:#20b2aa,color:#1a1a2e
+classDef center fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
+classDef echo fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e
+A[&quot;A=21 · World&quot;]:::corner
+B[&quot;B=1 · Magician&quot;]:::edge
+C[&quot;C=6 · Lovers&quot;]:::corner
+D[&quot;D=10 · Wheel&quot;]:::edge
+C2[&quot;center&lt;br/&gt;乙 Day Master&quot;]:::center
+E[&quot;E=10 · Wheel&quot;]:::edge
+F[&quot;F=20 · Judgement&quot;]:::corner
+G[&quot;G=10 · Wheel&quot;]:::edge
+H[&quot;H=4 · Emperor&quot;]:::corner
+I[&quot;I=9 · Hermit&quot;]:::corner
+ECHO[&quot;Echo: 10 × 3 (D,E,G) — Wheel of Fortune&quot;]:::echo
+A --- B --- C
+A --- D --- C2 --- E --- C
+C --- F --- C
+D --- G --- E
+F --- H --- I
+I --- G --- F
+C2 --- ECHO
+</div>
+
+
+
+<p>ผังชะตา 3×3 ของนาตาเลีย ลาดินี คือ &quot;แผนที่จิต&quot; ที่บอกว่าคุณถูกตั้งโปรแกรมมาอย่างไร</p>
+
+<h3>แกนบน — ความคิด / จุดเริ่มต้น (A-B-C = 21-1-6)</h3>
+
+<p><strong>A = 21 (The World / โลก) → B = 1 (The Magician / นักมายากล) → C = 6 (The Lovers / คู่รัก)</strong></p>
+
+<p>แกนบนแทนเหตุผลที่คุณเกิดมา — คุณเกิดมาเพื่อ &quot;เลือก&quot;</p>
+
+<p>21 (The World) คือความสมบูรณ์ จุดจบของวงจรหนึ่ง → 1 (The Magician) คือการเริ่มต้นใหม่ด้วยพลังแห่งการสร้างสรรค์ → 6 (The Lovers) คือการเลือกระหว่างทางเดินที่หลากหลาย</p>
+
+<p>นี่คือเหตุผลที่ Persona ของคุณ (ENTJ) เป็น &quot;ผู้เลือก&quot; — คุณมองเห็นทางเลือกหลายทางและตัดสินใจได้เร็ว แต่การเลือกของคุณไม่ใช่แค่เพื่อตัวเอง — มันเพื่อ &quot;โลก&quot; (21) ที่คุณกำลังสร้าง</p>
+
+<h3>แกนกลาง — การงาน / วิถีชีวิต (D-E-F = 10-10-20)</h3>
+
+<p><strong>D = 10 (Wheel of Fortune / วงล้อแห่งโชค) → E = 10 (Wheel of Fortune ซ้ำ) → F = 20 (Judgement / การตัดสิน)</strong></p>
+
+<p>แกนกลางของชีวิตคุณคือ <strong>&quot;การตาย-เกิด-ยุติ&quot;</strong> ของ Ego สามครั้ง</p>
+
+<p>Wheel ปรากฏสองครั้งซ้อนกัน แล้วปิดด้วย Judgement (การตัดสิน) นี่หมายความว่าทุกครั้งที่คุณผ่าน &quot;วงล้อ&quot; คุณจะเสีย Ego ชุดเก่าไปหนึ่งชิ้น แต่ได้ Self ที่ลึกขึ้นหนึ่งชั้น</p>
+
+<p>สำหรับ ENTJ ที่ชอบควบคุม นี่คือบทเรียนที่ยากที่สุด: <strong>&quot;จังหวะของจักรวาลมีส่วนร่วมเสมอ&quot;</strong> คุณไม่สามารถสร้างวงจรได้ตามต้องการเพียงอย่างเดียว — คุณต้องเรียนรู้ &quot;อ่านจังหวะ&quot; และเคลื่อนไปกับมัน</p>
+
+<h3>แกนล่าง — ฐานราก / บุคลิก (G-H-I = 10-4-9)</h3>
+
+<p><strong>G = 10 (Wheel of Fortune ครั้งที่สาม) → H = 4 (The Emperor / จักรพรรดิ) → I = 9 (The Hermit / ฤๅษี)</strong></p>
+
+<p>รากฐานของจิตคุณคือ Wheel (10) → Emperor (4) → Hermit (9)</p>
+
+<p>นี่หมายความว่าใต้ Persona &quot;ผู้ปกครอง&quot; (Emperor) มี <strong>Wise Old Man (Hermit)</strong> นอนอยู่เสมอ Persona ของ ENTJ เป็น &quot;ชุดเกราะ&quot; ที่คุณใส่เพื่อปกป้อง Hermit ข้างใน</p>
+
+<p>แต่ในท้ายที่สุด I = 9 (The Hermit) คือจุดหมาย — คุณกำลังเดินทางกลับไปหาปราชญ์ภายใน</p>
+
+<h3>Echo Numbers — 10 ปรากฏ 3 ครั้ง (D, E, G)</h3>
+
+<p><strong>10 × 3 = &quot;Triple Amplification ของ Shadow&quot;</strong></p>
+
+<p>ลูป 10 จะหมุนจนคุณเรียนรู้ → ลูป 10 ยังหมุนจนคุณล้ม → ลูป 10 ครั้งที่สามคือ &quot;ตัวตลก&quot; ของจิตไร้สำนึก — คุณรู้แล้วว่ามันเป็นลูป</p>
+
+<p>นี่คือเหตุผลที่คุณมักรู้สึกว่าชีวิต &quot;วนลูป&quot; — จิตกำลังบอกว่า &quot;หยุดบังคับ เริ่มฟัง&quot;</p>
+
+<hr>
+
+<div class="mermaid">
+%% Octagram — Monad at center + 8 cosmic forces radiating outward
+flowchart TD
+classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+classDef n fill:#11112a,stroke:#00f0ff,color:#00f0ff
+classDef ne fill:#11112a,stroke:#39ff14,color:#39ff14
+classDef e fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+classDef se fill:#11112a,stroke:#ff00d4,color:#ff00d4
+classDef s fill:#11112a,stroke:#ff8c00,color:#ffd700
+classDef sw fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+classDef w fill:#11112a,stroke:#39ff14,color:#39ff14
+classDef nw fill:#11112a,stroke:#00f0ff,color:#00f0ff
+MON[&quot;Monad · Self&lt;br/&gt;I=9 Hermit&quot;]:::center
+N[&quot;N · Kybalion&lt;br/&gt;Mentalism&quot;]:::n
+NE[&quot;NE · LoA&lt;br/&gt;Vibration&quot;]:::ne
+E[&quot;E · Matrix&lt;br/&gt;Loop&quot;]:::e
+SE[&quot;SE · BaZi&lt;br/&gt;乙木 Heavenly Stem&quot;]:::se
+S[&quot;S · Jung&lt;br/&gt;Shadow&quot;]:::s
+SW[&quot;SW · Ladini&lt;br/&gt;Saturn 2030-31&quot;]:::sw
+W[&quot;W · Hermetic&lt;br/&gt;Polarity&quot;]:::w
+NW[&quot;NW · Mystery&lt;br/&gt;Initiation&quot;]:::nw
+MON --- N
+MON --- NE
+MON --- E
+MON --- SE
+MON --- S
+MON --- SW
+MON --- W
+MON --- NW
+N --- NE
+NE --- E
+E --- SE
+SE --- S
+S --- SW
+SW --- W
+W --- NW
+NW --- N
+</div>
+
+<h2>Section 3 · พรสวรรค์ ศักยภาพ และอดีตชาติ</h2>
+
+<div class="mermaid">
+%% Octagram — Monad at center + 8 cosmic forces radiating outward
+flowchart TD
+classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+classDef n fill:#11112a,stroke:#00f0ff,color:#00f0ff
+classDef ne fill:#11112a,stroke:#39ff14,color:#39ff14
+classDef e fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+classDef se fill:#11112a,stroke:#ff00d4,color:#ff00d4
+classDef s fill:#11112a,stroke:#ff8c00,color:#ffd700
+classDef sw fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+classDef w fill:#11112a,stroke:#39ff14,color:#39ff14
+classDef nw fill:#11112a,stroke:#00f0ff,color:#00f0ff
+MON[&quot;Monad · Self&lt;br/&gt;I=9 Hermit&quot;]:::center
+N[&quot;N · Kybalion&lt;br/&gt;Mentalism&quot;]:::n
+NE[&quot;NE · LoA&lt;br/&gt;Vibration&quot;]:::ne
+E[&quot;E · Matrix&lt;br/&gt;Loop&quot;]:::e
+SE[&quot;SE · BaZi&lt;br/&gt;乙木 Heavenly Stem&quot;]:::se
+S[&quot;S · Jung&lt;br/&gt;Shadow&quot;]:::s
+SW[&quot;SW · Ladini&lt;br/&gt;Saturn 2030-31&quot;]:::sw
+W[&quot;W · Hermetic&lt;br/&gt;Polarity&quot;]:::w
+NW[&quot;NW · Mystery&lt;br/&gt;Initiation&quot;]:::nw
+MON --- N
+MON --- NE
+MON --- E
+MON --- SE
+MON --- S
+MON --- SW
+MON --- W
+MON --- NW
+N --- NE
+NE --- E
+E --- SE
+SE --- S
+S --- SW
+SW --- W
+W --- NW
+NW --- N
+</div>
+
+
+
+<h3>พรสวรรค์หลักที่คุณมีตั้งแต่เกิด</h3>
+
+<p>คุณมีของขวัญสามชั้นที่คนทั่วไปไม่มี:</p>
+
+<p>1. <strong>ความเร็วในการตัดสินใจ (Te dominant)</strong> — คุณประมวลข้อมูลแล้วสรุปภายในเวลาที่คนอื่นยังถกเถียงกันอยู่ คุณไม่กลัวตัดสินใจผิด เพราะคุณรู้ว่าการไม่ตัดสินเสียโอกาสมากกว่า</p>
+
+<p>2. <strong>วิสัยทัศน์ระยะยาว (Ni auxiliary)</strong> — คุณมองเห็นจุดจบของสถานการณ์ก่อนเหตุการณ์จะเกิด คุณสามารถจับ pattern ที่ซ่อนอยู่และคาดการณ์อนาคตได้แม่นยำ นี่คือ <strong>Perception ที่ไม่ได้มาจากตรรกะ แต่มาจาก Collective Unconscious</strong> (จิตไร้สำนึกรวม) ที่ส่งสัญลักษณ์มาให้</p>
+
+<p>3. <strong>พลังงานการลงมือ (Se tertiary)</strong> — คุณไม่ใช่คนที่แค่วางแผนแล้วจบ คุณลงสนามเอง เจรจาเอง ทำด้วยมือตัวเอง เมื่ออยู่ในโหมดล่าเป้าหมาย คุณไม่เหนื่อยง่าย</p>
+
+<h3>ของขวัญที่ซ่อนอยู่ในเงา</h3>
+
+<p><strong>Fi inferior (ความรู้สึกภายใน)</strong> คือของขวัญที่คุณยังไม่ได้เปิด</p>
+
+<p>มันคือความสามารถที่จะรู้สึกลึกซึ้งกับคุณค่าส่วนตัว ความภักดีต่อคนที่รัก และความงดงามของความอ่อนแอ</p>
+
+<p>คุณเรียนรู้ตั้งแต่เด็กว่า &quot;ความอ่อนแอ = อันตราย&quot; จึงเก็บ Fi ไว้ในที่ลึก แต่ Fi ไม่ใช่อารมณ์ — มันคือ <strong>inner compass (เข็มทิศภายใน)</strong> ที่บอกว่าชีวิตนี้ควรเดินไปทางไหน ไม่ใช่แค่ &quot;อะไรทำเงินได้&quot;</p>
+
+<p>เมื่อคุณอายุ 40+ และเริ่มเห็นว่าความสำเร็จภายนอกไม่ได้เติมเต็มทุกอย่าง นั่นคือสัญญาณว่า Fi พร้อมจะผุด — ถ้าคุณเปิดรับ คุณจะพบกับ &quot;ตัวเองเวอร์ชันที่ลึกกว่า&quot; ที่ทรงพลังกว่า Te-Ni อย่างเดียวมาก</p>
+
+<h3>รูปแบบปัญหาที่วนลูป (Karmic Tail)</h3>
+
+<p><strong>&quot;Repetition Compulsion&quot;</strong> — การบีบบังคับให้ทำซ้ำ</p>
+
+<p>คุณมักเจอสถานการณ์แบบ &quot;ตัดสินใจเร็ว → ล้มเหลว → ลุกขึ้นใหม่&quot; ซ้ำๆ นี่ไม่ใช่โชคร้าย — มันคือ <strong>สัญลักษณ์ที่จิตส่งมาบอกว่า &quot;หยุดและตั้งคำถามว่า ทำไมฉันเร่ง?&quot;</strong></p>
+
+<p>ในอดีตชาติ คุณอาจเคยล้มเหลวในการประสานความอ่อนน้อม (乙) กับความแข็งแกร่ง (辛) — คุณอาจเคยปล่อยให้ความอ่อนน้อมกลายเป็นอ่อนแอ หรือให้ความแข็งแกร่งกลายเป็นดุร้าย</p>
+
+<p><strong>ในชาตินี้ คุณได้โอกาสใหม่</strong> ที่จะทำให้สองขั้วนี้สมดุล — รากที่อ่อนน้อมแต่ไม่หัก ใบที่แข็งแกร่งแต่ไม่บาด</p>
+
+<h3>บทเรียนที่ต้องปลดล็อก</h3>
+
+<p><strong>&quot;ปล่อยการควบคุม ไม่ใช่ปล่อยความรับผิดชอบ&quot;</strong></p>
+
+<p>Ego ของคุณเข้าใจผิดว่า Fi ที่อ่อนโยนคือความอ่อนแอ แต่ที่จริงแล้วมันคือ <strong>ความสามารถในการยอมรับว่าโลกไม่ได้หมุนรอบคุณ</strong></p>
+
+<p>เมื่อคุณเรียนรู้ได้ Wheel จะหยุดหมุนและกลายเป็น <strong>Mandala</strong> (วงจรสมบูรณ์) ที่สวยงาม</p>
+
+<hr>
+
+<h2>Section 4 · การเงิน ความสำเร็จ และบทบาทเชิงลึก</h2>
+
+<h3>อุตสาหกรรมที่เหมาะสมกับคุณ</h3>
+
+<p>จากการอ่านผังชะตาและบุคลิกภาพ คุณเหมาะกับงานที่ต้องการ <strong>วิสัยทัศน์ระยะยาว + โครงสร้างระบบ + การรับใช้ปัญญา</strong></p>
+
+<p>สามสาขาที่เหมาะสมที่สุด (จาก &quot;รหัสชะตาและศักยภาพดั้งเดิม&quot; ล้วนๆ ไม่อ้างอิงอาชีพปัจจุบัน):</p>
+
+<p>1. <strong>Technology Team Leadership / Project Management</strong> — ใช้ Te (ตรรกะ) จัดโครงสร้างทีม + Ni (สัญชาตญาณ) มอง product roadmap + I=9 Hermit (ปราชญ์) ตัดสินใจเชิงระบบ — เหมาะกับการนำทีมวิศวกรและจัดการโครงการเทคโนโลยีที่ต้องอาศัยทั้งสถาปัตยกรรมและคน</p>
+
+<p>2. <strong>Strategic Consulting / Digital Transformation</strong> — ใช้ Te จัดโครงสร้างองค์กร + Ni มองอนาคตของอุตสาหกรรม + ความสามารถอ่านรูปแบบที่ซ่อนอยู่ — เหมาะกับการช่วยธุรกิจเปลี่ยนผ่านสู่ดิจิทัล</p>
+
+<p>3. <strong>Education / Knowledge Architecture</strong> — สร้าง knowledge systems ที่ Hermit ถ่ายทอด พัฒนาคนและถ่ายทอดปัญญา — เหมาะกับการเป็นผู้ฝึกสอนหรือสถาปนิกความรู้ในองค์กรเทคโนโลยี</p>
+
+<p><strong>สิ่งที่ไม่เหมาะ:</strong> งานที่ต้องนั่งโต๊ะเฉยๆ 8 ชั่วโมง หรืออาชีพที่ทุกขั้นตอนถูกควบคุมจากเบื้องบน — คุณต้อง &quot;เป็นเจ้าของเกม&quot; ถึงจะเบ่งบาน</p>
+
+<h3>รูปแบบการหาเงิน</h3>
+
+<p>รายได้ของคุณเป็นวงจร 7 ปี — คุณทำเงินได้ดีในปี Personal Year 1, 5, 8, 9 (cycle สูง) และชะลอในปี 4, 7 (cycle ต่ำ)</p>
+
+<p>นี่ไม่ใช่โชคร้าย — มันคือจังหวะของวงล้อ (Wheel) ที่หมุน ในปีที่ cycle ต่ำ อย่าบังคับให้รายได้เพิ่ม แต่ใช้เวลานั้น &quot;ปลูกเมล็ด&quot; สำหรับ cycle ถัดไป</p>
+
+<p><strong>Peak window (จุดสูงสุด):</strong> <strong>อายุ 48-49 (2034-2035)</strong> — BaZi year pillar เป็น 甲寅/乙卯 (ตรงกับ Day Master ของคุณ) + Personal Year 1/2 = <strong>&quot;I am the year&quot;</strong> ผลงานที่ตราตัวตนที่สุดจะมาถึง</p>
+
+<h3>บทบาทในที่ทำงาน</h3>
+
+<p><strong>เมื่อคุณเป็น Boss (ผู้นำ):</strong></p>
+<p>คุณสวม &quot;Mask of Authority&quot; ได้เป็นธรรมชาติ คนในทีมจะเคารพคุณ แต่อาจ &quot;เว้นระยะ&quot; เพราะ Persona ที่แข็งเกินไป</p>
+
+<blockquote>
+<p>**สถานการณ์จำลอง:** คุณเพิ่งขึ้นเป็น CTO เสนอ roadmap 3 ปีภายใน 7 นาที ไม่มีใครเถียง แต่สัปดาห์ต่อมาวิศวกรอาวุโสลาออกโดยไม่บอกเหตุผล — นี่คือ Shadow ที่ปรากฏ Persona &quot;รู้ทุกอย่าง&quot; ทำให้คนในทีมไม่กล้าบอกว่า roadmap ของคุณขาด empathy</p>
+</blockquote>
+
+<p><strong>บทเรียน:</strong> หยุดและฟัง อย่าให้ความมั่นใจกลายเป็นกำแพง</p>
+
+<p><strong>เมื่อคุณเป็น Subordinate (ผู้ตาม):</strong></p>
+<p>คุณถอนตัวเมื่อต้องอยู่ใต้คนที่คุณเห็นว่า &quot;ไม่เก่งกว่า&quot; คุณมี &quot;Critical Father Complex&quot; ภายในที่ตัดสินผู้นำอย่างรวดเร็ว</p>
+
+<p><strong>บทเรียน:</strong> เรียนรู้ที่จะเชื่อมั่นในระบบมากกว่าตัวบุคคล บางครั้งผู้นำที่ &quot;ต่างจากคุณ&quot; มีสิ่งที่คุณเรียนรู้ได้</p>
+
+<p><strong>มือขวา (Active — รุก):</strong> Te — ความสามารถสร้างระบบ ตัดสินใจ จัดการ — นี่คือด้านที่คุณถนัด</p>
+
+<p><strong>มือซ้าย (Receptive — รับ):</strong> Ni + Fi — สัญชาตญาณ + คุณค่า — Self ที่ยังไม่ค่อยได้ใช้ ฝึก &quot;หยุด 10 นาที&quot; ก่อนตัดสินใจใหญ่ เพื่อฟังเสียงข้างใน</p>
+
+<hr>
+
+<h2>Section 5 · สายสัมพันธ์ ความรัก และครอบครัว</h2>
+
+<h3>ความรักและวงใน</h3>
+
+<p><strong>รูปแบบความสัมพันธ์:</strong></p>
+<p>คุณดึงดูด &quot;Strong Partner&quot; (คนที่มีพลัง) เพราะ Anima (พลังงานหญิงภายใน) ของคุณต้องการ &quot;คู่ต่อสู้&quot; ไม่ใช่ &quot;ผู้ตาม&quot;</p>
+
+<p>แต่ทุกครั้งที่ได้คู่ที่แข็งจริง Persona &quot;ผู้ควบคุม&quot; ของคุณจะขัดแย้งกับ Anima ที่อยาก &quot;ถูกมองเห็นความอ่อนแอ&quot;</p>
+
+<p><strong>จุดบอดทางอารมณ์:</strong></p>
+<p>คุณคิดว่าความรักคือ &quot;ระบบที่ต้องบำรุงรักษา&quot; — คุณจัดการความสัมพันธ์เหมือนจัดการโปรเจกต์ ลืมว่าความสัมพันธ์ที่แท้จริงต้องการ <strong>vulnerability</strong> (ความอ่อนแอ) ไม่ใช่แค่ accountability (ความรับผิดชอบ)</p>
+
+<p><strong>ภาษารักของคุณ:</strong></p>
+<ul>
+<li><strong>คุณแสดงรักด้วย:</strong> Acts of Service (การกระทำ) — ลงทุนเวลา/ทรัพยากรสร้างอนาคตร่วมกัน จำทุกเรื่องที่คู่พูดถึง แล้วจัดการให้แบบเงียบๆ</li>
+<li><strong>คุณต้องการรับ:</strong> Words of Affirmation (คำยืนยัน) — ไม่ใช่คำชมทั่วไป แต่คำที่ระบุว่า "เธอเป็นคนสำคัญกับฉันเพราะ..." (เจาะจง ไม่คลุมเครือ)</li>
+</ul>
+
+<p><strong>การดึงดูดคนเข้าวงใน:</strong></p>
+<p>คนที่เข้ามาใกล้มักเป็น &quot;ลูกน้อง&quot; ที่จงรักภักดี หรือ &quot;ที่ปรึกษา&quot; ที่ช่วยให้คุณ reflexive (ส่องกระจกตัวเอง) ขึ้น</p>
+
+<h3>มรดกสายตระกูล</h3>
+
+<p><strong>สายบิดา (Paternal line):</strong></p>
+<p>Father Archetype ในจิตของคุณคือ &quot;The Authoritarian Ruler&quot; — ผู้ที่ให้คุณค่า &quot;ทำให้สำเร็จ&quot; มากกว่า &quot;เป็นจริง&quot;</p>
+
+<p>นี่ส่งผลต่อ Persona &quot;Boss&quot; ของคุณ — คุณสวมบทบาทพ่อที่คุณไม่เคยมีในแบบที่คุณต้องการ</p>
+
+<p><strong>สายมารดา (Maternal line):</strong></p>
+<p>Mother Archetype คือ &quot;The Nurturing Hermit&quot; — ผู้ที่ให้ &quot;พื้นที่เงียบ&quot;</p>
+
+<p>นี่คือ Self (I=9 The Hermit) ที่คุณกำลังตามหา คุณต้องการ &quot;กลับบ้าน&quot; หาความเงียบข้างในที่แม่เคยให้</p>
+
+<hr>
+
+<h2>Section 6 · สุขภาพและจุดอ่อน</h2>
+
+<p>ร่างกายเป็น &quot;สัญลักษณ์&quot; ที่บอกว่าจิตกำลังสื่อสารอะไร</p>
+
+<h3>จุดที่ควรระวัง</h3>
+
+<p><strong>Crown Chakra (ศีรษะ / ระบบประสาท):</strong></p>
+<p>Yin Wood + Ni ที่ทำงานหนัก → คุณมีแนวโน้ม <strong>overthinking จนปวดหัว/ไมเกรน</strong> ในช่วงใกล้ deadline</p>
+
+<p>Ego ที่คิดแทนที่จะ &quot;รู้สึก&quot; สร้าง somatic tension (ความตึงทางร่างกาย) ที่ศีรษะ</p>
+
+<p><strong>Solar Plexus (ท้อง / ระบบย่อยอาหาร):</strong></p>
+<p>ENTJ-A 8w7 ใช้อำนาจบ่อย → <strong>กระเพาะอาหารเป็นอวัยวะแรกที่รับภาระ</strong></p>
+
+<p>&quot;Indigestion of unsaid words&quot; (ความไม่ย่อยของคำที่ไม่ได้พูด) คือโรคประจำตัวของ ENTJ ในช่วง Fi grip</p>
+
+<p><strong>Root Chakra (ฐานราก / กระดูก):</strong></p>
+<p>Wheel ที่หมุนบ่อย (D=E=G=10) → รู้สึก &quot;ไม่มั่นคง&quot; ทุก 7 ปี</p>
+
+<p>กระดูกสันหลัง (Foundation) จะเป็นสัญลักษณ์ของภาระที่ Ego แบก</p>
+
+<h3>พลังงานและการพักผ่อน</h3>
+
+<p><strong>รูปแบบพลังงาน:</strong> คุณมีพลังงานแบบ burst — สูงมาก 3-6 เดือน แล้วลงฮวบ</p>
+
+<p>เมื่อพลังหมด ร่างกายส่งสัญญาณ: นอนไม่หลับ ปวดคอ/บ่า ย่อยอาหารแปรปรวน ภูมิตกต่ำ</p>
+
+<p><strong>วิธีปรับสมดุล:</strong></p>
+<p>ต้องมี <strong>recovery ritual</strong> ที่เป็น Se-grounded (ยึดกับการรับรู้ปัจจุบัน) — เดินเร็ว ยกเวท ทำอาหาร เล่นกีฬาที่ใช้ร่างกายเต็มที่</p>
+
+<p><strong>หลักสำคัญ:</strong> &quot;ทุกครั้งที่ Body ส่งสัญญาณ ให้หยุด Ego และถาม Self&quot; — 10 นาที silence ก่อนนอน + บันทึก dream journal เพราะ Shadow จะปรากฏในร่างกายก่อนปรากฏในความคิด</p>
+
+<hr>
+
+<div class="mermaid">
+%% 5 Stages of Evolution — left-to-right timeline before age-60 convergence (2046 丙寅)
+flowchart LR
+classDef stage fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+classDef peak fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e,stroke-width:3px
+classDef hub fill:#11112a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+S1[&quot;Stage 1 · 5-24&lt;br/&gt;ปฐมบท · สร้างเข็มทิศ&lt;br/&gt;大运 戊子→丁亥&quot;]:::stage
+S2[&quot;Stage 2 · 25-34&lt;br/&gt;สำรวจ + ขยาย · Peak Window&lt;br/&gt;大运 丙戌 = 用神&quot;]:::peak
+S3[&quot;Stage 3 · 35-44&lt;br/&gt;ปะทะ + จุดวิกฤต&lt;br/&gt;大运 乙酉&quot;]:::stage
+S4[&quot;Stage 4 · 45-54&lt;br/&gt;บูรณาการ + ปรับขั้ว&lt;br/&gt;大运 甲申&quot;]:::stage
+S5[&quot;Stage 5 · 55-64&lt;br/&gt;ตกผลึก + ส่งมอบ&lt;br/&gt;大运 癸未&quot;]:::stage
+H[&quot;Age 60 · 2046 丙寅&lt;br/&gt;Sexagenary Completion&lt;br/&gt;丙 + 寅 = ไฟอุ่นไม้&quot;]:::hub
+S1 --&gt; S2 --&gt; S3 --&gt; S4 --&gt; S5 --&gt; H
+</div>
+
+<h2>Section 7 · ไทม์ไลน์ 5 ช่วงวัย และพยากรณ์อาชีพรายปี</h2>
+
+<h3>5 ช่วงวัยก่อนจุดบรรจบอายุ 60</h3>
+
+<table>
+<thead><tr><th>ช่วง</th><th>ช่วงวัย</th><th>ธีม</th><th>เครื่องหมาย</th></tr></thead>
+<tbody>
+<tr><td>**1**</td><td>วัยเยาว์ – ต้น 20</td><td>**The Hero&#x27;s Departure** — Ego ฝึกความแข็งแกร่ง</td><td>เริ่มงานแรก ตัดสินใจชีวิตใหญ่ครั้งแรก</td></tr>
+<tr><td>**2**</td><td>กลาง 20 – ต้น 30</td><td>**The Sovereign&#x27;s Ascent** — Persona &quot;Ruler&quot; ก่อตัว</td><td>ขึ้นเป็นผู้นำทีม/โปรเจกต์ใหญ่</td></tr>
+<tr><td>**3**</td><td>กลาง 30 – ต้น 40</td><td>**Shadow Confrontation** — Wheel เริ่มหมุน</td><td>ความสัมพันธ์/อาชีพที่ท้าทายที่สุด</td></tr>
+<tr><td>**4**</td><td>กลาง 40 – ต้น 50</td><td>**Anima Integration** — เสียงภายในเริ่มดัง</td><td>เรียนรู้ที่จะ &quot;ฟัง&quot; มากกว่า &quot;สั่ง&quot;</td></tr>
+<tr><td>**5**</td><td>กลาง 50 – 59</td><td>**Sage Emergence** — Self ปรากฏชัด</td><td>บทบาทที่ปรึกษา/ครูที่แท้จริง</td></tr>
+</tbody></table>
+
+<p><strong>ตอนนี้คุณอยู่ที่ช่วงที่ 3-4</strong> — กำลังเข้าสู่ช่วงเปลี่ยนผ่านจาก &quot;ผู้บัญชาการ&quot; สู่ &quot;ผู้บูรณาการ&quot;</p>
+
+<h3>ปีสำคัญที่ควรรู้ (2026-2046)</h3>
+
+<table>
+<thead><tr><th>ปี</th><th>อายุ</th><th>พลังงานนำ</th><th>สถานการณ์อาชีพ</th><th>กลยุทธ์</th></tr></thead>
+<tbody>
+<tr><td>**2026**</td><td>40</td><td>PY 2 + 丙午 Fire</td><td>**Wheel turning** — เรียนรู้ความอดทน</td><td>Te: ตั้งเป้าหมายชัด · Fi: ฟังเสียงข้างใน</td></tr>
+<tr><td>**2030**</td><td>44</td><td>PY 6 + 庚戌 Metal</td><td>**Authority Test** — Shadow เคาะประตู</td><td>Te: ตั้งรับ (ไม่รุก) · Ni: มองระยะยาว</td></tr>
+<tr><td>**2031**</td><td>45</td><td>PY 7 + 辛亥 Metal</td><td>**Tower moment** — Persona ชั้นนอกพัง</td><td>Te: ปล่อยระบบเก่า · Fi: รับตัวตนใหม่</td></tr>
+<tr><td>**2034**</td><td>48</td><td>PY 1 + 甲寅 Wood</td><td>**&quot;I am the year&quot;** — Self ขึ้นมา</td><td>Te: รุก signature move · Ni: วาง vision 5 ปี</td></tr>
+<tr><td>**2035**</td><td>49</td><td>PY 2 + 乙卯 Wood</td><td>**Solstice** — ผลงานที่ตราตัวตน</td><td>Te: เปิดตัวผลงานใหญ่ · Fi: ภูมิใจในตัวเอง</td></tr>
+<tr><td>**2044**</td><td>58</td><td>PY 2 + 甲子 Wood</td><td>**Return to origin** — ความทรงจำวงจร</td><td>Te: harvest · Fi: ส่งมอบบทเรียน</td></tr>
+<tr><td>**2046**</td><td>60</td><td>PY 4 + 丙寅 Fire</td><td>**Convergence** — Ego + Self รวมเป็นหนึ่ง</td><td>เป็น The Sage-Ruler</td></tr>
+</tbody></table>
+
+<p><strong>จุดเปลี่ยนที่สำคัญที่สุด:</strong></p>
+
+<p>1. <strong>อายุ 44-45 (2030-2031)</strong> — Shadow Confrontation · ความรู้สึกที่ฝังลึกจะผุด อย่ากลัว ให้นั่งกับมัน</p>
+<p>2. <strong>อายุ 48-49 (2034-2035)</strong> — Solstice moment · ผลงานที่ตราตัวตนมาถึง นี่คือจุดสูงสุดของชีวิตการงาน</p>
+<p>3. <strong>อายุ 60 (2046)</strong> — Convergence · ผู้บัญชาการและปราชญ์รวมเป็นหนึ่ง</p>
+
+<hr>
+
+<h2>Section 8 · คำแนะนำและแนวทางปฏิบัติ</h2>
+
+<h3>รายวัน (Daily)</h3>
+
+<p>1. <strong>10 นาที Silent Reflection</strong> — ก่อนนอน ตั้งคำถามเดียว: &quot;วันนี้ Ego ของฉันทำอะไรที่ Self ไม่อยากทำ?&quot; บันทึกคำตอบแค่ 1-2 บรรทัด</p>
+
+<p>2. <strong>ทำสิ่งที่ &quot;ไร้ประโยชน์&quot; 1 อย่าง</strong> — ฟังเพลง เดินเล่น มองนก — Ego ที่ถูกสอนให้ควบคุมทุกอย่างต้องฝึก &quot;ปล่อย&quot; แม้แต่ 15 นาที</p>
+
+<p>3. <strong>Se-grounding ritual 30 นาที</strong> — เดินเร็ว ยกเวท ทำอาหาร — กิจกรรมที่ร่างกายทำงานเต็มที่ (ไม่นับเดินเล่น ต้องเหงื่อออก)</p>
+
+<h3>รายสัปดาห์ (Weekly)</h3>
+
+<p>1. <strong>Dream Journal</strong> — บันทึกความฝัน 2-3 คืนต่อสัปดาห์ ความฝันคือ &quot;ทางหลวง&quot; สู่จิตไร้สำนึก — ความฝันที่มี น้ำท่วม/บ้าน/คนแปลกหน้า/สัตว์ คือ Archetypes ที่กำลังพูดกับ Ego</p>
+
+<p>2. <strong>Active Imagination</strong> — นั่งเงียบ 15 นาที ปล่อยให้ภาพในหัวผุดขึ้นมาเอง โดยไม่ตัดสิน</p>
+
+<p>3. <strong>Fi exploration</strong> — จดบันทึกสั้นๆ ว่า &quot;สัปดาห์นี้อะไรทำให้รู้สึกมีคุณค่า&quot; เพื่อฝึกให้ Fi มีเสียง</p>
+
+<h3>รายเดือน (Monthly)</h3>
+
+<p>1. <strong>Shadow Audit</strong> — เขียนคำถาม: &quot;เดือนนี้ฉันปฏิเสธ/กด/โกรธ/อิจฉาอะไร?&quot; แล้วดูว่าสิ่งนั้นสะท้อน &quot;ส่วนที่ถูกปฏิเสธ&quot; ของตัวเองหรือไม่</p>
+
+<p>2. <strong>Vision Check</strong> — ทุก 6 เดือน ถามตัวเองว่า &quot;วิสัยทัศน์ 5 ปีที่เคยตั้งไว้ยังใช่อยู่ไหม&quot; แล้วปรับหรือยืนยัน</p>
+
+<p>3. <strong>Reading the Collective</strong> — อ่านตำนาน/นิทาน 1 เรื่องต่อเดือน เพื่อ amplify สัญลักษณ์ที่จิตไร้สำนึกใช้สื่อสาร</p>
+
+<h3>กลยุทธ์รับมือวิกฤต — เมื่อตกอยู่ในอารมณ์เชิงลบ (Fi Grip)</h3>
+
+<p><strong>สัญญาณเตือนล่วงหน้า:</strong></p>
+<ul>
+<li>ตัดสินคนเร็วเกินไป</li>
+<li>หงุดหริดเรื่องเล็กๆ</li>
+<li>อยากอยู่คนเดียว</li>
+<li>รู้สึกตัวเองไร้ค่าทั้งที่ภายนอกทุกอย่างดีหมด</li>
+</ul>
+
+<p><strong>วิธีป้องกัน:</strong></p>
+<p>1. ทันทีที่เห็นสัญญาณ <strong>หยุดแผนงาน 24-48 ชม.</strong></p>
+<p>2. ทำกิจกรรม Se-grounded (เดินป่า ว่ายน้ำ ซ่อมรถ)</p>
+<p>3. อย่าพยายาม &quot;ซ่อม&quot; — ให้ &quot;นั่ง&quot; กับมัน 30 นาที แล้วถาม: &quot;The Child กำลังบอกอะไร?&quot;</p>
+<p>4. ฝึก &quot;Active Imagination&quot; กับ The Wounded Child — จินตนาการว่าเด็กน้อยในตัวคุณกำลังร้องไห้ ถามว่า &quot;เธอต้องการอะไร?&quot; Ego ฟังคำตอบแล้วทำตาม</p>
+
+<hr>
+
+<h2>Section 9 · บทสรุปแห่งสัจธรรม</h2>
+
+<h3>ความเกี่ยวข้องกันของสรรพสิ่ง</h3>
+
+<p>ศาสตร์ทั้งหมดที่คุณกำลังอ่านอยู่นี้ — MBTI, BaZi, Matrix of Destiny, Kybalion, Theosophy — ล้วนเป็น <strong>ภาษาต่างๆ ของจิตเดียวกัน</strong> ที่พูดถึง Archetypes แบบเดียวกัน</p>
+
+<p>นี่ไม่ใช่เรื่องบังเอิญ — มันคือ <strong>Collective Unconscious</strong> (จิตไร้สำนึกรวม) ที่ส่งสัญลักษณ์เดียวกันไปทั่วโลก เพราะจิตมนุษย์ทุกคนมี layer ลึกที่แชร์ร่วมกัน</p>
+
+<p>คุณเกิดมาเพื่อ <strong>เรียนรู้ว่า &quot;อำนาจที่แท้จริง&quot; ไม่ใช่การสั่ง แต่เป็นการ &quot;กลับเข้าหาตัวเอง&quot;</strong></p>
+
+<p>Wheel (วงล้อ) จะหมุนจนกว่าคุณจะหยุดคว้า — และเมื่อคุณหยุด วงล้อจะกลายเป็น Mandala (วงจรสมบูรณ์) ที่สวยงาม</p>
+
+<h3>สัจธรรมประจำตัวคุณ</h3>
+
+<blockquote>
+<p>*&quot;คุณไม่ได้มาเกิดเพื่อควบคุมโลก คุณมาเกิดเพื่อเรียนรู้ว่า — เมื่อโลกหมุนเร็วเกินไป — คุณสามารถหยุด และเป็น &#x27;แสงสว่าง&#x27; ให้ตัวเองและคนรอบข้างได้&quot;*</p>
+</blockquote>
+
+<p>สิ่งที่คุณควรจำไว้:</p>
+
+<p><strong>Persona เป็นเรือ Self เป็นทะเล</strong></p>
+
+<p>เมื่อเรือแตก เราก็แค่ลงไปยืนบนทะเล ไม่ใช่จม</p>
+
+<p>การที่ Persona &quot;Ruler&quot; (ผู้ปกครอง) สั่นคลอนในช่วงอายุ 44-45 ไม่ใช่ความล้มเหลว — มันคือคำเชื้อเชิญให้คุณกลับบ้าน</p>
+
+<p>เมื่ออายุ 60 คุณจะไม่ใช่ &quot;ผู้บัญชาการ&quot; อีกต่อไป คุณจะเป็น <strong>The Sage</strong> (ปราชญ์) ที่รู้ว่าปัญญาที่แท้จริงเกิดจาก <strong>การเผชิญ Shadow ของตัวเอง</strong> และใช้มันเป็นแสงส่องทางให้คนอื่น</p>
+
+<h3>ข้อความสุดท้าย</h3>
+
+<p>ในชาตินี้ คุณได้โอกาสที่จะประสานความอ่อนน้อม (乙 Yin Wood) กับความแข็งแกร่ง (辛 Metal) — รากที่อ่อนน้อมแต่ไม่หักไม่ต้องการมีเครื่องกีดขวางทั้งสิ้น ในขณะเดียวกันใบที่แข็งแกร่งแต่ไม่บาด</p>
+
+<p>สามตัว 乙 (วัน-ชั่วโมง-ปี) ในชาร์ตของคุณคือ <strong>Monad ที่ปรากฏสามครั้งในรอบชาติเดียว</strong> — ครั้งนี้คือครั้งที่วิญญาณของคุณเลือก &quot;เก็บเกี่ยว&quot; ไม่ใช่ &quot;เริ่มใหม่&quot;</p>
+
+<p><strong>ปรัชญาที่ ENTJ-A 8w7 ควรนำไปใช้:</strong></p>
+
+<p>&quot;อำนาจที่แท้จริงไม่ได้มาจากการควบคุม แต่มาจากการรู้จักตัวเองจนกล้าปล่อยให้คนอื่นเติบโตได้&quot;</p>
+
+<p><strong>การบูรณาการขั้นสุดท้าย:</strong></p>
+
+<p>Te-Ni-Se-Fi จะทำงานเป็นทีมเดียวกัน — ไม่มีใครถูกกดขี่</p>
+
+<p>คุณจะค้นพบว่าการตัดสินใจที่ดีที่สุดหลายครั้งมาจากการ &quot;นั่งเงียบๆ ฟัง Se และ Fi&quot; แล้วค่อยสั่ง Te</p>
+
+<p>นี่ไม่ใช่จุดอ่อน — มันคือ <strong>superpower ใหม่</strong> ที่ทำให้คุณเป็นผู้นำที่คนอยากติดตามเพราะศรัทธา ไม่ใช่กลัว</p>
+
+<p><strong>ปัญญาประจำตัว:</strong></p>
+
+<p><em>&quot;ทุกคนมีวงจรของตัวเอง ฉันแค่ต้องอยู่ในวงจรของฉันโดยไม่บังคับให้เร็วเกินไป&quot;</em></p>
+
+<p>ในวัย 40 คุณยังมีเวลาอีก 20-30 ปี — ปัญญาที่เก็บเกี่ยวไม่ใช่แค่ผลงาน แต่คือความสามารถอยู่กับความไม่แน่นอนได้อย่างสงบ</p>
+
+<p><strong>นี่คือของขวัญสุดท้ายที่คุณจะให้โลก — ผู้นำที่ไม่ได้แค่สั่ง แต่อยู่กับทุกคนที่เขานำ</strong></p>
+
+<hr>
+
+<h2>เกี่ยวกับพยากรณ์นี้</h2>
+
+<p>พยากรณ์นี้ถูกสร้างขึ้นโดยการรวมความรู้จาก 6 สำนักคิด:</p>
+<ul>
+<li>Carl Jung (จิตวิทยาเชิงลึก)</li>
+<li>Isabel Briggs Myers (MBTI)</li>
+<li>Helena Blavatsky (กฎแห่งการดึงดูดและญาณวิทยา)</li>
+<li>The Three Initiates (The Kybalion)</li>
+<li>นาตาเลีย ลาดินี (Matrix of Destiny)</li>
+<li>Su Yu Hong (BaZi และ Period 9)</li>
+</ul>
+
+<p>ทุกตัวเลข ทุกการคำนวณ มาจากวันเกิดจริงของคุณ ไม่มีการสุ่ม ไม่มีการเดา</p>
+
+<p><strong>หมายเหตุสำคัญ:</strong> พยากรณ์นี้เป็น &quot;กระจกส่องเพื่อการตั้งเจตนา&quot; ไม่ใช่คำทำนายที่ตายตัว คุณมีอิสระที่จะเลือกเดินทางของคุณเองเสมอ</p>
+
+<hr>
+
+<p><em>เขียนโดย Thai Writer · รวบรวมจากการวิเคราะห์ของ Carl Jung, Helena Blavatsky, Isabel Briggs Myers</em></p>
+<p><em>วันที่ 5 กรกฎาคม 2569</em></p>
+
+
+<footer>
+  <p><strong>Project Omni-Self Forecast</strong> · MET-462 · 5 กรกฎาคม 2569 (2026-07-05)</p>
+  <p>Generated by Paperclip CTO pipeline · Canonical inputs: <code>analysis/_shared/big_inputs.md</code></p>
+  <p>Day Master 乙 · Period 9 (離火運) · Age 40y 5m 14d</p>
+</footer>
+
+</div>
+<script>
+  mermaid.initialize({
+    startOnLoad:true,
+    theme:'dark',
+    themeVariables:{
+      primaryColor:'#11112a',
+      primaryTextColor:'#e6f7ff',
+      primaryBorderColor:'#00f0ff',
+      lineColor:'#00f0ff',
+      secondaryColor:'#181833',
+      tertiaryColor:'#0a0a1a',
+      background:'#050514',
+      fontFamily:'Kanit, sans-serif'
+    },
+    flowchart:{ curve:'basis', htmlLabels:true }
+  });
+</script>
+</body>
+</html>

@@ -18,8 +18,15 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
     --accent-magenta:#f63375 (magenta accent from reference corner)
 
   Fonts (loaded via <link> in <head> only):
-    Headings:  Kanit            (Google Fonts — Thai + Latin)
+    Headings:  Kanit            (Google Fonts — Thai + Latin, bold weight)
     Body:      Inter            (Google Fonts — highly readable Latin sans)
+
+  Sections covered (Project Omni-Self, 10-section skeleton per MET-447):
+    §0 Summary (6 lenses)    §5 Relationships + Generation Lines
+    §1 Cosmic Synergy        §6 Health Card + Chakras
+    §2 Natalia Square 3x3    §7 Life Stages + Year-by-Year
+    §3 Talent + Karmic Tail  §8 Actionable Protocols
+    §4 Career + Roles        §9 Ultimate Synthesis
 -->
 <html lang="en">
 <head>
@@ -43,7 +50,7 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
     --accent-6: #ff8c00;
     --accent-7: #dc143c;
     --accent-magenta: #f63375;
-    --card-radius: 12px;
+    --card-radius: 6px;
     --page-max: 1280px;
   }
 
@@ -55,14 +62,14 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
     background: var(--bg);
     color: var(--fg);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 12px;
-    line-height: 1.35;
+    font-size: 10.5px;
+    line-height: 1.3;
     height: 100%;
   }
 
   body {
     background: linear-gradient(135deg, var(--bg) 0%, var(--accent-2) 45%, var(--accent-1) 100%);
-    padding: 4px;
+    padding: 3px;
   }
 
   .page {
@@ -70,41 +77,47 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
     margin: 0 auto;
     background: #fff;
     border-radius: var(--card-radius);
-    padding: 8px 10px;
+    padding: 6px 8px;
     box-shadow: 0 10px 40px rgba(20, 16, 60, 0.25);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: minmax(0, auto);
-    grid-template-rows: auto auto auto;
-    gap: 5px 8px;
+    gap: 3px 6px;
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: 'Kanit', 'Inter', sans-serif;
-    margin: 0 0 3px 0;
+    margin: 0 0 2px 0;
     color: var(--fg);
   }
   h1 {
     grid-column: 1 / -1;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     border-bottom: 2px solid var(--accent-1);
-    padding-bottom: 3px;
-    line-height: 1.15;
+    padding-bottom: 2px;
+    line-height: 1.1;
   }
   h2 {
     grid-column: 1 / -1;
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 700;
     color: var(--accent-1);
     margin-top: 0;
     text-transform: uppercase;
+    letter-spacing: 0.2px;
+  }
+  h3 {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--accent-2);
+    margin: 1px 0 1px 0;
   }
 
   .card {
     background: var(--bg-soft);
-    border-radius: 6px;
-    padding: 5px 7px;
+    border-radius: var(--card-radius);
+    padding: 3px 5px;
     border-left: 3px solid var(--accent-1);
     overflow: hidden;
   }
@@ -117,19 +130,34 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
   .card.accent-6 { border-left-color: var(--accent-6); }
   .card.accent-7 { border-left-color: var(--accent-7); }
 
-  .card p { margin: 0 0 3px 0; font-size: 11.5px; }
-  .card ul { margin: 2px 0 2px 16px; padding: 0; font-size: 11.5px; }
-  .card li { margin: 1px 0; }
+  .card p { margin: 0 0 2px 0; font-size: 10px; }
+  .card ul { margin: 1px 0 1px 14px; padding: 0; font-size: 10px; }
+  .card li { margin: 0 0; }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px 6px;
+    margin-top: 2px;
+  }
+  .lens {
+    background: #fff;
+    border-radius: 4px;
+    padding: 2px 4px;
+    border-left: 2px solid var(--accent-2);
+    font-size: 9.5px;
+  }
+  .lens strong { font-family: 'Kanit', sans-serif; color: var(--accent-1); font-weight: 700; }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 10.5px;
-    margin-top: 2px;
+    font-size: 9px;
+    margin-top: 1px;
   }
   th, td {
     text-align: left;
-    padding: 3px 5px;
+    padding: 2px 4px;
     border-bottom: 1px solid #cfe7f4;
   }
   th {
@@ -137,53 +165,40 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
     background: var(--accent-1);
     color: #fff;
     font-weight: 600;
+    font-size: 9px;
   }
   tr:nth-child(even) td { background: #f0f8ff; }
 
   .mermaid {
     background: #fff;
-    border-radius: 6px;
-    padding: 2px;
+    border-radius: 4px;
+    padding: 1px;
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 200px;
-    min-height: 160px;
+    max-height: 130px;
+    min-height: 100px;
     overflow: hidden;
   }
-  .mermaid svg { max-height: 200px; width: auto !important; max-width: 100%; }
-
-  .eight-spoke-svg {
-    background: #fff;
-    border-radius: 6px;
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 220px;
-    min-height: 180px;
-    overflow: hidden;
-  }
-  .eight-spoke-svg svg { width: 100%; max-width: 320px; height: auto; max-height: 200px; }
+  .mermaid svg { max-height: 130px; width: auto !important; max-width: 100%; }
 
   .footer {
     grid-column: 1 / -1;
     text-align: right;
     color: var(--muted);
-    font-size: 10px;
+    font-size: 9px;
     border-top: 1px solid #d4e6f0;
-    padding-top: 3px;
+    padding-top: 2px;
   }
 
-  /* One-page fit: prefer ≤ 110vh on desktop 1280px wide */
+  /* Compress further on wider desktop viewports to keep 1-page fit */
   @media (min-width: 1024px) {
-    body { padding: 3px; }
-    .page { padding: 6px 8px; gap: 4px 6px; }
-    h1 { font-size: 14px; }
-    h2 { font-size: 10px; }
-    .card { padding: 4px 6px; }
-    .mermaid, .mermaid svg { max-height: 160px; }
-    .eight-spoke-svg, .eight-spoke-svg svg { max-height: 180px; }
+    body { padding: 2px; }
+    .page { padding: 4px 6px; gap: 2px 5px; }
+    h1 { font-size: 13px; }
+    h2 { font-size: 9px; }
+    .card { padding: 2px 4px; }
+    .mermaid, .mermaid svg { max-height: 110px; }
   }
   @media print {
     body { background: #fff; padding: 0; }
@@ -195,95 +210,182 @@ Theme CSS custom properties (kept here for offline use, override per forecast):
   <main class="page" id="page">
     <h1>Forecast — {{person_name}} <span style="color: var(--accent-magenta);">·</span> {{dob}}</h1>
 
+    <!-- Section 0 — Summary (6 lenses) -->
     <section class="card full accent-1">
-      <h2>Section 0 — Summary</h2>
-      <p><strong>Person-year window:</strong> {{person_year_start}} → {{person_year_end}}</p>
-      <p><strong>Headline reading:</strong> {{headline_reading}}</p>
-      <p>{{summary_paragraph}}</p>
-    </section>
-
-    <section class="card accent-1">
-      <h2>Section 1 — Eight Spoke Layout</h2>
-      <div class="eight-spoke-svg" aria-label="Eight-spoke radial layout — 8 numbered slots around a central hub">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">
-          <defs>
-            <style>
-              .ring { fill: none; stroke: #4169e1; stroke-width: 1; opacity: 0.45; }
-              .spoke { stroke-width: 2; }
-              .node { stroke: #fff; stroke-width: 2; }
-              .label { font-family: Inter, sans-serif; font-size: 7px; fill: #1a1a2e; font-weight: 600; }
-              .label-light { fill: #fff; }
-            </style>
-          </defs>
-          <circle class="ring" cx="100" cy="100" r="78" />
-          <line class="spoke" x1="100" y1="100" x2="100" y2="22"  stroke="#8a2be2"/>
-          <line class="spoke" x1="100" y1="100" x2="155" y2="45"  stroke="#4169e1"/>
-          <line class="spoke" x1="100" y1="100" x2="178" y2="100" stroke="#20b2aa"/>
-          <line class="spoke" x1="100" y1="100" x2="155" y2="155" stroke="#9acd32"/>
-          <line class="spoke" x1="100" y1="100" x2="100" y2="178" stroke="#ffd700"/>
-          <line class="spoke" x1="100" y1="100" x2="45"  y2="155" stroke="#ff8c00"/>
-          <line class="spoke" x1="100" y1="100" x2="22"  y2="100" stroke="#dc143c"/>
-          <line class="spoke" x1="100" y1="100" x2="45"  y2="45"  stroke="#8a2be2"/>
-          <circle class="node" cx="100" cy="22"  r="11" fill="#8a2be2"/><text class="label label-light" x="100" y="25" text-anchor="middle">1 · 20y</text>
-          <circle class="node" cx="155" cy="45"  r="11" fill="#4169e1"/><text class="label label-light" x="155" y="48" text-anchor="middle">2 · 30y</text>
-          <circle class="node" cx="178" cy="100" r="11" fill="#20b2aa"/><text class="label label-light" x="178" y="103" text-anchor="middle">3 · 25y</text>
-          <circle class="node" cx="155" cy="155" r="11" fill="#9acd32"/><text class="label"            x="155" y="158" text-anchor="middle">4 · 50y</text>
-          <circle class="node" cx="100" cy="178" r="11" fill="#ffd700"/><text class="label"            x="100" y="181" text-anchor="middle">5 · 60y</text>
-          <circle class="node" cx="45"  cy="155" r="11" fill="#ff8c00"/><text class="label"            x="45"  y="158" text-anchor="middle">6 · 45y</text>
-          <circle class="node" cx="22"  cy="100" r="11" fill="#dc143c"/><text class="label label-light" x="22"  y="103" text-anchor="middle">7 · 40y</text>
-          <circle class="node" cx="45"  cy="45"  r="11" fill="#8a2be2"/><text class="label label-light" x="45"  y="48"  text-anchor="middle">8 · 70y</text>
-          <circle class="node" cx="100" cy="100" r="14" fill="#ffffff" stroke="#222" stroke-width="2"/><text class="label" x="100" y="103" text-anchor="middle">11 · center</text>
-        </svg>
+      <h2>Section 0 — บทสรุป 6 มุมมอง (Summary)</h2>
+      <p><strong>Person-year window:</strong> {{person_year_start}} → {{person_year_end}} · <strong>Headline:</strong> {{headline_reading}}</p>
+      <div class="lens-grid">
+        <div class="lens"><strong>Jung:</strong> {{lens_jung_persona}} / {{lens_jung_shadow}}</div>
+        <div class="lens"><strong>LoA:</strong> {{lens_law_of_attraction_freq}}</div>
+        <div class="lens"><strong>Kybalion:</strong> {{lens_kybalion_rhythm}}</div>
+        <div class="lens"><strong>MBTI:</strong> {{lens_mbti_type}} · lead {{lens_mbti_lead}} · grip {{lens_mbti_grip}}</div>
+        <div class="lens"><strong>Age 60:</strong> {{lens_age60_role}}</div>
+        <div class="lens"><strong>BaZi/Period 9:</strong> DM {{lens_bazi_day_master}} · bal {{lens_bazi_balance}}</div>
       </div>
     </section>
 
-    <section class="card accent-2">
-      <h2>Section 2 — Three-Axis Matrix</h2>
-      <div class="mermaid" data-mermaid="matrix">
+    <!-- Section 1 — Cosmic Synergy -->
+    <section class="card full accent-2">
+      <h2>Section 1 — จุดเชื่อมโยงปรัชญาและวัฏจักร (Cosmic Synergy)</h2>
+      <p><strong>Kybalion:</strong> {{synergy_kybalion}} · <strong>LoA:</strong> {{synergy_loa}} · <strong>Matrix:</strong> {{synergy_matrix}}</p>
+      <p><strong>Proof:</strong> {{synergy_proof}}</p>
+      <div class="mermaid" data-mermaid="synergy">
 flowchart LR
-    classDef zone fill:#f5f5f5,stroke:#222,color:#222
-    Z["{{zone_label}}<br/>Zone value: 12 / 10 / 4"]:::zone
-    P["Axis A"]:::zone
-    E["Axis B"]:::zone
-    M["Axis C"]:::zone
-    Z --> P
-    Z --> E
-    Z --> M
+    classDef engine fill:#f5f5f5,stroke:#222,color:#222
+    K["Kybalion<br/>Rhythm"]:::engine
+    L["LoA<br/>Vibration"]:::engine
+    M["Matrix<br/>Loop"]:::engine
+    K --> L --> M --> K
       </div>
     </section>
 
-    <section class="card accent-3">
-      <h2>Section 3 — Career Years</h2>
-      <ul>
-        <li><strong>{{career_year_1}}</strong> — {{career_year_1_label}}</li>
-        <li><strong>{{career_year_2}}</strong> — {{career_year_2_label}}</li>
-        <li><strong>{{career_year_3}}</strong> — {{career_year_3_label}}</li>
-        <li><strong>{{career_year_4}}</strong> — {{career_year_4_label}}</li>
-        <li><strong>{{career_year_5}}</strong> — {{career_year_5_label}}</li>
-      </ul>
+    <!-- Section 2 — Natalia Square 3x3 -->
+    <section class="card full accent-3">
+      <h2>Section 2 — โปรแกรมชีวิตและแกนหลัก (Natalia Square 3×3)</h2>
+      <p><strong>Top axis (ความคิด):</strong> {{natalia_top_axis_value}} ({{natalia_top_token}}) · <strong>Mid axis (การงาน):</strong> {{natalia_mid_cycle}} ({{natalia_mid_token}}) · <strong>Base (ฐานราก):</strong> {{natalia_base_drive}} / mask {{natalia_base_mask}} · <strong>Echo:</strong> {{natalia_echo_numbers}} — {{natalia_echo_influence}}</p>
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+    classDef corner fill:#e6f8ff,stroke:#4169e1,color:#1a1a2e
+    classDef edge   fill:#f0f8ff,stroke:#20b2aa,color:#1a1a2e
+    classDef center fill:#fff,stroke:#8a2be2,color:#1a1a2e,stroke-width:3px
+    classDef echo   fill:#fff5e6,stroke:#ff8c00,color:#1a1a2e
+    A["A"]:::corner
+    B["B"]:::edge
+    C["C"]:::corner
+    D["D"]:::edge
+    C2["center"]:::center
+    E["E"]:::edge
+    F["F"]:::corner
+    G["G"]:::edge
+    H["H"]:::corner
+    I["I"]:::corner
+    A --- B --- C
+    A --- D --- C2 --- E --- C
+    C --- F --- C
+    D --- G --- E
+    F --- H --- I
+    I --- G --- F
+      </div>
     </section>
 
-    <section class="card accent-5 full">
-      <h2>Section 4 — Slot Card</h2>
+    <!-- Section 3 — Talent & Karmic Tail -->
+    <section class="card accent-4">
+      <h2>Section 3.1 — พรสวรรค์หลักและศักยภาพแฝง</h2>
+      <p><strong>Primary:</strong> {{talent_primary}}</p>
+      <p><strong>Latent:</strong> {{talent_latent}}</p>
+    </section>
+    <section class="card accent-4">
+      <h2>Section 3.2 — ชีวิตในอดีตและหางกรรม (Karmic Tail)</h2>
+      <p><strong>Recurring pattern:</strong> {{karmic_pattern}}</p>
+      <p><strong>Lesson to unlock:</strong> {{karmic_lesson}}</p>
+    </section>
+
+    <!-- Section 4 — Career & Role -->
+    <section class="card full accent-5">
+      <h2>Section 4 — การเงิน ความสำเร็จ และบทบาทเชิงลึก (Career & Role)</h2>
+      <p><strong>Industry fit:</strong> {{career_industry}} · <strong>Income pattern:</strong> {{career_income_pattern}} · <strong>Peak window:</strong> {{career_peak_window}}</p>
       <table>
         <thead>
-          <tr><th>Slot</th><th>Axis A</th><th>Axis B</th><th>Axis C</th></tr>
+          <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
         </thead>
         <tbody>
-          <tr><td>Slot 1</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
-          <tr><td>Slot 2</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
-          <tr><td>Slot 3</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
-          <tr><td>Slot 4</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
-          <tr><td>Slot 5</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
-          <tr><td>Slot 6</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
-          <tr><td>Slot 7</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
-          <tr><td><strong>Zone value</strong></td><td>{{hc_result_phys}}</td><td>{{hc_result_eng}}</td><td>{{hc_result_emo}}</td></tr>
+          <tr><td>Boss (ผู้นำ)</td><td>{{role_boss}}</td><td>{{role_boss_token}}</td></tr>
+          <tr><td>Subordinate (ผู้ตาม/ทีมเวิร์ค)</td><td>{{role_sub}}</td><td>{{role_sub_token}}</td></tr>
+          <tr><td>Active hand (มือขวา — รุก)</td><td>{{role_active}}</td><td>{{role_active_token}}</td></tr>
+          <tr><td>Receptive hand (มือซ้าย — รับ)</td><td>{{role_receptive}}</td><td>{{role_receptive_token}}</td></tr>
         </tbody>
       </table>
     </section>
 
+    <!-- Section 5 — Relationships & Lines -->
+    <section class="card accent-6">
+      <h2>Section 5.1 — ความรักและวงใน (Relationships)</h2>
+      <p><strong>Pattern:</strong> {{love_pattern}}</p>
+      <p><strong>Inner-circle pull:</strong> {{love_pull}}</p>
+      <p><strong>Blind spot:</strong> {{love_blind_spot}}</p>
+    </section>
+    <section class="card accent-6">
+      <h2>Section 5.2 — มรดกสายตระกูล (Generation Lines)</h2>
+      <p><strong>Paternal:</strong> {{line_father}}</p>
+      <p><strong>Maternal:</strong> {{line_mother}}</p>
+    </section>
+
+    <!-- Section 6 — Health Card & Chakras -->
+    <section class="card full accent-7">
+      <h2>Section 6 — สุขภาพและจุดอ่อน (Health Card & Chakras)</h2>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Chakra</th><th>Axis A (Physical)</th><th>Axis B (Energy)</th><th>Axis C (Emotional)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Crown (Sahasrara)</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
+          <tr><td>2</td><td>Third Eye (Ajna)</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
+          <tr><td>3</td><td>Throat (Vishuddha)</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
+          <tr><td>4</td><td>Heart (Anahata)</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
+          <tr><td>5</td><td>Solar Plexus (Manipura)</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
+          <tr><td>6</td><td>Sacral (Svadhisthana)</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
+          <tr><td>7</td><td>Root (Muladhara)</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
+          <tr><td><strong>Σ</strong></td><td><strong>Zone value</strong></td><td><strong>{{hc_result_phys}}</strong></td><td><strong>{{hc_result_eng}}</strong></td><td><strong>{{hc_result_emo}}</strong></td></tr>
+        </tbody>
+      </table>
+      <p><strong>Watch:</strong> {{health_watch}} · <strong>Balance ritual:</strong> {{health_balance}}</p>
+    </section>
+
+    <!-- Section 7.1 — 5 Stages of Evolution -->
+    <section class="card full accent-1">
+      <h2>Section 7.1 — ไทม์ไลน์ 5 ช่วงวัย (5 Stages of Evolution, before age 60)</h2>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Stage</th><th>Age band</th><th>Theme</th><th>Marker</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>ปฐมบทและการสร้างเข็มทิศ</td><td>วัยเยาว์ – ต้น 20</td><td>{{stage_1_theme}}</td><td>{{stage_1_marker}}</td></tr>
+          <tr><td>2</td><td>การสำรวจและขยายอาณาเขต</td><td>กลาง 20 – ต้น 30</td><td>{{stage_2_theme}}</td><td>{{stage_2_marker}}</td></tr>
+          <tr><td>3</td><td>การปะทะและจุดวิกฤต</td><td>กลาง 30 – ต้น 40</td><td>{{stage_3_theme}}</td><td>{{stage_3_marker}}</td></tr>
+          <tr><td>4</td><td>การบูรณาการและปรับขั้วพลังงาน</td><td>กลาง 40 – ต้น 50</td><td>{{stage_4_theme}}</td><td>{{stage_4_marker}}</td></tr>
+          <tr><td>5</td><td>การตกผลึกและส่งมอบ</td><td>กลาง 50 – 59</td><td>{{stage_5_theme}}</td><td>{{stage_5_marker}}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 7.2 — Year-by-Year Career Forecast -->
+    <section class="card full accent-2">
+      <h2>Section 7.2 — พยากรณ์อาชีพรายปี (Year-by-Year, อายุปัจจุบัน → 60)</h2>
+      <table>
+        <thead>
+          <tr><th>Year (CE)</th><th>Age</th><th>Lead energy</th><th>Career situation</th><th>Strategy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>{{career_year_1}}</td><td>{{career_year_1_age}}</td><td>{{career_year_1_energy}}</td><td>{{career_year_1_situation}}</td><td>{{career_year_1_strategy}}</td></tr>
+          <tr><td>{{career_year_2}}</td><td>{{career_year_2_age}}</td><td>{{career_year_2_energy}}</td><td>{{career_year_2_situation}}</td><td>{{career_year_2_strategy}}</td></tr>
+          <tr><td>{{career_year_3}}</td><td>{{career_year_3_age}}</td><td>{{career_year_3_energy}}</td><td>{{career_year_3_situation}}</td><td>{{career_year_3_strategy}}</td></tr>
+          <tr><td>{{career_year_4}}</td><td>{{career_year_4_age}}</td><td>{{career_year_4_energy}}</td><td>{{career_year_4_situation}}</td><td>{{career_year_4_strategy}}</td></tr>
+          <tr><td>{{career_year_5}}</td><td>{{career_year_5_age}}</td><td>{{career_year_5_energy}}</td><td>{{career_year_5_situation}}</td><td>{{career_year_5_strategy}}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Section 8 — Actionable Protocols -->
+    <section class="card full accent-3">
+      <h2>Section 8 — คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols)</h2>
+      <p><strong>Daily:</strong> {{protocol_daily}}</p>
+      <p><strong>Weekly:</strong> {{protocol_weekly}}</p>
+      <p><strong>Monthly:</strong> {{protocol_monthly}}</p>
+      <p><strong>Crisis Mastery:</strong> {{protocol_crisis}}</p>
+    </section>
+
+    <!-- Section 9 — Ultimate Synthesis -->
+    <section class="card accent-5">
+      <h2>Section 9.1 — ความเกี่ยวข้องกันของสรรพสิ่ง (Interconnectedness)</h2>
+      <p>{{synthesis_interconnectedness}}</p>
+    </section>
+    <section class="card accent-5">
+      <h2>Section 9.2 — สัจธรรมประจำตัว (Your Ultimate Truth)</h2>
+      <p>{{synthesis_ultimate_truth}}</p>
+    </section>
+
     <div class="footer">
-      Template v{{template_version}} · Generated {{generated_at}}
+      Template v{{template_version}} · Sections 0–9 (Project Omni-Self) · Generated {{generated_at}}
     </div>
   </main>
 

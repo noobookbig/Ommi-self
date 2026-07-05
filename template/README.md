@@ -5,24 +5,117 @@ Canonical Template package for the Ommi-self forecasting workflow.
 This directory contains **structure only** — no numerology, no interpretation, no business
 logic. Meaning is filled in by downstream agents (MET-447-B/C/D).
 
+> Updated in **MET-458** — the skeleton now spans the full **10 sections** of Project
+> Omni-Self Forecast. Section 0 (summary) is preserved as the umbrella; Sections 1–10
+> mirror the canonical Output Structure (MET-457).
+
 ## Files
 
 | File | Purpose |
 |---|---|
-| `forecast.md` | Markdown source template. Author your forecast here, replacing `{{tokens}}` with real per-person values. |
-| `forecast-template.html` | Single-page HTML wrapper. Inline `<style>`, inline mermaid init, vendored mermaid runtime. |
+| `forecast.md` | Markdown source template — **10-section skeleton** (§0 umbrella summary + §1..§9, mapping 1:1 to MET-457's ส่วนที่ 1..10). Replace `{{tokens}}` with real per-person values. |
+| `forecast-template.html` | Single-page HTML wrapper. Inline `<style>`, inline mermaid init, vendored mermaid runtime. Mirrors the 10-section layout as a single renderable page. |
 | `vendor/mermaid.min.js` | Mermaid v10.9.1 runtime, bundled locally so the wrapper is **offline-clean** (no CDN dependency at render time). Google Fonts still loads over the network for `Kanit` + `Inter`; if needed, swap to system fonts by deleting the `<link>` lines in the wrapper. |
+
+## 10-section skeleton (Project Omni-Self Forecast)
+
+| § (template) | Section title | Anchor | Primary discipline | Maps to MET-457 ส่วนที่ |
+|---|---|---|---|---|
+| Header | ข้อมูลผู้รับคำพยากรณ์ | Identity metadata | inputs | (input) |
+| §0 | บทสรุป 6 มุมมองเชิงลึก (The 6 Lenses) | Jung / LOA / Kybalion / MBTI / Age 60 / BaZi | 6 disciplines | ส่วนที่ 1 |
+| §1 | จุดเชื่อมโยงแห่งปรัชญาและวัฏจักร (The Cosmic Synergy) | Kybalion ↔ LOA ↔ Matrix loop | convergence | ส่วนที่ 2 |
+| §2 | โปรแกรมชีวิตและแกนหลัก (Natalia Square 3×3) | Top / Middle / Bottom axis + Echo | Matrix of Destiny | ส่วนที่ 3 |
+| §3 | พรสวรรค์ ศักยภาพ และอดีตชาติ (Talent + Karmic Tail) | Core gift + Karmic tail | Identity & past | ส่วนที่ 4 |
+| §4 | การเงิน ความสำเร็จ และบทบาทเชิงลึก (Career + Roles) | Industry + Boss/Sub/Active/Receptive | career | ส่วนที่ 5 |
+| §5 | สายสัมพันธ์ ความรัก และครอบครัว (Relationships + Lineage) | Inner circle + Paternal/Maternal | relationships | ส่วนที่ 6 |
+| §6 | สุขภาพและจุดอ่อน (Health Card & Chakras) | 7-chakra table (Crown→Root) | health | ส่วนที่ 7 |
+| §7 | ไทม์ไลน์ 5 ช่วงวัย + พยากรณ์รายปี (Timeline + Year-by-Year) | 5 stages + year-by-year → 60 | timeline | ส่วนที่ 8 |
+| §8 | คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols) | Daily / Weekly / Monthly + Crisis 5-step | protocols | ส่วนที่ 9 |
+| §9 | บทสรุปแห่งสัจธรรม (The Ultimate Synthesis) | Interconnectedness + Ultimate Truth | final synthesis | ส่วนที่ 10 |
+
+> The template uses §0..§9 internally so the umbrella summary (§0 = the 6-lens reading)
+> precedes the spec's ส่วนที่ 1. The mapping above is 1:1 with the parent MET-457
+> Output Structure.
+
+## Token catalog (complete, 10-section)
+
+> Every token below is a placeholder. The list is intentionally exhaustive so any
+> downstream agent can locate the right one by section. `*_short` variants are 1-line
+> labels intended for cards/charts; the un-suffixed tokens carry full sentences.
+
+### Header tokens
+
+- Identity: `{{person_name}}`, `{{dob}}`, `{{personality_type}}`, `{{day_master}}`, `{{matrix_core}}`
+- Window & headline: `{{person_year_start}}`, `{{person_year_end}}`, `{{headline_reading}}`
+
+### §0 — 6 Lenses (umbrella summary)
+
+- 6-lens reading sentences: `{{lens_jung_persona}}`, `{{lens_jung_shadow}}` — combined as `{{lens_jung}}`
+- `{{lens_law_of_attraction_freq}}` (combined as `{{lens_law_of_attraction}}`)
+- `{{lens_kybalion_rhythm}}`, `{{lens_kybalion_cause}}` (combined as `{{lens_kybalion}}`)
+- `{{lens_mbti_type}}`, `{{lens_mbti_lead}}`, `{{lens_mbti_grip}}` (combined as `{{lens_mbti}}`)
+- `{{lens_age60_role}}`, `{{lens_age60_target}}` (combined as `{{lens_age_60}}`)
+- `{{lens_bazi_day_master}}`, `{{lens_bazi_balance}}`, `{{lens_bazi_period9_fit}}` (combined as `{{lens_bazi}}`)
+- Aggregate body: `{{summary_paragraph}}` (≤ 300 คำ — used in §0 of .html and as overall glue paragraph)
+
+### §1 — Cosmic Synergy
+
+- `{{synergy_kybalion}}`, `{{synergy_loa}}`, `{{synergy_matrix}}`, `{{synergy_proof}}`
+
+### §2 — Natalia Square 3×3
+
+- 3×3 cells (9): `{{natalia_A}}` … `{{natalia_I}}`
+- Center: `{{natalia_center}}`
+- Axes: `{{natalia_top_axis_value}}`, `{{natalia_top_token}}`, `{{natalia_mid_cycle}}`, `{{natalia_mid_token}}`, `{{natalia_base_drive}}`, `{{natalia_base_mask}}`
+- Echo: `{{natalia_echo_numbers}}`, `{{natalia_echo_influence}}`
+
+### §3 — Talent & Karma
+
+- Talent: `{{talent_primary}}`, `{{talent_latent}}`
+- Karmic: `{{karmic_pattern}}`, `{{karmic_lesson}}`
+
+### §4 — Career & Roles (no current-job reference)
+
+- `{{career_industry}}`, `{{career_income_pattern}}`, `{{career_peak_window}}`
+- Roles: `{{role_boss}}`, `{{role_sub}}`, `{{role_active}}`, `{{role_receptive}}` (+ `{{role_*_token}}` chart labels)
+
+### §5 — Relationships + Lineage
+
+- Love: `{{love_pattern}}`, `{{love_pull}}`, `{{love_blind_spot}}`
+- Lineage: `{{line_father}}`, `{{line_mother}}`
+
+### §6 — Health Card & Chakras
+
+- 7-chakra × 3-axis: `{{hc_1_phys}}` … `{{hc_7_emo}}`
+- Zone value: `{{hc_result_phys}}`, `{{hc_result_eng}}`, `{{hc_result_emo}}`
+- Watch & balance: `{{health_watch}}`, `{{health_balance}}`
+
+### §7 — Timeline + Year-by-Year Forecast (อายุปัจจุบัน → 60)
+
+- 5 Stages of Evolution: `{{stage_1_theme}}` … `{{stage_5_theme}}` (+ `{{stage_*_marker}}`)
+- Year rows: `{{career_year_N}}`, `{{career_year_N_age}}`, `{{career_year_N_energy}}`, `{{career_year_N_situation}}`, `{{career_year_N_strategy}}` (for `N = 1..5` scaffold — agent expands to age 60 per person)
+
+### §8 — Actionable Protocols
+
+- Cadence: `{{protocol_daily}}`, `{{protocol_weekly}}`, `{{protocol_monthly}}`
+- Crisis: `{{protocol_crisis}}`
+
+### §9 — Ultimate Synthesis
+
+- `{{synthesis_interconnectedness}}`, `{{synthesis_ultimate_truth}}`
+
+### Meta
+
+- `{{template_version}}`, `{{generated_at}}`
 
 ## How to author a new forecast
 
 1. Copy `forecast.md` to your forecast folder (typically `analysis/<person-slug>.md`).
-2. Open the copy and replace every `{{token}}`:
-   - identity tokens: `{{person_name}}`, `{{dob}}`, `{{person_year_start}}`, `{{person_year_end}}`, `{{headline_reading}}`, `{{summary_paragraph}}`
-   - career-year tokens: `{{career_year_1}}` … `{{career_year_5}}` + matching `{{career_year_N_label}}`
-   - health-card tokens: `{{hc_1_phys}}`, `{{hc_1_eng}}`, `{{hc_1_emo}}` … `{{hc_result_emo}}`
-   - meta tokens: `{{template_version}}`, `{{generated_at}}`
-3. Update the mermaid block(s) in the .md with the computed slot values (eight-spoke radial + matrix table).
-4. Open `forecast-template.html`, replace the same tokens in the HTML body, and update the inline mermaid source in the `.mermaid` divs to match the .md.
+2. Open the copy and replace every `{{token}}` from the catalog above.
+3. Update the mermaid block(s) in the .md with the computed slot values (10 sections,
+   plus inline diagrams per section).
+4. Open `forecast-template.html`, replace the same tokens in the HTML body, and update
+   each inline mermaid source in the `.mermaid` div to match the .md.
 5. Open the .html in a browser to render. Mermaid init runs on `DOMContentLoaded`.
 
 ## Theme palette
@@ -34,39 +127,49 @@ Hex values are documented in the comment block at the top of `forecast-template.
 | `--bg` | `#32dbfc` | page gradient start (cyan, top-left of JPG ref) |
 | `--bg-soft` | `#e6f8ff` | card surface |
 | `--fg` | `#1a1a2e` | body text |
-| `--accent-1` | `#8a2be2` | accent 1 — slot 1 + slot 8 (deep purple) |
-| `--accent-2` | `#4169e1` | accent 2 — slot 2 (royal blue) |
-| `--accent-3` | `#20b2aa` | accent 3 — slot 3 (teal) |
-| `--accent-4` | `#9acd32` | accent 4 — slot 4 (lime) |
-| `--accent-5` | `#ffd700` | accent 5 — slot 5 (gold) |
-| `--accent-6` | `#ff8c00` | accent 6 — slot 6 (orange) |
-| `--accent-7` | `#dc143c` | accent 7 — slot 7 (crimson) |
+| `--accent-1` | `#8a2be2` | §0 (umbrella/6 Lenses) + brand accents (deep purple) |
+| `--accent-2` | `#4169e1` | §1 (Cosmic Synergy) — royal blue |
+| `--accent-3` | `#20b2aa` | §2 (Natalia Square) — teal |
+| `--accent-4` | `#9acd32` | §3 (Talent & Karma) — lime |
+| `--accent-5` | `#ffd700` | §4 (Career & Roles) — gold |
+| `--accent-6` | `#ff8c00` | §5 (Relationships) — orange |
+| `--accent-7` | `#dc143c` | §6 (Health & Chakras) — crimson |
+| `--accent-8` | `#f63375` | §7 (Timeline & Year-by-Year) — magenta |
+| `--accent-9` | `#1a1a2e` | §8 (Protocols) — deep ink |
+| (slate reuse) | `#4a4a6a` | §9 (Ultimate Synthesis) — slate (currently rendered in ink for visual closure) |
 | `--accent-magenta` | `#f63375` | magenta highlight (corner accent from JPG) |
 
 Palette was sampled from
 `paperclip-storage/issues/MET-447/2026/07/05/...-1783225172954.jpg` (Cloudly SaaS landing
-template) and additionally drawn from the eight-slot color wheel that the reference PDF uses.
+template) and extended to 10 sections by adding `--accent-8`/`--accent-9`/`--accent-10`.
 
 ## Single-page layout
 
-`forecast-template.html` uses a CSS grid (`1fr 1fr`) with `gap: 18px 22px` on a max-width
-`1280px` page. The page is sized to fit ≤ 110vh on a desktop browser at 1280px width so
-the deliverable renders as a single page without scroll chrome (per acceptance criterion).
+`forecast-template.html` uses a CSS grid (`1fr 1fr`) with `gap: 3px 6px` on a max-width
+`1280px` page, sized so the deliverable renders as a single page without scroll chrome on
+a desktop browser at 1280px width (per the original MET-447 acceptance criterion).
+Sections §0 (umbrella), §7 (timeline + year-by-year) use the full row (`.card.full`);
+the rest are paired cards (one text-heavy + one diagram).
+
+## Acceptance criteria mapping
 
 ## Acceptance criteria mapping
 
 | Criterion | Where |
 |---|---|
-| Section-0 summary, eight-spoke layout, matrix, career-year list, health card | `forecast.md` §0–§4 and matching `<section class="card">` blocks in the HTML wrapper |
-| 1-page render on 1280px desktop | `.page` grid + `@media (min-width: 1024px)` rules |
+| All 10 sections of Project Omni-Self Forecast | `forecast.md` §0..§9 (1:1 with MET-457's ส่วนที่ 1..10) and matching `<h2>Section N` blocks in HTML |
 | Inline `<style>` only | `<style>` block inside `<head>`, no external `.css` link |
 | Google font via `<link>` only | `fonts.googleapis.com` link in `<head>` (Kanit headings, Inter body) |
-| Eight-spoke layout matches PDF structure | 8 numbered slots (`S1`–`S8`) around central node `C`, joined hub-and-spoke + outer ring |
-| Palette documented as CSS custom properties | comment block at top of HTML + `:root` in `<style>` |
-| No frameworks; only mermaid runtime + minimal DOMContentLoaded init | one `<script src="vendor/mermaid.min.js">` + one inline `DOMContentLoaded` listener |
+| Per-section accents from palette | `--accent-1..7` documented as CSS custom properties + used as card border-left colors |
+| No frameworks; only mermaid + minimal DOMContentLoaded init | one `<script src="vendor/mermaid.min.js">` + one inline `DOMContentLoaded` listener |
 | No business logic in template | only `{{tokens}}` placeholders; the .md and .html carry structure, not meaning |
 
 ## Versioning
 
 `{{template_version}}` is a placeholder. Bump it when the section list, palette, or layout
 changes in a backward-incompatible way.
+
+| Version | Date | Change |
+|---|---|---|
+| (MET-447) | initial | 5-section skeleton (Section 0..4) |
+| (MET-458) | expansion | 10-section skeleton (§0..§9, mapping 1:1 to MET-457 ส่วนที่ 1..10); added 6-lens tokens, Natalia 3×3 cells, 7-chakra table, 5 stages, year-by-year rows, crisis 5-step |

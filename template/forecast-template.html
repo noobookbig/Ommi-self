@@ -4,17 +4,17 @@
   Theme palette extracted from /home/big/.paperclip/instances/default/.../1783225172954.jpg
   (Cloudly SaaS landing template, cyan→magenta gradient with deep purple accents).
 
-  Theme CSS custom properties (kept here for offline use, override per forecast):
+Theme CSS custom properties (kept here for offline use, override per forecast):
     --bg:           #32dbfc  (dominant cyan from top-left of reference)
     --bg-soft:      #e6f8ff  (soft cyan tint for card surfaces)
     --fg:           #1a1a2e  (deep ink for body text)
-    --accent-1:     #8a2be2  (deep purple — chakra 1, mission)
-    --accent-2:     #4169e1  (royal blue — chakra 2)
-    --accent-3:     #20b2aa  (teal — chakra 3)
-    --accent-4:     #9acd32  (lime — chakra 4)
-    --accent-5:     #ffd700  (gold — chakra 5)
-    --accent-6:     #ff8c00  (orange — chakra 6)
-    --accent-7:     #dc143c  (crimson — chakra 7)
+    --accent-1:     #8a2be2  (deep purple — slot 1 + slot 8)
+    --accent-2:     #4169e1  (royal blue — slot 2)
+    --accent-3:     #20b2aa  (teal — slot 3)
+    --accent-4:     #9acd32  (lime — slot 4)
+    --accent-5:     #ffd700  (gold — slot 5)
+    --accent-6:     #ff8c00  (orange — slot 6)
+    --accent-7:     #dc143c  (crimson — slot 7)
     --accent-magenta:#f63375 (magenta accent from reference corner)
 
   Fonts (loaded via <link> in <head> only):
@@ -43,7 +43,7 @@
     --accent-6: #ff8c00;
     --accent-7: #dc143c;
     --accent-magenta: #f63375;
-    --card-radius: 14px;
+    --card-radius: 12px;
     --page-max: 1280px;
   }
 
@@ -55,14 +55,14 @@
     background: var(--bg);
     color: var(--fg);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 13px;
-    line-height: 1.4;
+    font-size: 12px;
+    line-height: 1.35;
     height: 100%;
   }
 
   body {
     background: linear-gradient(135deg, var(--bg) 0%, var(--accent-2) 45%, var(--accent-1) 100%);
-    padding: 10px;
+    padding: 4px;
   }
 
   .page {
@@ -70,40 +70,42 @@
     margin: 0 auto;
     background: #fff;
     border-radius: var(--card-radius);
-    padding: 16px 20px;
+    padding: 8px 10px;
     box-shadow: 0 10px 40px rgba(20, 16, 60, 0.25);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px 14px;
+    grid-auto-rows: minmax(0, auto);
+    grid-template-rows: auto auto auto;
+    gap: 5px 8px;
   }
 
   h1, h2, h3 {
     font-family: 'Kanit', 'Inter', sans-serif;
-    margin: 0 0 6px 0;
+    margin: 0 0 3px 0;
     color: var(--fg);
   }
   h1 {
     grid-column: 1 / -1;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 700;
-    border-bottom: 3px solid var(--accent-1);
-    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent-1);
+    padding-bottom: 3px;
+    line-height: 1.15;
   }
   h2 {
     grid-column: 1 / -1;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--accent-1);
-    margin-top: 2px;
+    margin-top: 0;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
   .card {
     background: var(--bg-soft);
-    border-radius: var(--card-radius);
-    padding: 10px 12px;
-    border-left: 4px solid var(--accent-1);
+    border-radius: 6px;
+    padding: 5px 7px;
+    border-left: 3px solid var(--accent-1);
     overflow: hidden;
   }
   .card.full { grid-column: 1 / -1; }
@@ -115,19 +117,19 @@
   .card.accent-6 { border-left-color: var(--accent-6); }
   .card.accent-7 { border-left-color: var(--accent-7); }
 
-  .card p { margin: 0 0 6px 0; }
-  .card ul { margin: 4px 0 4px 18px; padding: 0; }
-  .card li { margin: 2px 0; }
+  .card p { margin: 0 0 3px 0; font-size: 11.5px; }
+  .card ul { margin: 2px 0 2px 16px; padding: 0; font-size: 11.5px; }
+  .card li { margin: 1px 0; }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 11.5px;
-    margin-top: 4px;
+    font-size: 10.5px;
+    margin-top: 2px;
   }
   th, td {
     text-align: left;
-    padding: 3px 6px;
+    padding: 3px 5px;
     border-bottom: 1px solid #cfe7f4;
   }
   th {
@@ -135,39 +137,53 @@
     background: var(--accent-1);
     color: #fff;
     font-weight: 600;
-    letter-spacing: 0.03em;
   }
   tr:nth-child(even) td { background: #f0f8ff; }
 
   .mermaid {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 6px;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 200px;
+    min-height: 160px;
+    overflow: hidden;
+  }
+  .mermaid svg { max-height: 200px; width: auto !important; max-width: 100%; }
+
+  .eight-spoke-svg {
+    background: #fff;
+    border-radius: 6px;
     padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 240px;
+    max-height: 220px;
+    min-height: 180px;
     overflow: hidden;
   }
-  .mermaid svg { max-height: 240px; width: auto !important; }
+  .eight-spoke-svg svg { width: 100%; max-width: 320px; height: auto; max-height: 200px; }
 
   .footer {
     grid-column: 1 / -1;
     text-align: right;
     color: var(--muted);
-    font-size: 11px;
+    font-size: 10px;
     border-top: 1px solid #d4e6f0;
-    padding-top: 6px;
+    padding-top: 3px;
   }
 
   /* One-page fit: prefer ≤ 110vh on desktop 1280px wide */
   @media (min-width: 1024px) {
-    body { padding: 8px; }
-    .page { padding: 12px 16px; gap: 8px 12px; }
-    h1 { font-size: 20px; }
-    h2 { font-size: 13px; }
-    .card { padding: 8px 10px; }
-    .mermaid, .mermaid svg { max-height: 200px; }
+    body { padding: 3px; }
+    .page { padding: 6px 8px; gap: 4px 6px; }
+    h1 { font-size: 14px; }
+    h2 { font-size: 10px; }
+    .card { padding: 4px 6px; }
+    .mermaid, .mermaid svg { max-height: 160px; }
+    .eight-spoke-svg, .eight-spoke-svg svg { max-height: 180px; }
   }
   @media print {
     body { background: #fff; padding: 0; }
@@ -187,98 +203,52 @@
     </section>
 
     <section class="card accent-1">
-      <h2>Section 1 — Octagram</h2>
-      <div class="mermaid" data-mermaid="octagram">
-flowchart LR
-    classDef ch1 fill:#8a2be2,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch2 fill:#4169e1,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch3 fill:#20b2aa,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch4 fill:#9acd32,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch5 fill:#ffd700,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch6 fill:#ff8c00,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch7 fill:#dc143c,stroke:#fff,color:#fff,stroke-width:2px
-    classDef center fill:#fff,stroke:#222,color:#222,stroke-width:2px
-
-    subgraph HUB["HUB"]
-        direction TB
-        C["11<br/>center"]:::center
-    end
-    subgraph TOP["top"]
-        direction TB
-        S1["1<br/>Sahasrara<br/>20y"]:::ch1
-    end
-    subgraph TOPR["top-right"]
-        direction TB
-        S2["13<br/>Ajna<br/>30y"]:::ch2
-    end
-    subgraph RIGHT["right"]
-        direction TB
-        S3["12<br/>Vissudha<br/>25y"]:::ch3
-    end
-    subgraph BOTR["bottom-right"]
-        direction TB
-        S4["5<br/>Anahata<br/>50y"]:::ch4
-    end
-    subgraph BOT["bottom"]
-        direction TB
-        S5["21<br/>Manipura<br/>60y"]:::ch5
-    end
-    subgraph BOTL["bottom-left"]
-        direction TB
-        S6["17<br/>Svadhisthana<br/>45y"]:::ch6
-    end
-    subgraph LEFT["left"]
-        direction TB
-        S7["6<br/>Muladhara<br/>40y"]:::ch7
-    end
-    subgraph TOPL["top-left"]
-        direction TB
-        S8["16<br/>Common<br/>70y"]:::ch1
-    end
-
-    C --- S1
-    C --- S2
-    C --- S3
-    C --- S4
-    C --- S5
-    C --- S6
-    C --- S7
-    C --- S8
-    S1 --- S2
-    S2 --- S3
-    S3 --- S4
-    S4 --- S5
-    S5 --- S6
-    S6 --- S7
-    S7 --- S8
-    S8 --- S1
+      <h2>Section 1 — Eight Spoke Layout</h2>
+      <div class="eight-spoke-svg" aria-label="Eight-spoke radial layout — 8 numbered slots around a central hub">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">
+          <defs>
+            <style>
+              .ring { fill: none; stroke: #4169e1; stroke-width: 1; opacity: 0.45; }
+              .spoke { stroke-width: 2; }
+              .node { stroke: #fff; stroke-width: 2; }
+              .label { font-family: Inter, sans-serif; font-size: 7px; fill: #1a1a2e; font-weight: 600; }
+              .label-light { fill: #fff; }
+            </style>
+          </defs>
+          <circle class="ring" cx="100" cy="100" r="78" />
+          <line class="spoke" x1="100" y1="100" x2="100" y2="22"  stroke="#8a2be2"/>
+          <line class="spoke" x1="100" y1="100" x2="155" y2="45"  stroke="#4169e1"/>
+          <line class="spoke" x1="100" y1="100" x2="178" y2="100" stroke="#20b2aa"/>
+          <line class="spoke" x1="100" y1="100" x2="155" y2="155" stroke="#9acd32"/>
+          <line class="spoke" x1="100" y1="100" x2="100" y2="178" stroke="#ffd700"/>
+          <line class="spoke" x1="100" y1="100" x2="45"  y2="155" stroke="#ff8c00"/>
+          <line class="spoke" x1="100" y1="100" x2="22"  y2="100" stroke="#dc143c"/>
+          <line class="spoke" x1="100" y1="100" x2="45"  y2="45"  stroke="#8a2be2"/>
+          <circle class="node" cx="100" cy="22"  r="11" fill="#8a2be2"/><text class="label label-light" x="100" y="25" text-anchor="middle">1 · 20y</text>
+          <circle class="node" cx="155" cy="45"  r="11" fill="#4169e1"/><text class="label label-light" x="155" y="48" text-anchor="middle">2 · 30y</text>
+          <circle class="node" cx="178" cy="100" r="11" fill="#20b2aa"/><text class="label label-light" x="178" y="103" text-anchor="middle">3 · 25y</text>
+          <circle class="node" cx="155" cy="155" r="11" fill="#9acd32"/><text class="label"            x="155" y="158" text-anchor="middle">4 · 50y</text>
+          <circle class="node" cx="100" cy="178" r="11" fill="#ffd700"/><text class="label"            x="100" y="181" text-anchor="middle">5 · 60y</text>
+          <circle class="node" cx="45"  cy="155" r="11" fill="#ff8c00"/><text class="label"            x="45"  y="158" text-anchor="middle">6 · 45y</text>
+          <circle class="node" cx="22"  cy="100" r="11" fill="#dc143c"/><text class="label label-light" x="22"  y="103" text-anchor="middle">7 · 40y</text>
+          <circle class="node" cx="45"  cy="45"  r="11" fill="#8a2be2"/><text class="label label-light" x="45"  y="48"  text-anchor="middle">8 · 70y</text>
+          <circle class="node" cx="100" cy="100" r="14" fill="#ffffff" stroke="#222" stroke-width="2"/><text class="label" x="100" y="103" text-anchor="middle">11 · center</text>
+        </svg>
       </div>
     </section>
 
     <section class="card accent-2">
-      <h2>Section 2 — Matrix</h2>
+      <h2>Section 2 — Three-Axis Matrix</h2>
       <div class="mermaid" data-mermaid="matrix">
 flowchart LR
     classDef zone fill:#f5f5f5,stroke:#222,color:#222
-    Z["Common energy<br/>12 / 10 / 4"]:::zone
-    P["Physics"]:::zone
-    E["Energy"]:::zone
-    M["Emotions"]:::zone
+    Z["{{zone_label}}<br/>Zone value: 12 / 10 / 4"]:::zone
+    P["Axis A"]:::zone
+    E["Axis B"]:::zone
+    M["Axis C"]:::zone
     Z --> P
     Z --> E
     Z --> M
-      </div>
-      <div class="mermaid" data-mermaid="matrix-rows">
-flowchart LR
-    classDef row fill:#fafafa,stroke:#bbb,color:#222
-    R1["1<br/>Sahasrara"]:::row
-    R2["2<br/>Ajna"]:::row
-    R3["3<br/>Vissudha"]:::row
-    R4["4<br/>Anahata"]:::row
-    R5["5<br/>Manipura"]:::row
-    R6["6<br/>Svadhi."]:::row
-    R7["7<br/>Muladhara"]:::row
-    R1 --> R2 --> R3 --> R4 --> R5 --> R6 --> R7
       </div>
     </section>
 
@@ -294,20 +264,20 @@ flowchart LR
     </section>
 
     <section class="card accent-5 full">
-      <h2>Section 4 — Health Card</h2>
+      <h2>Section 4 — Slot Card</h2>
       <table>
         <thead>
-          <tr><th>Chakra</th><th>Physics</th><th>Energy</th><th>Emotions</th></tr>
+          <tr><th>Slot</th><th>Axis A</th><th>Axis B</th><th>Axis C</th></tr>
         </thead>
         <tbody>
-          <tr><td>Sahasrara · Mission</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
-          <tr><td>Ajna · Destiny</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
-          <tr><td>Vissudha · Destiny</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
-          <tr><td>Anahata · Relationships</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
-          <tr><td>Manipura · Status</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
-          <tr><td>Svadhisthana · Joy</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
-          <tr><td>Muladhara · Body</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
-          <tr><td><strong>Common energy</strong></td><td>{{hc_result_phys}}</td><td>{{hc_result_eng}}</td><td>{{hc_result_emo}}</td></tr>
+          <tr><td>Slot 1</td><td>{{hc_1_phys}}</td><td>{{hc_1_eng}}</td><td>{{hc_1_emo}}</td></tr>
+          <tr><td>Slot 2</td><td>{{hc_2_phys}}</td><td>{{hc_2_eng}}</td><td>{{hc_2_emo}}</td></tr>
+          <tr><td>Slot 3</td><td>{{hc_3_phys}}</td><td>{{hc_3_eng}}</td><td>{{hc_3_emo}}</td></tr>
+          <tr><td>Slot 4</td><td>{{hc_4_phys}}</td><td>{{hc_4_eng}}</td><td>{{hc_4_emo}}</td></tr>
+          <tr><td>Slot 5</td><td>{{hc_5_phys}}</td><td>{{hc_5_eng}}</td><td>{{hc_5_emo}}</td></tr>
+          <tr><td>Slot 6</td><td>{{hc_6_phys}}</td><td>{{hc_6_eng}}</td><td>{{hc_6_emo}}</td></tr>
+          <tr><td>Slot 7</td><td>{{hc_7_phys}}</td><td>{{hc_7_eng}}</td><td>{{hc_7_emo}}</td></tr>
+          <tr><td><strong>Zone value</strong></td><td>{{hc_result_phys}}</td><td>{{hc_result_eng}}</td><td>{{hc_result_emo}}</td></tr>
         </tbody>
       </table>
     </section>

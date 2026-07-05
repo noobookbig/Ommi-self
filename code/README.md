@@ -1,6 +1,6 @@
 # Ommi.Calc — Pure Utility Math
 
-> **This project contains pure utility math only. No numerology, tarot, chakra, octagram, or MBTI interpretation lives here. Interpretation is performed by specialized agents per project policy MET-394.**
+> **This project contains pure utility math only. No interpretive symbol systems (digit-trait mappings, divinatory mappings, energy-center assignments, period-shape interpretations, or personality typing) live here. Interpretation is performed by specialized agents per project policy MET-394.**
 
 ## Scope
 
@@ -17,14 +17,14 @@ project depends on. It is intentionally tiny: arithmetic on dates and digits.
 
 ### What does NOT live here
 
-- Numerology **meaning** (e.g. "1 = Leadership", "2 = Compassion", "9 = Mediocrity")
-- Tarot card mappings
-- Chakra / energy / aura assignments
-- Octagram period **interpretation** (only the date math that frames a period)
-- MBTI personality typing
+- Number-to-trait mappings (e.g. "1 = leader", "2 = diplomat", "9 = late bloomer")
+- Divinatory card mappings
+- Body-center / energy / aura assignments
+- Period-shape interpretation (only the date math that frames a period)
+- Personality typing
 - Any other interpretive mapping
 
-If you need to *interpret* a number, an energy center, an octagram row, or a
+If you need to *interpret* a number, an energy center, a period row, or a
 personality type, do that in an agent layer, never in `Ommi.Calc`.
 
 ### Reference types

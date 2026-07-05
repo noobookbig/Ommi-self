@@ -16,17 +16,17 @@
 - Headline reading: `{{headline_reading}}`
 
 ```mermaid
-%% Octagram — 8 chakra spokes around a central zone.
+%% Eight-spoke layout — 8 numbered slots around a central zone.
 %% Subgraphs label each spoke's position; the diagram preserves the
 %% 8-spoke + center + outer-ring structure of the reference PDF.
 flowchart LR
-    classDef ch1 fill:#8a2be2,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch2 fill:#4169e1,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch3 fill:#20b2aa,stroke:#fff,color:#fff,stroke-width:2px
-    classDef ch4 fill:#9acd32,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch5 fill:#ffd700,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch6 fill:#ff8c00,stroke:#fff,color:#000,stroke-width:2px
-    classDef ch7 fill:#dc143c,stroke:#fff,color:#fff,stroke-width:2px
+    classDef slot1 fill:#8a2be2,stroke:#fff,color:#fff,stroke-width:2px
+    classDef slot2 fill:#4169e1,stroke:#fff,color:#fff,stroke-width:2px
+    classDef slot3 fill:#20b2aa,stroke:#fff,color:#fff,stroke-width:2px
+    classDef slot4 fill:#9acd32,stroke:#fff,color:#000,stroke-width:2px
+    classDef slot5 fill:#ffd700,stroke:#fff,color:#000,stroke-width:2px
+    classDef slot6 fill:#ff8c00,stroke:#fff,color:#000,stroke-width:2px
+    classDef slot7 fill:#dc143c,stroke:#fff,color:#fff,stroke-width:2px
     classDef center fill:#fff,stroke:#222,color:#222,stroke-width:2px
 
     subgraph HUB["HUB"]
@@ -35,35 +35,35 @@ flowchart LR
     end
     subgraph TOP["top"]
         direction TB
-        S1["1<br/>Sahasrara<br/>20y"]:::ch1
+        S1["1<br/>Slot 1<br/>20y"]:::slot1
     end
     subgraph TOPR["top-right"]
         direction TB
-        S2["13<br/>Ajna<br/>30y"]:::ch2
+        S2["13<br/>Slot 2<br/>30y"]:::slot2
     end
     subgraph RIGHT["right"]
         direction TB
-        S3["12<br/>Vissudha<br/>25y"]:::ch3
+        S3["12<br/>Slot 3<br/>25y"]:::slot3
     end
     subgraph BOTR["bottom-right"]
         direction TB
-        S4["5<br/>Anahata<br/>50y"]:::ch4
+        S4["5<br/>Slot 4<br/>50y"]:::slot4
     end
     subgraph BOT["bottom"]
         direction TB
-        S5["21<br/>Manipura<br/>60y"]:::ch5
+        S5["21<br/>Slot 5<br/>60y"]:::slot5
     end
     subgraph BOTL["bottom-left"]
         direction TB
-        S6["17<br/>Svadhisthana<br/>45y"]:::ch6
+        S6["17<br/>Slot 6<br/>45y"]:::slot6
     end
     subgraph LEFT["left"]
         direction TB
-        S7["6<br/>Muladhara<br/>40y"]:::ch7
+        S7["6<br/>Slot 7<br/>40y"]:::slot7
     end
     subgraph TOPL["top-left"]
         direction TB
-        S8["16<br/>Common<br/>70y"]:::ch1
+        S8["16<br/>Slot 8<br/>70y"]:::slot1
     end
 
     C --- S1
@@ -84,40 +84,40 @@ flowchart LR
     S8 --- S1
 ```
 
-## Section 1 — Octagram (mermaid)
+## Section 1 — Eight Spoke Layout (mermaid)
 
-> 8 chakra spokes around a central zone. See diagram above. Each spoke carries a numeric
+> 8 numbered slots around a central zone. See diagram above. Each spoke carries a numeric
 > token (placeholder) and a person-year marker. Real values come from the personal-calculation
 > tool (MET-447-B).
 
 ```mermaid
-%% Matrix of Destiny — placeholder table shape.
+%% Three-axis zone — placeholder table shape.
 flowchart LR
     classDef zone fill:#f5f5f5,stroke:#222,color:#222
-    Z["{{zone_label}}<br/>Common energy: 12 / 10 / 4"]:::zone
-    P["Physics"]:::zone
-    E["Energy"]:::zone
-    M["Emotions"]:::zone
+    Z["{{zone_label}}<br/>Zone value: 12 / 10 / 4"]:::zone
+    P["Axis A"]:::zone
+    E["Axis B"]:::zone
+    M["Axis C"]:::zone
     Z --> P
     Z --> E
     Z --> M
 ```
 
-## Section 2 — Matrix (mermaid)
+## Section 2 — Three-Axis Matrix (mermaid)
 
-> Matrix of Destiny table — placeholder rows. Replace with computed values.
+> Three-axis placeholder rows. Replace with computed values.
 
 ```mermaid
-%% Matrix rows — chakra name + physics/energy/emotions triple.
+%% Matrix rows — slot label + three-axis triple.
 flowchart TB
     classDef row fill:#fafafa,stroke:#bbb,color:#222
-    R1["Sahasrara — Mission — 21 / 1 / 22"]:::row
-    R2["Ajna — Destiny — 8 / 13 / 21"]:::row
-    R3["Vissudha — Destiny — 5 / 12 / 17"]:::row
-    R4["Anahata — Relationships — 16 / 5 / 21"]:::row
-    R5["Manipura — Status — 11 / 11 / 22"]:::row
-    R6["Svadhisthana — Joy — 17 / 21 / 11"]:::row
-    R7["Muladhara — Body — 6 / 10 / 16"]:::row
+    R1["Slot 1 — 21 / 1 / 22"]:::row
+    R2["Slot 2 — 8 / 13 / 21"]:::row
+    R3["Slot 3 — 5 / 12 / 17"]:::row
+    R4["Slot 4 — 16 / 5 / 21"]:::row
+    R5["Slot 5 — 11 / 11 / 22"]:::row
+    R6["Slot 6 — 17 / 21 / 11"]:::row
+    R7["Slot 7 — 6 / 10 / 16"]:::row
     R1 --> R2 --> R3 --> R4 --> R5 --> R6 --> R7
 ```
 
@@ -129,18 +129,18 @@ flowchart TB
 - `{{career_year_4}}` — `{{career_year_4_label}}`
 - `{{career_year_5}}` — `{{career_year_5_label}}`
 
-## Section 4 — Health card
+## Section 4 — Health Card
 
-| Chakra | Physics | Energy | Emotions |
-|--------|---------|--------|----------|
-| Sahasrara (Mission) | `{{hc_1_phys}}` | `{{hc_1_eng}}` | `{{hc_1_emo}}` |
-| Ajna (Destiny) | `{{hc_2_phys}}` | `{{hc_2_eng}}` | `{{hc_2_emo}}` |
-| Vissudha (Destiny) | `{{hc_3_phys}}` | `{{hc_3_eng}}` | `{{hc_3_emo}}` |
-| Anahata (Relationships) | `{{hc_4_phys}}` | `{{hc_4_eng}}` | `{{hc_4_emo}}` |
-| Manipura (Status) | `{{hc_5_phys}}` | `{{hc_5_eng}}` | `{{hc_5_emo}}` |
-| Svadhisthana (Joy) | `{{hc_6_phys}}` | `{{hc_6_eng}}` | `{{hc_6_emo}}` |
-| Muladhara (Body) | `{{hc_7_phys}}` | `{{hc_7_eng}}` | `{{hc_7_emo}}` |
-| Common energy zone | `{{hc_result_phys}}` | `{{hc_result_eng}}` | `{{hc_result_emo}}` |
+| Slot | Axis A | Axis B | Axis C |
+|------|--------|--------|--------|
+| Slot 1 | `{{hc_1_phys}}` | `{{hc_1_eng}}` | `{{hc_1_emo}}` |
+| Slot 2 | `{{hc_2_phys}}` | `{{hc_2_eng}}` | `{{hc_2_emo}}` |
+| Slot 3 | `{{hc_3_phys}}` | `{{hc_3_eng}}` | `{{hc_3_emo}}` |
+| Slot 4 | `{{hc_4_phys}}` | `{{hc_4_eng}}` | `{{hc_4_emo}}` |
+| Slot 5 | `{{hc_5_phys}}` | `{{hc_5_eng}}` | `{{hc_5_emo}}` |
+| Slot 6 | `{{hc_6_phys}}` | `{{hc_6_eng}}` | `{{hc_6_emo}}` |
+| Slot 7 | `{{hc_7_phys}}` | `{{hc_7_eng}}` | `{{hc_7_emo}}` |
+| Zone value | `{{hc_result_phys}}` | `{{hc_result_eng}}` | `{{hc_result_emo}}` |
 
 ---
 

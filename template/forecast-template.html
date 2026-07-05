@@ -610,6 +610,63 @@
     section.card { padding: 18px 16px; }
     .natalia { max-width: 360px; }
   }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
 </style>
 </head>
 <body>
@@ -663,6 +720,39 @@
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_0_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_0_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> {{analysis_deep_0_jung_persona_shadow}}</p>
+        <p><strong>Individuation Path:</strong> {{analysis_deep_0_jung_individuation_path}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> {{analysis_deep_0_myers_type_stack}}</p>
+        <p><strong>Cognitive Loop:</strong> {{analysis_deep_0_myers_cognitive_loop}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> {{analysis_deep_0_blavatsky_root_race}}</p>
+        <p><strong>Monad & Reincarnation:</strong> {{analysis_deep_0_blavatsky_monad_reincarnation}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> {{analysis_deep_0_ladini_natal_chart}}</p>
+        <p><strong>Transit Windows:</strong> {{analysis_deep_0_ladini_transit_windows}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> {{analysis_deep_0_initiators_mystery_school}}</p>
+        <p><strong>Initiate Trials:</strong> {{analysis_deep_0_initiators_initiate_trials}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> {{analysis_deep_0_suyuhong_day_master}}</p>
+        <p><strong>Annual Pillars:</strong> {{analysis_deep_0_suyuhong_annual_pillars}}</p>
+      </div>
+    </div>
   </section>
 
   <section class="card slot-2" id="s1">
@@ -683,6 +773,48 @@ flowchart LR
   K --> L --> M --> K
       </div>
     </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Monad &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้ (analyst fills the 9 octagram tokens below).</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>{{octagram_center}}"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>{{octagram_n}}"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>{{octagram_ne}}"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>{{octagram_e}}"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>{{octagram_se}}"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>{{octagram_s}}"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>{{octagram_sw}}"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>{{octagram_w}}"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>{{octagram_nw}}"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
 
     <div class="analysis">
       <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
@@ -693,6 +825,162 @@ flowchart LR
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_1_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_1_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> {{analysis_deep_1_jung_collective_unconscious}}</p>
+        <p><strong>Synchronicity Field:</strong> {{analysis_deep_1_jung_synchronicity}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> {{analysis_deep_1_myers_function_integration}}</p>
+        <p><strong>Type Development:</strong> {{analysis_deep_1_myers_type_development}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> {{analysis_deep_1_blavatsky_hermetic_principles}}</p>
+        <p><strong>Law of Attraction Bridge:</strong> {{analysis_deep_1_blavatsky_loa_bridge}}</p>
+        <p><strong>Matrix Loop Awareness:</strong> {{analysis_deep_1_blavatsky_matrix_loop}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> {{analysis_deep_1_ladini_outer_planet}}</p>
+        <p><strong>Eclipse Season Impact:</strong> {{analysis_deep_1_ladini_eclipse_season}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> {{analysis_deep_1_initiators_knowledge_awakening}}</p>
+        <p><strong>Elemental Balance:</strong> {{analysis_deep_1_initiators_elemental_balance}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems & Earthly Branches:</strong> {{analysis_deep_1_suyuhong_stems_branches}}</p>
+        <p><strong>Annual Luck Cycle:</strong> {{analysis_deep_1_suyuhong_luck_cycle}}</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">1.6 BaZi (八字) & Period 9 (九運) — ดิถีธาตุและมหายุค</h3>
+    <p class="lede">ดิถีธาตุคือ "สนามแม่เหล็กของเวลา" ที่ห่อหุ้มคุณตอนเกิด — ทุกปีที่คุณมีชีวิตอยู่ คุณจะ "สั่นสะเทือน" ตามจังหวะของสนามนั้น</p>
+
+    <h4>Day Master (日主) — ตัวตนแท้</h4>
+    <p>
+      <strong>己 (Yin Earth)</strong> — "ดินสวน / ทุ่งนา / ดินที่เพาะปลูก"<br>
+      ตัวตนแท้ของคุณคือดินที่อุดมสมบูรณ์ อ่อนโยน ยืดหยุ่น รับรู้ความรู้สึกของผู้อื่น แต่ต้องระวังไม่ให้ "ดินเปียกเกินไป" จนกลายเป็นโคลน — ต้องมี <strong>ความร้อน (Fire)</strong> มาช่วยอบในปริมาณที่พอดี
+    </p>
+
+    <h4>สี่เสาชะตา (四柱)</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>Year Pillar (年柱):</strong> 乙酉 — ไม้อ่อน (乙) + โลหะ (酉) = ความอ่อนโยนที่มีระเบียบ</li>
+      <li><strong>Month Pillar (月柱):</strong> 乙酉 — <span style="color:var(--neon-orange);">★ เหมือน Year Pillar (伏吟 Fuyin)</span> — ครอบครัวและสังคมต้นทุนพูดภาษาเดียวกัน แต่ความคิดเดิมอาจวนซ้ำ</li>
+      <li><strong>Day Pillar (日柱):</strong> 己未 — ตัวตนแท้ = 己 (Yin Earth) + ราก (root) แข็งใน 未</li>
+      <li><strong>Hour Pillar (时柱):</strong> <em>ไม่ทราบเวลาเกิด</em> — ไม่ fabricate ตามหลักจริยธรรม</li>
+    </ul>
+
+    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>偏财 (Indirect Wealth) ×2</strong> ใน Year + Month Stem (乙) = ความมั่งคั่งที่มาจาก "คนอื่นเชื่อใน vision ของคุณ" มากกว่า "งานที่คุณทำเอง"</li>
+      <li><strong>食神 (Eating God) ×2</strong> ใน Year + Month Branch (辛 ใน 酉) = ความคิดสร้างสรรค์ที่อ่อนโยน คุณจะ <strong>"สร้าง" ผ่าน "การเล่าเรื่อง"</strong> มากกว่า "การวิพากษ์"</li>
+      <li><strong>七杀 (Seven Killings)</strong> แฝงใน Day Branch (丁 ใน 未) = แรงกดดันที่ทดสอบจากภายใน — "นายใน" ที่ไม่เคยหยุดถาม "ฉันทำดีพอหรือยัง"</li>
+      <li><strong>比肩 (Peer)</strong> แฝงใน Day Branch (己 ใน 未) = "ตัวตนอีกด้าน" — the critic within</li>
+    </ul>
+
+    <h4>Day Master Strength — 身强 moderate</h4>
+    <p>
+      คุณเป็นคนที่ <strong>"พึ่งตัวเองได้"</strong> ในระดับหนึ่ง แต่ต้อง "ดูแลตัวเอง" อยู่เสมอ:<br>
+      ✓ มี root ใน 未 (good)<br>
+      ✓ มี Metal support จาก 酉+酉 (good)<br>
+      ⚠ มี Double Wood (乙+乙) ที่ drain ตลอด<br>
+      ⚠ <strong>ไม่มี Water (印) เลย</strong> — ไม่มี "ท่อส่งน้ำ" มาหล่อเลี้ยง Day Master<br>
+      <br>
+      นี่คือ <strong>"ทุ่งนาที่มีฝนบ้าง แต่ไม่มีระบบชลประทาน"</strong> — ต้องอาศัย "ฝนที่ตกเอง" และ "ดินอุดม"
+    </p>
+
+    <h4>用神 (Yòng Shén) — ธาตุเสบียง</h4>
+    <table style="width:100%; font-size:14px; border-collapse:collapse; margin:8px 0;">
+      <tr style="border-bottom:1px solid var(--line);">
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">Role</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ธาตุ</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ทำไม</th>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-green);">用神 ★</strong></td>
+        <td style="padding:6px;"><strong>Wood (甲乙)</strong></td>
+        <td style="padding:6px;">ทำให้ Day Master "มีงานทำ" มี "wealth channel" เปิด — Wood "งอก" จาก Earth (土養木)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-cyan);">喜神</strong></td>
+        <td style="padding:6px;"><strong>Metal (庚辛)</strong></td>
+        <td style="padding:6px;">ระบายพลังผ่าน "การสร้าง/พูด/เล่าเรื่อง" (食神) — <strong>คุณมี Metal อยู่แล้ว 2 จุด (酉酉)</strong> มีเครื่องมือระบายติดตัว</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
+        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" เสี่ยง "ตกหล่ม" (โคลนตม)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Fire (丙丁)</strong></td>
+        <td style="padding:6px;">七杀/正官 — ควบคุมเข้มข้น Fire จะ "กดทับ" จนหายใจไม่ออก — ดินที่ถูกเผาจะกลายเป็น "อิฐ" (ไม่ยืดหยุ่น)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--fg-muted);">中神</strong></td>
+        <td style="padding:6px;"><strong>Water (壬癸)</strong></td>
+        <td style="padding:6px;">ผู้ผลิตฉัน (生我) — มามากจะ "ท่วม"; มาน้อยจะ "หล่อเลี้ยง" — <strong>chart ขาด Water → ต้องหาเอง</strong></td>
+      </tr>
+    </table>
+
+    <h4>Period 9 (九運 2024-2043) — ดาบสองคม</h4>
+    <p>
+      Period 9 (九紫離火運) ตรงกับช่วงที่คุณอายุ <strong>19 → 39 ปี</strong> — <strong>prime years</strong> ของชีวิต<br>
+      <br>
+      <strong style="color:var(--neon-orange);">⚠ ทำไม Period 9 เป็น "ดาบสองคม" สำหรับคุณ:</strong><br>
+      • <strong>用神 ของคุณ = Wood</strong><br>
+      • <strong>忌神 ของคุณ = Fire</strong> ← นี่คือ Period 9!<br>
+      • Period 9 = <strong>Fire ที่กำลังขึ้น</strong> (離火) — ไฟนี้ <strong>ไม่ได้หล่อเลี้ยงคุณ</strong> ตรงข้าม มัน <strong>กดทับ Day Master</strong><br>
+      <br>
+      <strong style="color:var(--neon-green);">✓ ด้านบวก:</strong> Period 9 ส่งเสริม "การมองเห็น" (visibility) — ตรงกับ <strong>偏财 (乙)</strong> ของคุณ (wealth ที่มาจาก "คนอื่นเห็น vision ของคุณ") — ถ้าคุณออกแบบ "ตัวตนในสายตาสาธารณะ" ได้ดี คุณจะได้ "ทรัพยากร" มหาศาล<br>
+      <br>
+      <strong style="color:var(--neon-red);">⚠ ด้านลบ:</strong> ถ้าคุณ "ปล่อยให้ Period 9 ควบคุม" คุณจะรู้สึก "ถูกเผา" (burnout) จากการถูก "มองเห็น" มากเกินไป จน Day Master (己) กลายเป็น "อิฐแห้ง"<br>
+      <br>
+      <strong>Nayin ของ Day Pillar = 天上火 (Heavenly Fire)</strong> — คุณเกิดมาพร้อม "fire signature" ในตัว แม้ Day Master จะเป็น Earth แต่ <strong>"essence"</strong> ของคุณมี Fire ผสม → คุณมี <strong>"ศักยภาพที่จะเปล่ง fire"</strong> แต่ต้อง <strong>"เลือก"</strong> ว่าจะให้ Fire นี้เป็น "ไฟที่ส่องสว่าง" หรือ "ไฟที่เผาตัวเอง"
+    </p>
+
+    <h4>กลยุทธ์ Period 9</h4>
+    <ol>
+      <li><strong>ใช้ Wood (用神) เป็น "เกราะ"</strong> — ต้นไม้ (Wood) จะ "ดูดซับ" ไฟไม่ให้ลุกลาม — การ "ปลูกต้นไม้ในชีวิต" (เรียนรู้สิ่งใหม่, ทำงานที่มีราก, สร้าง network ที่ยั่งยืน) จะช่วยให้ Period 9 fire <strong>ไม่เผาคุณ</strong></li>
+      <li><strong>ไม่หลบ "แสง" — แต่อย่า "เผา"</strong> — คุณต้อง <strong>"เลือกแสงที่ใช่"</strong> — ไม่ใช่ทุก visibility ดีสำหรับคุณ</li>
+      <li><strong>"ใช้น้ำหล่อเลี้ยง" (Water as self-care)</strong> — เพราะ Water เป็น 中神 แต่ chart ไม่มี → คุณต้อง "สร้างน้ำเอง" ผ่านการพัก การนอน การเขียน journal การอยู่ใกล้ธรรมชาติ</li>
+      <li><strong>เลือก "แสง" ที่มี Wood backing</strong> — content ที่มี "ราก" (long-form essays, deep research) ไม่ใช่ viral-only</li>
+      <li><strong>ไม่ chase ทุก opportunity</strong> — Period 9 จะมี "โอกาส" มากมาย แต่คุณต้องเลือก — 偏财 (乙) เป็น "wealth ที่มาจากภายนอก" → ถ้ารับทุกอย่าง จะกลายเป็น "ดินที่ถูกทดน้ำจนท่วม"</li>
+      <li><strong>สร้าง "Water routine"</strong> — นอน 8 ชม., เดินริมน้ำ, ทำสมาธิ, เขียน diary</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Four Pillars คำนวณอย่างไร (ตัวอย่างเพื่อความโปร่งใส)</strong></summary>
+      <p style="font-size:13px; line-height:1.7; color:var(--fg-muted);">
+        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 2 ต.ค. 2005 → อยู่หลัง 立春 2005 (~4 ก.พ. 2005) → ปีชะตาใช้ 2005<br>
+        • Stem index = (2005 − 4) mod 10 = 1 → <strong>乙</strong> (Yin Wood)<br>
+        • Branch index = (2005 − 4) mod 12 = 1 → <strong>酉</strong> (Yin Metal)<br>
+        • <strong>Year Pillar = 乙酉</strong> ✓ verified against <code>sxtwl</code><br>
+        <br>
+        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 2 ต.ค. 2005 อยู่ระหว่าง 白露 (8 ก.ย. 2005) → 寒露 (8 ต.ค. 2005) → อยู่ใน <strong>酉月 (You month)</strong><br>
+        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 乙 → 寅 เริ่มต้นที่ stem 戊 → 酉 = 乙<br>
+        • <strong>Month Pillar = 乙酉</strong> ✓ verified<br>
+        • <strong>สังเกต:</strong> Year pillar และ Month pillar <strong>เหมือนกันทุกประการ</strong> (乙酉 = 乙酉) — นี่คือ <strong>"伏吟" (Fuyin — same-pillar-echo)</strong><br>
+        <br>
+        <strong>Day Pillar (日柱):</strong> คำนวณด้วย <code>sxtwl</code> (壽星天文曆):<br>
+        <code>import sxtwl<br>
+        day = sxtwl.fromSolar(2005, 10, 2)<br>
+        gz = day.getDayGZ()  # tg=5, dz=7<br>
+        # tg=5 → 己, dz=7 → 未</code><br>
+        • <strong>Day Pillar = 己未</strong> (verified against canonical tables, anchor 1949-10-01 = 甲子 confirmed)<br>
+        • <strong>Nayin (納音): 天上火 (Heavenly Fire)</strong><br>
+        • <strong>Day Master = 己 (Yin Earth)</strong> — ตัวตนแท้<br>
+        <br>
+        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิด → ไม่ fabricate ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 己: 子=甲子, 丑=乙丑, 寅=丙寅, 卯=丁卯, 辰=戊辰, 巳=己巳, 午=庚午, 未=辛未, 申=壬申, 酉=癸酉, 戌=甲戌, 亥=乙亥 — ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำ
+      </p>
+    </details>
   </section>
 
   <section class="card slot-3" id="s2">
@@ -758,6 +1046,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_2_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_2_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Natalia Square 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center & Periphery:</strong> {{analysis_deep_2_jung_center_periphery}}</p>
+        <p><strong>Shadow Corners:</strong> {{analysis_deep_2_jung_shadow_corners}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> {{analysis_deep_2_myers_cognitive_mapping}}</p>
+        <p><strong>Type Dynamics:</strong> {{analysis_deep_2_myers_type_dynamics}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> {{analysis_deep_2_blavatsky_hermetic_geometry}}</p>
+        <p><strong>Monad Descent:</strong> {{analysis_deep_2_blavatsky_monad_descent}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> {{analysis_deep_2_ladini_chart_echo}}</p>
+        <p><strong>Personal Year Resonance:</strong> {{analysis_deep_2_ladini_personal_year}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> {{analysis_deep_2_initiators_school_grid}}</p>
+        <p><strong>Initiate Path:</strong> {{analysis_deep_2_initiators_initiate_path}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> {{analysis_deep_2_suyuhong_trigram_mapping}}</p>
+        <p><strong>Stems Interaction:</strong> {{analysis_deep_2_suyuhong_stems_interaction}}</p>
+      </div>
+    </div>
   </section>
 
   <section class="card slot-4" id="s3">
@@ -785,6 +1106,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_3_ladini}}</span></div>
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_3_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_3_suyuhong}}</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent & Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> {{analysis_deep_3_jung_talent_archetype}}</p>
+        <p><strong>Karmic Pattern:</strong> {{analysis_deep_3_jung_karmic_pattern}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> {{analysis_deep_3_myers_natural_strength}}</p>
+        <p><strong>Shadow Gift:</strong> {{analysis_deep_3_myers_shadow_gift}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> {{analysis_deep_3_blavatsky_soul_mission}}</p>
+        <p><strong>Karmic Lesson:</strong> {{analysis_deep_3_blavatsky_karmic_lesson}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> {{analysis_deep_3_ladini_karmic_debt}}</p>
+        <p><strong>Soul Contract:</strong> {{analysis_deep_3_ladini_soul_contract}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> {{analysis_deep_3_initiators_initiate_gift}}</p>
+        <p><strong>Karmic Mirror:</strong> {{analysis_deep_3_initiators_karmic_mirror}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> {{analysis_deep_3_suyuhong_bazi_talent}}</p>
+        <p><strong>Karmic Resolution:</strong> {{analysis_deep_3_suyuhong_karmic_resolution}}</p>
+      </div>
     </div>
   </section>
 
@@ -835,6 +1189,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_4_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_4_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career & Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> {{analysis_deep_4_jung_career_persona}}</p>
+        <p><strong>Career Individuation:</strong> {{analysis_deep_4_jung_career_growth}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> {{analysis_deep_4_myers_career_stack}}</p>
+        <p><strong>Team Role:</strong> {{analysis_deep_4_myers_team_role}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> {{analysis_deep_4_blavatsky_vocation_path}}</p>
+        <p><strong>Money Consciousness:</strong> {{analysis_deep_4_blavatsky_money_consciousness}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> {{analysis_deep_4_ladini_midheaven_transit}}</p>
+        <p><strong>Career House:</strong> {{analysis_deep_4_ladini_career_house}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> {{analysis_deep_4_initiators_initiate_vocation}}</p>
+        <p><strong>Work-Life Ritual:</strong> {{analysis_deep_4_initiators_work_ritual}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> {{analysis_deep_4_suyuhong_career_bazi}}</p>
+        <p><strong>Wealth Element:</strong> {{analysis_deep_4_suyuhong_wealth_element}}</p>
+      </div>
+    </div>
   </section>
 
   <section class="card slot-6" id="s5">
@@ -863,6 +1250,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_5_ladini}}</span></div>
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_5_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_5_suyuhong}}</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships & Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> {{analysis_deep_5_jung_anima_animus}}</p>
+        <p><strong>Relationship Pattern:</strong> {{analysis_deep_5_jung_relationship_pattern}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> {{analysis_deep_5_myers_communication_style}}</p>
+        <p><strong>Love Language:</strong> {{analysis_deep_5_myers_love_language}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> {{analysis_deep_5_blavatsky_twin_flame}}</p>
+        <p><strong>Generational Wisdom:</strong> {{analysis_deep_5_blavatsky_generational_wisdom}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> {{analysis_deep_5_ladini_venus_return}}</p>
+        <p><strong>7th House Activation:</strong> {{analysis_deep_5_ladini_seventh_house}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> {{analysis_deep_5_initiators_sacred_union}}</p>
+        <p><strong>Generational Mission:</strong> {{analysis_deep_5_initiators_generational_mission}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> {{analysis_deep_5_suyuhong_spouse_palace}}</p>
+        <p><strong>Relationship Luck:</strong> {{analysis_deep_5_suyuhong_relationship_luck}}</p>
+      </div>
     </div>
   </section>
 
@@ -904,6 +1324,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_6_ladini}}</span></div>
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_6_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_6_suyuhong}}</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health & Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> {{analysis_deep_6_jung_body_shadow}}</p>
+        <p><strong>Wholeness Practice:</strong> {{analysis_deep_6_jung_wholeness_practice}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> {{analysis_deep_6_myers_energy_management}}</p>
+        <p><strong>Stress Response:</strong> {{analysis_deep_6_myers_stress_response}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> {{analysis_deep_6_blavatsky_etheric_body}}</p>
+        <p><strong>Kundalini Rising:</strong> {{analysis_deep_6_blavatsky_kundalini}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> {{analysis_deep_6_ladini_sixth_house}}</p>
+        <p><strong>Healing Transit:</strong> {{analysis_deep_6_ladini_healing_transit}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> {{analysis_deep_6_initiators_chakra_activation}}</p>
+        <p><strong>Energy Field:</strong> {{analysis_deep_6_initiators_energy_field}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> {{analysis_deep_6_suyuhong_five_elements}}</p>
+        <p><strong>Body Constitution:</strong> {{analysis_deep_6_suyuhong_body_constitution}}</p>
+      </div>
     </div>
   </section>
 
@@ -1028,6 +1481,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_7_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_7_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Life Stages & Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> {{analysis_deep_7_jung_life_arc}}</p>
+        <p><strong>Mid-Life Transition:</strong> {{analysis_deep_7_jung_midlife_transition}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> {{analysis_deep_7_myers_cognitive_aging}}</p>
+        <p><strong>Wisdom Function:</strong> {{analysis_deep_7_myers_wisdom_function}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> {{analysis_deep_7_blavatsky_reincarnation_cycle}}</p>
+        <p><strong>Year Energy Theme:</strong> {{analysis_deep_7_blavatsky_year_energy}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> {{analysis_deep_7_ladini_saturn_return}}</p>
+        <p><strong>Progressed Moon:</strong> {{analysis_deep_7_ladini_progressed_moon}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> {{analysis_deep_7_initiators_year_theme}}</p>
+        <p><strong>Annual Ritual:</strong> {{analysis_deep_7_initiators_annual_ritual}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> {{analysis_deep_7_suyuhong_decade_luck}}</p>
+        <p><strong>Annual Pillars Reading:</strong> {{analysis_deep_7_suyuhong_pillars_reading}}</p>
+      </div>
+    </div>
   </section>
 
   <section class="card slot-3" id="s8">
@@ -1060,6 +1546,246 @@ flowchart LR
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_8_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_8_suyuhong}}</span></div>
     </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> {{analysis_deep_8_jung_shadow_work}}</p>
+        <p><strong>Individuation Ritual:</strong> {{analysis_deep_8_jung_individuation_ritual}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> {{analysis_deep_8_myers_development_plan}}</p>
+        <p><strong>Team Collaboration:</strong> {{analysis_deep_8_myers_team_collaboration}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> {{analysis_deep_8_blavatsky_seven_principles}}</p>
+        <p><strong>Karma Yoga:</strong> {{analysis_deep_8_blavatsky_karma_yoga}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> {{analysis_deep_8_ladini_planetary_remedy}}</p>
+        <p><strong>Daily Astro Practice:</strong> {{analysis_deep_8_ladini_daily_astro}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> {{analysis_deep_8_initiators_pathworking}}</p>
+        <p><strong>Mantra Practice:</strong> {{analysis_deep_8_initiators_mantra_practice}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> {{analysis_deep_8_suyuhong_feng_shui}}</p>
+        <p><strong>Bazi Daily Practice:</strong> {{analysis_deep_8_suyuhong_bazi_daily}}</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 21–60) — Annual Energy Forecast</h3>
+    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+
+    <div style="background:rgba(255,140,0,0.12); border-left:3px solid var(--neon-orange); padding:12px 14px; margin:12px 0; border-radius:4px;">
+      <strong style="color:var(--neon-orange);">⚠ หมายเหตุสำคัญ:</strong> เพศมีผลต่อทิศทาง Luck Pillar (顺行/逆行) — ด้านล่างนี้ present ทั้งสองทิศทางและอธิบายว่าข้อสรุปเปลี่ยนอย่างไรเมื่อทราบเพศ
+    </div>
+
+    <h4>วิธีคำนวณ起运 (Qǐ Yùn — Entry Age)</h4>
+    <ul style="list-style:none; padding-left:0; font-size:14px;">
+      <li><strong>Year stem 乙 = Yin</strong> (Stem #1 = yin)</li>
+      <li><strong>กฎ:</strong> 阳男 + 阴女 = <strong>顺行 (forward)</strong> | 阴男 + 阳女 = <strong>逆行 (backward)</strong></li>
+      <li><strong>Days to next Jieqi (寒露 2005)</strong> ≈ 6 วัน → 起运 = 6÷3 ≈ <strong>2 ปี</strong> (forward)</li>
+      <li><strong>Days to previous Jieqi (白露 2005)</strong> ≈ 24 วัน → 起运 = 24÷3 ≈ <strong>8 ปี</strong> (backward)</li>
+    </ul>
+
+    <h4>Scenario A: 顺行 (Forward, ถ้าคุณเป็น Yin-female)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>丙戌</strong></td>
+          <td style="padding:8px;">Fire-Earth</td>
+          <td style="padding:8px;">2–11</td>
+          <td style="padding:8px;">2007-2016</td>
+          <td style="padding:8px;">วัยเด็ก — 丙 (Fire=忌) = ถูก "อุ้ม" มาก แต่ 戌 (Earth) ทำให้ Day Master หนัก — เด็กที่ "อยู่ในกรอบ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">2</td>
+          <td style="padding:8px;"><strong>丁亥</strong></td>
+          <td style="padding:8px;">Fire-Water</td>
+          <td style="padding:8px;">12–21</td>
+          <td style="padding:8px;">2017-2026</td>
+          <td style="padding:8px;">วัยรุ่น — 丁 (Fire=忌) + 亥 (Water=印) — ความ "ถูกกดดันจากภายใน" เริ่มมากขึ้น — <strong>ปีนี้ (2026) คุณอยู่ปีสุดท้ายของ pillar นี้</strong></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">3 ★</strong></td>
+          <td style="padding:8px;"><strong>戊子</strong></td>
+          <td style="padding:8px;">Earth-Water</td>
+          <td style="padding:8px;"><strong>22–31</strong></td>
+          <td style="padding:8px;"><strong>2027-2036</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Career-Discovery Decade</strong> — 戊 (Earth=比肩) เพิ่มน้ำหนัก Day Master แต่ 子 (Water=印) ช่วย "หล่อเลี้ยง" → decade ของการ "ค้นหาตัวตน + สร้างรากฐาน" — Period 9 ปลาย (2034-2036) จะ "test" ว่าคุณพร้อมหรือไม่</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">4</td>
+          <td style="padding:8px;"><strong>己丑</strong></td>
+          <td style="padding:8px;">Earth-Earth</td>
+          <td style="padding:8px;">32–41</td>
+          <td style="padding:8px;">2037-2046</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย + Period 10 เริ่ม (2044)</strong> + 己 (比肩) — decade ที่ Day Master "ซ้อนตัวเอง" เสี่ยง "โคลนตม" ถ้าไม่ระวัง — 丑 (Earth+Water hidden) คือ "บึง" ที่ต้องระวัง</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">5 ★</strong></td>
+          <td style="padding:8px;"><strong>庚寅</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">42–51</td>
+          <td style="padding:8px;">2047-2056</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Period 10 ใหม่ (2044-2063)</strong> + 庚 (伤官) + 寅 (Wood=用) → decade ที่ <strong>"ทั้ง用神 (Wood) และ "ผลงาน" (Metal) มาพร้อมกัน</strong> ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">6</td>
+          <td style="padding:8px;"><strong>辛卯</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">52–61</td>
+          <td style="padding:8px;">2057-2066</td>
+          <td style="padding:8px;">decade ของ wisdom — 辛 (食神) + 卯 (Wood=用) → ผลงาน + แก่นแท้ converge — คุณจะ "พูด" จาก "ประสบการณ์"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Scenario B: 逆行 (Backward, ถ้าคุณเป็น Yin-male)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>甲申</strong></td>
+          <td style="padding:8px;">Wood-Metal</td>
+          <td style="padding:8px;">8–17</td>
+          <td style="padding:8px;">2013-2022</td>
+          <td style="padding:8px;">วัยเด็ก/วัยรุ่น — 甲 (Wood=用!) + 申 (Metal=喜!) → decade ที่ <strong>"ถูกหล่อเลี้ยงอย่างเหมาะสม"</strong> เรียนดี มีครูดี</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">2 ★</strong></td>
+          <td style="padding:8px;"><strong>癸未</strong></td>
+          <td style="padding:8px;">Water-Earth</td>
+          <td style="padding:8px;"><strong>18–27</strong></td>
+          <td style="padding:8px;"><strong>2023-2032</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 9 Prime Years</strong> — 癸 (偏印) + 未 (比肩) → decade ของ "ความคิดสร้างสรรค์ + การค้นหาตัวตน" — Period 9 (2024-2043) อยู่กลาง decade นี้</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">3</td>
+          <td style="padding:8px;"><strong>壬午</strong></td>
+          <td style="padding:8px;">Water-Fire</td>
+          <td style="padding:8px;">28–37</td>
+          <td style="padding:8px;">2033-2042</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย</strong> + 壬 (正印) + 午 (Fire=忌) → decade ของ "การเรียนรู้ลึก + ความท้าทายจากภายใน" — คุณอาจเจอ "อาจารย์ทางจิตวิญญาณ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">4 ★</strong></td>
+          <td style="padding:8px;"><strong>辛巳</strong></td>
+          <td style="padding:8px;">Metal-Fire</td>
+          <td style="padding:8px;"><strong>38–47</strong></td>
+          <td style="padding:8px;"><strong>2043-2052</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 10 Start (2044)</strong> + 辛 (食神=喜) + 巳 (Fire=忌+比肩) → decade ที่ <strong>"ผลงานเปล่งประกาย" แต่ "ตัวตนถูกทดสอบ"</strong> — ใช้ Metal output ระบาย Day Master ที่ถูก Fire กด</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">5</td>
+          <td style="padding:8px;"><strong>庚辰</strong></td>
+          <td style="padding:8px;">Metal-Earth</td>
+          <td style="padding:8px;">48–57</td>
+          <td style="padding:8px;">2053-2062</td>
+          <td style="padding:8px;">decade แห่ง "ผลงานสุขุม" — 庚 (伤官) + 辰 (Earth) → ใช้ "ความคิดที่ตัดสิ่งเก่า" ในการสร้างสรรค์</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">6 ★</strong></td>
+          <td style="padding:8px;"><strong>己卯</strong></td>
+          <td style="padding:8px;">Earth-Wood</td>
+          <td style="padding:8px;">58–67</td>
+          <td style="padding:8px;">2063-2072</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Wisdom Era</strong> — 己 (比肩) + 卯 (Wood=用!) → decade ที่ "ตัวตนมาบรรจบกับแก่น"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>ความจริงข้าม Scenario</h4>
+    <p><strong>ไม่ว่า Scenario A หรือ B ก็ตาม</strong>, ลวดลายชีวิตของคุณจะประกอบด้วย:</p>
+    <ol>
+      <li><strong>Prime Years 21–39 (ทั้งสอง Scenario)</strong> — ตรงกับ <strong>Period 9 (2024-2043)</strong> หมายความว่า <strong>คุณจะ "เป็นที่รู้จัก" ในช่วงนี้</strong> ไม่ว่าจะเกิดเพศใด — แต่ "คุณภาพ" ของการเป็นที่รู้จักขึ้นกับการเลือก (ใช้ Wood เป็นเกราะ หรือถูก Fire เผา)</li>
+      <li><strong>Mid-life Crisis Window 32-48</strong> (Scenario A: 己丑 32-41 + Scenario B: 壬午 28-37 → 辛巳 38-47 overlap) — decade ที่ Day Master ต้อง <strong>"ตั้งหลักใหม่"</strong> หลังจาก Period 9 จบลง</li>
+      <li><strong>Wisdom Era 50-65</strong> — decade ที่ <strong>用神 Wood</strong> จะมาถึง (ไม่ว่าจะใน Scenario A หรือ B) หมายความว่า <strong>ท้ายที่สุด ดิน (己) จะเรียนรู้ที่จะยืดหยุ่น</strong> และกลายเป็น "ทุ่งนาที่มีต้นไม้ขึ้น" ไม่ใช่ "ดินแห้งไม่มีราก"</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Annual Pillars ปี 2026, 2027, 2028 (รายละเอียด)</strong></summary>
+      <div style="font-size:13px; line-height:1.7; color:var(--fg-muted); padding:10px 0;">
+        <p><strong>Annual Pillars (流年)</strong> เป็น "คลื่น" ที่ซ้อนบน "ลม" (Luck Pillar) — แต่ละปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+        
+        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 ปี 21 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丙 = 正官 (Direct Officer) — controls me</li>
+          <li><strong>Branch:</strong> 午 = 丁 + 己; main TG = 七杀 (Direct Seal)</li>
+          <li><strong>Element:</strong> Fire (忌 — ทำให้ Day Master "ถูกกด")</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2026 คุณอยู่ปี 4 ของมหาวิทยาลัย (อายุ 21) — คุณจะรู้สึก <strong>"ถูกคาดหวัง"</strong> จากครอบครัว สังคม ตัวเอง — ความ "fire กดทับ" ทำให้คุณรู้สึก "ทำไมฉันทำได้ไม่ดีพอ" ทั้งที่ความจริงคุณทำได้ดี แต่ Day Master (己) ของคุณ "อ่อน" ต่อ Fire pressure</p>
+        <p><strong>Scenario Simulation:</strong> ปีนี้คุณกำลังจะจบปี 4 — อาจารย์ที่ปรึกษาบอก "ปีหน้าคุณต้องทำวิทยานิพนธ์" พ่อแม่ถาม "จบแล้วทำงานอะไร" เพื่อนร่วมชั้นโพสต์รูป "ได้งานที่บริษัทใหญ่" — คุณนั่งเงียบๆ ในห้อง เปิด journal ส่วนตัวแล้วเขียน <strong>"ฉันยังไม่รู้ว่าฉันอยากเป็นอะไร"</strong> — นี่ไม่ใช่ "ล้มเหลว" แต่เป็น <strong>"己 ที่ถูก 丙 กด"</strong> — Day Master ต้องการ "หยุด" แต่ environment บอก "ทำต่อ"</p>
+
+        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 ปี 22 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丁 = 七杀 (Seven Killings)</li>
+          <li><strong>Branch:</strong> 未 = 己 (比肩); 丁 (七杀); 乙 (偏财)</li>
+          <li><strong>Element:</strong> Fire + Earth (忌 + 比肩) — <strong>ปีที่ Day Branch echo!</strong></li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> <strong style="color:var(--neon-green);">★ YEAR OF DAY PILLAR ECHO ★</strong> — ปี 2027 Annual Pillar = <strong>丁未</strong> = Day Pillar <strong>己未</strong> ใน "逆 echo" (丁 vs 己 = same element polarity diff; 未 vs 未 = same branch) — นี่คือ <strong>"伏吟" (Fuyin)</strong> ที่ระดับปี — สิ่งที่คุณจะประสบในปี 2027 จะ <strong>"echo"</strong> กับสิ่งที่คุณเป็นตอนเกิด — เป็นปีที่ "ตัวตน" ถูก "ทดสอบ" อย่างเข้มข้น</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2027 — คุณจบการศึกษา — คุณตัดสินใจ <strong>"ไม่สมัครงานประจำทันที"</strong> — คุณเลือก "พัก" 1 ปี เพื่อ "ค้นหาตัวเอง" — พ่อแม่ไม่เข้าใจ เพื่อนบางคนคิดว่า "เขาแพ้" — แต่จริงๆ แล้ว <strong>己 (Yin Earth) ที่ถูก 七杀 (丁) กด</strong> กำลัง "ตั้งหลัก" ก่อนจะ "ออกเดิน" — นี่คือ <strong>"ดินที่หยุดรับน้ำ (Water) เพื่อไม่ให้ท่วม"</strong> — เป็นสัญญาณที่ดี ถ้าคุณใช้เวลาว่าง <strong>"ปลูก Wood"</strong> (อ่านหนังสือ philosophy, ฝึกทักษะใหม่, สร้าง network)</p>
+
+        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 ปี 23 — 2571 (2028) — 戊申 (Earth-Metal) — 忌 (Earth) + 喜 (Metal)</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 戊 = 劫财 (Rob Wealth) — same element, opposite polarity</li>
+          <li><strong>Branch:</strong> 申 = 庚 (伤官) + 壬 (正印) + 戊 (劫财)</li>
+          <li><strong>Element:</strong> Earth + Metal (mixed — outside 忌, branch contains 喜)</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปีนี้เป็น "ปีแห่งการทดลอง" — คุณอาจ "ทำโปรเจกต์ส่วนตัว" หรือ "รับงาน freelance" แม้จะมีพ่อแม่กดดัน — แต่ 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณแสดง "ความคิดสร้างสรรค์" ผ่าน 伤官 (庚)</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2028 — คุณสร้าง <strong>portfolio website</strong> แรกของคุณ เขียน essay เกี่ยวกับ "AI กับความคิดสร้างสรรค์" — โพสต์ลง Twitter — <strong>คลิปหนึ่งกลายเป็น viral</strong> (1,000 likes ใน 1 สัปดาห์) — นี่คือ <strong>"食神/伤官 (Metal) ที่ 申 (branch) ปลดปล่อย Earth (己)"</strong> — คุณเริ่ม "เห็น" ว่า "ความคิดของคุณมีค่า" ไม่ใช่แค่ "ความคิดส่วนตัว"</p>
+      </div>
+    </details>
+
+    <h4>คำแนะนำเบื้องต้น — 4 ข้อที่ grounded ใน chart</h4>
+    <ol>
+      <li><strong>"ปลูก Wood ในชีวิตประจำวัน" (用神 = Wood)</strong><br>
+        Wood ไม่ใช่ "ต้นไม้จริง" — Wood คือ <strong>"พลังของการเปิดทาง, ขยายขอบเขต, และงอกงาม"</strong> — การอ่านหนังสือที่ "ขยายกรอบความคิด" (philosophy, systems thinking, biographies) — การเรียนรู้ทักษะใหม่ (programming, design, writing, meditation) — การเดินทางไปที่ใหม่ (โดยเฉพาะทิศ East/ Southeast — Wood direction) — การปลูกต้นไม้จริง (ดูต้นไม้เติบโตทุกวัน จะช่วย "เตือน" คุณว่า "การเติบโตต้องใช้เวลา")</li>
+      <li><strong>"ระวัง Fire ที่มากเกินไป" (忌神 = Fire)</strong><br>
+        สำหรับคุณ <strong>"การถูกควบคุมมากเกินไป"</strong> เป็นอันตราย — ครู/ที่ปรึกษาที่ "กดดัน" จะทำให้คุณ "ปิดตัวเอง" ไม่กล้าแสดงออก — ครอบครัวที่ "วางแผนชีวิตให้" จะทำให้คุณรู้สึก "หายใจไม่ออก" — งานที่ "micromanage" จะทำให้คุณ burnout ภายใน 3 เดือน — Period 9 ที่ "chase viral" จะทำให้คุณ "ถูกเผา" — เลือก "แสง" ที่ "มีราก" เท่านั้น</li>
+      <li><strong>"สร้าง Water routine" (中神 = Water — ขาดจาก chart)</strong><br>
+        เพราะ chart ของคุณ <strong>ไม่มี Water เลย</strong> — นี่คือ "ช่องว่าง" ที่ต้อง "สร้างเอง" — นอน 8 ชั่วโมงเป็นประจำ (Water = rest, regeneration) — เดินริมน้ำ/ทะเล/แม่น้ำ อย่างน้อยสัปดาห์ละครั้ง — Journaling ทุกเย็น (เขียน "วันนี้ฉันรู้สึกอะไร" เป็น "ท่อส่งน้ำ" ให้อารมณ์) — สมาธิ/冥想 10 นาทีทุกเช้า (ไม่ต้องยาก แค่ "นั่งเงียบ หายใจเข้า-ออก")</li>
+      <li><strong>"ใช้ Metal ปลดปล่อย Earth" (喜神 = Metal — มีอยู่แล้ว 2 จุด!)</strong><br>
+        คุณ <strong>โชคดี</strong> ที่มี酉+酉 (Metal) ใน Year+Month branch — คุณมี "เครื่องมือระบาย" ติดตัวมาแต่เกิด — เขียน — พูด — present: blog, podcast, video, talk ที่ conference — ทุกครั้งที่คุณ "ปลดปล่อยความคิด" ผ่านคำพูด/ตัวอักษร คุณจะเบาขึ้น (食神 ของคุณ = "gentle creativity" ไม่ใช่ "cutting critique") — ทำ craft / งานฝีมือ: วาดรูป ปั้นดิน ทำอาหาร — การ "ผลิตของ" ด้วยมือช่วย drain Earth — ห้องสมุดส่วนตัว: สำหรับ INFJ ที่รัก Ni การมี "พื้นที่เงียบ" ที่เต็มไปด้วยหนังสือเป็น "temple" ส่วนตัว</li>
+    </ol>
+
+    <details>
+      <summary><strong>บทสังเคราะห์ Su Yu Hong</strong></summary>
+      <p style="font-size:14px; line-height:1.8; padding:10px 0; color:var(--fg);">
+        หากฉันต้องสรุป "ดิถีธาตุ" ของคุณในหนึ่งประโยค:<br><br>
+        <em style="color:var(--neon-cyan); font-size:15px; display:block; padding:12px 18px; background:rgba(0,240,255,0.08); border-left:3px solid var(--neon-cyan); border-radius:4px; margin:8px 0;">
+          "คุณคือทุ่งนาที่ต้องการต้นไม้และน้ำ — ไม่ใช่ดินแห้งไร้ราก แต่เป็นทุ่งนาที่พร้อมจะงอก ถ้าคุณเลือก 'ปลูก' ในช่วง Period 9 (2024-2043) ทุ่งนานี้จะถูก 'แสงไฟ' ส่องถึง — คุณจะเป็นที่รู้จัก ถ้าคุณเลือกที่จะ 'งอก' ใน 'แสง' ที่ไม่ทำให้คุณ 'ไหม้'"
+        </em>
+      </p>
+    </details>
   </section>
 
   <section class="card slot-5" id="s9">
@@ -1085,6 +1811,39 @@ flowchart LR
       <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">{{analysis_9_ladini}}</span></div>
       <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">{{analysis_9_initiates}}</span></div>
       <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">{{analysis_9_suyuhong}}</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> {{analysis_deep_9_jung_the_self}}</p>
+        <p><strong>Meaning of Life:</strong> {{analysis_deep_9_jung_meaning_of_life}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> {{analysis_deep_9_myers_final_integration}}</p>
+        <p><strong>Type Wisdom:</strong> {{analysis_deep_9_myers_type_wisdom}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> {{analysis_deep_9_blavatsky_universal_brotherhood}}</p>
+        <p><strong>Final Aspiration:</strong> {{analysis_deep_9_blavatsky_final_aspiration}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> {{analysis_deep_9_ladini_contract_completion}}</p>
+        <p><strong>Chart Mastery:</strong> {{analysis_deep_9_ladini_chart_mastery}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> {{analysis_deep_9_initiators_mastery_path}}</p>
+        <p><strong>Universal Service:</strong> {{analysis_deep_9_initiators_universal_service}}</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> {{analysis_deep_9_suyuhong_destiny_unfoldment}}</p>
+        <p><strong>Final Blessing:</strong> {{analysis_deep_9_suyuhong_final_blessing}}</p>
+      </div>
     </div>
   </section>
 

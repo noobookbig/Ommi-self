@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Nat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; Nat</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>2005-10-02</span>
+      <span><strong>Window</strong>2026 &rarr; 2065</span>
+      <span><strong>Headline</strong>Day Master 己 (Yin Earth) · Personal Year 2 เริ่มที่อายุ 21 · สู่ PY 5 ตอนอายุ 60 — วงล้อ 'รู้แล้ว-สอน-รู้อีกครั้ง'</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Quiet Therapist / Emotional over-identification</div>
+      <div class="lens"><strong>LoA</strong>high-coherence inner-band</div>
+      <div class="lens"><strong>Kybalion</strong>polishing→revealing 7-yr</div>
+      <div class="lens"><strong>MBTI</strong>INFJ-A &middot; lead Ni-Fe &middot; grip Se Grip & Ti Loop under chronic stress</div>
+      <div class="lens"><strong>Age 60</strong>mentor-writer</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 己 (Yin Earth) &middot; bal needs 丁 (Yin Fire) + 癸 (Yin Water)</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona = Quiet Therapist; Shadow = over-identification</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Ni-Fe loop reinforced; Ti-Se surfaced only under stress</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">vibration peaks at 21:00 reflection + equinox; low-band is emotional</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">19 center (Sun) เป็น karmic amplifier — repeated illumination</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">polishing 7-yr = rhythm-lived; rhythm is the master key</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">己 Yin Earth needs 丁 + 癸; Period 9 Fire drains but also illuminates</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> [Nat-deep §0/jung] persona shadow</p>
+        <p><strong>Individuation Path:</strong> [Nat-deep §0/jung] individuation path</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> [Nat-deep §0/myers] type stack</p>
+        <p><strong>Cognitive Loop:</strong> [Nat-deep §0/myers] cognitive loop</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> [Nat-deep §0/blavatsky] root race</p>
+        <p><strong>Monad & Reincarnation:</strong> [Nat-deep §0/blavatsky] monad reincarnation</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> [Nat-deep §0/ladini] natal chart</p>
+        <p><strong>Transit Windows:</strong> [Nat-deep §0/ladini] transit windows</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> [Nat-deep §0/initiators] mystery school</p>
+        <p><strong>Initiate Trials:</strong> [Nat-deep §0/initiators] initiate trials</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> [Nat-deep §0/suyuhong] day master</p>
+        <p><strong>Annual Pillars:</strong> [Nat-deep §0/suyuhong] annual pillars</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm: 7-yr polishing pulse</p>
+    <p><strong>LoA:</strong> Coherence locks at daily 21:00 reflection</p>
+    <p><strong>Matrix:</strong> Center 19 master number spins loop</p>
+    <p><strong>Proof:</strong> all three engines climax 2062</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
+      </div>
+    </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Monad &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้ (analyst fills the 9 octagram tokens below).</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>[Nat octagram center] placeholder"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>[Nat octagram n] placeholder"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>[Nat octagram ne] placeholder"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>[Nat octagram e] placeholder"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>[Nat octagram se] placeholder"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>[Nat octagram s] placeholder"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>[Nat octagram sw] placeholder"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>[Nat octagram w] placeholder"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>[Nat octagram nw] placeholder"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">engines: Ni archetype, Fe mirror, Persona teacher — let all run</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Ni gathers / Fe cares / Ti seals; lowers are passengers</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">law satisfied when intent+emotion+action share quiet frequency</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">3×3 with master centre 19 = radiant loop; honour the centre</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">rhythm precedes vibration precedes form — inner moves outer</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">2062 Metal-year couples all three engines into one climax</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> [Nat-deep §1/jung] collective unconscious</p>
+        <p><strong>Synchronicity Field:</strong> [Nat-deep §1/jung] synchronicity</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> [Nat-deep §1/myers] function integration</p>
+        <p><strong>Type Development:</strong> [Nat-deep §1/myers] type development</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> [Nat-deep §1/blavatsky] hermetic principles</p>
+        <p><strong>Law of Attraction Bridge:</strong> [Nat-deep §1/blavatsky] loa bridge</p>
+        <p><strong>Matrix Loop Awareness:</strong> [Nat-deep §1/blavatsky] matrix loop</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> [Nat-deep §1/ladini] outer planet</p>
+        <p><strong>Eclipse Season Impact:</strong> [Nat-deep §1/ladini] eclipse season</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> [Nat-deep §1/initiators] knowledge awakening</p>
+        <p><strong>Elemental Balance:</strong> [Nat-deep §1/initiators] elemental balance</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems & Earthly Branches:</strong> [Nat-deep §1/suyuhong] stems branches</p>
+        <p><strong>Annual Luck Cycle:</strong> [Nat-deep §1/suyuhong] luck cycle</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">1.6 BaZi (八字) & Period 9 (九運) — ดิถีธาตุและมหายุค</h3>
+    <p class="lede">ดิถีธาตุคือ "สนามแม่เหล็กของเวลา" ที่ห่อหุ้มคุณตอนเกิด — ทุกปีที่คุณมีชีวิตอยู่ คุณจะ "สั่นสะเทือน" ตามจังหวะของสนามนั้น</p>
+
+    <h4>Day Master (日主) — ตัวตนแท้</h4>
+    <p>
+      <strong>戊 (Yang Earth)</strong> — "ภูเขา / ดินแข็ง / กำแพง"<br>
+      ตัวตนแท้ของคุณคือภูเขาที่มั่นคง รับน้ำหนักได้มาก เป็นที่พึ่งของคนรอบข้าง แต่ต้องระวังไม่ให้ "ภูเขาถูกกัดเซาะ" จากน้ำ (Water) ที่ซัดมาไม่หยุด — ต้องมี <strong>ไม้ (Wood)</strong> มาช่วยคลายดิน และ <strong>ไฟ (Fire)</strong> มาหล่อเลี้ยง
+    </p>
+
+    <h4>สี่เสาชะตา (四柱)</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>Year Pillar (年柱):</strong> 丙寅 — ไฟยางค์ (丙) + เสือ (寅) = ไฟป่าที่เริ่มลุกโชติช่วง พลังงานแห่งการเริ่มต้น</li>
+      <li><strong>Month Pillar (月柱):</strong> 壬辰 — น้ำยางค์ (壬) + มังกร (辰) = น้ำทะเลที่ลึกและแข็งแกร่ง ความมั่นคงที่ไหลเวียน</li>
+      <li><strong>Day Pillar (日柱):</strong> 戊子 — ดินยางค์ (戊) + หนู (子) = <span style="color:var(--neon-cyan);">★ ภูเขากลางทะเล</span> — ตัวตนแท้ที่มั่นคงแต่ถูกท้าทาย</li>
+      <li><strong>Hour Pillar (时柱):</strong> 戊午 (placeholder เวลา 12:00 น.) — ดินยางค์ (戊) + ม้า (午) = ภูเขาใต้แสงตะวันเที่ยง <em>(หมายเหตุ: เวลาเกิดที่แน่นอนไม่ทราบ ใช้เที่ยงเป็นค่า placeholder ตามหลักจริยธรรม)</em></li>
+    </ul>
+
+    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master 戊 (Yang Earth)</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>偏印 (Indirect Resource)</strong> ใน Year Stem (丙) = พลังสร้างสรรค์ที่มาจาก "การเผชิญหน้ากับไฟ" — คุณเรียนรู้จากวิกฤต ไม่ใช่จากตำรา</li>
+      <li><strong>偏官 (Seven Killings)</strong> ใน Month Stem (壬) = แรงกดดันจากภายนอก — ความคาดหวังจากสังคม ครอบครัว ธุรกิจ ที่ทำให้คุณต้อง "แข็งแกร่ง" ตลอดเวลา</li>
+      <li><strong>比肩 (Peer)</strong> ใน Day Stem + Hour Stem (戊×2) = "ภูเขาคู่" — คุณมีพลังรับน้ำหนักสองเท่า แต่ก็เหงาสองเท่าเพราะไม่มีใครเข้าใจภาระที่คุณแบก</li>
+      <li><strong>正官 (Direct Officer)</strong> แฝงใน Month Branch (癸 ใน 辰) = ความรับผิดชอบที่ "ถูกต้อง" และ "จำเป็น" — คุณไม่สามารถปฏิเสธได้</li>
+      <li><strong>偏財 (Indirect Wealth)</strong> แฝงใน Year Branch (甲 ใน 寅) = ความมั่งคั่งที่มาจาก "การลงทุนในคน" และ "การสร้างระบบ"</li>
+    </ul>
+
+    <h4>Day Master Strength — 身旺 ปานกลาง</h4>
+    <p>
+      คุณเป็นคน <strong>"พอเพียงพอดี"</strong> — ไม่อ่อนแอจนล้มง่าย แต่ก็ไม่แข็งแกร่งจนรับทุกอย่างได้:<br>
+      ✓ มี Fire resource จาก 丙 (Year) + 午 (Hour) ที่หล่อเลี้ยง Earth (火生土)<br>
+      ✓ มี Earth peer จาก 戊+戊 ที่ช่วยพยุง<br>
+      ⚠ มี Water killing energy จาก 壬 (Month) + 子 (Day Branch) ที่กดดันตลอด (水克土)<br>
+      ⚠ <strong>ขาด Wood (財)</strong> ที่ชัดเจน — "ไม้" คือช่องทางทำเงิน แต่คุณต้อง "หา" Wood ด้วยตัวเอง<br>
+      <br>
+      นี่คือ <strong>"ภูเขากลางทะเล"</strong> — คุณยืนมั่นได้ แต่คลื่นซัดตลอดเวลา ถ้าคุณไม่ดูแลตัวเอง "ภูเขา" จะถูกกัดเซาะจนพังทลาย
+    </p>
+
+    <h4>用神 (Yòng Shén) — ธาตุเสบียง</h4>
+    <table style="width:100%; font-size:14px; border-collapse:collapse; margin:8px 0;">
+      <tr style="border-bottom:1px solid var(--line);">
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">Role</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ธาตุ</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ทำไม</th>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-green);">用神 ★</strong></td>
+        <td style="padding:6px;"><strong>Wood (甲乙)</strong></td>
+        <td style="padding:6px;">ทำให้ภูเขา "มีต้นไม้" — Wood คลายดิน (木疏土) และเป็นช่องทางทำเงิน (財) — <strong>คุณต้องการคนที่มีความคิดสร้างสรรค์มาช่วย</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-cyan);">喜神</strong></td>
+        <td style="padding:6px;"><strong>Fire (丙丁)</strong></td>
+        <td style="padding:6px;">หล่อเลี้ยงดิน (火生土) และคอยระบายน้ำ (Fire evaporates Water) — <strong>คุณมี Fire อยู่แล้ว (丙+午) ต้องดูแลให้ลุกไหม้อยู่เสมอ</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Water (壬癸)</strong></td>
+        <td style="padding:6px;">Water overwhelms Earth (水克土) — ถ้า Water มากเกินไป "ภูเขา" จะกลายเป็น "โคลน" — <strong>หลีกเลี่ยงสถานการณ์ที่ท่วมท้นจนควบคุมไม่ได้</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-orange);">慎用</strong></td>
+        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
+        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" ทำให้หนักเกินแบก — <strong>อย่ารับภาระซ้ำซ้อนจากคนที่คิดเหมือนคุณ</strong></td>
+      </tr>
+    </table>
+
+    <h4>Nayin (納音) — เสียงแห่งชะตา</h4>
+    <p>
+      <strong>Day Pillar Nayin:</strong> <span style="color:var(--neon-orange);">霹雳火</span> (Thunderbolt Fire / ฟ้าผ่า)<br>
+      คุณมีพลังที่ "ปะทุ" ทันทีทันใดเมื่อถึงจุดหนึ่ง — ไม่ใช่ไฟที่ลุกค่อย ๆ แต่เป็นฟ้าผ่าที่ฟาดลงมาทีเดียวแล้วเปลี่ยนทุกอย่าง นี่คือ "จุดเปลี่ยนครั้งใหญ่" ที่จะเกิดในชีวิตคุณ — เมื่อมันมาถึง คุณจะรู้ว่า "นี่แหละ" และทุกอย่างจะไม่เหมือนเดิมอีกต่อไป
+    </p>
+
+    <details style="margin-top:16px;">
+      <summary><strong>ขยายความ — Four Pillars คำนวณอย่างไร (ตัวอย่างเพื่อความโปร่งใส)</strong></summary>
+      <p style="font-size:13px; line-height:1.7; color:var(--fg-muted);">
+        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 14 เมษายน 1986 → อยู่หลัง 立春 1986 (~4 ก.พ. 1986) → ปีชะตาใช้ 1986<br>
+        • Stem index = (1986 − 4) mod 10 = 2 → <strong>丙</strong> (Yang Fire)<br>
+        • Branch index = (1986 − 4) mod 12 = 2 → <strong>寅</strong> (Tiger / Wood)<br>
+        • <strong>Year Pillar = 丙寅</strong> ✓ verified against <code>sxtwl</code><br>
+        <br>
+        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 14 เมษายน 1986 อยู่หลัง 清明 (5 เมษายน 1986) → อยู่ใน <strong>辰月 (Dragon month)</strong><br>
+        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 丙 → 寅 เริ่มต้นที่ stem 庚 → 辰 = 壬<br>
+        • <strong>Month Pillar = 壬辰</strong> ✓ verified<br>
+        <br>
+        <strong>Day Pillar (日柱):</strong> คำนวณด้วย <code>sxtwl</code> (壽星天文曆):<br>
+        <code>import sxtwl<br>
+        day = sxtwl.fromSolar(1986, 4, 14)<br>
+        gz = day.getDayGZ()  # tg=4, dz=0<br>
+        # tg=4 → 戊, dz=0 → 子</code><br>
+        • <strong>Day Pillar = 戊子</strong> (verified against canonical computation in <code>bazi_calc_nuttawat.py</code>)<br>
+        • <strong>Nayin (納音): 霹雳火 (Thunderbolt Fire)</strong><br>
+        • <strong>Day Master = 戊 (Yang Earth)</strong> — ตัวตนแท้<br>
+        <br>
+        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิดที่แน่นอน → ใช้ 12:00 น. (午 hour) เป็น placeholder ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 戊: 子=壬子, 丑=癸丑, 寅=甲寅, 卯=乙卯, 辰=丙辰, 巳=丁巳, 午=戊午, 未=己未, 申=庚申, 酉=辛酉, 戌=壬戌, 亥=癸亥<br>
+        • <strong>Hour Pillar = 戊午</strong> (placeholder — จะปรับเมื่อได้เวลาเกิดที่แน่นอน)<br>
+        <br>
+        ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำที่สุด
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 2 / 10 / 7 (visionary wheel channel)</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> 12 / 19 / 17 (sacrifice → sun → star)</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> 19 / 12 / 17 / mask calm healer</span>
+      <span class="pill"><strong>Echo</strong> 12, 17, 19 &mdash; Echo 12-17-19 (Hanged Man–Star–Sun) — Kármic-3 ของ Nat: หยุด-ฟื้น-เปล่ง สะท้อนสองครั้งในผัง 3×3</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
+      </div>
+    </div>
+
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">2</span><span class="token">[Nat n.A] placeholder</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">10</span><span class="token">[Nat n.B] placeholder</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">7</span><span class="token">[Nat n.C] placeholder</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">12</span><span class="token">[Nat n.D] placeholder</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">19</span><span class="token">[Nat n.E] placeholder</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">17</span><span class="token">[Nat n.F] placeholder</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">19</span><span class="token">[Nat n.G] placeholder</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">12</span><span class="token">[Nat n.H] placeholder</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">17</span><span class="token">[Nat n.I] placeholder</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>[Nat n.echo_extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">top=vision base=drive; mask is calm healer, drive is teacher</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Ni-Ti top/mid, Fe base: stack maps onto spatial axes</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">3×3 is frequency lattice; 19 at centre is carrier wave</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">12-17-19 in centre = Kármic-3 amplifier; echo doubles lesson</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">square embodies gender principle; centre is illumination point</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Earth-Fire-Earth top-mid-base: productive cycle; P9 = fire↑</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Natalia Square 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center & Periphery:</strong> [Nat-deep §2/jung] center periphery</p>
+        <p><strong>Shadow Corners:</strong> [Nat-deep §2/jung] shadow corners</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> [Nat-deep §2/myers] cognitive mapping</p>
+        <p><strong>Type Dynamics:</strong> [Nat-deep §2/myers] type dynamics</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> [Nat-deep §2/blavatsky] hermetic geometry</p>
+        <p><strong>Monad Descent:</strong> [Nat-deep §2/blavatsky] monad descent</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> [Nat-deep §2/ladini] chart echo</p>
+        <p><strong>Personal Year Resonance:</strong> [Nat-deep §2/ladini] personal year</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> [Nat-deep §2/initiators] school grid</p>
+        <p><strong>Initiate Path:</strong> [Nat-deep §2/initiators] initiate path</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> [Nat-deep §2/suyuhong] trigram mapping</p>
+        <p><strong>Stems Interaction:</strong> [Nat-deep §2/suyuhong] stems interaction</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> symbolic counseling for adolescents</p>
+    <p><strong>Latent:</strong> fiction writing for quiet audiences</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> over-identifying with others' emotions</p>
+    <p><strong>Lesson to unlock:</strong> discharge emotion consciously, name it before you carry it</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่อดีตชาติทิ้งร่องรอยไว้</strong></summary>
+      <p>[Nat karmic_extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">latent=rejected critic, primary=healer; individuation needs both</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">primary=Ni, latent=Se or Ti; stack tires → tertiary surfaces</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">karmic pattern = low-freq vibration; raise via evening ritual</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Echo 12-17-19 = shadow of master-centre; name before you carry</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">past-cause returns; unlock by re-seeding at lower volume</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">favourable elements = talent; clashes = karmic tail, drain via ritual</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent & Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> [Nat-deep §3/jung] talent archetype</p>
+        <p><strong>Karmic Pattern:</strong> [Nat-deep §3/jung] karmic pattern</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> [Nat-deep §3/myers] natural strength</p>
+        <p><strong>Shadow Gift:</strong> [Nat-deep §3/myers] shadow gift</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> [Nat-deep §3/blavatsky] soul mission</p>
+        <p><strong>Karmic Lesson:</strong> [Nat-deep §3/blavatsky] karmic lesson</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> [Nat-deep §3/ladini] karmic debt</p>
+        <p><strong>Soul Contract:</strong> [Nat-deep §3/ladini] soul contract</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> [Nat-deep §3/initiators] initiate gift</p>
+        <p><strong>Karmic Mirror:</strong> [Nat-deep §3/initiators] karmic mirror</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> [Nat-deep §3/suyuhong] bazi talent</p>
+        <p><strong>Karmic Resolution:</strong> [Nat-deep §3/suyuhong] karmic resolution</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น</p>
+
+    <p>
+      <span class="pill"><strong>Industry fit</strong> ed-tech / counseling / content publishing</span>
+      <span class="pill"><strong>Income pattern</strong> lumpy retainer from a small circle of long-term clients</span>
+      <span class="pill"><strong>Peak window</strong> 2034 Q2 – 2035 Q4</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>holds the why, defers the how</td>
+          <td>quiet custodian</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>follows the why once signed in</td>
+          <td>loyal weaver</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>shapes under deadline, narrows scope live</td>
+          <td>editor</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>absorbs quiet signals, integrates over weeks</td>
+          <td>mirror</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">boss=persona, sub=shadow; pick consciously, no autopilot</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">boss=Ni, sub=Ti (only when trust), active/receptive=Fe/Se lead</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">industry fit = vibration match, not credential; income follows resonance</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">four roles = four cardinal cells; peak = centre holds all four</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">role-at-work = universe rehearsing larger self (as above)</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Ed-tech fits Yin Earth; 2034 Metal-year burns, receptive restores</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career & Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> [Nat-deep §4/jung] career persona</p>
+        <p><strong>Career Individuation:</strong> [Nat-deep §4/jung] career growth</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> [Nat-deep §4/myers] career stack</p>
+        <p><strong>Team Role:</strong> [Nat-deep §4/myers] team role</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> [Nat-deep §4/blavatsky] vocation path</p>
+        <p><strong>Money Consciousness:</strong> [Nat-deep §4/blavatsky] money consciousness</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> [Nat-deep §4/ladini] midheaven transit</p>
+        <p><strong>Career House:</strong> [Nat-deep §4/ladini] career house</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> [Nat-deep §4/initiators] initiate vocation</p>
+        <p><strong>Work-Life Ritual:</strong> [Nat-deep §4/initiators] work ritual</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> [Nat-deep §4/suyuhong] career bazi</p>
+        <p><strong>Wealth Element:</strong> [Nat-deep §4/suyuhong] wealth element</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> long fuse, deep burn</p>
+    <p><strong>Inner-circle pull:</strong> people who rest in silence without pressure</p>
+    <p><strong>Blind spot:</strong> confuses intensity for depth</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal line:</strong> duty-quiet engineer — silent approval</p>
+    <p><strong>Maternal line:</strong> expressive healer — emotional vocabulary</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>[Nat relationships_extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">inner pull = animus; blind spot = inferior Se projected onto partner</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">long-fuse-deep-burn = Ni-Fe intimacy; intensity-confusion = grip</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">love = vibration duet; re-tune, don't re-pick</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">paternal/maternal lines = inherited corners; current = centre integrating</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">love = correspondence; pull = rhythm seeking octave; intensity = cause-confusion</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">spouse-star should complement: Yin Earth ↔ Fire or Water, not Wood/Metal</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships & Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> [Nat-deep §5/jung] anima animus</p>
+        <p><strong>Relationship Pattern:</strong> [Nat-deep §5/jung] relationship pattern</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> [Nat-deep §5/myers] communication style</p>
+        <p><strong>Love Language:</strong> [Nat-deep §5/myers] love language</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> [Nat-deep §5/blavatsky] twin flame</p>
+        <p><strong>Generational Wisdom:</strong> [Nat-deep §5/blavatsky] generational wisdom</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> [Nat-deep §5/ladini] venus return</p>
+        <p><strong>7th House Activation:</strong> [Nat-deep §5/ladini] seventh house</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> [Nat-deep §5/initiators] sacred union</p>
+        <p><strong>Generational Mission:</strong> [Nat-deep §5/initiators] generational mission</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> [Nat-deep §5/suyuhong] spouse palace</p>
+        <p><strong>Relationship Luck:</strong> [Nat-deep §5/suyuhong] relationship luck</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>Crown clarity</td><td>Vision pull</td><td>Quiet certainty</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>Sharp insight</td><td>Intuition surges</td><td>Quiet pride</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>Voice strength</td><td>Steady output</td><td>Even temper</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>Open chest</td><td>Warm circulation</td><td>Trust earned</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>Soft core</td><td>Sunlit drive</td><td>Soft confidence</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>Easy flow</td><td>Creative tide</td><td>Soft joy</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>Grounded body</td><td>Restful current</td><td>Patient root</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>12</strong></td><td><strong>19</strong></td><td><strong>17</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> solar plexus over-feels under deadline sprints</span>
+      <span class="pill"><strong>Balance ritual</strong> 30-min quiet journaling every evening</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>[Nat health_extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">7 chakras = 7 archetypes; Σ-row = ego's relation to body</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">phys=Si, eng=Ni, emo=Fe; low totals = starved stack</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">chakras = fixed vibration; imbalance = dissonance between two</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">health card = 3×3 on body; Σ = over-feel or balanced</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">body = densest octave; solar plexus = where cause enters soma</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">chakra ↔ element; solar over-feel = Earth↑; journaling = Metal dispersal</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health & Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> [Nat-deep §6/jung] body shadow</p>
+        <p><strong>Wholeness Practice:</strong> [Nat-deep §6/jung] wholeness practice</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> [Nat-deep §6/myers] energy management</p>
+        <p><strong>Stress Response:</strong> [Nat-deep §6/myers] stress response</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> [Nat-deep §6/blavatsky] etheric body</p>
+        <p><strong>Kundalini Rising:</strong> [Nat-deep §6/blavatsky] kundalini</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> [Nat-deep §6/ladini] sixth house</p>
+        <p><strong>Healing Transit:</strong> [Nat-deep §6/ladini] healing transit</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> [Nat-deep §6/initiators] chakra activation</p>
+        <p><strong>Energy Field:</strong> [Nat-deep §6/initiators] energy field</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> [Nat-deep §6/suyuhong] five elements</p>
+        <p><strong>Body Constitution:</strong> [Nat-deep §6/suyuhong] body constitution</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (ก่อน 60)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">วัยเยาว์ &ndash; ต้น 20</div>
+        <p class="stage-theme">compass-build</p>
+        <p class="stage-marker"><strong>Marker:</strong> first client conversation held</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและขยายอาณาเขต</div>
+        <div class="stage-band">กลาง 20 &ndash; ต้น 30</div>
+        <p class="stage-theme">calibration</p>
+        <p class="stage-marker"><strong>Marker:</strong> thesis defended</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การปะทะและจุดวิกฤต</div>
+        <div class="stage-band">กลาง 30 &ndash; ต้น 40</div>
+        <p class="stage-theme">collision</p>
+        <p class="stage-marker"><strong>Marker:</strong> first quiet mentor lost</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">กลาง 40 &ndash; ต้น 50</div>
+        <p class="stage-theme">integration</p>
+        <p class="stage-marker"><strong>Marker:</strong> small-room practice opened</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">กลาง 50 &ndash; 59</div>
+        <p class="stage-theme">delivery</p>
+        <p class="stage-marker"><strong>Marker:</strong> first book draft handed in</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุปัจจุบัน &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2026</span>
+        <span class="age">อายุ 21</span>
+        <span class="lead">Personal Year 2 + 丙午 Yang Fire</span>
+        <span class="situation">study-rhythm year — old mandate eases</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Ni — listen before you design</p>
+        <p>[Nat career-year-1-detail] placeholder</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2027</span>
+        <span class="age">อายุ 22</span>
+        <span class="lead">Personal Year 3 + 丁未 Yin Fire</span>
+        <span class="situation">graduation + transition (study → early-career)</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fe — feel the room before you answer</p>
+        <p>[Nat career-year-2-detail] placeholder</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2028</span>
+        <span class="age">อายุ 23</span>
+        <span class="lead">Personal Year 4 + 戊申 Yang Earth</span>
+        <span class="situation">first chapter seed</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Ti — name what is true</p>
+        <p>[Nat career-year-3-detail] placeholder</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2029</span>
+        <span class="age">อายุ 24</span>
+        <span class="lead">Personal Year 5 + 己酉 Yin Earth</span>
+        <span class="situation">small circle crystallizes</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fi — protect the core rhythm</p>
+        <p>[Nat career-year-4-detail] placeholder</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2030</span>
+        <span class="age">อายุ 25</span>
+        <span class="lead">Personal Year 6 + 庚戌 Yang Metal</span>
+        <span class="situation">first significant public output</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Se — anchor to one sensory ritual</p>
+        <p>[Nat career-year-5-detail] placeholder</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">5 stages = 5 individuation cycles; S3 = dark night, S4 = integrate</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">stages rotate lead: Ni/Fe/Ti/Se/balanced; year-strategy picks function</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">coherence ↑ S1-S2, peak S3→S4, settle S5; year = dominant freq</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">5 stages = 5 master cycles; year-by-year = matrix at full resolution</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">5×12=60 convergence; crisis mastery = polarity applied to overwhelm</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">stage-element = luck-pillar flow; year = Personal# + annual stem</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Life Stages & Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> [Nat-deep §7/jung] life arc</p>
+        <p><strong>Mid-Life Transition:</strong> [Nat-deep §7/jung] midlife transition</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> [Nat-deep §7/myers] cognitive aging</p>
+        <p><strong>Wisdom Function:</strong> [Nat-deep §7/myers] wisdom function</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> [Nat-deep §7/blavatsky] reincarnation cycle</p>
+        <p><strong>Year Energy Theme:</strong> [Nat-deep §7/blavatsky] year energy</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> [Nat-deep §7/ladini] saturn return</p>
+        <p><strong>Progressed Moon:</strong> [Nat-deep §7/ladini] progressed moon</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> [Nat-deep §7/initiators] year theme</p>
+        <p><strong>Annual Ritual:</strong> [Nat-deep §7/initiators] annual ritual</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> [Nat-deep §7/suyuhong] decade luck</p>
+        <p><strong>Annual Pillars Reading:</strong> [Nat-deep §7/suyuhong] pillars reading</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>21:00 still-point journaling + 10-min sensory walk</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>Sunday 90-min forest + 1 mentor call</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>full-day retreat — review three lanes</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต</h3>
+    <p>10-min box-breath + cold face plunge + write one anchor sentence</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p>[Nat protocol extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">daily=ego↔body, weekly=ego↔Self, monthly=ego↔collective</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">walk=Se feed, call=Ni-Fe, retreat=Ni dive, breath=Fi-grip override</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">daily raises, weekly stabilises, monthly resets, crisis = emergency</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">daily=cell, weekly=row, monthly=centre, crisis=full-square reset</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">practice = conscious rhythm; without it rhythm runs you</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">walk=Earth, forest=Earth+Water, retreat=Earth, breath=Metal dispersal</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> [Nat-deep §8/jung] shadow work</p>
+        <p><strong>Individuation Ritual:</strong> [Nat-deep §8/jung] individuation ritual</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> [Nat-deep §8/myers] development plan</p>
+        <p><strong>Team Collaboration:</strong> [Nat-deep §8/myers] team collaboration</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> [Nat-deep §8/blavatsky] seven principles</p>
+        <p><strong>Karma Yoga:</strong> [Nat-deep §8/blavatsky] karma yoga</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> [Nat-deep §8/ladini] planetary remedy</p>
+        <p><strong>Daily Astro Practice:</strong> [Nat-deep §8/ladini] daily astro</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> [Nat-deep §8/initiators] pathworking</p>
+        <p><strong>Mantra Practice:</strong> [Nat-deep §8/initiators] mantra practice</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> [Nat-deep §8/suyuhong] feng shui</p>
+        <p><strong>Bazi Daily Practice:</strong> [Nat-deep §8/suyuhong] bazi daily</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 40–60) — Annual Energy Forecast</h3>
+    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神 — เฉพาะผู้ชาย (阳男) ตาม raw input sex=ชาย</p>
+
+    <details>
+      <summary><strong>ขยายความ — Annual Pillars ปี 2026, 2027, 2028 (รายละเอียด)</strong></summary>
+      <div style="font-size:13px; line-height:1.7; color:var(--fg-muted); padding:10px 0;">
+        <p><strong>Annual Pillars (流年)</strong> เป็น "คลื่น" ที่ซ้อนบน "ลม" (Luck Pillar) — แต่ละปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+
+        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 อายุ 40 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丙 = 正官 (Direct Officer) — controls me</li>
+          <li><strong>Branch:</strong> 午 = 丁 + 己; main TG = 七杀 (Direct Seal)</li>
+          <li><strong>Element:</strong> Fire (忌 — ทำให้ Day Master "ถูกกด")</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2026 Nuttawat อยู่ในปีที่ 40 ของชีวิต (ปี เถ้าแก่ ปีที่ 1 ของรอบอายุ 40-60) — เป็นปีของการ <strong>"เตรียมปิดรอบ"</strong> — Introspection year ที่ต้อง <strong>"หยุดฟัง"</strong> ตัวเองให้ได้ก่อนจะขยาย — Day Master (戊) ของคุณ (Yang Earth = ภูเขา) เผชิญ Fire pressure อย่างระมัดระวัง — ใช้ Si (ความจำที่สั่งสม) ทบทวน 10 ปีที่ผ่านมาให้ดีก่อนตัดสินใจใหญ่</p>
+        <p><strong>Scenario Simulation:</strong> [Nat scenario_year_1] placeholder</p>
+
+        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 อายุ 41 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丁 = 七杀 (Seven Killings)</li>
+          <li><strong>Branch:</strong> 未 = 己 (比肩); 丁 (七杀); 乙 (偏财)</li>
+          <li><strong>Element:</strong> Fire + Earth (忌 + 比肩) — <strong>ปีที่ Day Branch echo!</strong></li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2027 Annual Pillar = <strong>丁未</strong> — Day Pillar <strong>戊子</strong> — ไม่มี direct echo แต่ 丁 (Fire) = 偏印 (Indirect Resource) ที่หล่อเลี้ยง 戊 Earth — นี่คือปีที่ <strong>"ได้รับการสนับสนุนจากพลังงานภายนอก"</strong> แต่ในบริบท Nuttawat เป็นปีที่ <strong>ทดสอบ "ระบบ" ของธุรกิจ</strong> — เงินทุนหมุนเวียน ลูกค้า ทีมงาน จะถูก stress test — ใช้ Te+Si วางแผน backup 3 ชั้น</p>
+        <p><strong>Scenario Simulation:</strong> [Nat scenario_year_2] placeholder</p>
+
+        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 อายุ 42 — 2571 (2028) — 戊申 (Earth-Metal) — Earth=比肩 + Metal=喜</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 戊 = 劫财 (Rob Wealth) — same element, opposite polarity</li>
+          <li><strong>Branch:</strong> 申 = 庚 (伤官) + 壬 (正印) + 戊 (劫财)</li>
+          <li><strong>Element:</strong> Earth + Metal (mixed — branch contains 喜 Metal)</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2028 คุณอยู่ปีอายุ 42 — Personal Year 9 = <strong>"Closure"</strong> — เป็นปีแห่งการ <strong>"ปล่อยวางสิ่งที่ไม่จำเป็น"</strong> ในธุรกิจ (ลูกค้าที่ขาดทุน สายงานที่ตาย พนักงานที่ burn out) — 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณ "ผลิตงานใหม่" (伤官 = creativity, public expression) โดยใช้ประสบการณ์ 20 ปีที่สั่งสม — ใช้ Tonglen + grounding ceremony ก่อนตัดสินใจใหญ่</p>
+        <p><strong>Scenario Simulation:</strong> [Nat scenario_year_3] placeholder</p>
+      </div>
+    </details>
+
+    <h4>คำแนะนำเบื้องต้น — 4 ข้อที่ grounded ใน chart</h4>
+    <ol>
+      <li><strong>"ปลูก Wood ในชีวิตประจำวัน" (用神 = Wood)</strong><br>
+        Wood ไม่ใช่ "ต้นไม้จริง" — Wood คือ <strong>"พลังของการเปิดทาง, ขยายขอบเขต, และงอกงาม"</strong> — การอ่านหนังสือที่ "ขยายกรอบความคิด" (philosophy, systems thinking, biographies) — การเรียนรู้ทักษะใหม่ (programming, design, writing, meditation) — การเดินทางไปที่ใหม่ (โดยเฉพาะทิศ East/ Southeast — Wood direction) — การปลูกต้นไม้จริง (ดูต้นไม้เติบโตทุกวัน จะช่วย "เตือน" คุณว่า "การเติบโตต้องใช้เวลา")</li>
+      <li><strong>"ระวัง Fire ที่มากเกินไป" (忌神 = Fire)</strong><br>
+        สำหรับคุณ <strong>"การถูกควบคุมมากเกินไป"</strong> เป็นอันตราย — ครู/ที่ปรึกษาที่ "กดดัน" จะทำให้คุณ "ปิดตัวเอง" ไม่กล้าแสดงออก — ครอบครัวที่ "วางแผนชีวิตให้" จะทำให้คุณรู้สึก "หายใจไม่ออก" — งานที่ "micromanage" จะทำให้คุณ burnout ภายใน 3 เดือน — Period 9 ที่ "chase viral" จะทำให้คุณ "ถูกเผา" — เลือก "แสง" ที่ "มีราก" เท่านั้น</li>
+      <li><strong>"สร้าง Water routine" (中神 = Water — ขาดจาก chart)</strong><br>
+        เพราะ chart ของคุณ <strong>ไม่มี Water เลย</strong> — นี่คือ "ช่องว่าง" ที่ต้อง "สร้างเอง" — นอน 8 ชั่วโมงเป็นประจำ (Water = rest, regeneration) — เดินริมน้ำ/ทะเล/แม่น้ำ อย่างน้อยสัปดาห์ละครั้ง — Journaling ทุกเย็น (เขียน "วันนี้ฉันรู้สึกอะไร" เป็น "ท่อส่งน้ำ" ให้อารมณ์) — สมาธิ/冥想 10 นาทีทุกเช้า (ไม่ต้องยาก แค่ "นั่งเงียบ หายใจเข้า-ออก")</li>
+      <li><strong>"ใช้ Metal ปลดปล่อย Earth" (喜神 = Metal — มีอยู่แล้ว 2 จุด!)</strong><br>
+        คุณ <strong>โชคดี</strong> ที่มี酉+酉 (Metal) ใน Year+Month branch — คุณมี "เครื่องมือระบาย" ติดตัวมาแต่เกิด — เขียน — พูด — present: blog, podcast, video, talk ที่ conference — ทุกครั้งที่คุณ "ปลดปล่อยความคิด" ผ่านคำพูด/ตัวอักษร คุณจะเบาขึ้น (食神 ของคุณ = "gentle creativity" ไม่ใช่ "cutting critique") — ทำ craft / งานฝีมือ: วาดรูป ปั้นดิน ทำอาหาร — การ "ผลิตของ" ด้วยมือช่วย drain Earth — ห้องสมุดส่วนตัว: สำหรับ INFJ ที่รัก Ni การมี "พื้นที่เงียบ" ที่เต็มไปด้วยหนังสือเป็น "temple" ส่วนตัว</li>
+    </ol>
+
+    <details>
+      <summary><strong>บทสังเคราะห์ Su Yu Hong</strong></summary>
+      <p style="font-size:14px; line-height:1.8; padding:10px 0; color:var(--fg);">
+        หากฉันต้องสรุป "ดิถีธาตุ" ของคุณในหนึ่งประโยค:<br><br>
+        <em style="color:var(--neon-cyan); font-size:15px; display:block; padding:12px 18px; background:rgba(0,240,255,0.08); border-left:3px solid var(--neon-cyan); border-radius:4px; margin:8px 0;">
+          "คุณคือทุ่งนาที่ต้องการต้นไม้และน้ำ — ไม่ใช่ดินแห้งไร้ราก แต่เป็นทุ่งนาที่พร้อมจะงอก ถ้าคุณเลือก 'ปลูก' ในช่วง Period 9 (2024-2043) ทุ่งนานี้จะถูก 'แสงไฟ' ส่องถึง — คุณจะเป็นที่รู้จัก ถ้าคุณเลือกที่จะ 'งอก' ใน 'แสง' ที่ไม่ทำให้คุณ 'ไหม้'"
+        </em>
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>MBTI Ni-Fe ตรงกับ BaZi Yin Earth (己) — ทั้งคู่เป็น 'ผู้รับรู้ที่อ่อนโยน'; Matrix Center 19 (Sun) ขยายเสียงของทั้งสอง — คนเดียวกันปรากฏในทุกเลนส์</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p>เรียนรู้ที่จะรับ — แล้วสอนสิ่งที่คุณรับ</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p>[Nat synthesis_extended] placeholder</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">school=Self's first expression; company=persona supporting it</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">all 4 integrated: Ni sees, Fe speaks, Ti protects, Se engages</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">school = highest freq; company = carrier wave; coherence = truth</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">19 = school-key handed; build school first, company is side-effect</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">school = mind's highest octave; company = working octave — same mind</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">P9 Yin Earth = illustrator-years; teach (school) > manage (company)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> [Nat-deep §9/jung] the self</p>
+        <p><strong>Meaning of Life:</strong> [Nat-deep §9/jung] meaning of life</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> [Nat-deep §9/myers] final integration</p>
+        <p><strong>Type Wisdom:</strong> [Nat-deep §9/myers] type wisdom</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> [Nat-deep §9/blavatsky] universal brotherhood</p>
+        <p><strong>Final Aspiration:</strong> [Nat-deep §9/blavatsky] final aspiration</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> [Nat-deep §9/ladini] contract completion</p>
+        <p><strong>Chart Mastery:</strong> [Nat-deep §9/ladini] chart mastery</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> [Nat-deep §9/initiators] mastery path</p>
+        <p><strong>Universal Service:</strong> [Nat-deep §9/initiators] universal service</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> [Nat-deep §9/suyuhong] destiny unfoldment</p>
+        <p><strong>Final Blessing:</strong> [Nat-deep §9/suyuhong] final blessing</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v2.1 &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-05
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

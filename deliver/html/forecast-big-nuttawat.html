@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<!--
+  forecast-big.html — "Big variant" skeleton (MET-612-K3 / F3 fix)
+  Differentiated layout vs forecast-template.html (compact variant).
+  Inline stylesheet · Kanit 300/400/500/700 · 2-column with sticky left sidebar TOC · wider content column for desktop ≥ 1280px
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Layout differences vs compact (forecast-template.html):
+    - Top-level wrapper:    <div class="page">              → <div class="big-layout">
+    - Top hero banner:      <header class="hero">           → <header class="big-head">  (slim, no gradient, no glow)
+    - TOC location:         <nav class="toc">               → <aside class="big-toc"> (sticky LEFT sidebar, 220px wide, vertical list)
+    - Content column:       (full width, sibling of hero)   → <main class="big-main">  (right of sidebar)
+    - Section markers:      <section class="card slot-N">   → <section class="big-card big-slot-N" data-section="N">
+    - Footer:               <footer class="foot">           → <footer class="big-foot"> (extended with extra rows: TOC mirror, ID hash, generated time)
+
+  Palette tokens (CSS custom properties) — SAME as compact for brand consistency:
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+  forecast-big.html — Big variant skeleton (MET-612-K3 / F3 fix) · sidebar layout
+  RENDERED FOR: Nuttawat forecast · MET-612 · variant=big · generated 2026-07-08
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Nuttawat (Big Variant)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1480px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+    --sidebar-w: 220px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Big layout — 2-column with sticky left sidebar */
+  .big-layout {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 32px 28px 96px;
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    grid-template-areas:
+      "head   head"
+      "toc    main"
+      "foot   foot";
+    gap: 24px 28px;
+  }
+
+  /* Slim head — replaces compact's gradient hero banner */
+  header.big-head {
+    grid-area: head;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 4px 18px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  header.big-head h1 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: -0.3px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 14px rgba(0, 240, 255, 0.25),
+      0 0 28px rgba(255, 0, 212, 0.14);
+  }
+  header.big-head .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  header.big-head .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+  header.big-head .head-tag {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--neon-violet);
+    background: rgba(157, 78, 221, 0.10);
+    color: var(--neon-violet);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  /* Sidebar TOC */
+  aside.big-toc {
+    grid-area: toc;
+    position: sticky;
+    top: 16px;
+    align-self: start;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 14px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  aside.big-toc .toc-title {
+    margin: 0 0 10px 0;
+    padding: 0 4px 8px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    border-bottom: 1px solid var(--line);
+  }
+  aside.big-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  aside.big-toc a {
+    display: block;
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  aside.big-toc a:hover, aside.big-toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  /* Main column */
+  main.big-main {
+    grid-area: main;
+    min-width: 0;
+  }
+
+  /* Section cards — different class from compact's .card */
+  section.big-card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 24px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.big-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.big-card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.big-card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.big-card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.big-card.big-slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.big-card.big-slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.big-card.big-slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.big-card.big-slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.big-card.big-slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.big-card.big-slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.big-card.big-slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.big-card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.big-card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.big-card p { margin: 0 0 12px 0; }
+  section.big-card ul, section.big-card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.big-card li { margin: 0 0 4px 0; }
+
+  section.big-card strong { color: var(--fg); font-weight: 500; }
+  section.big-card code, section.big-card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--neon-gold);
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.20);
+  }
+  .natalia .num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--fg);
+  }
+  .natalia .label {
+    font-size: 11px;
+    color: var(--fg-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .analysis {
+    margin: 12px 0 18px 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.30);
+    padding: 14px 16px;
+  }
+  .analysis-header {
+    font-size: 12px;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .a-row {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding: 4px 0;
+  }
+  .a-row .a-name {
+    color: var(--neon-gold);
+    font-weight: 500;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.30);
+  }
+  .a-row .a-text { color: var(--fg); }
+
+  .lens-deep {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin: 14px 0 8px 0;
+  }
+  .lens-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.30);
+    border-left: 3px solid var(--accent, var(--neon-cyan));
+  }
+  .lens-card h4 {
+    margin: 0 0 8px 0;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 12px;
+  }
+  .lens-card p { margin: 0 0 8px 0; font-size: 13.5px; }
+  .lens-card strong { color: var(--neon-gold); font-weight: 500; }
+  .deep-header {
+    grid-column: 1 / -1;
+    font-size: 12px;
+    color: var(--neon-magenta);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 6px 0 0 0;
+    font-weight: 500;
+  }
+
+  .year-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 18px 0;
+    font-size: 13.5px;
+  }
+  .year-table th, .year-table td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .year-table th {
+    background: rgba(0, 0, 0, 0.40);
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .year-table tr:nth-child(even) td { background: rgba(0, 0, 0, 0.18); }
+  .year-table td:first-child {
+    color: var(--neon-gold);
+    font-weight: 500;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.30);
+    white-space: nowrap;
+  }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 12px;
+    margin: 10px 0 18px 0;
+    overflow-x: auto;
+  }
+  .mermaid-wrap .mermaid { font-family: 'Kanit', sans-serif; }
+
+  /* Big footer — extended with TOC mirror + ID hash + generated timestamp */
+  footer.big-foot {
+    grid-area: foot;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 24px;
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 -4px 18px rgba(0, 0, 0, 0.30),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  footer.big-foot .foot-primary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: baseline;
+    font-size: 13px;
+    color: var(--fg-muted);
+  }
+  footer.big-foot .foot-primary strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+  }
+  footer.big-foot .foot-toc-mirror {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin: 10px 0 8px 0;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+  }
+  footer.big-foot .foot-toc-mirror a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  footer.big-foot .foot-toc-mirror a:hover {
+    color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+  }
+  footer.big-foot .foot-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--fg-dim);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  footer.big-foot .foot-meta .foot-hash {
+    color: var(--neon-magenta);
+  }
+
+  /* Responsive: collapse to single column on narrow viewports */
+  @media (max-width: 980px) {
+    .big-layout {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "head"
+        "toc"
+        "main"
+        "foot";
+    }
+    aside.big-toc {
+      position: relative;
+      top: 0;
+      max-height: none;
+    }
+    aside.big-toc ol {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="big-layout">
+
+  <header class="big-head">
+    <h1>Forecast &mdash; Nuttawat <span class="head-tag">Big Variant</span></h1>
+    <p class="meta">
+      <span><strong>DOB</strong>14 เมษายน 1986</span>
+      <span><strong>Window</strong>2026 &rarr; 2046</span>
+      <span><strong>Headline</strong>อายุ 40 ถึง 60 ปีบริบูรณ์ — จากเถ้าแก่สู่ผู้อาวุโส</span>
+    </p>
+  </header>
+
+  <aside class="big-toc" aria-label="สารบัญเรื่อง">
+    <p class="toc-title">สารบัญ · Contents</p>
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </aside>
+
+  <main class="big-main">
+
+  <section class="big-card big-slot-1" id="s0" data-section="0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>The Commander (จอมบัญชาการ) / The Unseen Commander (จอมบัญชาการที่ไม่มีใครเห็น)</div>
+      <div class="lens"><strong>LoA</strong>Earth-Mountain 14-4-6 + Echo Lover × 2 (responsibility doubled)</div>
+      <div class="lens"><strong>Kybalion</strong>Seasonal Arc 3-phase (Build → Carry → Release)</div>
+      <div class="lens"><strong>MBTI</strong>ESTJ &middot; lead Te-Si &middot; grip Fi-Grip + Ne-Loop + Te-Overdrive (Triple Shadow)</div>
+      <div class="lens"><strong>Age 60</strong>ผู้อาวุโส (Elder) — ให้คำปรึกษา ไม่ใช่เถ้าแก่</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 戊土 (Yang Earth / Mountain) &middot; bal ต้องการ Fire (印 = mentor/brand) + Earth (比劫 = team)</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona = The Commander (จอมบัญชาการ) — เถ้าแก่ที่ตัดสินเร็ว จำทุกอย่าง สร้างระบบได้เก่ง — คนที่ทุกคนในห้องประชุมต้องฟังเมื่อคุณพูด</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Te (Dominant) — มือที่สั่งการโลก สร้างระบบจาก chaos · Si (Auxiliary) — คลังความจำที่ไม่ลบ · Ne (Tertiary) — ประตูครึ่งเดียว เห็นความเป็นไปได้แต่ไม่กล้าลงทุน · Fi (Inferior) — ห้องที่ปิดล็อก ความรู้สึกที่ไม่เคยฟัง</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Dominant vibration = 14-4-6 triad + Echo 6×2 — Temperance (14) + Emperor (4) + Lovers doubled (6×2) — "ภูเขาไฟที่ปกคลุมด้วยดินอุดมสมบูรณ์" — ความถี่สูงที่สั่นด้วย pattern recognition + choice + responsibility doubled</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Top axis (14-4-6) = Temperance-Emperor-Lovers — "ผู้ผสมผสาน-จักรพรรดิ์-การเลือก" — แกนบนของ Nuttawat คือการเลือก (Lovers 6) ที่ขับเคลื่อนด้วยโครงสร้าง (Emperor 4) และการผสมผสาน (Temperance 14)</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mentalism (All is Mind) — Nuttawat ดำเนินชีวิตผ่าน "ความคิดเป็นอันดับแรก" ทุกการ ตัดสินใจเริ่มที่ Te · Correspondence (as above so below) — ภายใน (Persona) → ภายนอก (Business) · 7 Principle ผสานในตัวเดียว</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master = 戊 (Yang Earth) — ภูเขา/ดินแห้ง/Yang Earth — 6 Stems ใน 1 ตัว — ไม่ใช่อ่อน ไม่ใช่แข็ง "ภูเขาที่อยู่กลางน้ำ" — Fire (印 = mentor/brand) เป็น สิ่งที่ Day Master ต้องการ — Period 9 = 用神 peak match</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> Persona=Commander · Shadow=Unseen Commander — คู่ที่ต้อง reconcile</p>
+        <p><strong>Individuation Path:</strong> 4 ขั้น: Business Owner → Multi-Branch → Wisdom Builder → Elder — Nuttawat อยู่ขั้น 1 (40-44)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> Stack = Te(hero) · Si(parent) · Ne(child) · Fi(aspirational) — order สำคัญ: develop Fi last</p>
+        <p><strong>Cognitive Loop:</strong> Loop = Te-Si (over-optimize) · Triple Grip = Fi + Ne + Te-Overdrive — ทั้ง 3 = warning signs</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> Fifth Root-Race (intellectual-spiritual) — Nuttawat aligned with archetype of "Master of Mountains"</p>
+        <p><strong>Monad & Reincarnation:</strong> Monad = mountain-pattern มาแต่อดีตชาติ · ชาตินี้ integrate ผ่าน Business + Succession</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> Natal = Temperance(14)-Emperor(4)-Lovers(6)+Lovers(6)-Empress(3)-Moon(18)+Wheel(10)-HangedMan(12)-Judgement(20) — Triad 14-4-6 + Echo 6×2</p>
+        <p><strong>Transit Windows:</strong> Transits: Uranus opposition (42), Chiron return (50), Neptune square (54), Saturn return #2 (60)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> Mystery School pattern = Nuttawat = "Builder initiate" ของ Mentalism principle — เรียนรู้ผ่านการสร้าง</p>
+        <p><strong>Initiate Trials:</strong> Trials = (1) Cash flow crisis (2032) (2) Partner betrayal (2034) (3) Identity collapse (2040) — แต่ละ trial = principle lesson</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> Day Master = 戊 (Yang Earth) = 阳土 = mountain / dry earth — "ภูเขาที่ต้องการไฟ"</p>
+        <p><strong>Annual Pillars:</strong> Annual pillars 2026-2046 cycle: Fire (2026-27) → Earth (2028-29) → Metal (2030-31) → Water (2032-33, 2042-43) → Wood (2034-35, 2044-45) → Fire (2036-37, 2046) → Earth (2038-39) → Metal (2040-41)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-2" id="s1" data-section="1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm: Seasonal Arc (Build → Carry → Release) — 7-yr pulse</p>
+    <p><strong>LoA:</strong> Mountain frequency + Fire Period = amplify manifestation — but warns KAMA (ความกลัว)</p>
+    <p><strong>Matrix:</strong> Triad 14-4-6 + Echo 6×2 — Temperance/Emperor/Lovers doubled at C & D</p>
+    <p><strong>Proof:</strong> ทั้งสามเครื่องยนต์มาบรรจบกันที่ปี 2046 (PY 9, Age 60) — Year Pillar 丙寅 repeat = rebirth</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  classDef cosmic fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  Kybalion[Kybalion&#58; Rhythm + Mentalism]:::engine
+  LoA[Law of Attraction&#58; Vibration]:::engine
+  Matrix[Matrix of Destiny&#58; Triad 14-4-6]:::cosmic
+  Kybalion --> Matrix
+  LoA --> Matrix
+  Matrix --> Kybalion
+  Matrix --> LoA
+      </div>
+    </div>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#181833,stroke:#ffd700,color:#ffd700
+  classDef ring fill:#11112a,stroke:#9d4edd,color:#9d4edd
+  Monad["Synthesist ที่รวม Commander + Fi-Compass + Matrix Lens เข้าด้วยกันอย่างสงบ"]:::center
+  N["Mentor/Elder — ให้คำปรึกษาแก่เถ้าแก่รุ่นใหม่"]:::ring
+  NE["Architect of Legacy — ออกแบบระบบ succession ที่ทำงานได้เองเมื่อคุณไม่อยู่"]:::ring
+  E["Strategist of Wisdom — เห็น macro-cycle ของ Period 9 → Period 1 → 2"]:::ring
+  SE["Grandfather figure — ให้ความเห็นชอบที่ "ไม่พูด" แต่รู้สึกได้"]:::ring
+  S["Heir of Wisdom — รับมรดกความรู้จากรุ่นก่อน + ส่งต่อรุ่นถัดไป"]:::ring
+  SW["Hermit of Mountain — ถอยเข้า Hermetic cave ปีละ 1 ครั้ง อย่างน้อย 7 วัน"]:::ring
+  W["Sage — "คนที่รู้จักรอบตัว" — แต่ละคำพูดถ่วงด้วยบทเรียน 40 ปี"]:::ring
+  NW["Witness — เป็นผู้เห็นเถ้าแก่รุ่นใหม่ integrate Fi ของตัวเอง"]:::ring
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+  Monad --- N
+  Monad --- NE
+  Monad --- E
+  Monad --- SE
+  Monad --- S
+  Monad --- SW
+  Monad --- W
+  Monad --- NW
+      </div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Driving force = Anima (internal feminine) — Nuttawat ต้อง integrate ความ "อ่อนโยน" ที่ถูกซ่อนไว้ใต้ Persona ของ Commander — Anima ของ Nuttawat คือ "คนที่ร้องไห้ได้"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Auxiliary Si = "Archivist function" — Si ของ Nuttawat ทำงาน "ตามแบบแปลน" ที่ Te วาง · แต่ Si ต้องเรียนรู้ที่จะ "ฟังคน" ไม่ใช่แค่ "จำข้อมูล"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Cosmic Correspondence — ภายใน (Mountain persona) ↔ ภายนอก (Business empire) — Nuttawat ที่ Te/Si ชัดเจนจะดึงดูด pattern ที่ตรงกันจากจักรวาลมาให้แบบ deterministic</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Mid axis (6-3-18) = Lovers-Empress-Moon — "การเลือก-ความอุดมสมบูรณ์-ภาพลวงตา" — แกนกลางของ Nuttawat คือการเลือกที่นำไปสู่ความอุดมสมบูรณ์ แต่แฝงด้วยภาพลวงตา (Moon 18) — ต้องระวัง responsibility ที่ซ่อนอยู่</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Polarity (Build ↔ Release) — Nuttawat oscillates ระหว่าง "แบกภูเขา" กับ "ปล่อยภูเขา" · Rhythm (7-yr pulse) — Seasonal Arc · Cause/Effect — ทุก Lovers Moment seed Q1 กลับมา Q4 ในรูปแบบใหม่</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Nuttawat เกิด 14 เม.ย. 1986 = Year 丙寅 (Yang Fire), Month 壬辰 (Yang Water/辰月), Day 戊子 (Day Master) — Day branch มี Water (癸) + Rat (子) = Water ซ่อนอยู่ใน Day branch — เป็น "用神 บางส่วน" ที่ต้อง activate ด้วย Fire</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> Archetypes ที่ active ในจิตใจ Nuttawat: Commander · Emperor · Temperance · Lovers (×2) · Wheel — 5 archetypes ใน 1</p>
+        <p><strong>Synchronicity:</strong> Echo 6×2 คือ "synchronicity chain" — เมื่อ Lovers Moment 1 ปรากฏ อีก 2 จะตามมา</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> Integration = "ดึง Ne + Fi เข้ามาทุกวัน" — ไม่ต้อง dominate แค่ nourish</p>
+        <p><strong>Type Development:</strong> Development stage = "Type 5" (mid-life) — หลังอายุ 45 focus เปลี่ยนจาก optimize เป็น meaning</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> 7 Principles รวมใน 1 mental act = "เห็น pattern ที่ซ่อนอยู่ภายใน (Vibration) แล้วแปลงเป็น business architecture (Mentalism + Correspondence)"</p>
+        <p><strong>LoA Bridge:</strong> LoA bridge = "vibration match" — เมื่อ Nuttawat aligned กับ triad 14-4-6 จักรวาลจะส่ง matching opportunity</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Eclipse Season:</strong> Eclipse windows = bi-annual — เมื่อ eclipse activate 14-4-6 ใน natal = big shift</p>
+        <p><strong>Outer Planet:</strong> Outer = Neptune-Saturn conjunction 2025-2026 (generational pivot), Uranus in Taurus (Nuttawat = Earth-fixed resonance)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Knowledge & Awakening:</strong> Awakening = "All is Mind" — Nuttawat ตื่นเมื่อ realize "Every business = thought materialized"</p>
+        <p><strong>Elemental Balance:</strong> Balance = Earth (business) + Fire (brand) + Water (cash flow) + Air (communication) + Wood (growth) — 5 elements ใน 1 Nuttawat</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Stems &amp; Branches:</strong> Stems+branches = 戊子 (Day) · 壬辰 (Month) · 丙寅 (Year) · 戊午 (Hour placeholder) — Earth+Water hidden dominance แต่ Day Master 自身ปานกลาง</p>
+        <p><strong>Luck Cycle:</strong> Luck cycle = Decade (大运) — current 2020s consolidate, 2030s peak (戊申), 2040s wisdom (丁酉), 2050s legacy</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-3" id="s2" data-section="2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia 3&times;3</h2>
+    <p class="lede">แผนที่จิตวิญญาณ 9 ตำแหน่ง (Natalia Square) และ Echo Numbers</p>
+
+    <div class="natalia">
+      <div class="cell"><div class="num">14</div><div class="label">Temperance (ผู้ผสมผสาน) — ผสมคนที่แตกต่างเป็นหนึ่งเดียว</div></div>
+      <div class="cell"><div class="num">4</div><div class="label">Emperor (จักรพรรดิ์) — วางกฎจากประสบการณ์ 40 ปี</div></div>
+      <div class="cell"><div class="num">6</div><div class="label">Lovers (การเลือก) — แรงจูงใจคือการเลือก — Echo 6 × 1</div></div>
+      <div class="cell"><div class="num">6</div><div class="label">Lovers (การเลือก) — การเลือกที่กลางของชีวิต — Echo 6 × 2</div></div>
+      <div class="cell center"><div class="num">3</div><div class="label">Center</div></div>
+      <div class="cell"><div class="num">3</div><div class="label">Empress (ความอุดมสมบูรณ์) — ศูนย์กลางของความคิดสร้างสรรค์</div></div>
+      <div class="cell"><div class="num">18</div><div class="label">Moon (ภาพลวงตา + ความรับผิดชอบ) — ภาระที่ซ่อนอยู่ในงาน</div></div>
+      <div class="cell"><div class="num">10</div><div class="label">Wheel of Fortune (วงล้อโชคชะตา) — รากฐานของการหมุนเวียน</div></div>
+      <div class="cell"><div class="num">12</div><div class="label">Hanged Man (การแขวน/ปล่อยวาง) — รากฐานของการมองโลกกลับด้าน</div></div>
+      <div class="cell"><div class="num">20</div><div class="label">Judgement (การพิพากษา) — รากฐานของการตัดสินใจครั้งสุดท้าย</div></div>
+    </div>
+
+    <p><strong>Top axis:</strong> 14 / 4 / 6 &middot; <em>Temperance — Emperor — Lovers</em></p>
+    <p><strong>Mid cycle:</strong> 6 / 3 / 18 &middot; <em>Lovers — Empress — Moon (illusion + responsibility doubled)</em></p>
+    <p><strong>Base drive:</strong> 10 / 12 / 20 &middot; <em>Wheel of Fortune — Hanged Man — Judgement</em></p>
+    <p><strong>Echo numbers:</strong> 6 (The Lovers) × 2 — Echo 6 × 2 ที่ C (top axis) และ D (mid axis) = "Double Cross of Choice" — การเลือกครั้งใหญ่จะดังซ้ำ 2-3 ครั้งตลอดช่วงอายุ 40-60 ทุก Lovers Moment เป็นโอกาส integrate Fi (ความรู้สึก) ที่ถูกกดทับ 40 ปี</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia3x3">
+flowchart TD
+  classDef cell fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef center fill:#181833,stroke:#ffd700,color:#ffd700
+  A["A = 14"]:::cell
+  B["B = 4"]:::cell
+  C["C = 6"]:::cell
+  D["D = 6"]:::cell
+  E["Center = 3"]:::center
+  F["E = 3"]:::cell
+  G["F = 18"]:::cell
+  H["G = 10"]:::cell
+  I["H = 12"]:::cell
+  J["I = 20"]:::cell
+      </div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Base drive = The Unseen Commander — Persona หนาจน "ลืมตัวเอง" · Shadow = คนที่ไม่มีใครเห็นคุณค่า · Anima = คนที่ร้องไห้ได้ — ทั้งสาม shadow ของ Nuttawat</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Inferior Fi (Anima) — Fi ของ Nuttawat เป็นทั้ง "aspiration" และ "Achilles heel" — เมื่อโอเวอร์โหลด Fi จะระเบิดเป็น Fi-Grip (หงุดหริด ระเบิดอารมณ์ ดื้อรั้น)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Shadow vibration = KAMA pattern — เมื่อ Nuttawat อยู่ในขั้วลบ พลังงานจะดึงดูด "ความกลัว" เข้ามาในชีวิต · สิ่งที่สั่นด้วยความถี่เดียวกันจะดึงดูดกัน — inclusive ทั้ง risk และ reward</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Base axis (10-12-20) — Wheel of Fortune + Hanged Man + Judgement — แกนล่างของ Nuttawat คือทั้ง 3 archetype ที่เป็น "การหมุน + การปล่อยวาง + การพิพากษา"</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Transmutation Practice — เมื่อ Te-overdrive (คิดวน) → ลุกเดิน + พูด Fi ออกเสียง = Mental Transmutation จาก Build ไป Release · เมื่อ Te-burnout → หยุด + ดูดซับ BUDDHI</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master Strength = 身强ปานกลาง (Shen Qiang — Day Master แข็งแกร่งปานกลาง) — Day Master ได้ seasonal support (辰月 = Earth) + Day branch 子 (Water) = ใช้ Fire เป็น用神 สมดุล</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Matrix 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center ↔ Periphery:</strong> Center = Empress (3) — Ego อยู่ที่นี่ · Periphery = Lovers(6) + Moon(18) — แรงที่ดึงเข้า-ดันออก Ego</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Mapping:</strong> Map = system(Te) ↔ record(Si) ↔ scan(Ne) ↔ feel(Fi) — Nuttawat ใช้ 4 ตัวนี้ทุกวัน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Occult Training:</strong> Training = daily 21:00 reflection + weekly nature walk + monthly writing — Hermetic disciplines</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Chart Echo:</strong> Echo = 6×2 occupies 2/9 positions on Nuttawat's chart — "Double Cross of Choice" ไม่ใช่ coincidence</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Path:</strong> Path = Apprentice (40-44) → Companion (45-49) → Master (50-54) → Elder (55-60) — Hermetic ranking</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Stems Interaction:</strong> Stems interaction = 戊 (DM) vs 丙/丁 (Fire 印) favorable (用神) · vs 甲/乙 (Wood 财) drain · vs 壬/癸 (Water 官杀) kill</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-4" id="s3" data-section="3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic</h2>
+    <p class="lede">ของขวัญหลัก (Talent) และบทเรียนจากอดีตชาติ (Karmic Tail)</p>
+
+    <h3>Talent &mdash; พรสวรรค์หลัก</h3>
+    <p><strong>Primary:</strong> การสร้างกฎเกณฑ์ + การบริหารทรัพยากร + การทำให้ธุรกิจเติบโตอย่างเป็นรูปธรรม</p>
+    <p><strong>Latent:</strong> Temperance (A=14) — ผสมผสานคนที่แตกต่างเป็นหนึ่งเดียว — latent รอ integrate</p>
+
+    <h3>Karmic &mdash; หางกรรม &amp; บทเรียน</h3>
+    <p><strong>Pattern:</strong> "เลือกซ้ำ ๆ โดยไม่เรียนรู้" — Echo 6×2 บอกว่าหางกรรมคือลูปการเลือก</p>
+    <p><strong>Lesson:</strong> เลือกอย่างมีสติ ใช้ทั้งหัวใจและเหตุผล — 3C Framework (Clarity / Consequence / Courage)</p>
+    <p>Karmic Tail ของ Nuttawat คือ "ลูปการเลือกซ้ำซาก" — ในอดีตชาติ คุณเคย ตัดสินใจครั้งใหญ่โดยใช้ Te/Si ล้วน ไม่เคยฟัง Fi เลย — ชาตินี้ Echo 6×2 บังคับให้ คุณเจอทางเลือกครั้งใหญ่ 2-3 ครั้ง แต่ละครั้งคือโอกาส integrate Fi ที่ถูกกดทับ — บทเรียน: ใช้ 3C Framework (Clarity / Consequence / Courage) — ถามว่า "ฉันเลือกจากกลัว หรือกล้า?"</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona ↔ Shadow dynamics — Nuttawat จะพบว่า Persona (Commander) ขัดกับ Shadow (Unseen) เป็นช่วงๆ · เมื่อ Persona overwhelm Shadow = chill · เมื่อ Shadow swallow Persona = burnout + Fi-Grip</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Type development stage — Te-Si-Ne-Fi — Nuttawat อยู่ใน "early-mid" — Te-Si ทำงานเต็มที่ แต่ Ne-Fi ยังอ่อน · Type development ที่ดีต้อง "feed Ne + Fi" อย่างตั้งใจ (เดิน/พูดรู้สึก)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Monad-Ego-Personality — Nuttawat = strong Monad (mountain-pattern มาแต่อดีตชาติ) + focused Ego (Commander) + developing Personality (Emperor integration) — Soul blueprint ครบเครื่องแต่ยังไม่ได้ run</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Natal square ทั้ง 9 ตำแหน่ง = "แผนที่ Soul" ของ Nuttawat — แต่ละตำแหน่งอ่านได้จาก ทั้ง 5 row (logical/functional/emotional) · เมื่อ integrate Triad 14-4-6 + Echo 6×2 Nuttawat จะกลายเป็น "Soul Builder"</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mentalism at workspace — Nuttawat ดำเนินงานผ่าน "ความคิดเป็นอันดับแรก" ทุกการ ตัดสินใจเริ่มที่ Te · Correspondence ทำให้ pattern ภายใน → business architecture ภายนอก</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Ten Gods profile ของ Nuttawat — 比肩 (戊 เท่ากับ Day Master, ใน Pillars) + 劫财 (己) + 食神/伤官 (庚/辛) + 偏印/正印 (丙/丁 — 用神 peak ใน Period 9) + 偏财/正财 (壬/癸) + 七杀/正官 (甲/乙)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent &amp; Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima Projection:</strong> Anima ของ Nuttawat = "คนที่ร้องไห้ได้" — เรียนรู้จากคู่รักที่แสดงออกได้อย่างเป็นธรรมชาติ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Grip Pattern:</strong> Fi-Grip trigger = (1) cash flow ตก > 1 เดือน (2) sleep < 6 (3) partner ทรยศ — predict & prevent</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Soul:</strong> Root soul = Fifth Root (intellectual) but carries Atlantean echoes (architecture) + Lemurian (mountain wisdom)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Center Anchor:</strong> Center = 3 (Empress) — Nuttawat's anchor — เป้าหมายของ chart = สร้างสรรค์ + อุดมสมบูรณ์</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mental States:</strong> States = (1) Build (Te/Si) (2) Carry (Te/Si heavy) (3) Release (Fi/Ne) (4) Burned (Te exhausted) — transmute between</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>用神 Choice:</strong> 用神 = Fire (印 = mentor/brand/wisdom) + Earth (比劫 = team) — Period 9 = 用神 peak · Period 1 = challenge</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-5" id="s4" data-section="4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Roles</h2>
+    <p class="lede">อุตสาหกรรม รูปแบบรายได้ และบทบาท 4 มิติ</p>
+
+    <h3>Career &mdash; เส้นทางอาชีพ</h3>
+    <p><strong>Industry:</strong> Business Ownership / Manufacturing / Service (ตามบริบทของเถ้าแก่)</p>
+    <p><strong>Income pattern:</strong> cash flow ต่อเนื่องจาก legacy business + dividend + เงินลงทุนหลัง IPO/ขายกิจการ</p>
+    <p><strong>Peak window:</strong> 2027-2028 (อายุ 41-42) + 2035-2036 (อายุ 49-50) + 2045 (อายุ 59)</p>
+
+    <h3>Roles &mdash; บทบาท 4 มิติ</h3>
+    <p><strong>Boss (ทำไม + กฎ):</strong> ถือ "ทำไม" + "กฎ" — ปล่อย "อย่างไร" ให้ทีม — Te/Si dominate <span class="pill">Commander-in-Chief ที่ยังยึดทุกอย่าง — ต้องเรียนรู้ปล่อย</span></p>
+    <p><strong>Sub (เชื่อมือ):</strong> เชื่อมือทันทีที่ "ทำไม" ตรง + partner ไม่ทรยศ — Te execute <span class="pill">loyal executor ที่ตั้งคำถาม — แต่เมื่อเชื่อจะทุ่มเท</span></p>
+    <p><strong>Active (ลงมือ):</strong> ship ภายใต้ deadline — extend / hire / IPO — Te dominate <span class="pill">launcher ที่ expand — แต่ต้องระวัง Si-Fi Loop เมื่อเหนื่อย</span></p>
+    <p><strong>Receptive (รับ):</strong> ฟังที่ปรึกษา/ครอบครัว/ลูกน้อง — Si + BUDDHI — หยุดและฟัง <span class="pill">mirror แห่งความจริง — รับฟังก่อนตัดสินใจ</span></p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Individuation path — Business Owner (40-44) → Mid-Life Crisis (44-50) → Wisdom Builder (50-55) → Self เปิดเผย (55-60) — ทั้ง 4 ขั้นคือการ "reconcile" Commander กับ Unseen</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Grip prediction — Fi-Grip จะเกิดเมื่อ (1) cash flow ตกดิ่ง นานเกิน 1 เดือน + (2) sleep < 6 ชม. + (3) partner ทรยศ = black hole of Fi → ป้องกันด้วย 5-step Protocol (หยุด/หายใจ/ถาม/เขียน/ระบาย)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Root-race mapping — Nuttawat = "Fifth Root-Race archetype" (intellectual-spiritual) — Ego oriented toward wisdom · Monad origin = "Mountain-builder" ที่ integrate ผ่าน อายุ 50 ในชาตินี้</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Outer-planet transits — Uranus opposition ที่อายุ 42 (2028), Chiron return ที่อายุ 50, Neptune square ที่อายุ 54 — transit windows สำคัญที่ Nuttawat ต้อง observe</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">7 Principle mastery — Nuttawat ดำเนิน 7 Principle ใน domain: Mentalism (business), Correspondence (Persona ↔ Brand), Vibration (Mountain frequency), Polarity (Build ↔ Release), Rhythm (7-yr), Cause/Effect (Lovers → consequence), Gender (Commander ↔ Elder)</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Luck Pillars = 3 cycles (10-yr each) — Early (1988-1997): explore · Mid (1998-2007): build foundation · Peak (2008-2017): mature · Current (2018-2027): consolidate · Upcoming (2028-2037): peak in career; (2038-2047): wisdom · (2048-2057): legacy</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career &amp; Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Integration:</strong> Shadow = Unseen Commander — integrate โดย feed Fi deliberately (เขียนรู้สึก/พูดรู้สึก) — ไม่ใช่ fight</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Loop Pattern:</strong> Ne-Loop trigger = stakeholder rejection of plan — recover ด้วย stakeholder interview</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Auric Field:</strong> Auric = strong mental body (yellow), weak emotional (pink) — recovery = nourish emotional through relationships</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Blueprint:</strong> Blueprint = "Soul Builder" — คนที่ออกแบบระบบให้คนอื่น Soul-Realize</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Transmutation:</strong> Transmutation = "ลุกเดิน 5 นาที + พูด Fi ออกเสียง" — เปลี่ยน Carry → Release</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>P9 Warning:</strong> P9 warning = Fire (印) overwhelm 戊 if too much — Nuttawat burns out if not anchor with Earth (team) — must seek Earth (cooling)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-6" id="s5" data-section="5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships</h2>
+    <p class="lede">ความรัก วงใน และสายตระกูล</p>
+
+    <h3>Love &mdash; ความรัก</h3>
+    <p><strong>Pattern:</strong> long fuse, deep carry — รักที่แบกมากกว่าพูด</p>
+    <p><strong>Pull:</strong> คนที่ "อยู่ข้างๆ" โดยไม่เรียกร้อง — Earth/Water person (ครู/หมอ/นักบำบัด)</p>
+    <p><strong>Blind spot:</strong> ไม่แสดงอารมณ์ (Fi-inferior) — ทำให้คู่ไม่รู้ว่าคุณคิดอะไร</p>
+
+    <h3>Lineage &mdash; สายตระกูล</h3>
+    <p><strong>Father line:</strong> สายบิดา (丙寅) — พ่อส่งความกล้า + พลังเริ่มต้น — แต่ต้องระวังไฟมากเกินไป</p>
+    <p><strong>Mother line:</strong> สายมารดา (壬辰) — แม่ส่งความฉลาด + ปรับตัว — แปลงเป็นความรอบคอบของภูเขา</p>
+    <p>Correspondences ของ Nuttawat ในความสัมพันธ์มีสามชั้น — (1) ภายใน ↔ ภายนอก: 戊子 = ภูเขากลางน้ำ คู่รู้สึกมั่นคงแต่บางครั้งหนัก (2) Personal Year 6 = ปีแห่งความรับผิดชอบ — 2034 + 2043 เป็น window ที่ "คนที่ใช่" จะปรากฏ (3) Karmic Tail = "สร้างสะพานระหว่างความกล้ากับความอ่อนโยน" — บทเรียนชาตินี้</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Career individuation path — Business Owner → Multi-Branch Owner → Founder/Mentor → Elder/Consultant — แต่ละขั้นคือการ "ปล่อย Ego control" ที่ลดลงเรื่อยๆ</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Workplace behavior — ESTJ Business Owner — เมื่ออยู่ใน Owner mode Nuttawat จะ optimize ได้ดีเยี่ยม · เมื่อขยับเป็น Mentor ต้อง "ดูแลคน" ไม่ใช่ "optimize process"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Career Law of Attraction — เมื่อ Nuttawat aligned กับ triad 14-4-6 ทั้งใน/นอก จักรวาลจะส่ง "matching opportunity" · Period 9 (Fire = 用神) จะดึงดูด ลูกค้า/partner/mentor ที่ตรงกับ Vision ของ Nuttawat มา</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Career peak timing — PY 8 (2027, 2036, 2045) + PY 6 (2034, 2043) + PY 3 (2040) = prime windows · 2046 (Age 60) = absolute peak — rebirth choice</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Career Rhythm — Seasonal Arc — Build phase (40-44) → Carry phase (45-49) → Trough phase (50-54) → Wisdom phase (55-59) → Release phase (60) — แต่ละ phase ต้อง embody principle ที่ต่างกัน</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Career 用神 — Nuttawat ต้องอยู่ใน "โครงสร้างที่มี Fire (印 = mentor/brand) + Earth (比劫 = team)" · เป็น Business Owner ที่มีที่ปรึกษา Fire + ทีม Earth — ไม่ใช่ Solo Entrepreneur ในตลาดเสรี (Water ล้วน)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Ego-Self Axis:</strong> Ego-Self axis = ระยะห่างระหว่าง Nuttawat กับ Self — Self realization ลดระยะนี้</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Senior IC Mode:</strong> Business Owner mode = optimize, don't manage — KPI > meeting, SOP > discussion</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> Etheric = dense from business work — but physical body neglected — vibration therapy recommended</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Age 60 Chart:</strong> Age 60 = chart ที่ illuminated ทั้ง 9 ตำแหน่ง — Triad 14-4-6 + Echo 6×2 harmonized</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Polarity (Build ↔ Release):</strong> Polarity = Build ↔ Release — Nuttawat oscillates — goal = swing less, maintain middle</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Climate &amp; Lifestyle:</strong> Lifestyle = near mountain (literal), warm color (red/orange), slow meals, journaling — feeds Fire + Earth elements</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-7" id="s6" data-section="6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health &amp; Chakras</h2>
+    <p class="lede">การ์ดสุขภาพ 7 จักระ และสัญญาณเตือน</p>
+
+    <table class="year-table">
+      <thead>
+        <tr>
+          <th>Chakra</th>
+          <th>Physical</th>
+          <th>Energy</th>
+          <th>Emotional</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1 · Crown</td>
+          <td>Crown — ปวดหัวจาก Te-overdrive คิด 16-18 ชม./วัน</td>
+          <td>Vision ที่ไม่เคยปิด — แม้ตอนนอนยังคิดเรื่องงาน</td>
+          <td>ความเหงาจากการที่ "ไม่มีใครเห็นคุณค่า" — Fi-Grip signal</td>
+        </tr>
+        <tr>
+          <td>2 · Third Eye</td>
+          <td>Third Eye — ปวดกระบอกตา ตาคมเกินไป</td>
+          <td>Insight surges — pattern recognition ที่ไม่เคยหยุด</td>
+          <td>Quiet pride — ภูมิใจที่ไม่ได้รับการยอมรับ</td>
+        </tr>
+        <tr>
+          <td>3 · Solar Plexus</td>
+          <td>Solar Plexus — กรดไหลย้อน แผลกระเพาะ (Te-Overdrive #1 risk)</td>
+          <td>Will-power burnout — "ต้องทำให้ได้" จนหมดแรง</td>
+          <td>Frustration ที่ถูกเก็บ — ระเบิดเป็น Fi-Grip (หงุดหริด)</td>
+        </tr>
+        <tr>
+          <td>4 · Heart</td>
+          <td>Heart — แน่นหน้าอก ความดันโลหิตสูง (KAMA effect)</td>
+          <td>Warm circulation ต่ำ — เลือดไหลช้า (sedentary)</td>
+          <td>ความรู้สึกที่ถูกเก็บ — "ไม่มีใครอยู่ข้างๆ"</td>
+        </tr>
+        <tr>
+          <td>5 · Throat</td>
+          <td>Throat — พูดน้อย คอแห้ง (Fi-inferior + Te-monopoly)</td>
+          <td>Expression blocked — Te dominate จน Fi หายใจไม่ออก</td>
+          <td>Quiet grief — ความโศกที่ไม่เคยร้องไห้</td>
+        </tr>
+        <tr>
+          <td>6 · Solar</td>
+          <td>Solar — ระบบย่อยอาหารช้า กินไม่เป็นเวลา (Te-Overdrive)</td>
+          <td>Creative tide ที่มาเป็นช่วงๆ — เมื่อ Si rest</td>
+          <td>Soft joy ในจุดเล็กๆ — ลูกชายยิ้ม ภรรยาหัวเราะ</td>
+        </tr>
+        <tr>
+          <td>7 · Root</td>
+          <td>Root — ปวดหลังเรื่อยรัง น้ำหนักเกิน (KAMA effect #2)</td>
+          <td>Grounding ต่ำ — ลอยในโลกของ KPI + cash flow</td>
+          <td>Survival anxiety — "ถ้าวันหนึ่งธุรกิจล่ม"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Result (Phys/Eng/Emo):</strong> 18 / 3 / 12</p>
+    <p><strong>Watch:</strong> Solar Plexus (#3) + Root (#7) — อันตายสูงสุดสำหรับ ESTJ เถ้าแก่ Te-Overdrive</p>
+    <p><strong>Balance:</strong> ตั้งกฎ 7 ชั่วโมงนอน + ออกกำลังกายสัปดาห์ละ 3 ครั้ง (เดิน 30 นาที) + สมาธิ 5 นาทีก่อนนอน (ปล่อยวาง KAMA) — เป็น minimum</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Anima projection ในความสัมพันธ์ — Nuttawat จะดึงดูด "คนที่แสดงออกได้ดี" (สิ่งที่ Anima อยากทำ) · เรียนรู้จากคู่รักว่า "การแสดงออกไม่ใช่การสูญเสีย Identity"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Communication pattern — Nuttawat = "จอมบัญชาการที่เงียบ" ในสายตาคนอื่น — ต้องเพิ่ม "Language of warmth" ในการสื่อสาร — เปลี่ยน "ฉันคิดว่า" เป็น "ฉันรู้สึก" ใน 1 ใน 5 ข้อความ</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Karmic correspondence ในครอบครัว — Nuttawat มาจากสายตระกูลที่ "เข้าใจโครงสร้าง แต่ไม่เข้าใจใจคน" · บทเรียนของ Nuttawat คือสร้างสะพานระหว่าง 2 ฝั่ง</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Generational lines — Father line (A-I = 14-20): hidden strength ผ่าน duty — Mother line (C-G = 6-10): visionary + wisdom · Nuttawat สืบทอดทั้งสองแต่ต้อง choose — ไม่สามารถ absorb ทั้งหมด</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Gender principle ใน relationship — "Masculine = Build (Te/Si)" + "Feminine = Release (Fi/Ne)" · Nuttawat ใน relationship ต้องสลับเป็น Release อย่างน้อย 30% ของเวลา</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Family 用神 — คู่ครองที่ดีคือ "คนที่ให้ Fire (อบอุ่น) + Earth (มั่นคง) ได้" — Fire-Earth person = ครู/นักเยียวยา/ผู้ใหญ่ที่ Nuttawat respect — PY 6 window ปี 2034 (อายุ 48) เป็นจุดพบ</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health &amp; Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Transcendent Function:</strong> Transcendent = จุดที่ Commander+Unseen ผสาน — เมื่อ "จอมบัญชาการ" กับ "คนที่ไม่มีใครเห็น" กลายเป็น "Sage"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Lead Mode:</strong> Lead mode = protect team's Si — shield them from stakeholder chaos — coach, not push</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Akashic Pattern:</strong> Akashic = Nuttawat's record กลั่นเป็น "Master Builder" ผ่านหลายชาติ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Dharma Path:</strong> Dharma = "ส่งต่อสิ่งที่สร้าง" — ลูกศิษย์ของ Nuttawat จะ integrate Triad ของตัวเอง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Rhythm:</strong> Rhythm = Seasonal Arc — Build (2026-30) → Carry (2031-35) → Trough (2036-40) → Wisdom (2041-45) → Release (2046)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Relationships (BaZi):</strong> Karmic spouse = Fire+Earth person (mentor/healer/teacher) — not Water person (would amplify 杀)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-1" id="s71" data-section="7.1">
+    <h2><span class="num">&sect;7.1</span>5 ช่วงวัย &middot; 5 Stages of Evolution</h2>
+    <p class="lede">ช่วงสำคัญ 5 ช่วงตลอด 21 ปีข้างหน้า (อายุ 40&rarr;60)</p>
+
+    <table class="year-table">
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>Theme</th>
+          <th>Marker</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Build & Consolidate (สร้างและรวบรวม)</td><td>ได้รับความไว้วางใจให้เป็น Business Owner ที่ทีม/ที่ปรึกษาพึ่งได้</td></tr>
+        <tr><td>2</td><td>Carry the Mountain (แบกภูเขา)</td><td>Lovers Moment #1 ที่อายุ 41 (2031) — ทางเลือกใหญ่ — ต้องใช้ Fi</td></tr>
+        <tr><td>3</td><td>Hit the Trough (เจอน้ำท่วมภูเขา)</td><td>Trough ที่อายุ 46 (2032) — 子-子冲 — financial risk สูงสุด</td></tr>
+        <tr><td>4</td><td>Wisdom & Legacy (ปัญญาและมรดก)</td><td>Peak ที่อายุ 50 (2036) — 丙辰 — Seal + Earth root — สร้างมูลนิธิ</td></tr>
+        <tr><td>5</td><td>Release & Rebirth (ปล่อยวางและเกิดใหม่)</td><td>Age 60 (2046) — 丙寅 = Year Pillar repeat = rebirth</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="big-card big-slot-2" id="s72" data-section="7.2">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์รายปี 21 ปี &middot; Year-by-Year</h2>
+    <p class="lede">21 ปีข้างหน้า — อายุ 40 &rarr; 60 บริบูรณ์ (2026 &rarr; 2046)</p>
+
+    <table class="year-table">
+      <thead>
+        <tr>
+          <th>Year · Age</th>
+          <th>Energy</th>
+          <th>Situation</th>
+          <th>Strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026 · 40</td>
+          <td>PY 7 · 丙午 (Yang Fire = 偏印 Seal)</td>
+          <td>印 doubled — ปีคิดมาก แต่ตัดสินใจช้า · อาจถูก partner/mentor ครอบงำ หรือรู้สึก "ถูกบังคับ" โดยที่ปรึกษา · Lovers Moment seed</td>
+          <td>รับ (ชะลอ) — Si ทบทวน track record 6 เดือนก่อนตัดสินใจใหญ่ · ไม่เซ็นสัญญาใหม่ใน Q1</td>
+        </tr>
+        <tr>
+          <td>2027 · 41</td>
+          <td>PY 8 · 丁未 (Yin Fire = 正印 Seal + 比肩 Earth)</td>
+          <td>印 + 比肩 — ปีความอบอุ่น + การสะสม · Brand reputation เริ่มเป็นที่รู้จัก · Peak #1 — เก็บเกี่ยวครั้งแรก</td>
+          <td>รุก (ค่อยเป็นค่อยไป) — Te จัด SOP ใหม่ · Si ทบทวน KPI เก่า · refine ระบบภายใน · อย่าขยายเร็ว</td>
+        </tr>
+        <tr>
+          <td>2028 · 42</td>
+          <td>PY 9 · 戊申 (Day Master repeat = 伏吟 pattern)</td>
+          <td>Day Pillar repeat + Luck Pillar branch repeat · ยืนยันตัวเอง · ขยายธุรกิจเต็มที่ · 申 = metal storage = wealth เริ่มไหลเข้ามาก · Peak #1 ต่อ</td>
+          <td>รุก (เต็มที่) — Te execute plans · Si recall data · ขยายสาขา / launch sub-brand · จัดการ cash flow เข้มงวด</td>
+        </tr>
+        <tr>
+          <td>2029 · 43</td>
+          <td>PY 1 · 己酉 (劫财 Rob-Wealth + Luck Pillar branch repeat)</td>
+          <td>RW + 酉 doubled — ปีเงินหลุดมือ · คู่แข่งใหม่ · partner ขอแบ่งกำไร · มีคนในทีมที่ไม่จริงใจ · New Beginning seed</td>
+          <td>รับ (ป้องกัน) — Te ตรวจ contract ทุกฉบับ · Si ตรวจ background partner ใหม่ · ไม่ให้กู้ยืม</td>
+        </tr>
+        <tr>
+          <td>2030 · 44</td>
+          <td>PY 2 · 庚戌 (食神 EG + 戌 Earth storage)</td>
+          <td>EG + Earth storage — ปีผลิตสูง · Product ใหม่ออก · innovation ได้ผล · receptive mode หลัง RW</td>
+          <td>รุก (สร้างสรรค์) — Te ทำ plan · Si ใช้ข้อมูลเก่า design ใหม่ · ลงทุนใน R&D</td>
+        </tr>
+        <tr>
+          <td>2031 · 45</td>
+          <td>PY 3 · 辛亥 (伤官 HG + 亥 Water storage)</td>
+          <td>HG + 亥 — ปีปากกล้า + อารมณ์ร้อน · ★ LOVERS MOMENT #1 · พูด/เขียนอะไรที่อาจทำร้าย partner/ลูกค้าโดยไม่ตั้งใจ</td>
+          <td>รับ (ระวังคำพูด) — Si ทบทวน communications · หลีกเลี่ยง conflict · ฟังมากกว่าพูด · 3C Framework</td>
+        </tr>
+        <tr>
+          <td>2032 · 46</td>
+          <td>PY 4 · 壬子 (偏财 IW + 子 Day branch clash! 子-子冲)</td>
+          <td>★ TROUGH YEAR — 子-子冲 · น้ำท่วมภูเขา · risk ทางการเงินสูงสุด · สาขาใหม่ revenue ตก 35% · ธนาคารเรียกชำระเงินต้นคืนเร็วขึ้น · คู่ค้าผิดสัญญา</td>
+          <td>ชะลอ (สกัดความเสี่ยง) — Te risk assessment · Si ทบทวน scenarios · ไม่ลงทุนใหม่ · เก็บสด · Scenario A: วิกฤตสภาพคล่อง</td>
+        </tr>
+        <tr>
+          <td>2033 · 47</td>
+          <td>PY 5 · 癸丑 (正财 DW + 丑 Earth bag)</td>
+          <td>DW + 丑 hidden 己癸辛 — wealth ผสม negative · Pillar 6 (丁酉) เริ่มต้น · ธุรกรรมที่ไม่โปร่งใสอาจปรากฏ · change seed</td>
+          <td>รับ (ตรวจสอบ) — Te audit ทุก transaction · Si เปรียบเทียบกับมาตรฐาน · ปรึกษาผู้เชี่ยวชาญทางการเงิน</td>
+        </tr>
+        <tr>
+          <td>2034 · 48</td>
+          <td>PY 6 · 甲寅 (七杀 7K + 寅 Year branch clash 寅-申!)</td>
+          <td>★ LOVERS MOMENT #2 SEED — 寅-申冲 · ความกดดันจากภายนอก · คู่แข่งใหญ่ · กฎระเบียบใหม่ · คดีความ · Scenario B: ข้อพิพาททางกฎหมาย</td>
+          <td>ชะลอ (ตั้งรับ) — Te ปกป้อง assets · Si ทบทวน legal compliance · หา legal advisor · ห้ามขยาย</td>
+        </tr>
+        <tr>
+          <td>2035 · 49</td>
+          <td>PY 7 · 乙卯 (正官 DO + 卯 Wood peak)</td>
+          <td>DO + Wood peak — ปีกฎ ระเบียบ สัญญา · เหมาะกับการเซ็นข้อตกลงใหญ่ · แต่ต้องอ่านให้ละเอียด · introspection เก็บเกี่ยวรอบ 2</td>
+          <td>รับ (เซ็นอย่างรอบคอบ) — Te review contracts · Si เปรียบเทียบ terms · ใช้ทนายความตรวจสอบ</td>
+        </tr>
+        <tr>
+          <td>2036 · 50</td>
+          <td>PY 8 · 丙辰 (偏印 IS + 辰 Month branch repeat)</td>
+          <td>★ PEAK YEAR · IS + 辰 = Seal + Earth root · Wisdom + experience + mentor help · ★ Peak #2 — สร้างมูลนิธิ · เขียนหนังสือ · Scenario C: Peak legacy</td>
+          <td>รุก (สร้าง legacy) — Te execute vision · Si share knowledge · สร้างมูลนิธิ/mentorship program · เขียน memoir</td>
+        </tr>
+        <tr>
+          <td>2037 · 51</td>
+          <td>PY 9 · 丁巳 (正印 DS + 巳 Fire peak + hidden 丙戊庚)</td>
+          <td>DS + 巳 — ไฟเต็มที่ · Wisdom สูงสุด · แต่ต้องระวัง "印 heavy" · closure seed · อย่า burnout</td>
+          <td>รุก (อย่างระวัง) — Te lead · Si balance · หลีกเลี่ยง burnout · พักผ่อนให้เพียงพอ</td>
+        </tr>
+        <tr>
+          <td>2038 · 52</td>
+          <td>PY 1 · 戊午 (比肩 Peer + 午 Fire peak)</td>
+          <td>Day stem repeat (戊) + 午 — ตัวตนซ้ำ + ไฟเต็ม · ปีความมั่นใจสูงสุด · แต่ต้องระวัง arrogance · new beginning</td>
+          <td>รุก (อย่างถ่อมตน) — Te execute · Si listen feedback · รับฟังคนรอบข้าง</td>
+        </tr>
+        <tr>
+          <td>2039 · 53</td>
+          <td>PY 2 · 己未 (劫财 RW + 未 Earth bag)</td>
+          <td>RW + 未 — คู่แข่ง + ความสูญเสียเล็กๆ · partner ขอแบ่ง · มีคนในทีมลาออก · receptive mode</td>
+          <td>รับ (รักษาคน) — Te retain talents · Si ประเมิน compensation · ดูแล morale</td>
+        </tr>
+        <tr>
+          <td>2040 · 54</td>
+          <td>PY 3 · 庚申 (食神 EG + 申 Luck Pillar branch repeat)</td>
+          <td>★ LOVERS MOMENT #2 · EG + 申 = output สูง · Product launch · innovation · IP creation · ★ ลูกชายอยากช่วย — เลือก "ปกป้อง" vs "ไว้ใจ"</td>
+          <td>รุก (สร้างสรรค์) — Te innovation roadmap · Si patent/protect · ลงทุนใน IP · ฟัง Fi — ลูกต้องการโอกาส</td>
+        </tr>
+        <tr>
+          <td>2041 · 55</td>
+          <td>PY 4 · 辛酉 (伤官 HG + 酉 Luck Pillar branch repeat)</td>
+          <td>HG + 酉 — ปากกล้า + ดาบคม · ปัญหากับ legal/regulatory · คำพูดทำร้ายคนสำคัญ · foundation seed</td>
+          <td>รับ (ระวังคำพูด + legal) — Si document ทุกอย่าง · หลีกเลี่ยงเซ็นสัญญาใหญ่ · ถ่ายทอดความรู้</td>
+        </tr>
+        <tr>
+          <td>2042 · 56</td>
+          <td>PY 5 · 壬戌 (偏财 IW + 戌 Earth storage)</td>
+          <td>IW + 戌 — wealth จากความเสี่ยง · Investment opportunity ใหญ่ · เปลี่ยนผู้นำบางตำแหน่ง · change</td>
+          <td>ชะลอ (ประเมินความเสี่ยง) — Te ROI analysis · Si stress-test · ไม่ลงทุนทั้งหมด</td>
+        </tr>
+        <tr>
+          <td>2043 · 57</td>
+          <td>PY 6 · 癸亥 (正财 DW + 亥 Water storage) · ★ PERIOD 9 → PERIOD 1 TRANSITION</td>
+          <td>Period 9 สิ้นสุด + Period 1 (Water) เริ่มต้น · ปีส่งทอด + เริ่มต้นใหม่ · ★ Responsibility year — ส่งต่อ wisdom เข้าสู่ยุคใหม่</td>
+          <td>รับ (transition) — Te wrap up Period 9 projects · Si บันทึก wisdom · เตรียมตัวเข้าสู่ Period 1</td>
+        </tr>
+        <tr>
+          <td>2044 · 58</td>
+          <td>PY 7 · 甲子 (七杀 7K + 子 Day branch clash! 子-子冲)</td>
+          <td>子-子冲 + Period 1 (Water) เริ่มเต็มที่ · ปีความกดดันสูง · Regulators, legal, contracts · introspection</td>
+          <td>ชะลอ (ตั้งรับ) — Te compliance · Si audit · ห้ามขยาย</td>
+        </tr>
+        <tr>
+          <td>2045 · 59</td>
+          <td>PY 8 · 乙丑 (正官 DO + 丑 Earth bag)</td>
+          <td>★ PEAK #3 — DO + 丑 — ปีกฎ ระเบียบ พันธะ · เตรียม succession · เก็บเกี่ยวครั้งสุดท้าย · ★ Authority year ก่อนปิดฉาก</td>
+          <td>รับ (วางแผน succession) — Te design transition plan · Si บันทึก wisdom · ส่งต่อผู้สืบทอด · เขียนแผนส่งต่อชัดเจน</td>
+        </tr>
+        <tr>
+          <td>2046 · 60</td>
+          <td>PY 9 · 丙寅 (偏印 IS + 寅 Year branch repeat! = Year Pillar repeat)</td>
+          <td>★ AGE 60 — REBIRTH · 丙寅 = Year Pillar repeat · "กลับสู่จุดเริ่มต้น" "วัฏจักรใหม่" · ★ LOVERS MOMENT #3 — choice ครั้งสุดท้าย · ภูเขาลูกใหม่</td>
+          <td>รุก (เริ่มต้นใหม่) — Te vision · Si wisdom · "ภูเขาลูกใหม่" — บทใหม่ของชีวิต · ส่งต่อกิจการ · กลายเป็น "ผู้อาวุโส"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Mind-Body split = central health risk — Nuttawat ใช้ mind มากเกินไปจน body ขาด การเชื่อมต่อ · Body Wisdom ritual = บังคับให้ตัวเองรู้สึกถึงร่างกาย 30 นาที/วัน</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Se + Ne nourishment — Nuttawat ต้อง "feed" Ne (Extraverted Intuition) + Se (Sensing) อย่าง deliberate — เดิน 30 นาที กินโดยไม่ดูจอ นวดตัว weekly — สิ่งเหล่านี้ไม่ใช่ luxury แต่เป็น preventive maintenance</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Etheric body ในมุม Blavatsky — Nuttawat = "etheric blueprint ที่หนาแน่น" — แต่ physical body ถูกทอดทิ้ง · Vibration therapy = near-water, forest, mountain — ช่วย recharge etheric body</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">7 Chakras ในภาพรวม — Crown (#1) + Third Eye (#2) overload (จากคิดหนัก) · Solar Plexus (#3) high-risk (Te-Overdrive) · Heart (#4) suppressed · Throat (#5) blocked · Solar (#6) weak · Root (#7) KAMA</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Vibration principle ในสุขภาพ — Nuttawat เป็น "high-vibration person" แต่ body เป็น "low-vibration" (sedentary) · ต้อง sync สองความถี่ — exercise + meditation</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">BaZi health risks = Earth (stomach/spleen) + Fire (heart) overload · 用神 Fire ช่วย warm + circulate · 戊 Day Master risk: 胃 (stomach), 心 (heart), 肌肉 (muscle) — 用神 Water (Period 1) จะช่วย cool + protect</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Timeline &amp; Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Complex Identification:</strong> Complex = KAMA-loop (กลัวสูญเสีย) — แก้ด้วย pattern interrupt ritual (พูด Fi ออกเสียง)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> Style = "Te directive → Si data → Ne option → Fi warmth optional" — ส่วนสุดท้าย optional แต่ wins trust</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> Cycle = Nuttawat กลับมา integrate Triad 14-4-6 จน harmonized — ชาตินี้คือ cycle ปิด</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Lessons:</strong> Lessons = (1) "เลือกซ้ำโดยไม่เรียนรู้" → ปล่อย (2) "ความเหงาไม่ใช่อ่อนแอ" (3) "Moon ไม่ใช่ภาพลวงตาทั้งหมด"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Cause/Effect:</strong> Cause/Effect = "ทุก Lovers Moment seed → Trough effect" — Nuttawat ต้อง observe 2031/2034/2040 patterns</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career (BaZi):</strong> Career = Business Owner with mentor (Fire) + team (Earth) — not Solo Founder in free market (Water)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-3" id="s8" data-section="8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">โปรโตคอลรายวัน รายสัปดาห์ รายเดือน และขั้นตอนวิกฤต</p>
+
+    <h3>Cadence &mdash; จังหวะปฏิบัติ</h3>
+    <p><strong>Daily:</strong> เช้า: Te Check + Si Check + BUDDHI 2 นาที · กลางวัน: Ne Break 5 นาที + ถาม "ทำจาก Te หรือ KAMA?" · เย็น: Fi Check 1 ประโยค + ถาม "วันนี้เลือกจากกลัวบ้างไหม?" + Gratitude 3 สิ่ง</p>
+    <p><strong>Weekly:</strong> ออกกำลังกาย 3 ครั้ง (เดิน 30 นาที/ครั้ง) · คุยกับคู่ครอง 15 นาที · คุยกับเพื่อนที่ไม่ใช่หุ้นส่วน · ทำกิจกรรมสร้างสรรค์ (วาดรูป/ทำอาหาร)</p>
+    <p><strong>Monthly:</strong> ทบทวนเป้าหมาย · ตรวจสุขภาพประจำปี · ตรวจสอบ cash flow กับที่ปรึกษาทางการเงิน · สะสม reserve fund 20% ของกำไร</p>
+    <p><strong>Extended:</strong> Action Plan ที่ balance ทั้ง Te (สั่งการ), Si (ทบทวน), Ne (เดิน/มองใหม่), Fi (ฟังใจ) — และ integrate BUDDHI (intuition) เป็นสวิตช์หลัก</p>
+
+    <h3>Crisis 5-Step &mdash; 5 ขั้นวิกฤต</h3>
+    <p>Fi-Grip Recovery 5 ขั้น: (1) หยุด 10 นาที — ออกจากสถานการณ์ (2) หายใจลึก 5 ครั้ง — สูดลึก ปล่อยช้า (3) ถามตัวเอง — "Fi-Grip บอกอะไร?" (มักจะเป็น "ฉันเหนื่อย") (4) เขียนออกมา — "วันนี้ฉันรู้สึกว่า..." (5) ระบายกับคนไว้ใจ — โทรหาเพื่อน/คู่ครอง</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Meaning = "Self realization" — Nuttawat เกิดมาเพื่อ "realize Self" ผ่านการสร้าง ธุรกิจที่ให้คนอื่น realize ตัวเอง — Architect of Self-realization platforms</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Type's purpose = "Mentor for ESTJ Business Owner" — Nuttawat มาสอนคนอื่นให้ "เห็นโครงสร้าง" + "ปล่อยวางเมื่อถึงเวลา" · ไม่ใช่ missionary แบบ preach แต่ missionary แบบ Commander → Elder</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Root mission = "Bridge between structure and souls" — Nuttawat เกิดมาสร้าง สะพานระหว่างโครงสร้าง (ที่ Ego เห็น) กับ Soul (ที่ Monad รู้)</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Soul mission = integrate Triad 14-4-6 + Echo 6×2 — เมื่อ integrate คุณจะกลายเป็น "Soul Builder" — คนที่ออกแบบระบบให้คนอื่น Soul-Realize</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Ultimate purpose = Mental Transmutation at scale — Nuttawat สอนคนอื่นให้ transmute ความคิดเป็น wisdom (Te → Fi) และความกลัวเป็น acceptance (KAMA → BUDDHI)</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Soul = "ภูเขาที่เปล่งประกาย" — Day Master ปานกลาง (身强ปานกลาง) แต่เมื่อ surround ด้วย 用神 (Fire 印) จะเปล่งประกายมากกว่า Strong Day Master — บทเรียน: "ความปานกลางไม่ใช่ข้อจำกัด ถ้ามีโครงสร้างที่ถูก (Fire mentor)"</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Archetypal Pattern:</strong> Pattern = Hero's Journey ของ ESTJ — call (อายุ 40) → ordeal (Trough 46) → return (Sage 60)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Conflict Management:</strong> Conflict = 3 steps: (1) listen fully (2) name pattern (3) propose trade-off — ไม่ compromise vision</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Seven Principles:</strong> 7 = Mentalism (vision) · Correspondence (Persona-Brand) · Vibration (mountain freq) · Polarity (Build↔Release) · Rhythm (Seasonal Arc) · Cause/Effect (Lovers → consequence) · Gender (Commander ↔ Elder)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Number Vibration:</strong> Number vibration = 14 → Temperance mix · 4 → Emperor structure · 6 → Lovers choice — Nuttawat "ผสม + สั่ง + เลือก"</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Gender Principle:</strong> Gender = Masculine (Te/Si action) + Feminine (Fi/Ne reception) — Nuttawat ใน relationship = 70M / 30F</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Health (BaZi):</strong> Su Yu Hong lens — Nuttawat's BaZi Day Master & 用神 · ปีที่ 8 → health_bazi สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="big-card big-slot-4" id="s9" data-section="9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; The Ultimate Synthesis</h2>
+    <p class="lede">บทสรุปรวมทั้ง 6 ศาสตร์เข้าด้วยกัน</p>
+
+    <h3>Interconnectedness &mdash; ความเชื่อมโยง</h3>
+    <p>ทั้ง 6 ศาสตร์มอง Nuttawat ผ่านเลนส์เดียวกัน — Jung เห็น Persona "Commander" + Shadow "Unseen", MBTI เห็น Te-Si-Ne-Fi + Triple Shadow, Natalia เห็น Triad 14-4-6 + Echo 6×2, Blavatsky เห็น Earth-Mountain frequency + KAMA risk, Kybalion เห็น Seasonal Arc + Mentalism, BaZi เห็น Day Master 戊 + 用神 Fire (Period 9) — ทั้งหมดบอกว่า Nuttawat คือ "ภูเขาที่ต้องเปลี่ยนจากผู้สร้างเป็นผู้ส่งต่อ" — และ Period 9 (2024-2043) คือหน้าต่างทอง ที่ Fire จะช่วยให้ภูเขาเปล่งประกาย — แต่ต้อง integrate Fi ที่ถูกกดทับ 40 ปี</p>
+
+    <h3>Ultimate Truth &mdash; สัจธรรมสูงสุด</h3>
+    <blockquote style="border-left: 3px solid var(--neon-magenta); padding: 8px 14px; margin: 12px 0; background: rgba(255, 0, 212, 0.05);">
+      สัจธรรมสูงสุดของคุณ: "การปล่อยวางไม่ใช่ความอ่อนแอ — การปล่อยวางคือความแข็งแกร่งในระดับที่สูงกว่า — ภูเขาที่ดีที่สุดไม่ใช่ภูเขาที่ยืนคนเดียว — ภูเขาที่ดีที่สุดคือภูเขาที่มีคนอื่นปีนขึ้นมายืนด้วย"
+    </blockquote>
+    <p>The Ultimate Synthesis ของ Nuttawat — "จากเถ้าแก่สู่ผู้อาวุโส" — คุณสร้างอาณาจักรมาด้วยมือตัวเอง คุณวางระบบที่แข็งแกร่ง คุณเลี้ยงคนที่เก่ง — ตอนนี้ถึงเวลาที่คุณจะ "ส่งต่อ" ไม่ใช่เพราะเหนื่อย แต่เพราะคุณ "พร้อม" — 21 ปีข้างหน้า คุณจะเจอทางเลือกครั้งใหญ่อย่างน้อย 3 ครั้ง (2031, 2040, 2046) — ทุกครั้งที่เจอ ให้จำ: "การเลือกที่ดีที่สุดไม่ใช่การเลือกที่ถูก แต่คือการเลือกที่คุณพอใจจะอยู่กับผลที่ตามมา"</p>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Age 60 Self — Nuttawat จะ integrate Commander+Unseen+Anima จนกลายเป็น "Sage" — คนที่ทุกคำพูดถ่วงด้วยบทเรียน ไม่ใช่คนที่ "รู้มากที่สุด" แต่ "รู้ลึกที่สุด"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Age 60 type — Te-Si-Ne-Fi ที่ integrated ทั้ง 4 — Nuttawat จะกลายเป็น "Healthy ESTJ" แบบ rare ที่หาได้ยาก — Wisdom Spoken</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Age 60 karma — Monad + Ego + Personality fully aligned — Nuttawat จะ "ส่ง Mountain pattern" ออกสู่โลกผ่าน writing/mentorship/succession — นี่คือ "Master of Fifth Root-Race"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Age 60 matrix — Triad 14-4-6 + Echo 6×2 harmonize ครบ — 9 ตำแหน่งบนผัง 3×3 เรืองแสง · Wheel หมุนช้า Lovers ตัด Emperor = Sage ในชุดผู้อาวุโส</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Age 60 mastery — 7 Hermetic Principles รวมเป็นหนึ่งเดียว — "As Above So Below" เป็นหนึ่งเดียวกับ Nuttawat — เห็น pattern ของจักรวาล = เห็น pattern ของตัวเอง</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Age 60 用神 mastery — เข้าใจ Day Master ตัวเองลึกซึ้ง — Earth (比劫 = team) + Fire (印 = wisdom/brand) balance สมบูรณ์ · Nuttawat จะเป็น "ภูเขาที่รู้จักตัวเอง" · 2046 = Year Pillar repeat = rebirth</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> Carl Jung lens — Nuttawat's Persona/Shadow/Anima dynamics · ปีที่ 9 → the_self สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Meaning of Life:</strong> Carl Jung lens — Nuttawat's Persona/Shadow/Anima dynamics · ปีที่ 9 → meaning_of_life สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> MBTI lens — Nuttawat's Te-Si-Ne-Fi cognitive function stack · ปีที่ 9 → final_integration สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Type Wisdom:</strong> MBTI lens — Nuttawat's Te-Si-Ne-Fi cognitive function stack · ปีที่ 9 → type_wisdom สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> Helena Blavatsky lens — Nuttawat's Monad/Ego/Personality alignment · ปีที่ 9 → universal_brotherhood สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Final Aspiration:</strong> Helena Blavatsky lens — Nuttawat's Monad/Ego/Personality alignment · ปีที่ 9 → final_aspiration สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> Natalia Ladini lens — Nuttawat's Matrix 3x3 patterns · ปีที่ 9 → contract_completion สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Chart Mastery:</strong> Natalia Ladini lens — Nuttawat's Matrix 3x3 patterns · ปีที่ 9 → chart_mastery สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> Three Initiates lens — Nuttawat's Hermetic principle integration · ปีที่ 9 → mastery_path สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Universal Service:</strong> Three Initiates lens — Nuttawat's Hermetic principle integration · ปีที่ 9 → universal_service สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> Su Yu Hong lens — Nuttawat's BaZi Day Master & 用神 · ปีที่ 9 → destiny_unfoldment สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+        <p><strong>Final Blessing:</strong> Su Yu Hong lens — Nuttawat's BaZi Day Master & 用神 · ปีที่ 9 → final_blessing สำหรับ Nuttawat (ESTJ Business Owner, Day Master 戊 身强ปานกลาง, Triad 14-4-6 + Echo 6×2)</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="big-foot">
+    <div class="foot-primary">
+      <span><strong>Template</strong> v2.1 &middot; Big Variant (MET-612-K3)</span>
+      <span><strong>Forecast</strong> Nuttawat</span>
+      <span><strong>Generated</strong> 2026-07-08</span>
+    </div>
+    <div class="foot-toc-mirror">
+      <a href="#s0">&sect;0 บทสรุป</a>
+      <a href="#s1">&sect;1 Cosmic Synergy</a>
+      <a href="#s2">&sect;2 Natalia 3&times;3</a>
+      <a href="#s3">&sect;3 Talent &amp; Karmic</a>
+      <a href="#s4">&sect;4 Career &amp; Roles</a>
+      <a href="#s5">&sect;5 Relationships</a>
+      <a href="#s6">&sect;6 Health &amp; Chakras</a>
+      <a href="#s71">&sect;7.1 5 Stages</a>
+      <a href="#s72">&sect;7.2 Year-by-Year</a>
+      <a href="#s8">&sect;8 Protocols</a>
+      <a href="#s9">&sect;9 Ultimate Synthesis</a>
+    </div>
+    <div class="foot-meta">
+      <span class="foot-hash">variant=big</span>
+      <span class="foot-hash">MET-612-K3</span>
+      <span class="foot-hash">skeleton=forecast-big.html</span>
+    </div>
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+<section class="card slot-f2" id="s-f2" style="border:1px solid var(--line); border-left:3px solid var(--neon-cyan); margin:18px 0; padding:16px; background:rgba(0,240,255,0.04);">
+  <h2><span class="num">&sect;F2</span>Scenario: วิกฤตและโอกาส (MET-651 reapply — grounded 40y Business Owner scenarios)</h2>
+  <p class="lede">3 grounded business scenarios จาก source MD (<code>analysis/nuttawat-omni-self-forecast.md</code> section "Scenario: วิกฤตและโอกาส") — อ้างอิง Triad 14-4-6, Echo 6×2, Lovers Moments #1-2 และ Business Owner voice (เถ้าแก่ / 40-60)</p>
+  <div class="lens-card" style="border:1px solid var(--line); margin:10px 0; padding:12px;">
+    <h4>Scenario A: วิกฤตสภาพคล่อง (อายุ 41 / 2027, BaZi 丁未 Fire + 比肩)</h4>
+    <p>มีเอกสาร 3 กอง: หนี้ครบกำหนด / โอกาสใหม่ / ยอดขายตก 30% — Te จะคำนวณ · Si จะคิดถึงครอบครัว · KAMA จะทำให้กลัว — ทางออก: ฟัง BUDDHI (intuition) หยุด 10 นาที ก่อนตัดสินใจ — อ้างอิง Triad 14-4-6 (Temperance/Emperor/Lovers) และ D=6 Echo เป็น 'ทางเลือกครั้งใหญ่ครั้งแรก' ของ Nuttawat</p>
+  </div>
+  <div class="lens-card" style="border:1px solid var(--line); margin:10px 0; padding:12px;">
+    <h4>Scenario B: ส่งต่อหรือไม่ (อายุ 54 / 2040, BaZi 庚申 Metal + 食神)</h4>
+    <p>ลูกชายจบแล้วอยากช่วย แต่คุณคิดว่ายังไม่พร้อม — นี่คือ Lovers Moment ที่สอง — เลือกระหว่าง 'ปกป้อง' กับ 'ไว้ใจ' — ทางออก: ฟัง Fi — ลูกต้องการโอกาส ไม่ใช่การปกป้อง — อ้างอิง C=6 Echo (ทางเลือกครั้งที่สอง) + Jung Shadow (Unseen Commander) + Te/Si-based identity จะ struggle กับการ 'ปล่อย'</p>
+  </div>
+  <div class="lens-card" style="border:1px solid var(--line); margin:10px 0; padding:12px;">
+    <h4>Scenario C: ทีมหลักลาออกพร้อมกัน (อายุ 47 / 2033, BaZi 癸丑 Water)</h4>
+    <p>ลูกน้องที่ไว้ใจ 3 คนบอกลาพร้อมกัน เพราะได้โอกาสที่ดีกว่า — Si จะคิดถึงความผิดหวัง · Te จะโทษระบบที่ไม่แข็งแรง — ทางออก: ฟัง Ne — นี่คือสัญญาณให้สร้างระบบที่ทำงานได้โดยไม่ต้องพึ่งคนใดคนหนึ่ง ใช้ Temperance (14) ผสมทีมเก่ากับคนใหม่</p>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — พี่ก้อย (Pi Goy)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; พี่ก้อย (Pi Goy)</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>26 พฤษภาคม 2515 (26.05.1972)</span>
+      <span><strong>Window</strong>2026 &rarr; 2032</span>
+      <span><strong>Headline</strong>ปีแห่งการหลอมแสงสู่เปลวเทียน (2026-2032) — Day Master 丁 Yin Fire (ดวงประทีป) · Echo 5-6-13 (Hierophant·Lovers·Death) · จาก PY 8 ในปี 54 (อายุ 54) สู่ PY 5 + 壬子 ในปี 60 บริบูรณ์ — วงล้อ 'สอน-เลือก-ปล่อย' ของผู้นำที่มาจากหัวใจ</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Mentor / Teacher (ENFJ) / Ti-Grip + Se-Loop + Fe-Overextension</div>
+      <div class="lens"><strong>LoA</strong>Hierophant-Sun axis (5+19 echo)</div>
+      <div class="lens"><strong>Kybalion</strong>Mid-life pivot — Sun high → Hermit return → Hierophant mature</div>
+      <div class="lens"><strong>MBTI</strong>ENFJ &middot; lead Fe-Ni &middot; grip Ti-Grip under chronic organizational stress</div>
+      <div class="lens"><strong>Age 60</strong>Sage-Mentor / Wisdom-keeper</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 丁 (Yin Fire) — ดวงประทีป / เปลวเทียน &middot; bal needs Wood (印) + Water (官) — feeds flame without drowning it</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona=Mentor/Teacher (Fe-Hero), Shadow=Ti-Grip + Se-Loop + Fe-Overextension — Individuation arc 54→60 = integrate Death (D=13) เป็น Wisdom-keeper; Self (H=11 Justice) คือเข็มทิศที่ Ego ต้องหันกลับมาฟัง</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">ENFJ stack Fe-Ni-Se-Ti — Ti (inferior) เป็นจุดบอดที่แท้จริง (ไม่ใช่ Se); TY 2026 = Deputy-Director stress window; strategy = harvest Ni under Fe ไม่ใช่ดัน Fe อย่างเดียว</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Dominant vibration 5-19 = 'Hierophant-Sun' — ผู้สอนที่ส่องสว่าง; dual vibration low-frequency Death (13) + mid-band Lovers (6); LoA coherence locks ตอมเช้ามืด (04:30-05:30 journaling)</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Matrix 8-5-19 บน / 13-5-6 กลาง / 19-11-18 ล่าง — Echo 5-6-13 ครอบ 5/9 ตำแหน่ง; กระจกสามด้าน (Hierophant·Lovers·Death) คือ 'ครู-เลือก-ปล่อย' — ไม่ใช่ห่วงโซ่ แต่เป็นแกนกลางของวิวัฒนาการ</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Rhythm (KYB §V) + Mentalism (KYB §I) = main switch; Yin Fire rhythm ขึ้นช้า-ส่องนาน-ดับเงียบ; Mental Transmutation = Vibration × Mentalism × Polarity เปลี่ยนความถี่ก่อนเปลี่ยน Rhythm</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master 丁 Yin Fire — 偏弱 ตามเกณฑ์ (no root support + no season help); 用神 = Wood (印 甲/乙, fuel the flame) + Water (官 壬/癸, structure/discipline); 忌神 = Earth (土 戊/己, buries the flame) + excess Metal (金 庚/辛, extinguishes); Period 9 Fire (2024-2043) = 同类 support แต่ risk 印 overflow</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> Persona = Mentor/Teacher (Fe-Ni ที่ 'อ่านใจคน + เห็นอนาคต') + Wisdom-keeper (H=11 Justice) — Shadow = Ti-Grip (เมื่อองค์กร pause โครงการ Ego ถอยเข้ามุม 'วิพากษ์วิจารณ์ตัวเอง + คนรอบข้าง') + Se-Loop (เมื่องานนำเสนอสำคัญพัง Ego ดึงทุกอย่างเข้าหาตัวเอง ทำงานหนักขึ้นแบบหุนหัน) + Fe-Overextension (แบกรับปัญหาลูกน้องจนหมดพลัง) — สามเงานี้คือสิ่งที่บอร์ดสั่งเจาะ</p>
+        <p><strong>Individuation Path:</strong> 54-57 Mentor (mid-life, 'The Hierophant Year' — สอนในระบบ) → 58-61 Sage (mature integration — Echo 5+19 บรรจบ) → 62-65 Wisdom-keeper (Hermit-mode — สอนนอกระบบ, เขียนหนังสือ/ที่ปรึกษา)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> Fe (dominant — read room + harmonize) → Ni (auxiliary — long-term pattern) → Se (tertiary — act in present) → Ti (inferior — internal logic frame); lead function ปลดปล่อย, inferior function = grip point ต้อง integrate ไม่ใช่กดทับ</p>
+        <p><strong>Cognitive Loop:</strong> Healthy loop: Fe→Ni→output → Ti checkpoint รายสัปดาห์ · Unhealthy: Fe→Se→loop (รีบทำงานมากเกินไปจนสูญ Ni) · Ti-Grip: Fe→Ti→loop (วิพากษ์วิจารณ์จนหยุด)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> Root-race view: พี่ก้อยอยู่ใน 5th Root-Race (Aryan) consciousness — Ego+Personality กำลัง integrate Monad ผ่าน Hierophant (5) + Sun (19); ไฟ Period 9 = collective fire ที่เร่งปลุก Monad ของความเป็น 'ครู'</p>
+        <p><strong>Monad & Reincarnation:</strong> Monad ของพี่ก้อยคือ 'ครู' (teacher archetype) — Ego ปัจจุบันเป็น Personality ที่ integrate Monad ผ่าน Sun (C=19); Soul mission = สอน/เชื่อม ไม่ใช่สร้าง empire; Reincarnation theme = repeat-as-teacher</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> Natal chart resonance: A=8 Strength (gentle power) · B=5 Hierophant (เกิดมาเป็นครู) · C=19 Sun (แสงสว่าง) · Center E=5 Hierophant (mission) · Echo 5-6-13 covers 5/9 cells = main architecture ไม่ใช่ background noise</p>
+        <p><strong>Transit Windows:</strong> Transit windows: 2026 (Saturn in Pisces — anchor identity), 2028-2030 (Saturn opposition — career test in Deputy Director role), 2032 (Saturn return — age 60 milestone), 2037 (Uranus opposition — individuation breakthrough)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> Mystery school: 'The Hierophant Mystery School' — ใช้ Fire frequency เป็น initiation chamber; เรียนรู้ผ่าน 'เปลวเทียน' (small flame) — ไม่ใช่ผ่านไฟใหญ่โดยตรง; 7 ขั้น = Flame-elements</p>
+        <p><strong>Initiate Trials:</strong> Initiate trials: (1) Letting-go trial — ปล่อยบทบาทรอง ผอ. เดิม (2030), (2) Authority trial — เผชิญบอร์ดที่ pause โครงการ (อายุ 56), (3) Mentor trial — เปลี่ยนจากผู้บริหารเป็นที่ปรึกษา (อายุ 58), (4) Echo trial — Echo 5-6-13 ต้อง integrate (อายุ 60), (5) Wisdom trial (อายุ 62)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> Day Master 丁 Yin Fire (ดวงประทีป) — 偏弱 ตามเกณฑ์ (ไม่มี root, ไม่มี season); 用神 = Wood (印 甲/乙, เติมเชื้อไฟ) + Water (官 壬/癸, structure/discipline); 忌神 = Earth (土 戊/己, ฝังเปลว) + excess Metal (金 庚/辛, ดับเปลว)</p>
+        <p><strong>Annual Pillars:</strong> Annual pillars 2026-2032: 丙午→丁未→戊申→己酉→庚戌→辛亥→壬子; ปีที่ flow ดี = 2028 戊申 (Wood hidden in 申 feeds flame) และ 2032 壬子 (官 clear structure); ปีที่ต้องระวัง = 2026 丙午 (Fire overload — 同类 มากเกินไป) และ 2030 庚戌 (Metal — extinguish risk)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm (KYB §V) + Mentalism (KYB §I) = main switch — Yin Fire rhythm ขึ้นช้า-ส่องนาน-ดับเงียบ; Mental Transmutation ทำงานที่ความถี่ 04:30-05:30 journaling + Sunday 60-min walk</p>
+    <p><strong>LoA:</strong> Manifestation Loop = clarify → align → receive → act → gratitude — coherence locks ตอนเช้ามืด journaling + Sunday walk (จริงหรือจำลอง); low-band trap = Ti-Grip</p>
+    <p><strong>Matrix:</strong> Center E=5 Hierophant + Echo 5-6-13 = phase-lock loop — Hierophant (rhythm) + Lovers (choice) + Death (release) หมุนรอบศูนย์เดียวกัน</p>
+    <p><strong>Proof:</strong> Three engines climax อายุ 60 (ปี 2032) — PY 5 + 壬子 (官 clarity) + Saturn return + Hierophant-Sun integration; Ego ต้อง integrate Death (D=13) ก่อนถึงจุดนี้ มิเช่นนั้นจะค้างที่ Ti-Grip</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
+      </div>
+    </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Monad &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้ (analyst fills the 9 octagram tokens below).</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>E=5 Hierophant · Self · Teaching mission"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>Mentalism · KYB §I · Fe-Ni"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>Vibration · LoA · Hierophant-Sun axis"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>Matrix Loop · Hierophant-Lovers-Death"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>BaZi · Day Master 丁 Yin Fire · Period 9 Fire"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>Jung · Shadow · Ti-Grip + Fe-Overextension"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>Natalia · Saturn Return · Transit"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>Polarity · KYB §IV · Fe↔Ti · Light↔Shadow"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>Mystery · Hierophant Initiation · 5 trials"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Engines: Persona (Ego-syntonic Mentor) + Shadow (Ego-dystonic Ti-Grip/Se-Loop) + Self (transcendent H=11 Justice) — let all run ไม่ปิด Shadow; Ti-Grip = Shadow talking loud</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Fe reads → Ni forecasts → Se acts → Ti grounds; healthy stack ทำงานเป็นทีม, inferior Ti เป็น safety net ไม่ใช่ villain</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Law satisfied เมื่อ intent (Mentalism) + emotion (Vibration) + action (Polarity) share frequency; alignment = ความคิด+อารมณ์+การกระทำสั่นที่ความถี่เดียวกัน</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">3×3 with master centre 5 = phase-lock loop; Hierophant ที่กลางเป็น carrier wave — honour centre โดยยอมรับว่า Ego เป็นแค่หนึ่งในผู้สอน ไม่ใช่ 'ผู้รู้ทั้งหมด'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Rhythm precedes Vibration precedes Form — inner moves outer; เปลี่ยน Rhythm ก่อน ค่อยเปลี่ยน Vibration ค่อยเปลี่ยน Form</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">2032 (壬子 Yang Water + Rat) = 官 clear — Day Master ได้ structure/discipline แต่ Water มาก = extinguish risk; Pillars บอกว่า Ego ต้อง integrate Wood (印) ก่อนถึงปีนั้น เพื่อให้เปลวไฟไม่ดับ</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> Collective Unconscious ของพี่ก้อย = 'Teacher archetype' (Hierophant) — Wise Elder ภายในตัวเธอต้อง pair กับ Persona Mentor — Hierophant+Hierophant integration</p>
+        <p><strong>Synchronicity Field:</strong> Synchronicity field: เมื่อ Ego อยู่ในจังหวะ Hierophant (5) — 'meaningful coincidences' จะหนาแน่นขึ้น (พบลูกศิษย์เก่า, ได้รับเชิญสอน); เมื่อ Ego ตกใน Ti-Grip — synchronicity จะแห้ง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> Function integration: dominant Fe + auxiliary Ni ใช้ทุกวันในบทบาท รอง ผอ.; tertiary Se ต้องฝึกตั้งแต่อายุ 54 (present-moment awareness); inferior Ti ต้อง acknowledge ไม่ปฏิเสธ (รับ feedback โดยไม่วิพากษ์วิจารณ์ตัวเอง)</p>
+        <p><strong>Type Development:</strong> Type development loop: ทุก 7 ปี ENFJ จะ 'level up' — 49, 56, 63; ทุกครั้งที่ level up Ego จะ integrate Se+Ti ได้ลึกขึ้น</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> 7 principles active: Mentalism (Fe-Ni), Correspondence (Matrix-Fire), Vibration (B=5 Hierophant), Polarity (Fe↔Ti), Rhythm (Yin Fire), Cause/Effect (C=19 Sun), Gender (Hierophant-Moon)</p>
+        <p><strong>Law of Attraction Bridge:</strong> LoA bridge: 'inner vibration = outer manifestation' — เปลี่ยน vibration ภายใน → โลกสะท้อนกลับ; manifestation Loop 5 ขั้น = clarify-align-receive-act-gratitude</p>
+        <p><strong>Matrix Loop Awareness:</strong> Matrix loop awareness: Center 5 + Echo 5-6-13 = locked loop; ถ้า Ego ไม่ observe loop นี้ จะถูก loop ลาก; ถ้า observe = loop กลายเป็น tool</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> Outer planet alignment: Uranus จะ trine natal Sun ในปี 2032 (อายุ 60) — individuation breakthrough; Neptune square natal Moon 2035 (อายุ 63) — emotional test</p>
+        <p><strong>Eclipse Season Impact:</strong> Eclipse season impact: ทุก eclipse ในช่วง April-October จะ trigger The Lovers (6) — พี่ก้อยควร track eclipse calendar เป็น rhythm marker สำหรับ 'ตัวเลือกใหญ่'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> Hidden knowledge awakening: เมื่อ Ego integrate Hierophant (5) Ego จะ 'ตื่น' — เห็น pattern ที่ซ่อนอยู่ในทุก event; นี่คือ 'initiation' ใน Mystery School</p>
+        <p><strong>Elemental Balance:</strong> Elemental balance: Fire ต้องการ Wood (印 fuel) + Water (官 structure); Period 9 เติม Fire มากเกินไป — ต้อง compensate ด้วย Wood ritual (เดินป่า/ปลูกต้นไม้)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems & Earthly Branches:</strong> Heavenly Stems & Earthly Branches: Year 壬子 (Yang Water + Rat), Month 乙巳 (Yin Wood + Snake), Day 丁巳 (Yin Fire + Snake), Hour [ไม่ทราบ] — Day Master 偏弱 ต้องการ Wood/Water support</p>
+        <p><strong>Annual Luck Cycle:</strong> Annual luck cycle: ปีที่ flow = 2028 (戊申 — Wood hidden in 申 feeds flame), 2032 (壬子 — 官 clarity); ปีที่ caution = 2026 (丙午 — Fire overload 同类), 2030 (庚戌 — Metal extinguish risk)</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">1.6 BaZi (八字) & Period 9 (九運) — ดิถีธาตุและมหายุค</h3>
+    <p class="lede">ดิถีธาตุคือ "สนามแม่เหล็กของเวลา" ที่ห่อหุ้มคุณตอนเกิด — ทุกปีที่คุณมีชีวิตอยู่ คุณจะ "สั่นสะเทือน" ตามจังหวะของสนามนั้น</p>
+
+    <h4>Day Master (日主) — ตัวตนแท้</h4>
+    <p>
+      <strong>己 (Yin Earth)</strong> — "ดินสวน / ทุ่งนา / ดินที่เพาะปลูก"<br>
+      ตัวตนแท้ของคุณคือดินที่อุดมสมบูรณ์ อ่อนโยน ยืดหยุ่น รับรู้ความรู้สึกของผู้อื่น แต่ต้องระวังไม่ให้ "ดินเปียกเกินไป" จนกลายเป็นโคลน — ต้องมี <strong>ความร้อน (Fire)</strong> มาช่วยอบในปริมาณที่พอดี
+    </p>
+
+    <h4>สี่เสาชะตา (四柱)</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>Year Pillar (年柱):</strong> 乙酉 — ไม้อ่อน (乙) + โลหะ (酉) = ความอ่อนโยนที่มีระเบียบ</li>
+      <li><strong>Month Pillar (月柱):</strong> 乙酉 — <span style="color:var(--neon-orange);">★ เหมือน Year Pillar (伏吟 Fuyin)</span> — ครอบครัวและสังคมต้นทุนพูดภาษาเดียวกัน แต่ความคิดเดิมอาจวนซ้ำ</li>
+      <li><strong>Day Pillar (日柱):</strong> 己未 — ตัวตนแท้ = 己 (Yin Earth) + ราก (root) แข็งใน 未</li>
+      <li><strong>Hour Pillar (时柱):</strong> <em>ไม่ทราบเวลาเกิด</em> — ไม่ fabricate ตามหลักจริยธรรม</li>
+    </ul>
+
+    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>偏财 (Indirect Wealth) ×2</strong> ใน Year + Month Stem (乙) = ความมั่งคั่งที่มาจาก "คนอื่นเชื่อใน vision ของคุณ" มากกว่า "งานที่คุณทำเอง"</li>
+      <li><strong>食神 (Eating God) ×2</strong> ใน Year + Month Branch (辛 ใน 酉) = ความคิดสร้างสรรค์ที่อ่อนโยน คุณจะ <strong>"สร้าง" ผ่าน "การเล่าเรื่อง"</strong> มากกว่า "การวิพากษ์"</li>
+      <li><strong>七杀 (Seven Killings)</strong> แฝงใน Day Branch (丁 ใน 未) = แรงกดดันที่ทดสอบจากภายใน — "นายใน" ที่ไม่เคยหยุดถาม "ฉันทำดีพอหรือยัง"</li>
+      <li><strong>比肩 (Peer)</strong> แฝงใน Day Branch (己 ใน 未) = "ตัวตนอีกด้าน" — the critic within</li>
+    </ul>
+
+    <h4>Day Master Strength — 身强 moderate</h4>
+    <p>
+      คุณเป็นคนที่ <strong>"พึ่งตัวเองได้"</strong> ในระดับหนึ่ง แต่ต้อง "ดูแลตัวเอง" อยู่เสมอ:<br>
+      ✓ มี root ใน 未 (good)<br>
+      ✓ มี Metal support จาก 酉+酉 (good)<br>
+      ⚠ มี Double Wood (乙+乙) ที่ drain ตลอด<br>
+      ⚠ <strong>ไม่มี Water (印) เลย</strong> — ไม่มี "ท่อส่งน้ำ" มาหล่อเลี้ยง Day Master<br>
+      <br>
+      นี่คือ <strong>"ทุ่งนาที่มีฝนบ้าง แต่ไม่มีระบบชลประทาน"</strong> — ต้องอาศัย "ฝนที่ตกเอง" และ "ดินอุดม"
+    </p>
+
+    <h4>用神 (Yòng Shén) — ธาตุเสบียง</h4>
+    <table style="width:100%; font-size:14px; border-collapse:collapse; margin:8px 0;">
+      <tr style="border-bottom:1px solid var(--line);">
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">Role</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ธาตุ</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ทำไม</th>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-green);">用神 ★</strong></td>
+        <td style="padding:6px;"><strong>Wood (甲乙)</strong></td>
+        <td style="padding:6px;">ทำให้ Day Master "มีงานทำ" มี "wealth channel" เปิด — Wood "งอก" จาก Earth (土養木)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-cyan);">喜神</strong></td>
+        <td style="padding:6px;"><strong>Metal (庚辛)</strong></td>
+        <td style="padding:6px;">ระบายพลังผ่าน "การสร้าง/พูด/เล่าเรื่อง" (食神) — <strong>คุณมี Metal อยู่แล้ว 2 จุด (酉酉)</strong> มีเครื่องมือระบายติดตัว</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
+        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" เสี่ยง "ตกหล่ม" (โคลนตม)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Fire (丙丁)</strong></td>
+        <td style="padding:6px;">七杀/正官 — ควบคุมเข้มข้น Fire จะ "กดทับ" จนหายใจไม่ออก — ดินที่ถูกเผาจะกลายเป็น "อิฐ" (ไม่ยืดหยุ่น)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--fg-muted);">中神</strong></td>
+        <td style="padding:6px;"><strong>Water (壬癸)</strong></td>
+        <td style="padding:6px;">ผู้ผลิตฉัน (生我) — มามากจะ "ท่วม"; มาน้อยจะ "หล่อเลี้ยง" — <strong>chart ขาด Water → ต้องหาเอง</strong></td>
+      </tr>
+    </table>
+
+    <h4>Period 9 (九運 2024-2043) — ดาบสองคม</h4>
+    <p>
+      Period 9 (九紫離火運) ตรงกับช่วงที่คุณอายุ <strong>19 → 39 ปี</strong> — <strong>prime years</strong> ของชีวิต<br>
+      <br>
+      <strong style="color:var(--neon-orange);">⚠ ทำไม Period 9 เป็น "ดาบสองคม" สำหรับคุณ:</strong><br>
+      • <strong>用神 ของคุณ = Wood</strong><br>
+      • <strong>忌神 ของคุณ = Fire</strong> ← นี่คือ Period 9!<br>
+      • Period 9 = <strong>Fire ที่กำลังขึ้น</strong> (離火) — ไฟนี้ <strong>ไม่ได้หล่อเลี้ยงคุณ</strong> ตรงข้าม มัน <strong>กดทับ Day Master</strong><br>
+      <br>
+      <strong style="color:var(--neon-green);">✓ ด้านบวก:</strong> Period 9 ส่งเสริม "การมองเห็น" (visibility) — ตรงกับ <strong>偏财 (乙)</strong> ของคุณ (wealth ที่มาจาก "คนอื่นเห็น vision ของคุณ") — ถ้าคุณออกแบบ "ตัวตนในสายตาสาธารณะ" ได้ดี คุณจะได้ "ทรัพยากร" มหาศาล<br>
+      <br>
+      <strong style="color:var(--neon-red);">⚠ ด้านลบ:</strong> ถ้าคุณ "ปล่อยให้ Period 9 ควบคุม" คุณจะรู้สึก "ถูกเผา" (burnout) จากการถูก "มองเห็น" มากเกินไป จน Day Master (己) กลายเป็น "อิฐแห้ง"<br>
+      <br>
+      <strong>Nayin ของ Day Pillar = 天上火 (Heavenly Fire)</strong> — คุณเกิดมาพร้อม "fire signature" ในตัว แม้ Day Master จะเป็น Earth แต่ <strong>"essence"</strong> ของคุณมี Fire ผสม → คุณมี <strong>"ศักยภาพที่จะเปล่ง fire"</strong> แต่ต้อง <strong>"เลือก"</strong> ว่าจะให้ Fire นี้เป็น "ไฟที่ส่องสว่าง" หรือ "ไฟที่เผาตัวเอง"
+    </p>
+
+    <h4>กลยุทธ์ Period 9</h4>
+    <ol>
+      <li><strong>ใช้ Wood (用神) เป็น "เกราะ"</strong> — ต้นไม้ (Wood) จะ "ดูดซับ" ไฟไม่ให้ลุกลาม — การ "ปลูกต้นไม้ในชีวิต" (เรียนรู้สิ่งใหม่, ทำงานที่มีราก, สร้าง network ที่ยั่งยืน) จะช่วยให้ Period 9 fire <strong>ไม่เผาคุณ</strong></li>
+      <li><strong>ไม่หลบ "แสง" — แต่อย่า "เผา"</strong> — คุณต้อง <strong>"เลือกแสงที่ใช่"</strong> — ไม่ใช่ทุก visibility ดีสำหรับคุณ</li>
+      <li><strong>"ใช้น้ำหล่อเลี้ยง" (Water as self-care)</strong> — เพราะ Water เป็น 中神 แต่ chart ไม่มี → คุณต้อง "สร้างน้ำเอง" ผ่านการพัก การนอน การเขียน journal การอยู่ใกล้ธรรมชาติ</li>
+      <li><strong>เลือก "แสง" ที่มี Wood backing</strong> — content ที่มี "ราก" (long-form essays, deep research) ไม่ใช่ viral-only</li>
+      <li><strong>ไม่ chase ทุก opportunity</strong> — Period 9 จะมี "โอกาส" มากมาย แต่คุณต้องเลือก — 偏财 (乙) เป็น "wealth ที่มาจากภายนอก" → ถ้ารับทุกอย่าง จะกลายเป็น "ดินที่ถูกทดน้ำจนท่วม"</li>
+      <li><strong>สร้าง "Water routine"</strong> — นอน 8 ชม., เดินริมน้ำ, ทำสมาธิ, เขียน diary</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Four Pillars คำนวณอย่างไร (ตัวอย่างเพื่อความโปร่งใส)</strong></summary>
+      <p style="font-size:13px; line-height:1.7; color:var(--fg-muted);">
+        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 2 ต.ค. 2005 → อยู่หลัง 立春 2005 (~4 ก.พ. 2005) → ปีชะตาใช้ 2005<br>
+        • Stem index = (2005 − 4) mod 10 = 1 → <strong>乙</strong> (Yin Wood)<br>
+        • Branch index = (2005 − 4) mod 12 = 1 → <strong>酉</strong> (Yin Metal)<br>
+        • <strong>Year Pillar = 乙酉</strong> ✓ verified against <code>sxtwl</code><br>
+        <br>
+        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 2 ต.ค. 2005 อยู่ระหว่าง 白露 (8 ก.ย. 2005) → 寒露 (8 ต.ค. 2005) → อยู่ใน <strong>酉月 (You month)</strong><br>
+        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 乙 → 寅 เริ่มต้นที่ stem 戊 → 酉 = 乙<br>
+        • <strong>Month Pillar = 乙酉</strong> ✓ verified<br>
+        • <strong>สังเกต:</strong> Year pillar และ Month pillar <strong>เหมือนกันทุกประการ</strong> (乙酉 = 乙酉) — นี่คือ <strong>"伏吟" (Fuyin — same-pillar-echo)</strong><br>
+        <br>
+        <strong>Day Pillar (日柱):</strong> คำนวณด้วย <code>sxtwl</code> (壽星天文曆):<br>
+        <code>import sxtwl<br>
+        day = sxtwl.fromSolar(2005, 10, 2)<br>
+        gz = day.getDayGZ()  # tg=5, dz=7<br>
+        # tg=5 → 己, dz=7 → 未</code><br>
+        • <strong>Day Pillar = 己未</strong> (verified against canonical tables, anchor 1949-10-01 = 甲子 confirmed)<br>
+        • <strong>Nayin (納音): 天上火 (Heavenly Fire)</strong><br>
+        • <strong>Day Master = 己 (Yin Earth)</strong> — ตัวตนแท้<br>
+        <br>
+        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิด → ไม่ fabricate ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 己: 子=甲子, 丑=乙丑, 寅=丙寅, 卯=丁卯, 辰=戊辰, 巳=己巳, 午=庚午, 未=辛未, 申=壬申, 酉=癸酉, 戌=甲戌, 亥=乙亥 — ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำ
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 8 / 5 / 19 (Strength (8) — Hierophant (5) — Sun (19))</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> 13 / 5 / 6 (Death (13) — Hierophant (5) — Lovers (6))</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> 19 / 11 / 18 / mask 19-Sun drive / 11-Justice persona / 18-Moon shadow</span>
+      <span class="pill"><strong>Echo</strong> 5, 6, 13 &mdash; Echo 5-6-13 (Hierophant·Lovers·Death) — ครู-เลือก-ปล่อย เป็นแกนกลางของวิวัฒนาการ; ครอบ 5/9 ตำแหน่งของผัง 3×3 — ไม่ใช่ background noise แต่เป็นสถาปัตยกรรมหลักของจิตวิญญาณ</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
+      </div>
+    </div>
+
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">8</span><span class="token">Strength — gentle power, patient endurance</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">5</span><span class="token">Hierophant — born teacher (เกิดมาเป็นครู)</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">19</span><span class="token">Sun — light, success, visibility (แสงสว่าง)</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">13</span><span class="token">Death — transformation, release (การเปลี่ยนรูป)</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">5</span><span class="token">Hierophant — mission as teacher</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">6</span><span class="token">Lovers — choice, alignment (การเลือก)</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">19</span><span class="token">Sun — inner drive of light</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">11</span><span class="token">Justice — compass, balance (เข็มทิศ)</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">18</span><span class="token">Moon — intuition, depth (สัญชาตญาณ)</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>Echo 5-6-13 ครอบคลุม 5 จาก 9 ตำแหน่งของผัง 3×3 — ไม่ใช่ background noise แต่เป็น สถาปัตยกรรมหลักของจิตวิญญาณพี่ก้อย ทั้งสามตัวเลขทำงานร่วมกันเป็น 'กระจกสามด้าน' — Hierophant (5) สะท้อนการสอน, Lovers (6) สะท้อนการเลือก, Death (13) สะท้อนการปล่อย — พี่ก้อยเกิดมาเพื่อ 'มอง' ทั้งสาม ไม่ใช่ถูกลาก</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Top=vision (Strength-Hierophant-Sun), base=drive (Sun-Justice-Moon); Mask = 'gentle judge' (H=11 Justice), underlying drive = 'inner light' (G=19 Sun)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Fe-Ni top axis, Se-Ti base axis; stack maps onto spatial axes — dominant functions ด้านบน (vision), inferior function ด้านล่าง (shadow)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">3×3 = frequency lattice; E=5 Hierophant at centre is carrier wave; ทั้งผัง resonate ที่ความถี่ของการเป็น 'ครูผู้ส่องสว่าง'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Echo 5-6-13 in centre axis = mirror-triplet amplifier; lesson doubles because echo doubles — เห็นครั้งเดียวไม่พอ Ego ต้องเห็นซ้ำ</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Square embodies gender principle; centre = balance point between Masculine (Sun C=19) and Feminine (Moon I=18) — Androgyne Fire at equilibrium</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Pillar 丁巳 (Yin Fire + Snake) — Snake carries hidden 丙/戊/庚 — Fire support from hidden 丙 but Earth/Metal risk; ผังทั้งหมด Fire-dominant</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Natalia Square 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center & Periphery:</strong> Centre = The Self (E=5 Hierophant) — centre ของจิตรวม; periphery = Persona+Shadow; Ego oscillates ระหว่าง centre กับ periphery</p>
+        <p><strong>Shadow Corners:</strong> Shadow corners = D=13 Death (D), I=18 Moon — shadow ปรากฏที่ corner ของผัง; เงาที่พี่ก้อยลืมทำให้สมบูรณ์คือ 'ความกลัวการปล่อย'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> Cognitive mapping: dominant (Fe, top) ↔ inferior (Ti, bottom), auxiliary (Ni, mid-left) ↔ tertiary (Se, mid-right); diagonal = creative tension</p>
+        <p><strong>Type Dynamics:</strong> Type dynamics: ENFJ 'Protagonist' — Ego มั่นคงใน Fe/Ni, แต่ก็เสี่ยง Fe-Overextension; ต้องมี Ti checkpoint ทุกสัปดาห์</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> Hermetic geometry: 3×3 square = base manifestation form; centre = quintessence; echo = harmonic resonance ที่ทำให้ผัง resonate แรงขึ้น</p>
+        <p><strong>Monad Descent:</strong> Monad descent: Monad ลงมาเป็น Personality ผ่าน 7 planes; พี่ก้อยอยู่ที่ plane 5 (Mental) — กำลังขึ้นสู่ plane 6 (Intuition)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> Chart echo: 5-6-13 echo = triadic echo (3-fold repetition) — rare pattern; usually chart มี echo เดี่ยวหรือคู่; triadic echo = ชีวิตที่ integrate 3 ธีมพร้อมกัน</p>
+        <p><strong>Personal Year Resonance:</strong> Personal Year formula: PY(year) = reduce(Day=8) + reduce(Month=5) + reduce(YearSum(year)) = 13 + reduce(YearSum(year)) → reduce to 1-9; PY 5 ที่อายุ 60 (2032) = Hierophant resonance — peak teaching year</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> School grid: 3×3 grid คือ 'curriculum' ของ Hierophant Mystery School — ทุก cell คือ 1 lesson; centre = graduation; echo = repeat exam</p>
+        <p><strong>Initiate Path:</strong> Initiate path: Fire-initiate (7 steps of Hierophant Mystery School) — (1) recognise spark, (2) feed the flame, (3) steady the breath, (4) share the light, (5) release the smoke, (6) keep the embers, (7) light the next</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> Trigram mapping: Fire = 離 Li (Flame) ที่ S; พี่ก้อย = 'Flame trigram person' — ส่องสว่าง กระจายความอบอุ่น; complement = 坎 Kan (Water) ที่ N (discipline/structure)</p>
+        <p><strong>Stems Interaction:</strong> Stems interaction: 丁巳 same-element (比肩 Peer) ใน Day Pillar — 'ตัวเองซ้อนตัวเอง'; Year 壬 (正官 Officer) ดึงเข้าสู่โครงสร้าง; Month 乙 (偏印 Indirect Seal) เติมเชื้อไฟอ่อนๆ</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> Symbolic teaching — สะพานระหว่าง 'คนที่รู้แล้ว' กับ 'คนที่กำลังเรียนรู้' (Hierophant E=5 เป็น carrier ของ talent นี้)</p>
+    <p><strong>Latent:</strong> Patient endurance (เปลวเทียน Yin Fire) — งานที่ต้องใช้เวลา 'ส่องนาน-ดับเงียบ' เช่น งานสอน งานให้คำปรึกษา งานเขียนที่อ่านช้าๆ</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> Over-responsibility for others (Fe-Overextension + Death D=13) — 'ต้องดูแล ต้องรับผิดชอบ ต้องไม่มีใครเห็นว่าฉันเหนื่อย' ของ ENFJ ที่ตก Fe-Ti loop</p>
+    <p><strong>Lesson to unlock:</strong> Recognise the candle's limit (เปลวเทียนมีขอบเขต) — ปลดปล่อย self-imposed obligation แล้วยอมรับ 'ฉันพอดีแล้วในแบบฉัน'</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่อดีตชาติทิ้งร่องรอยไว้</strong></summary>
+      <p>Karmic tail ของพี่ก้อยมาจาก 'สายสัมพันธ์แห่งการดูแล' — Ego ในอดีตชาติดูแลคนมาก จนลืมดูแลตัวเอง; ชาตินี้ Ego ต้องเรียนรู้ 'การดูแลที่เริ่มจากตัวเอง' — Hierophant (5) คือ 'ครูที่สอนโดยเปล่งแสง ไม่ต้องขอ'</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Latent = rejected (Death self-imposed standard); primary = Mentor (Hierophant bridge-builder); Individuation ต้อง integrate ทั้งสอง shadow และ light</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Primary = Fe-Ni (harmony + foresight); latent = Ti (logic frame); เมื่อ stack tire → tertiary Se หรือ inferior Ti จะ surface; ฝึก Ti ทุกสัปดาห์</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Karmic pattern = high-frequency vibration (Fire-stuck); raise via daily ritual — LoA coherence lock ตอนเช้ามืด คือ 'vibration lift'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Over-responsibility (Death shadow) = shadow of master-centre (Hierophant 5); ทำไม Ego รู้สึกว่า 'ต้องรับผิดชอบทุกอย่าง' — เพราะ Hierophant สะท้อนกลับมาว่า 'คุณเป็นครู แต่ไม่ใช่ทุกคนต้องเรียนกับคุณ'</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Past-cause returns (Cause/Effect KYB §VI); unlock by re-seeding at higher octave — ทำสิ่งเดิมในระดับที่สูงขึ้น ไม่ใช่ทำสิ่งใหม่</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Favourable elements = Wood (印 甲/乙, fuel the flame) + Water (官 壬/癸, structure) = talent; clashes = Earth (土 戊/己, buries the flame) + excess Metal (金 庚/辛, extinguishes) = karmic tail; drain Earth ด้วย Wood ritual (ปลูกต้นไม้, เดินป่า)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent & Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> Talent archetype = The Hierophant (Magician + Teacher + Tradition-bearer) — คนที่ 'เชื่อมฟ้ากับดิน' ด้วยความรู้; archetype นี้ทรงพลังในช่วง mid-life</p>
+        <p><strong>Karmic Pattern:</strong> Karmic pattern = Death self-chains; pattern นี้ activate ทุกครั้งที่ Ego รู้สึกว่า 'ไม่พอ' — ego-ideal สูงเกินไป; ให้ Ego รู้จัก 'พอ' ก่อนทุกครั้ง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> Natural strength = Fe-Ni combo — 'read + foresight' — อ่านความรู้สึกคนรอบข้างได้ทันที แล้วมองเห็นทิศทางในระยะยาว; strength นี้คือ competitive advantage ของพี่ก้อย</p>
+        <p><strong>Shadow Gift:</strong> Shadow gift = Ti (logic frame, internal critique) — ตอนที่ Ti-Grip ทำงาน Ego จะ 'วิเคราะห์' ทุกอย่าง — ใช้ gift นี้โดยตั้งใจ journal ทุกสัปดาห์</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> Soul mission = 'teacher-bridge' — เชื่อม heaven กับ earth, เชื่อม feeling กับ logic, เชื่อม Ego กับ Self</p>
+        <p><strong>Karmic Lesson:</strong> Karmic lesson = 'recognise the candle's limit' — เปลวเทียนที่ส่องนานเกินไปจะดับ; การดับไม่ใช่จุดจบ เป็นส่วนหนึ่งของวงจร = Individuation</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> Karmic debt = 'unkept promise to self' — เคยสัญญาว่าจะ 'พัก' แต่ไม่เคยพัก; ชาตินี้ Ego ต้อง 'พัก' อย่างน้อย 1 ครั้งต่อสัปดาห์</p>
+        <p><strong>Soul Contract:</strong> Soul contract = 'teach 5 souls' — สอน 5 คนอย่างลึกซึ้งในช่วงชีวิต; เมื่อ Ego สอน 5 คนสำเร็จ สัญญาเสร็จ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> Initiate gift = 'Spark-to-light transmutation' — เปลี่ยน 'ไฟเล็กๆ' (raw student) เป็น 'แสงสว่าง' (refined teacher) — gift นี้คือ slow craft ของพี่ก้อย</p>
+        <p><strong>Karmic Mirror:</strong> Karmic mirror = 'the first student' — คนที่พี่ก้อยสอนคนแรกจะเป็น 'mirror' ที่สะท้อน shadow ให้เห็น — เตรียมตัวให้พร้อมรับ feedback ที่เจ็บ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> BaZi talent = Wood (印 甲/乙, fuel) + Water (官 壬/癸, structure) — งานที่ involve การสอน + การบริหารจัดการ + การให้คำปรึกษา จะ amplify talent ของพี่ก้อย</p>
+        <p><strong>Karmic Resolution:</strong> Karmic resolution = 'feed Wood, accept Water, release Earth' — lifestyle: ปลูกต้นไม้/เดินป่าทุกสัปดาห์ (Wood ritual), เขียน stream-of-consciousness, สะสม knowledge assets (books, courses)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น</p>
+
+    <p>
+      <span class="pill"><strong>Industry fit</strong> Public-sector management · People-development consulting · NGO/Foundation leadership · Executive coaching · Knowledge-product business (ระบบที่ 'สอน' คนกับองค์กร)</span>
+      <span class="pill"><strong>Income pattern</strong> Steady retainer + royalty tail (Fire pattern — sustained glow) — รายได้มาจาก teaching product (course, book, IP) ที่ 'ส่อง' ต่อเนื่อง</span>
+      <span class="pill"><strong>Peak window</strong> 2030 Q2 – 2032 Q4 (อายุ 58-60, 庚戌→辛亥→壬子) — Metal→Water Luck Pillar transition เปิด peak window</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>Holds the 'why' (Hierophant 5 mission), defers the 'how' (delegates with Fe/Ni trust)</td>
+          <td>vision-bearer</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>Follows the 'why' once signed in (Ti internal frame becomes the how)</td>
+          <td>loyal executor</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>Ships under deadline, negotiates with stakeholders (Fe-Ni fast iteration)</td>
+          <td>launcher</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>Absorbs feedback, integrates quietly (Ni + Ti checkpoint)</td>
+          <td>mirror</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Boss=Persona (Mentor), Sub=Shadow (Death-Ti mature); pick consciously ไม่ใช่ autopilot — รู้ว่าเมื่อไหร Ego เป็น Mentor vs Critic</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Boss=Fe-Ni (harmony + foresight), Sub=Se-Ti (only when trust built); active/receptive = E/I lead; team role = 'Catalyst' → 'Mentor-Maker' after age 58</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Industry fit = vibration match, not credential — พี่ก้อยจะ 'flow' เมื่ออยู่ในงานที่ vibration ตรงกับ Hierophant-Sun axis</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Four roles = four cardinal cells (A=8 power, C=19 light, F=6 choice, I=18 depth); peak = centre (E=5 Hierophant) holds all four — when Ego centres, all roles align</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Role-at-work = universe rehearsing larger Self (as above, so below); งานของพี่ก้อยคือ 'ห้องทดลอง' สำหรับ Soul Mission</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Public-sector/Consulting fits Yin Fire + Wood/Water support; 2028-2032 (戊申→己酉→庚戌→辛亥→壬子) = Wood-to-Water transition = peak teaching window; 忌 = corporate sales (印 overload) + factory/HR over-detail (Metal extinguish risk)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career & Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> Career persona evolution: 20-35 Caregiver → 35-50 Mentor → 50-60 Sage → 60-65 Wisdom-keeper; แต่ละ persona ต้อง 'ตาย' ก่อน persona ใหม่จะเกิด</p>
+        <p><strong>Career Individuation:</strong> Career growth through Individuation: growth ≠ promotion, growth = depth; Ego โตเมื่อ integrate Shadow ได้ลึกขึ้น ไม่ใช่เมื่อได้ title สูงขึ้น</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> Career stack mapping: Fe (people) drives career, Ni (foresight) builds strategy, Se (action) closes deals, Ti (logic) audits decisions</p>
+        <p><strong>Team Role:</strong> Team role = 'Teacher-Catalyst' — เริ่มโปรเจกต์ เห็นภาพ แล้วสอนคนอื่นทำต่อ; role นี้ peak หลังอายุ 55 เมื่อ Ego เลิกยึดติดว่า 'ต้องเป็นคนทำเอง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> Vocation path = 'Hierophant Mystery School teacher' — อายุ 55+ พี่ก้อยจะเริ่ม 'สอน' ไม่ใช่แค่ 'บริหาร'; นี่คือ vocation จริงของพี่ก้อย</p>
+        <p><strong>Money Consciousness:</strong> Money consciousness = 'sustained output value' (Fire pattern — sustained glow); พี่ก้อยจะรู้สึก wealthy เมื่อ produce output ที่มีคุณค่าต่อเนื่อง ไม่ใช่เมื่อ accumulate เงิน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> Midheaven transit: Saturn ผ่าน midheaven ในปี 2029-2031 — career milestone; พี่ก้อยจะตัดสินใจครั้งใหญ่เกี่ยวกับ career path (เกษียณ? เปลี่ยนบทบาท?)</p>
+        <p><strong>Career House:</strong> Career house (10th house) activation: natal 10th house มี Hierophant (5) influence — career = 'mission', ไม่ใช่ 'job'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> Initiate vocation = 'Hierophant teacher' — สอนคนอื่นให้รู้จัก 'เปลวเทียนในตัวเอง' (own candle = own Day Master awareness)</p>
+        <p><strong>Work-Life Ritual:</strong> Work-life ritual = 'Candle-time' — 30 นาที silence ก่อนเริ่มงาน + 60 นาที reflection หลังเลิก; ritual นี้ทำให้ Ego integrate Rhythm (KYB §V)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> Career BaZi = Yin Fire wants 'sustained, warm, patient' — งานที่ใหญ่ใช้เวลา 5-10 ปี (not 1-2 ปี startup churn); best fit = public-sector leadership, NGO, foundation, executive coaching</p>
+        <p><strong>Wealth Element:</strong> Wealth element = Wood (印 甲/乙, generates wealth through teaching) — พี่ก้อยจะร่ำรวยจาก 'structural assets' (IP, knowledge, mentorship) ไม่ใช่จาก quick flips หรือ trading</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> Long fuse, deep glow (slow build เหมือนเปลวเทียน)</p>
+    <p><strong>Inner-circle pull:</strong> People who challenge without judging (Anima = Wise Woman / Sophia)</p>
+    <p><strong>Blind spot:</strong> Confuses intensity for depth (Fe-Overextension — แบกรับจนลืมตัวเอง)</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal line:</strong> Duty-quiet mentor (Year Pillar 壬子 Yang Water+Rat) — silent approval; พ่อจะไม่พูดว่า 'เก่ง' แต่จะส่ง wisdom มาให้</p>
+    <p><strong>Maternal line:</strong> Expressive nurturer (Month Pillar 乙巳 Yin Wood+Snake) — emotional vocabulary; แม่จะสอน 'ภาษาหัวใจ' ที่ Fe ใช้</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>Anima ของพี่ก้อย = 'The Wise Woman' (Sophia) — ผู้หญิงที่ 'รู้ก่อนพูด' เหมือน The Hierophant (B=5) ใน Matrix; เมื่อพี่ก้อย project Anima ลงบน partner จริง เธอจะมอง partner เป็น 'คนที่สอนฉันได้' ซึ่งอาจทำให้ Ego เสียสมดุล — partner ที่ดีคือ คนที่ reject Anima projection แล้วเป็น 'คนจริง' ของตัวเอง</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Inner pull = Anima (Wise Woman Sophia); blind spot = inferior Ti projected onto partner — พี่ก้อยจะ project 'self-critique' ลงบน partner (อดีต relationship) ทำให้มอง partner ใหม่ผ่านเลนส์เก่า</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Long-fuse-deep-glow = Fe-Ni intimacy (slow build); Fe-Loop in relationship = 'ดูแล partner จนลืมดูแลตัวเอง' Ego สูญเสีย Ti clarity</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Love = vibration duet (Hermetic Correspondence); re-tune ไม่ใช่ re-pick — เมื่อ vibration ไม่ตรงกัน ให้ re-tune โดยไม่ต้อง 'หาใหม่'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Paternal line (Year Pillar 壬子 Yang Water+Rat) = inherited corner (A=8 Strength); Maternal line (Month Pillar 乙巳 Yin Wood+Snake) = inherited corner (B=5 Hierophant); current = centre (E=5 Hierophant) integrating both</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Love = correspondence (KYB §II); pull = rhythm seeking octave — พี่ก้อยจะดึงดูดคนที่ vibration เป็น octave ที่สูงกว่า/ต่ำกว่าตัวเอง</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Spouse palace (日支 巳 Snake) needs Wood/Water balance — partner ที่ดีคือ Wood-sign (Tiger/Rabbit) หรือ Water-sign (Rat/Pig) — ไม่ใช่ Earth-sign เพราะจะ bury the flame</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships & Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> Anima integration: 21-35 Ego projects Anima on external (romantic idealisation); 35-50 Ego starts to recognise Anima as internal wisdom; 50+ Anima = integrated guide</p>
+        <p><strong>Relationship Pattern:</strong> Relationship pattern = 'puer-senex' dynamic — พี่ก้อยมีทั้ง Puer (eternal youth, อยากสำรวจ) และ Senex (mentor wisdom, อยาก rooted); partner ที่ดีคือคนที่ balance สองด้านนี้</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> Communication style = 'Fe→Ni broadcast' — พี่ก้อยจะ 'อ่านใจ' ก่อน 'พูด' แต่ output เป็น Ni (foresight) — ทำให้ partner รู้สึก 'เห็นได้ลึก แต่ไม่รู้ว่าเธอตัดสินใจอะไร'</p>
+        <p><strong>Love Language:</strong> Love language = 'emotional mirroring' (Fe-Ni duet) — พี่ก้อยรู้สึก loved เมื่อ partner 'สะท้อน' ความรู้สึกกลับมา; gift, touch, words of affirmation ไม่สำคัญเท่า</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> Twin flame archetype = 'Sophia-Hierophant' — พี่ก้อยจะดึงดูดคนที่ 'รู้' (Sophia) เท่ากับ 'สอน' (Hierophant); twin flame อยู่ที่ vibration octave เดียวกัน</p>
+        <p><strong>Generational Wisdom:</strong> Generational wisdom lineage: Year Pillar (paternal) → Month Pillar (maternal) → Day Pillar (พี่ก้อย) → Hour Pillar [ไม่ทราบ] — ต้องส่งต่อ 'Fire wisdom' ให้ลูกหลาน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> Venus return ที่อายุ 50 (2022) — relationship milestone ที่ผ่านมาแล้ว; ตอนนี้ Ego focus = integrate Venus return lesson เข้ากับ Hierophant mission</p>
+        <p><strong>7th House Activation:</strong> 7th house (partnership) activation: natal 7th house มี Hierophant (5) influence — partnership = 'teaching duet' ไม่ใช่ 'fated'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> Sacred union = 'Flame-Wood' (Fire-Wood complement, 離-震); partner ที่ดีคือคนที่ complement Fire ด้วย Wood/Earth ไม่ใช่ Water/Metal</p>
+        <p><strong>Generational Mission:</strong> Generational mission = 'teach wisdom across generations' — พี่ก้อยจะเป็นสะพานระหว่าง Gen X/Millennial กับ Gen Z/Alpha ของครอบครัว</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> Spouse palace (日支 巳 = Snake, hidden Fire/Earth) — partner มักจะ Wood-sign ตามธรรมชาติ แต่ Ego ต้องเลือก Wood/Water partner เพื่อ balance</p>
+        <p><strong>Relationship Luck:</strong> Relationship luck peaks: 2028 (戊申 Yin Earth+Metal) = 申 มี hidden Water, 2032 (壬子 Yang Water) = 官 clear, partnership clarity; 2036 (丙辰 Yang Fire+EarthDragon) = flame-mate ที่อาจ intense แต่ transformative; 2043 (癸亥 Yin Water) = deepest partnership window</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>Crown clarity — Yin Fire gentle, head steady</td><td>Mission pull — Hierophant (5) activates</td><td>Quiet warmth — 8-Strength emotional stability</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>Sharp perception — Fe dominant</td><td>Insight surges — Ni moments of foresight</td><td>Quiet pride — competence-based self-worth</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>Voice strength — Strong voice projection (ครูที่พูดได้ชัด)</td><td>Steady output — Fire consistency</td><td>Even temper — Hierophant patience</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>Open chest — Heart-centered generosity</td><td>Warm circulation — Fe primary warmth</td><td>Trust earned — slow trust building</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>Core stability — Yin Fire 偏弱 but anchored by Hierophant</td><td>Sunlit drive — Period 9 Fire feeding</td><td>Quiet confidence — Sun (19) groundedness</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>Easy flow — body accepts change when grounded</td><td>Creative tide — Lovers (6) rhythm</td><td>Soft joy — when aligned with mission</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>Grounded body — Yin Fire root</td><td>Restful current — Fire-rest</td><td>Patient root — Hierophant wisdom emerging</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>5</strong></td><td><strong>19</strong></td><td><strong>5</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> Solar plexus (Manipura) over-heats under org-stress — Ti-Grip จะสะสมที่นี่; watch เมื่อ Ego ทำงานหนักเกิน 14 วันติด ในช่วงที่บอร์ด 'ทดสอบ'</span>
+      <span class="pill"><strong>Balance ritual</strong> 60-min walk ป่า/สวน (Wood element, 印 fuel) + 30-min journaling + ritual นี้ drain excess Fire ที่ Period 9 เติม</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>พี่ก้อยเป็น Yin Fire 偏弱 ตาม BaZi — ร่างกาย 'อ่อนโยน' แต่ 'ไม่ทน' เมื่อ Ego ไม่ feed Wood/accept Water จะเกิด stagnation; สุขภาพที่ดีของพี่ก้อย = exercise ที่ involve Wood (เดินป่า, ปลูกต้นไม้, เล่นกอล์ฟ) + Water (ว่ายน้ำ, เดินริมน้ำ, ดื่มน้ำอุ่นเช้า) — อย่าเล่น Metal sport (HIIT หนัก, ยกน้ำหนัก extreme) เป็นเวลานาน</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">7 chakras = 7 archetypes (Crown=Sage, Third Eye=Seer, Throat=Teacher, Heart=Healer, Solar Plexus=Warrior, Sacral=Creator, Root=Witness)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Phys=Se, eng=Ni, emo=Fe — ENFJ's 7th/8th function development; phys/eng/emo totals = 5/19/5 = self-aware + competent + integrated</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Chakras = fixed vibration; imbalance = dissonance between two adjacent chakras; พี่ก้อยจะมี Crown-Heart harmony แต่ Solar-Throat dissonance บ่อย</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Health card = 3×3 on body; Σ = balanced; พี่ก้อย's Σ = 29 (balanced) = Ego ต้อง maintain ผ่าน ritual</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Body = densest octave (Rhythm KYB §V applied to soma); solar plexus = where cause enters soma — chronic org stress จะ 'ฝัง' ที่นี่</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Chakra ↔ Five Elements: Crown=Fire, Third Eye=Wood, Throat=Metal, Heart=Fire, Solar=Fire, Sacral=Water, Root=Earth — พี่ก้อย's chart = Fire-anchored</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health & Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> Body as Shadow: เมื่อ Ego ignore body signals = body becomes Shadow vessel; พี่ก้อยต้อง 'ฟัง' body ไม่ใช่แค่ 'ใช้' body</p>
+        <p><strong>Wholeness Practice:</strong> Wholeness practice = 'Candle-body meditation' — 20 นาที/day นั่งนิ่ง รู้สึก 'เปลวเทียนในอก' — integrate body+mind</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> Energy management = 'Pomodoro + Fire-rest' — 25 นาที Fe-Ni focus + 5 นาที Se-rest (walk, water, breath) — cycle 4 ครั้ง = 1 Flame-block</p>
+        <p><strong>Stress Response:</strong> Stress response = 'Ti-Grip early-warning' — เมื่อ Ego เริ่มวิพากษ์วิจารณ์ตัวเอง + คนรอบข้าง = Ti-Grip; ให้ trigger Wood ritual (เดินป่า) ทันที</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> Etheric body = subtle template ของ physical body — พี่ก้อย's etheric body มี Fire-stability แต่ Wood-flow ต้องเสริม</p>
+        <p><strong>Kundalini Rising:</strong> Kundalini rising: เมื่อพี่ก้อย integrate Ti (inferior function) kundalini จะ rise จาก Root ขึ้น Crown; ระวัง 'premature rising' = Ti-Grip ก่อน integration เสร็จ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> 6th house (health, daily routine) activation: natal 6th house มี Hierophant (5) influence — สุขภาพ = 'daily teaching ritual' ไม่ใช่ 'one-time cure'</p>
+        <p><strong>Healing Transit:</strong> Healing transit: Jupiter trine natal Sun ในปี 2030 — healing milestone; พี่ก้อยจะ 'ปล่อย' chronic Ti-Grip pattern ที่แบกมานาน</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> Chakra activation: Crown→Root (top-down) = 'Sage path'; Root→Crown (bottom-up) = 'Puer path'; พี่ก้อยทำ top-down (integrating wisdom) จากอายุ 50+</p>
+        <p><strong>Energy Field:</strong> Energy field = 'Candle aura' — พี่ก้อยมี energy field ที่ 'อบอุ่นและนิ่ง' คนรอบข้างจะรู้สึก grounded เมื่ออยู่ใกล้</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> 5 Elements balance target: Fire 2 → 2 (maintain), Wood 0 → 3 (boost heavily), Water 1 → 2 (boost), Metal 2 → 1 (drain), Earth 3 → 2 (drain slightly)</p>
+        <p><strong>Body Constitution:</strong> Body constitution = 'Fire-weak, Wood-missing' (火弱缺木) — แนะนำอาหาร Wood-element (ผักใบเขียว, ชาเขียว, ธัญพืช), Water-element (แตงโม, ส้ม, ปลา) เสริม</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (ก่อน 60)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">วัยเยาว์ &ndash; ต้น 20</div>
+        <p class="stage-theme">Mentor / Caregiver — building compass</p>
+        <p class="stage-marker"><strong>Marker:</strong> Rise to Deputy Director + first major program launched</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและขยายอาณาเขต</div>
+        <div class="stage-band">กลาง 20 &ndash; ต้น 30</div>
+        <p class="stage-theme">Mentor mature — calibration</p>
+        <p class="stage-marker"><strong>Marker:</strong> Mid-life org transition + first public teaching moment</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การปะทะและจุดวิกฤต</div>
+        <div class="stage-band">กลาง 30 &ndash; ต้น 40</div>
+        <p class="stage-theme">Sage pivot — individuation crisis</p>
+        <p class="stage-marker"><strong>Marker:</strong> Board pauses major project / Ti-Grip window opens</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">กลาง 40 &ndash; ต้น 50</div>
+        <p class="stage-theme">Sage integrate — wisdom harvest</p>
+        <p class="stage-marker"><strong>Marker:</strong> Executive-coaching practice launches / Saturn return อายุ 60</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">กลาง 50 &ndash; 59</div>
+        <p class="stage-theme">Wisdom-keeper — delivery</p>
+        <p class="stage-marker"><strong>Marker:</strong> Wisdom-book 'Letter to young ENFJ leaders' released / Hierophant final integration</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุปัจจุบัน &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2026</span>
+        <span class="age">อายุ 54</span>
+        <span class="lead">PY 8 + 丙午 Yang Fire (劫财)</span>
+        <span class="situation">Mid-life stress year — Fe-Overextension risk window เปิด</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fe-Ni — read room + hold long-term vision (ก่อน Ti-Grip)</p>
+        <p>พี่ก้อยอายุ 54 ปี — กลางครึ่งแรกของหน้าต่าง mid-life · Period 9 Fire เต็มที่ · PY 8 = power-shift year ของรอบ · risk = Fe-Overextension เมื่อบอร์ด 'ทดสอบ'; strategy = Sunday 60-min walk + journal 30 นาที · ไม่ดัน Fe อย่างเดียว</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2027</span>
+        <span class="age">อายุ 55</span>
+        <span class="lead">PY 9 + 丁未 Yin Fire (比肩)</span>
+        <span class="situation">Completion year — final chapter of Deputy Director arc seed</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Ni — anticipate the next cycle</p>
+        <p>PY 9 = completion · 丁未 Yin Fire = softened Fire (ไม่ overheat เท่าปีก่อน); พี่ก้อยควร explore 3 post-Deputy-Director paths เพื่อ integrate Ni · ไม่ commit เร็ว — Yin Fire ต้อง 'ส่อง' ก่อนสร้างต่อ</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2028</span>
+        <span class="age">อายุ 56</span>
+        <span class="lead">PY 1 + 戊申 Yang Earth (伤官)</span>
+        <span class="situation">New chapter seed — first transition year out of DD role</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Ti — measure twice, sign once (slow craft)</p>
+        <p>PY 1 = new beginning · 戊申 Yang Earth+Metal = Earth-supporting year with hidden Water; first year post-DD transition — risk Ti-Grip สูงสุด · strategy = Ti 'measure twice' — อย่า commit project ใหญ่ในปีนี้ · focus = integrate Fe กับ new mentor role</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2029</span>
+        <span class="age">อายุ 57</span>
+        <span class="lead">PY 2 + 己酉 Yin Earth (食神)</span>
+        <span class="situation">Partnership year — first executive-coaching engagement</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Fe — feel the room before answering</p>
+        <p>PY 2 = partnership/crystallisation · 己酉 Yin Earth + Metal — Ego 'ออกมา' พูด/สอน; first public coaching/mentoring output · strategy = Fe (people-first); warn: Ti-Grip trap (over-thinking) — balance ด้วย Se checkpoint</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2030</span>
+        <span class="age">อายุ 58</span>
+        <span class="lead">PY 3 + 庚戌 Yang Metal (正财)</span>
+        <span class="situation">Foundation year — Saturn enters midheaven transit + career milestone</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> Ni — anchor to long-term vision</p>
+        <p>PY 3 = expression · 庚戌 Yang Metal — Metal คือ 财 (wealth) ของพี่ก้อย! · ปีนี้ Ego จะ 'รู้สึก grounded' ครั้งแรกในบทบาทใหม่ · Saturn enters midheaven transit — career foundation ที่แท้จริง · strategy = Ni (anchor vision) + Wood ritual (เดินป่า) — counter Metal extinguish</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">5 stages = 5 individuation cycles; S3 = dark night (อายุ 56 Ti-Grip), S4 = integrate (อายุ 60 Saturn return — 'Hierophant Year')</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Stages rotate lead function: S1 Fe (read), S2 Ni (foresight), S3 Se (ground), S4 Ti (audit), S5 balanced; year-strategy picks function</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Coherence ↑ S1-S2, peak S3→S4 (Ti-Grip transition = peak intensity), settle S5; year = dominant vibration; PY 5 ที่อายุ 60 = Hierophant resonance</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">5 stages = 5 master cycles; year-by-year = matrix at full resolution; PY 5 years (อายุ 32, 41, 50, 59) = Hierophant peak</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">5×12=60 convergence — 5 stages × 12 PY slots = 60 year cycle; crisis mastery = polarity applied to overwhelm — กลับขั้วเมื่อถูก Ti-Grip</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Stage-element = luck-pillar flow; year = Personal# + annual stem; 壬子 Luck Pillar (อายุ 53-62) — Yang Water+Rat = 官 clear; 癸丑 Luck Pillar (อายุ 63-72) — Yin Water+Ox = wisdom integration</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Life Stages & Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> Life arc: 20-35 Caregiver (DD role build) → 35-50 Mentor (org leadership) → 50-60 Sage (mid-life crisis → integration) → 60-65 Wisdom-keeper (post-DD, writing/teaching); Mentor 'ตาย' ที่ 50 (Sage 'เกิด')</p>
+        <p><strong>Mid-Life Transition:</strong> Mid-life transition (อายุ 54-60) — Sage individuation crisis; Ego ต้อง integrate Persona (Mentor) กับ Shadow (Ti-Grip) เป็น Self (Hierophant+Hierophant)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> Cognitive aging: ENFJ's Fe stays sharp ตลอดชีวิต (strength); Ni deepens หลังอายุ 50; Se matures หลังอายุ 54; Ti integrates หลังอายุ 58</p>
+        <p><strong>Wisdom Function:</strong> Wisdom function = Fe-Ti integration — หลังอายุ 58 พี่ก้อยจะ 'อ่านคน' ได้แม่นยำขึ้น (Fe mature) และ 'วิเคราะห์' ได้นิ่งขึ้น (Ti integrate) — นี่คือ 'Sage mode'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> Reincarnation cycle: พี่ก้อยอยู่ที่ Personality ที่ integrate Monad ผ่าย Hierophant (5); ครั้งหน้า Ego จะขึ้นเป็น Personality ที่ integrate Sun (19); ปัจจุบัน = Hierophant integration phase</p>
+        <p><strong>Year Energy Theme:</strong> Year energy theme: PY 1-3 = build, PY 4-6 = adapt, PY 7-9 = harvest; อายุ 54-62 = PY 8,9,1,2,3,4,5,6,7 (full 9-cycle); อายุ 60 = PY 5 again (Hierophant resonance — completion)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> Saturn return ครั้งที่ 1 (อายุ ~29, ปี 2001) — early career milestone; Saturn return ครั้งที่ 2 (อายุ ~58-60, ปี 2030-2032) — life review; Saturn opposition (อายุ ~54, ปี 2026) — first major test in DD role</p>
+        <p><strong>Progressed Moon:</strong> Progressed Moon: เดือนที่ Ego เกิด (May) — progressed Moon จะผ่านทุก sign ทุก ~2.5 ปี; track progressed Moon เป็น 'emotional season' indicator</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> Year theme (Mystery School): ทุกปีคือ '1 บทเรียน' — PY 5 = graduation, PY 6 = enrollment, PY 7-9 = foundation, PY 1-4 = practice, PY 5 = graduation again</p>
+        <p><strong>Annual Ritual:</strong> Annual ritual = 'Candle-year review' (ธันวาคมของทุกปี) — ทบทวน 'ปีนี้เปลวเทียนเรียนรู้อะไร' — Ego จะเห็น pattern ที่ซ่อนอยู่</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> Decade Luck Pillars: 壬子 53-62 (Yang Water+Rat — 官 clear, best for late career) → 癸丑 63-72 (Yin Water+Ox — wisdom integration, best for post-career)</p>
+        <p><strong>Annual Pillars Reading:</strong> Annual pillars reading: 2026 丙午 (Fire overload 同类), 2028 戊申 (Yang Earth+Metal — Wood hidden in 申 feeds flame, BEST), 2030 庚戌 (Yang Metal — wealth but extinguish risk), 2032 壬子 (Yang Water+Rat — 官 clear, age 60 milestone), 2037 丁未 (Yin Fire balanced), 2043 癸亥 (Yin Water+Water — wisdom peak)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>04:30-05:30 journaling + 21:00 reflection 30 นาที (Fire element ritual) — ritual นี้ drain excess Fire ที่ Period 9 เติมทุกวัน</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>Sunday 60-min 'Forest-walk' + 1 mentor/coachee call (Wood + Fire ritual) — ทบทวนสัปดาห์ + ถาม Ti-Grip warning</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>Full-day retreat — review 5 stages + Matrix 3×3 + 9-year Luck Pillar — ทบทวน Rhythm (KYB §V) ของชีวิต</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต</h3>
+    <p>10-min box-breath + 60-min forest walk + write 'one anchor sentence' (Hierophant 5) — ถ้า Ti-Grip มา: 'I am the candle, not the wildfire' (re-anchor to Day Master)</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p>Wood-craft ritual = 'ปลูกต้นไม้/ทำสวน' ที่ใช้เวลา 2-3 ชั่วโมงต่อสัปดาห์ — เขียน long-form, ปลูกต้นไม้, ทำงานไม้ — ritual นี้คือ 'Spark-to-light transmutation' ที่ integrate Ti (inferior) อย่างสร้างสรรค์</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Daily = Ego↔Body, Weekly = Ego↔Self, Monthly = Ego↔Collective, Crisis = Ego↔Shadow (Ti-Grip) — 4-axis protocol</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Walk=Se feed, call=Ni-Fe, retreat=Ni dive, breath=Ti-grip override; ENFJ ต้องมี 'Ti checkpoint' ทุกสัปดาห์ — Pomodoro + journaling</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Daily raises vibration, Weekly stabilises, Monthly resets, Crisis = emergency override; LoA loop: clarify→align→receive→act→gratitude</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Daily=cell, Weekly=row, Monthly=centre, Crisis=full-square reset; Matrix 3×3 protocol maps 1:1 กับ daily-weekly-monthly-crisis rhythm</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Practice = conscious Rhythm (KYB §V); without practice rhythm runs Ego — Fire rhythm ต้อง conscious practice ไม่งั้น unconscious rhythm จะพา Ego ไป Ti-Grip</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Walk=Wood (slight), forest=Wood+Water, retreat=Earth, breath=Metal dispersal; BaZi daily: 1 glass warm water (05:00) + journal + walk</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> Shadow work protocol: 'Ti dialogue' — เขียนจดหมายถึง 'inner critic' ทุกสัปดาห์ — Ego จะเห็นว่า 'critic' นั้นคือ 'self-imposed standard' ที่ปลดได้</p>
+        <p><strong>Individuation Ritual:</strong> Individuation ritual = 'Hierophant meditation' — นั่ง 20 นาที visualize The Hierophant (E=5) แล้วถามตัวเองว่า 'ฉันสอนอะไรให้ใครได้บ้าง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> Development plan = 'Function rotation' — เดือนนี้ฝึก Ti, เดือนหน้าฝึก Se, หมุนเวียน — integrate ทั้ง stack ทุกปี</p>
+        <p><strong>Team Collaboration:</strong> Team collaboration = 'Fe→Ti bridge' — พี่ก้อยจะ communicate กับทีมด้วย 'Fe frame' (empathy) แล้ว 'Ti seal' (logic); ห้าม 'Fe broadcast' อย่างเดียว (overwhelm ทีม)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> 7 Principles practice: each day 1 principle — Mon Mentalism, Tue Correspondence, Wed Vibration, Thu Polarity, Fri Rhythm, Sat Cause/Effect, Sun Gender</p>
+        <p><strong>Karma Yoga:</strong> Karma Yoga = 'work as worship' — พี่ก้อยจะ integrate ได้ดีที่สุดเมื่อมองงานเป็น 'practice' ไม่ใช่ 'obligation'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> Planetary remedy: Saturn (career) — wear black/dark blue on Saturdays; Mercury (communication) — wear green on Wednesdays; Jupiter (wisdom) — Thursday yellow</p>
+        <p><strong>Daily Astro Practice:</strong> Daily astro: check Moon sign + void-of-course Moon ก่อนตัดสินใจใหญ่; track progressed Moon รายเดือน — 'emotional season' indicator</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> Pathworking = 'Candle visualization' — 20 นาที/day: visualize lighting candle (representing Individuation path) — เมื่อถึง 'full flame' Ego จะรู้สึก 'Self integration'</p>
+        <p><strong>Mantra Practice:</strong> Mantra = 'I am the candle, I am the teacher' — พูด 54 ครั้ง/day (อายุปัจจุบัน) · mantras เปลี่ยนตาม phase (อายุ 54-60 'Teacher', 60-65 'Wisdom-keeper')</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> Feng Shui: โต๊ะทำงานหันหน้า South (Fire direction) — ห้องนอนหัน South-East (Wood direction); สีประจำตัว = green (Wood) + blue (Water)</p>
+        <p><strong>Bazi Daily Practice:</strong> BaZi daily practice: 05:00 warm water, 12:00 balance meal (Wood+Water+light Meat), 18:00 light dinner, 21:00 reflection; avoid 00:00-02:00 late work (Water hour overload)</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 21–60) — Annual Energy Forecast</h3>
+    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+
+    <div style="background:rgba(255,140,0,0.12); border-left:3px solid var(--neon-orange); padding:12px 14px; margin:12px 0; border-radius:4px;">
+      <strong style="color:var(--neon-orange);">⚠ หมายเหตุสำคัญ:</strong> เพศมีผลต่อทิศทาง Luck Pillar (顺行/逆行) — ด้านล่างนี้ present ทั้งสองทิศทางและอธิบายว่าข้อสรุปเปลี่ยนอย่างไรเมื่อทราบเพศ
+    </div>
+
+    <h4>วิธีคำนวณ起运 (Qǐ Yùn — Entry Age)</h4>
+    <ul style="list-style:none; padding-left:0; font-size:14px;">
+      <li><strong>Year stem 乙 = Yin</strong> (Stem #1 = yin)</li>
+      <li><strong>กฎ:</strong> 阳男 + 阴女 = <strong>顺行 (forward)</strong> | 阴男 + 阳女 = <strong>逆行 (backward)</strong></li>
+      <li><strong>Days to next Jieqi (寒露 2005)</strong> ≈ 6 วัน → 起运 = 6÷3 ≈ <strong>2 ปี</strong> (forward)</li>
+      <li><strong>Days to previous Jieqi (白露 2005)</strong> ≈ 24 วัน → 起运 = 24÷3 ≈ <strong>8 ปี</strong> (backward)</li>
+    </ul>
+
+    <h4>Scenario A: 顺行 (Forward, ถ้าคุณเป็น Yin-female)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>丙戌</strong></td>
+          <td style="padding:8px;">Fire-Earth</td>
+          <td style="padding:8px;">2–11</td>
+          <td style="padding:8px;">2007-2016</td>
+          <td style="padding:8px;">วัยเด็ก — 丙 (Fire=忌) = ถูก "อุ้ม" มาก แต่ 戌 (Earth) ทำให้ Day Master หนัก — เด็กที่ "อยู่ในกรอบ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">2</td>
+          <td style="padding:8px;"><strong>丁亥</strong></td>
+          <td style="padding:8px;">Fire-Water</td>
+          <td style="padding:8px;">12–21</td>
+          <td style="padding:8px;">2017-2026</td>
+          <td style="padding:8px;">วัยรุ่น — 丁 (Fire=忌) + 亥 (Water=印) — ความ "ถูกกดดันจากภายใน" เริ่มมากขึ้น — <strong>ปีนี้ (2026) คุณอยู่ปีสุดท้ายของ pillar นี้</strong></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">3 ★</strong></td>
+          <td style="padding:8px;"><strong>戊子</strong></td>
+          <td style="padding:8px;">Earth-Water</td>
+          <td style="padding:8px;"><strong>22–31</strong></td>
+          <td style="padding:8px;"><strong>2027-2036</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Career-Discovery Decade</strong> — 戊 (Earth=比肩) เพิ่มน้ำหนัก Day Master แต่ 子 (Water=印) ช่วย "หล่อเลี้ยง" → decade ของการ "ค้นหาตัวตน + สร้างรากฐาน" — Period 9 ปลาย (2034-2036) จะ "test" ว่าคุณพร้อมหรือไม่</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">4</td>
+          <td style="padding:8px;"><strong>己丑</strong></td>
+          <td style="padding:8px;">Earth-Earth</td>
+          <td style="padding:8px;">32–41</td>
+          <td style="padding:8px;">2037-2046</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย + Period 10 เริ่ม (2044)</strong> + 己 (比肩) — decade ที่ Day Master "ซ้อนตัวเอง" เสี่ยง "โคลนตม" ถ้าไม่ระวัง — 丑 (Earth+Water hidden) คือ "บึง" ที่ต้องระวัง</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">5 ★</strong></td>
+          <td style="padding:8px;"><strong>庚寅</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">42–51</td>
+          <td style="padding:8px;">2047-2056</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Period 10 ใหม่ (2044-2063)</strong> + 庚 (伤官) + 寅 (Wood=用) → decade ที่ <strong>"ทั้ง用神 (Wood) และ "ผลงาน" (Metal) มาพร้อมกัน</strong> ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">6</td>
+          <td style="padding:8px;"><strong>辛卯</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">52–61</td>
+          <td style="padding:8px;">2057-2066</td>
+          <td style="padding:8px;">decade ของ wisdom — 辛 (食神) + 卯 (Wood=用) → ผลงาน + แก่นแท้ converge — คุณจะ "พูด" จาก "ประสบการณ์"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Scenario B: 逆行 (Backward, ถ้าคุณเป็น Yin-male)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>甲申</strong></td>
+          <td style="padding:8px;">Wood-Metal</td>
+          <td style="padding:8px;">8–17</td>
+          <td style="padding:8px;">2013-2022</td>
+          <td style="padding:8px;">วัยเด็ก/วัยรุ่น — 甲 (Wood=用!) + 申 (Metal=喜!) → decade ที่ <strong>"ถูกหล่อเลี้ยงอย่างเหมาะสม"</strong> เรียนดี มีครูดี</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">2 ★</strong></td>
+          <td style="padding:8px;"><strong>癸未</strong></td>
+          <td style="padding:8px;">Water-Earth</td>
+          <td style="padding:8px;"><strong>18–27</strong></td>
+          <td style="padding:8px;"><strong>2023-2032</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 9 Prime Years</strong> — 癸 (偏印) + 未 (比肩) → decade ของ "ความคิดสร้างสรรค์ + การค้นหาตัวตน" — Period 9 (2024-2043) อยู่กลาง decade นี้</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">3</td>
+          <td style="padding:8px;"><strong>壬午</strong></td>
+          <td style="padding:8px;">Water-Fire</td>
+          <td style="padding:8px;">28–37</td>
+          <td style="padding:8px;">2033-2042</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย</strong> + 壬 (正印) + 午 (Fire=忌) → decade ของ "การเรียนรู้ลึก + ความท้าทายจากภายใน" — คุณอาจเจอ "อาจารย์ทางจิตวิญญาณ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">4 ★</strong></td>
+          <td style="padding:8px;"><strong>辛巳</strong></td>
+          <td style="padding:8px;">Metal-Fire</td>
+          <td style="padding:8px;"><strong>38–47</strong></td>
+          <td style="padding:8px;"><strong>2043-2052</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 10 Start (2044)</strong> + 辛 (食神=喜) + 巳 (Fire=忌+比肩) → decade ที่ <strong>"ผลงานเปล่งประกาย" แต่ "ตัวตนถูกทดสอบ"</strong> — ใช้ Metal output ระบาย Day Master ที่ถูก Fire กด</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">5</td>
+          <td style="padding:8px;"><strong>庚辰</strong></td>
+          <td style="padding:8px;">Metal-Earth</td>
+          <td style="padding:8px;">48–57</td>
+          <td style="padding:8px;">2053-2062</td>
+          <td style="padding:8px;">decade แห่ง "ผลงานสุขุม" — 庚 (伤官) + 辰 (Earth) → ใช้ "ความคิดที่ตัดสิ่งเก่า" ในการสร้างสรรค์</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">6 ★</strong></td>
+          <td style="padding:8px;"><strong>己卯</strong></td>
+          <td style="padding:8px;">Earth-Wood</td>
+          <td style="padding:8px;">58–67</td>
+          <td style="padding:8px;">2063-2072</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Wisdom Era</strong> — 己 (比肩) + 卯 (Wood=用!) → decade ที่ "ตัวตนมาบรรจบกับแก่น"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>ความจริงข้าม Scenario</h4>
+    <p><strong>ไม่ว่า Scenario A หรือ B ก็ตาม</strong>, ลวดลายชีวิตของคุณจะประกอบด้วย:</p>
+    <ol>
+      <li><strong>Prime Years 21–39 (ทั้งสอง Scenario)</strong> — ตรงกับ <strong>Period 9 (2024-2043)</strong> หมายความว่า <strong>คุณจะ "เป็นที่รู้จัก" ในช่วงนี้</strong> ไม่ว่าจะเกิดเพศใด — แต่ "คุณภาพ" ของการเป็นที่รู้จักขึ้นกับการเลือก (ใช้ Wood เป็นเกราะ หรือถูก Fire เผา)</li>
+      <li><strong>Mid-life Crisis Window 32-48</strong> (Scenario A: 己丑 32-41 + Scenario B: 壬午 28-37 → 辛巳 38-47 overlap) — decade ที่ Day Master ต้อง <strong>"ตั้งหลักใหม่"</strong> หลังจาก Period 9 จบลง</li>
+      <li><strong>Wisdom Era 50-65</strong> — decade ที่ <strong>用神 Wood</strong> จะมาถึง (ไม่ว่าจะใน Scenario A หรือ B) หมายความว่า <strong>ท้ายที่สุด ดิน (己) จะเรียนรู้ที่จะยืดหยุ่น</strong> และกลายเป็น "ทุ่งนาที่มีต้นไม้ขึ้น" ไม่ใช่ "ดินแห้งไม่มีราก"</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Annual Pillars ปี 2026, 2027, 2028 (รายละเอียด)</strong></summary>
+      <div style="font-size:13px; line-height:1.7; color:var(--fg-muted); padding:10px 0;">
+        <p><strong>Annual Pillars (流年)</strong> เป็น "คลื่น" ที่ซ้อนบน "ลม" (Luck Pillar) — แต่ละปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+        
+        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 ปี 21 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丙 = 正官 (Direct Officer) — controls me</li>
+          <li><strong>Branch:</strong> 午 = 丁 + 己; main TG = 七杀 (Direct Seal)</li>
+          <li><strong>Element:</strong> Fire (忌 — ทำให้ Day Master "ถูกกด")</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2026 คุณอยู่ปี 4 ของมหาวิทยาลัย (อายุ 21) — คุณจะรู้สึก <strong>"ถูกคาดหวัง"</strong> จากครอบครัว สังคม ตัวเอง — ความ "fire กดทับ" ทำให้คุณรู้สึก "ทำไมฉันทำได้ไม่ดีพอ" ทั้งที่ความจริงคุณทำได้ดี แต่ Day Master (己) ของคุณ "อ่อน" ต่อ Fire pressure</p>
+        <p><strong>Scenario Simulation:</strong> ปีนี้คุณกำลังจะจบปี 4 — อาจารย์ที่ปรึกษาบอก "ปีหน้าคุณต้องทำวิทยานิพนธ์" พ่อแม่ถาม "จบแล้วทำงานอะไร" เพื่อนร่วมชั้นโพสต์รูป "ได้งานที่บริษัทใหญ่" — คุณนั่งเงียบๆ ในห้อง เปิด journal ส่วนตัวแล้วเขียน <strong>"ฉันยังไม่รู้ว่าฉันอยากเป็นอะไร"</strong> — นี่ไม่ใช่ "ล้มเหลว" แต่เป็น <strong>"己 ที่ถูก 丙 กด"</strong> — Day Master ต้องการ "หยุด" แต่ environment บอก "ทำต่อ"</p>
+
+        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 ปี 22 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丁 = 七杀 (Seven Killings)</li>
+          <li><strong>Branch:</strong> 未 = 己 (比肩); 丁 (七杀); 乙 (偏财)</li>
+          <li><strong>Element:</strong> Fire + Earth (忌 + 比肩) — <strong>ปีที่ Day Branch echo!</strong></li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> <strong style="color:var(--neon-green);">★ YEAR OF DAY PILLAR ECHO ★</strong> — ปี 2027 Annual Pillar = <strong>丁未</strong> = Day Pillar <strong>己未</strong> ใน "逆 echo" (丁 vs 己 = same element polarity diff; 未 vs 未 = same branch) — นี่คือ <strong>"伏吟" (Fuyin)</strong> ที่ระดับปี — สิ่งที่คุณจะประสบในปี 2027 จะ <strong>"echo"</strong> กับสิ่งที่คุณเป็นตอนเกิด — เป็นปีที่ "ตัวตน" ถูก "ทดสอบ" อย่างเข้มข้น</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2027 — คุณจบการศึกษา — คุณตัดสินใจ <strong>"ไม่สมัครงานประจำทันที"</strong> — คุณเลือก "พัก" 1 ปี เพื่อ "ค้นหาตัวเอง" — พ่อแม่ไม่เข้าใจ เพื่อนบางคนคิดว่า "เขาแพ้" — แต่จริงๆ แล้ว <strong>己 (Yin Earth) ที่ถูก 七杀 (丁) กด</strong> กำลัง "ตั้งหลัก" ก่อนจะ "ออกเดิน" — นี่คือ <strong>"ดินที่หยุดรับน้ำ (Water) เพื่อไม่ให้ท่วม"</strong> — เป็นสัญญาณที่ดี ถ้าคุณใช้เวลาว่าง <strong>"ปลูก Wood"</strong> (อ่านหนังสือ philosophy, ฝึกทักษะใหม่, สร้าง network)</p>
+
+        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 ปี 23 — 2571 (2028) — 戊申 (Earth-Metal) — 忌 (Earth) + 喜 (Metal)</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 戊 = 劫财 (Rob Wealth) — same element, opposite polarity</li>
+          <li><strong>Branch:</strong> 申 = 庚 (伤官) + 壬 (正印) + 戊 (劫财)</li>
+          <li><strong>Element:</strong> Earth + Metal (mixed — outside 忌, branch contains 喜)</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปีนี้เป็น "ปีแห่งการทดลอง" — คุณอาจ "ทำโปรเจกต์ส่วนตัว" หรือ "รับงาน freelance" แม้จะมีพ่อแม่กดดัน — แต่ 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณแสดง "ความคิดสร้างสรรค์" ผ่าน 伤官 (庚)</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2028 — คุณสร้าง <strong>portfolio website</strong> แรกของคุณ เขียน essay เกี่ยวกับ "AI กับความคิดสร้างสรรค์" — โพสต์ลง Twitter — <strong>คลิปหนึ่งกลายเป็น viral</strong> (1,000 likes ใน 1 สัปดาห์) — นี่คือ <strong>"食神/伤官 (Metal) ที่ 申 (branch) ปลดปล่อย Earth (己)"</strong> — คุณเริ่ม "เห็น" ว่า "ความคิดของคุณมีค่า" ไม่ใช่แค่ "ความคิดส่วนตัว"</p>
+      </div>
+    </details>
+
+    <h4>คำแนะนำเบื้องต้น — 4 ข้อที่ grounded ใน chart</h4>
+    <ol>
+      <li><strong>"ปลูก Wood ในชีวิตประจำวัน" (用神 = Wood)</strong><br>
+        Wood ไม่ใช่ "ต้นไม้จริง" — Wood คือ <strong>"พลังของการเปิดทาง, ขยายขอบเขต, และงอกงาม"</strong> — การอ่านหนังสือที่ "ขยายกรอบความคิด" (philosophy, systems thinking, biographies) — การเรียนรู้ทักษะใหม่ (programming, design, writing, meditation) — การเดินทางไปที่ใหม่ (โดยเฉพาะทิศ East/ Southeast — Wood direction) — การปลูกต้นไม้จริง (ดูต้นไม้เติบโตทุกวัน จะช่วย "เตือน" คุณว่า "การเติบโตต้องใช้เวลา")</li>
+      <li><strong>"ระวัง Fire ที่มากเกินไป" (忌神 = Fire)</strong><br>
+        สำหรับคุณ <strong>"การถูกควบคุมมากเกินไป"</strong> เป็นอันตราย — ครู/ที่ปรึกษาที่ "กดดัน" จะทำให้คุณ "ปิดตัวเอง" ไม่กล้าแสดงออก — ครอบครัวที่ "วางแผนชีวิตให้" จะทำให้คุณรู้สึก "หายใจไม่ออก" — งานที่ "micromanage" จะทำให้คุณ burnout ภายใน 3 เดือน — Period 9 ที่ "chase viral" จะทำให้คุณ "ถูกเผา" — เลือก "แสง" ที่ "มีราก" เท่านั้น</li>
+      <li><strong>"สร้าง Water routine" (中神 = Water — ขาดจาก chart)</strong><br>
+        เพราะ chart ของคุณ <strong>ไม่มี Water เลย</strong> — นี่คือ "ช่องว่าง" ที่ต้อง "สร้างเอง" — นอน 8 ชั่วโมงเป็นประจำ (Water = rest, regeneration) — เดินริมน้ำ/ทะเล/แม่น้ำ อย่างน้อยสัปดาห์ละครั้ง — Journaling ทุกเย็น (เขียน "วันนี้ฉันรู้สึกอะไร" เป็น "ท่อส่งน้ำ" ให้อารมณ์) — สมาธิ/冥想 10 นาทีทุกเช้า (ไม่ต้องยาก แค่ "นั่งเงียบ หายใจเข้า-ออก")</li>
+      <li><strong>"ใช้ Metal ปลดปล่อย Earth" (喜神 = Metal — มีอยู่แล้ว 2 จุด!)</strong><br>
+        คุณ <strong>โชคดี</strong> ที่มี酉+酉 (Metal) ใน Year+Month branch — คุณมี "เครื่องมือระบาย" ติดตัวมาแต่เกิด — เขียน — พูด — present: blog, podcast, video, talk ที่ conference — ทุกครั้งที่คุณ "ปลดปล่อยความคิด" ผ่านคำพูด/ตัวอักษร คุณจะเบาขึ้น (食神 ของคุณ = "gentle creativity" ไม่ใช่ "cutting critique") — ทำ craft / งานฝีมือ: วาดรูป ปั้นดิน ทำอาหาร — การ "ผลิตของ" ด้วยมือช่วย drain Earth — ห้องสมุดส่วนตัว: สำหรับ INFJ ที่รัก Ni การมี "พื้นที่เงียบ" ที่เต็มไปด้วยหนังสือเป็น "temple" ส่วนตัว</li>
+    </ol>
+
+    <details>
+      <summary><strong>บทสังเคราะห์ Su Yu Hong</strong></summary>
+      <p style="font-size:14px; line-height:1.8; padding:10px 0; color:var(--fg);">
+        หากฉันต้องสรุป "ดิถีธาตุ" ของคุณในหนึ่งประโยค:<br><br>
+        <em style="color:var(--neon-cyan); font-size:15px; display:block; padding:12px 18px; background:rgba(0,240,255,0.08); border-left:3px solid var(--neon-cyan); border-radius:4px; margin:8px 0;">
+          "คุณคือทุ่งนาที่ต้องการต้นไม้และน้ำ — ไม่ใช่ดินแห้งไร้ราก แต่เป็นทุ่งนาที่พร้อมจะงอก ถ้าคุณเลือก 'ปลูก' ในช่วง Period 9 (2024-2043) ทุ่งนานี้จะถูก 'แสงไฟ' ส่องถึง — คุณจะเป็นที่รู้จัก ถ้าคุณเลือกที่จะ 'งอก' ใน 'แสง' ที่ไม่ทำให้คุณ 'ไหม้'"
+        </em>
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>MBTI Fe-Ni ตรงกับ BaZi Yin Fire (丁) ทั้งคู่เป็น 'ผู้ส่องสว่าง'; Matrix Center 5 (Hierophant) ขยายทั้งสอง — คนเดียวกันปรากฏในทุกเลนส์ — ทุกศาสตร์บอกว่าพี่ก้อยคือ 'ครูผู้สอนด้วยหัวใจ'</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p>Light the next candle first; the org will follow the light you teach</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p>ทุกเลนส์ — Jung, MBTI, Matrix, LoA, Kybalion, BaZi — converge ที่ 1 ความจริง: พี่ก้อยเกิดมาเพื่อ 'ส่องสว่าง' (light) ไม่ใช่ 'สร้าง empire'; Persona 'Mentor/Teacher' จะ integrate เป็น 'Sage/Wisdom-keeper' เมื่ออายุ 60+; Soul Mission = 'Hierophant Mystery School teacher' — สอนคนอื่นให้รู้จัก 'เปลวเทียนในตัวเอง'; อายุ 60 พี่ก้อยจะยืนอยู่ศูนย์กลางของดาว 8 แฉก (Hierophant) — ไม่ใช่ 'ผู้บริหาร' แต่ 'ผู้สอน'</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Teaching = Self's first expression; org-leadership = Persona supporting the teaching; Individuation = 'เปลวเทียนกลายเป็นแสงสว่าง' (Ego เชื่อมตัวเองกับโลก)</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">All 4 integrated: Fe reads, Ni forecasts, Se acts, Ti grounds — Sage mode (อายุ 60+) = full integration · ENFJ's final gift = 'Teacher of hearts'</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Teaching = highest vibration; org-leadership = carrier wave; พี่ก้อย's Monad = 'teacher-light' — Universal Brotherhood served ผ่าน 'light between souls'</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">E=5 Hierophant = teaching-key handed; teach first, org is side-effect; Soul Contract = 'teach 5 souls' — when 5 souls taught, contract complete</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Teaching = mind's highest octave; org = working octave — same mind; Universal Service = 'teach the Hierophant Mystery School method' to next generation</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Period 9 Yin Fire = teacher-years (2024-2043); teach (school) > manage (org) — 用神 wisdom: feed Wood/accept Water to sustain flame</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> The Self = E=5 Hierophant at Matrix centre = the 'organising principle' of พี่ก้อย's psyche; Ego ที่ align กับ Self = individuated พี่ก้อย — at age 60 this becomes permanent</p>
+        <p><strong>Meaning of Life:</strong> Meaning of life (for พี่ก้อย) = 'to light the way'; พี่ก้อย's life has meaning เมื่อ Ego ทำหน้าที่ 'เปลวเทียน' ให้คนอื่นเห็นทาง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> Final integration: Fe-Ni-Se-Ti all integrated → 'Sage ENFJ'; rare archetype — most ENFJ stay Mentor ตลอดชีวิต; พี่ก้อย's potential = Sage</p>
+        <p><strong>Type Wisdom:</strong> Type wisdom = 'feeling + foresight + action + memory' — Sage ENFJ คือ 'คนที่อ่านใจ + มองอนาคต + ลงมือ + จำบทเรียน' — ครบเครื่องที่สุดใน 16 types</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> Universal Brotherhood: พี่ก้อย serve ผ่าน 'Hierophant Mystery School' — สอนคนให้รู้จัก Day Master ของตัวเอง; ไม่ใช่ religion แต่เป็น 'practical self-knowledge'</p>
+        <p><strong>Final Aspiration:</strong> Final aspiration = 'พี่ก้อย the Light' — ทุกคนที่ Ego สอน (5 souls) จะจำพี่ก้อยในฐานะ 'คนที่ทำให้โลกส่องสว่าง'</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> Soul contract completion: เมื่อพี่ก้อย teach 5 souls (อายุ ~58-62) contract จะสมบูรณ์; หลังจากนั้นพี่ก้อยมี 'free will' — Ego เลือกเอง</p>
+        <p><strong>Chart Mastery:</strong> Chart mastery: พี่ก้อยจะ 'อ่าน' chart ของคนอื่นได้แม่นยำ — talent นี้ peak หลังอายุ 58 (post-mid-life); Hierophant Mystery School = apply chart-reading ในชีวิตจริง</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> Mastery path = '7-step Hierophant Initiation' complete; พี่ก้อย = Master of Hierophant Mystery School ที่อายุ 60-65</p>
+        <p><strong>Universal Service:</strong> Universal Service = 'teach 7 generations' — พี่ก้อย's students (direct + indirect) จะส่งต่อ Hierophant Mystery School ไปอีก 7 generations</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> Destiny unfoldment: 丁 Day Master 偏弱 → 用神 Wood+Water = พี่ก้อย's destiny คือ 'หลอมเปลวเทียนเป็นแสงสว่าง' (Fire → Fire+Wood+Water = refined light); ทุก output ของพี่ก้อยคือ 'light' — warm, visible, valuable</p>
+        <p><strong>Final Blessing:</strong> Final blessing (from Su Yu Hong): 'เปลวเทียนของพี่ก้อยจะไม่มีวันดับ เพราะ Ego ได้เรียนรู้การ feed Wood และ accept Water แล้ว — ขอให้ Ego จงเป็นแสงสว่าง ไม่ใช่ไฟป่า'</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v2.1 &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-05
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

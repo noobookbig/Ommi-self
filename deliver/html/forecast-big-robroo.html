@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<!--
+  forecast-template.html — futuristic-neon redesign (MET-461 → MET-460)
+  Inline stylesheet · Kanit 300/400/500/700 · scrollable · denser data layout
+  Sections kept intact: §0 Summary · §1 Cosmic Synergy · §2 Natalia 3×3 ·
+    §3 Talent + Karmic · §4 Career + Roles · §5 Relationships + Lines ·
+    §6 Health + Chakras · §7.1 5 Stages · §7.2 Year-by-Year · §8 Protocols · §9 Ultimate Synthesis
+
+  Palette tokens (CSS custom properties):
+    --bg-0        #050514   deep midnight (page base)
+    --bg-1        #0a0a1a   primary surface
+    --bg-2        #11112a   raised card surface
+    --fg          #e6f7ff   primary text (icy)
+    --fg-muted    #8a93b8   secondary text
+    --neon-cyan   #00f0ff   slot 1 accent
+    --neon-magenta#ff00d4   slot 2 accent
+    --neon-violet #9d4edd   slot 3 accent
+    --neon-green  #39ff14   slot 4 accent
+    --neon-gold   #ffd700   slot 5 accent
+    --neon-orange #ff8c00   slot 6 accent
+    --neon-red    #ff3860   slot 7 accent
+-->
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Robroo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #050514;
+    --bg-1: #0a0a1a;
+    --bg-2: #11112a;
+    --bg-3: #181833;
+    --line: rgba(0, 240, 255, 0.12);
+    --line-strong: rgba(0, 240, 255, 0.28);
+
+    --fg: #e6f7ff;
+    --fg-muted: #8a93b8;
+    --fg-dim: #5a6388;
+
+    --neon-cyan:    #00f0ff;
+    --neon-magenta: #ff00d4;
+    --neon-violet:  #9d4edd;
+    --neon-green:   #39ff14;
+    --neon-gold:    #ffd700;
+    --neon-orange:  #ff8c00;
+    --neon-red:     #ff3860;
+
+    --page-max: 1320px;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --gutter: 16px;
+    --pad: 22px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--bg-0);
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--fg);
+    background:
+      radial-gradient(ellipse at 15% -10%, rgba(0, 240, 255, 0.10), transparent 55%),
+      radial-gradient(ellipse at 85% 10%, rgba(255, 0, 212, 0.10), transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(157, 78, 221, 0.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px 32px 96px;
+  }
+
+  header.hero {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    background:
+      linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    box-shadow:
+      0 0 0 1px rgba(0, 240, 255, 0.08),
+      0 0 40px rgba(0, 240, 255, 0.10),
+      0 0 80px rgba(255, 0, 212, 0.08);
+    margin-bottom: 32px;
+  }
+
+  header.hero h1 {
+    margin: 0 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow:
+      0 0 18px rgba(0, 240, 255, 0.35),
+      0 0 36px rgba(255, 0, 212, 0.20);
+  }
+
+  header.hero .meta {
+    margin: 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  header.hero .meta strong {
+    color: var(--neon-cyan);
+    font-weight: 500;
+    margin-right: 6px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 16px;
+    z-index: 10;
+    background: rgba(10, 10, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.45),
+      0 0 24px rgba(0, 240, 255, 0.08);
+  }
+  nav.toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px 18px;
+    font-size: 14px;
+  }
+  nav.toc a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible {
+    color: var(--neon-cyan);
+    border-left-color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.06);
+    outline: none;
+  }
+
+  section.card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    padding: var(--pad);
+    margin-bottom: 28px;
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    scroll-margin-top: 100px;
+  }
+
+  section.card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--card-glow, var(--neon-cyan));
+    box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+  }
+
+  section.card > h2 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0.3px;
+    color: var(--card-glow, var(--neon-cyan));
+    text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  section.card > h2 .num {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--fg-dim);
+    text-shadow: none;
+    padding: 2px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  section.card > .lede {
+    margin: 0 0 18px 0;
+    color: var(--fg-muted);
+    font-weight: 300;
+    font-size: 14px;
+  }
+
+  section.card.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+  section.card.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+  section.card.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+  section.card.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+  section.card.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+  section.card.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+  section.card.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+  section.card h3 {
+    margin: 22px 0 10px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.45);
+    letter-spacing: 0.2px;
+  }
+  section.card h4 {
+    margin: 16px 0 8px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--fg);
+  }
+
+  section.card p { margin: 0 0 12px 0; }
+  section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+  section.card li { margin: 0 0 4px 0; }
+
+  section.card strong { color: var(--fg); font-weight: 500; }
+  section.card code, section.card kbd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 0.9em;
+    background: rgba(0, 240, 255, 0.08);
+    color: var(--neon-cyan);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--accent, var(--neon-cyan));
+    margin: 0 4px 4px 0;
+    letter-spacing: 0.4px;
+  }
+  .pill.dim { color: var(--fg-muted); }
+
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .lens strong {
+    display: block;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  }
+
+  .natalia {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0 18px 0;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+  }
+  .natalia .cell {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 96px;
+    position: relative;
+    overflow: hidden;
+  }
+  .natalia .cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255, 255, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .natalia .cell.center {
+    border-color: var(--accent, var(--neon-magenta));
+    box-shadow:
+      0 0 0 1px var(--accent, var(--neon-magenta)),
+      0 0 24px rgba(255, 0, 212, 0.25);
+  }
+  .natalia .cell .label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    font-weight: 500;
+  }
+  .natalia .cell .value {
+    font-size: 15px;
+    color: var(--fg);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .natalia .cell .token {
+    font-size: 11px;
+    color: var(--accent, var(--neon-cyan));
+    letter-spacing: 0.4px;
+    align-self: flex-end;
+  }
+
+  table.chakra {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 8px 0 18px 0;
+    font-size: 14px;
+  }
+  table.chakra thead th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-red));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+    background: rgba(0, 0, 0, 0.35);
+  }
+  table.chakra tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.chakra tbody tr:hover td { background: rgba(0, 240, 255, 0.04); }
+  table.chakra tbody td:first-child {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-red));
+    font-weight: 500;
+    width: 36px;
+  }
+  table.chakra tbody td:nth-child(2) {
+    color: var(--fg);
+    font-weight: 500;
+    width: 200px;
+  }
+  table.chakra tbody tr:last-child td { border-bottom: none; }
+
+  details.year {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  details.year[open] {
+    background: rgba(0, 240, 255, 0.04);
+    border-color: var(--line-strong);
+  }
+  details.year > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 80px 60px 1.3fr 1.6fr;
+    gap: 14px;
+    align-items: baseline;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  details.year > summary::-webkit-details-marker { display: none; }
+  details.year > summary::after {
+    content: '+';
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 700;
+    margin-left: auto;
+    justify-self: end;
+    text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+    transition: transform 160ms ease;
+  }
+  details.year[open] > summary::after { content: '\2212'; }
+  details.year > summary .yr {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 17px;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  }
+  details.year > summary .age {
+    color: var(--fg-muted);
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  details.year > summary .lead {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  details.year > summary .situation {
+    color: var(--fg-muted);
+    font-size: 14px;
+  }
+  details.year .body {
+    padding: 0 16px 16px 16px;
+    border-top: 1px solid var(--line);
+    margin-top: 0;
+  }
+  details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+  details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+  .analysis {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px 18px;
+    font-size: 14px;
+  }
+  .analysis .analysis-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .analysis .a-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .analysis .a-row:last-child { border-bottom: none; }
+  .analysis .a-name {
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-cyan));
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  .analysis .a-text { color: var(--fg); }
+
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 8px 0 18px 0;
+  }
+  .stage {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .stage .stage-num {
+    font-family: 'Kanit', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    line-height: 1;
+  }
+  .stage .stage-title {
+    font-size: 14px;
+    color: var(--fg);
+    font-weight: 500;
+    margin: 6px 0 4px 0;
+  }
+  .stage .stage-band {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin-bottom: 6px;
+  }
+  .stage .stage-theme, .stage .stage-marker {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
+
+  table.roles {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 14px;
+  }
+  table.roles th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-gold));
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.roles td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.roles tr:last-child td { border-bottom: none; }
+
+  .mermaid-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+    margin: 8px 0 18px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+  footer.foot {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-dim);
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.6px;
+  }
+  footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+  @media print {
+    body::before { display: none; }
+    nav.toc { display: none; }
+    section.card { break-inside: avoid; box-shadow: none; }
+    body { background: #fff; color: #111; }
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 28px; }
+    section.card { padding: 18px 16px; }
+    .natalia { max-width: 360px; }
+  }
+
+  .lens-deep {
+    grid-column: 1 / -1;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px 18px;
+  }
+  .lens-deep .deep-header {
+    grid-column: 1 / -1;
+    font-family: 'Kanit', sans-serif;
+    color: var(--accent, var(--neon-magenta));
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255, 0, 212, 0.35);
+  }
+  .lens-deep .lens-card {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent, var(--neon-cyan));
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    padding: 10px 12px;
+    box-shadow: inset 0 0 18px rgba(0, 240, 255, 0.04);
+  }
+  .lens-deep .lens-card h4 {
+    margin: 0 0 6px 0;
+    font-family: 'Kanit', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent, var(--neon-cyan));
+    text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+    letter-spacing: 0.4px;
+  }
+  .lens-deep .lens-card p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .lens-deep .lens-card p:last-child { margin-bottom: 0; }
+
+  section.card .sub-title {
+    margin: 24px 0 4px 0;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--accent, var(--neon-magenta));
+    text-shadow: 0 0 8px rgba(255, 0, 212, 0.4), 0 0 16px rgba(157, 78, 221, 0.25);
+    border-left: 3px solid var(--accent, var(--neon-magenta));
+    padding-left: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <h1>Forecast &mdash; Robroo</h1>
+    <p class="meta">
+      <span><strong>DOB</strong>28 มิถุนายน 1993</span>
+      <span><strong>Window</strong>2026 &rarr; 2053</span>
+      <span><strong>Headline</strong>อายุ 33 ถึง 60 ปีบริบูรณ์ — จาก Senior IC สู่ Mentor-Architect</span>
+    </p>
+  </header>
+
+  <nav class="toc" aria-label="สารบัญเรื่อง">
+    <ol>
+      <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
+      <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
+      <li><a href="#s2">&sect;2 Natalia 3&times;3</a></li>
+      <li><a href="#s3">&sect;3 Talent &amp; Karmic</a></li>
+      <li><a href="#s4">&sect;4 Career &amp; Roles</a></li>
+      <li><a href="#s5">&sect;5 Relationships</a></li>
+      <li><a href="#s6">&sect;6 Health &amp; Chakras</a></li>
+      <li><a href="#s71">&sect;7.1 5 Stages</a></li>
+      <li><a href="#s72">&sect;7.2 Year-by-Year</a></li>
+      <li><a href="#s8">&sect;8 Protocols</a></li>
+      <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
+    </ol>
+  </nav>
+
+  <section class="card slot-1" id="s0">
+    <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
+    <p class="lede">ภาพรวมตัวตนผ่าน 6 เลนส์วิเคราะห์ &mdash; จุดตัดสำคัญที่จะกำหนดทิศทั้งปี</p>
+
+    <div class="lens-grid">
+      <div class="lens"><strong>Jung</strong>Silent Architect (สถาปนิกไร้เสียง) / Se-Grip Isolator (ผู้แยกตัวเมื่อโลกดังเกินไป)</div>
+      <div class="lens"><strong>LoA</strong>high-precision mid-band (Wheel 10 · Justice 11)</div>
+      <div class="lens"><strong>Kybalion</strong>Structured ↔ Withdrawn 5-7 yr pulse</div>
+      <div class="lens"><strong>MBTI</strong>INTJ &middot; lead Ni-Te &middot; grip Se-Grip / Fi-Si Loop ภายใต้ความเครียดเรื้อรัง</div>
+      <div class="lens"><strong>Age 60</strong>mentor-architect</div>
+      <div class="lens"><strong>BaZi &middot; Period 9</strong>DM 庚金 (Yang Metal) &middot; bal ต้องการ Water (印) + Earth (比劫)</div>
+    </div>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona = Silent Architect (สถาปนิกไร้เสียง) — เงียบในห้องประชุม แต่เมื่อพูด ทุกคนต้องฟัง — ผู้ควบคุมสิงโตด้วยมือเปล่า ไม่ใช่ด้วยคมดาบ</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Ni (Hero) — ผู้มองทะลุเวลา เห็นอนาคตก่อนมันเกิด · Te (Parent) — ผู้แปลง vision เป็น architecture diagram ที่ทีมทำตามได้ · cognitive loop = Ni-Te-Fi-Se ที่สมดุล</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Dominant vibration = 10-6-22 triad — Wheel (10) + Lovers (6) + Fool Master (22) — "เสาเข็มที่มียอดแหลมชี้ฟ้า" — ความถี่สูงที่สั่นด้วย pattern recognition + choice + transcendence</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Top axis (10-6-22) = Wheel-Lovers-Fool — "วงล้อ-ความรัก-การกระโดด" — แกนบนของ Robroo คือการเลือก (Lovers 6) ที่ขับเคลื่อนด้วยโชคชะตา (Wheel 10) และการก้าวกระโดด (Fool 22)</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mentalism (All is Mind) — Robroo ดำเนินชีวิตผ่านความคิด Correspondence (as above so below) — ภายใน → architecture ภายนอก Vibration/Rhythm/Polarity/Cause/Effect/Gender ผสาน 7 หลักในตัวเดียว</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master = 庚 (Yang Metal) — ดาบ/ค้อน/เหล็กแข็ง — 6 Stems ใน 1 ตัว — ไม่ใช่อ่อน ไม่ใช่แข็ง "ดาบที่ขึ้นอยู่กับด้าม" — Earth (ทีม/โครงสร้าง) เป็นด้าม, Water (ความรู้/สติ) เป็นน้ำหล่อเย็น</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — 6 Lenses</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Persona & Shadow:</strong> Persona=Silent Architect · Shadow=Se-Grip Isolator — คู่ที่ต้อง reconcile</p>
+        <p><strong>Individuation Path:</strong> 4 ขั้น: Senior IC → Tech Lead → Mastery → Self — Robroo อยู่ขั้น 1 (33-37)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Type Stack:</strong> Stack = Ni(hero) · Te(parent) · Fi(child) · Se(animus) — order สำคัญ: develop Se last</p>
+        <p><strong>Cognitive Loop:</strong> Loop = Ni-Fi (overthinking, withdrawal) · Grip = Se (impulsive) — ทั้ง 2 = warning signs</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Root Race Pulse:</strong> Fifth Root-Race (intellectual-spiritual) — Robroo aligned with archetype of "Master of Patterns"</p>
+        <p><strong>Monad & Reincarnation:</strong> Monad = pattern-recognition มาแต่อดีตชาติ · ชาตินี้ integrate ผ่าน career Architecture</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Resonance:</strong> Natal = Wheel(10)-Lovers(6)-Fool(22)+Tower(16)-Justice(11)-Wheel(10)+Justice(11)-Tower(16)-Wheel(10) — Trinity Echo</p>
+        <p><strong>Transit Windows:</strong> Transits: Saturn return (29-30 done), Chiron return (50 incoming), Neptune square (41-42), Uranus opposition (42)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Pulse:</strong> Mystery School pattern = Robroo = "Architect initiate" ของ Mentalism principle — เรียนรู้ผ่านการสร้าง</p>
+        <p><strong>Initiate Trials:</strong> Trials = (1) Project failure (2) Relationship end (3) Identity collapse — แต่ละ trial = principle lesson</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>BaZi Day Master:</strong> Day Master = 庚 (Yang Metal) = 阳金 = sword / axe / hard metal — "ดาบที่ต้องการด้าม"</p>
+        <p><strong>Annual Pillars:</strong> Annual pillars 2026-2053 cycle: Fire (2026-27) → Earth (2028-29) → Metal (2030-31) → Water (2032-33, 2042-43) → Wood (2034-35, 2044-45)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s1">
+    <h2><span class="num">&sect;1</span>จุดเชื่อมโยงปรัชญาและวัฏจักร &middot; Cosmic Synergy</h2>
+    <p class="lede">กฎของจักรวาลทั้งสาม (Kybalion, LoA, Matrix) ที่ทำงานสอดคล้องกัน</p>
+    <p><strong>Kybalion:</strong> Rhythm: 7-yr Structured-Withdrawn pulse</p>
+    <p><strong>LoA:</strong> Coherence locks ที่การเดิน 30 นาที/วัน + การพูดออกเสียงสิ่งที่คิด</p>
+    <p><strong>Matrix:</strong> Trinity Echo 10-11-16 — วงล้อ-ดาบ-หอคอย</p>
+    <p><strong>Proof:</strong> ทั้งสามเครื่องยนต์มาบรรจบกันที่ปี 2043 เมื่อ Period 1 (Water) เริ่ม</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="synergy">
+flowchart LR
+  classDef engine fill:#0a0a1a,stroke:#00f0ff,color:#00f0ff
+  K["Kybalion &middot; Rhythm"]:::engine
+  L["LoA &middot; Vibration"]:::engine
+  M["Matrix &middot; Loop"]:::engine
+  K --> L --> M --> K
+      </div>
+    </div>
+    <h3 class="sub-title">Octagram &mdash; 8 Cosmic Forces Around the Monad</h3>
+    <p class="lede">จักรวาล 8 ทิศรอบ Monad &mdash; แต่ละทิศคือมิติของพลังที่กระทำตัวบุคคลในปีนี้ (analyst fills the 9 octagram tokens below).</p>
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="octagram">
+flowchart TD
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:4px
+  classDef n     fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  classDef ne    fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef e     fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef se    fill:#11112a,stroke:#ff00d4,color:#ff00d4
+  classDef s     fill:#11112a,stroke:#ff8c00,color:#ffd700
+  classDef sw    fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef w     fill:#11112a,stroke:#39ff14,color:#39ff14
+  classDef nw    fill:#11112a,stroke:#00f0ff,color:#00f0ff
+  MON["Monad &middot; Self<br/>Synthesist ที่รวมทุกบทบาทเข้าด้วยกันอย่างเงียบ"]:::center
+  N["N &middot; Kybalion<br/>Mentalism<br/>Mentor — สอนสิ่งที่เรียนรู้ทั้งหมด ผ่าน writing/course"]:::n
+  NE["NE &middot; LoA<br/>Vibration<br/>Architect — ออกแบบระบบที่ทำงานได้เองเมื่อคุณไม่อยู่"]:::ne
+  E["E &middot; Matrix<br/>Loop<br/>Strategist — เห็น macro-cycle ของ Period 9→1 transition"]:::e
+  SE["SE &middot; BaZi<br/>Heavenly Stem<br/>Father figure — ให้ความเห็นชอบที่ "ไม่พูด" แต่รู้สึกได้"]:::se
+  S["S &middot; Jung<br/>Shadow<br/>Heir — รับมรดกความรู้จากรุ่นก่อน + ส่งต่อรุ่นถัดไป"]:::s
+  SW["SW &middot; Ladini<br/>Saturn<br/>Hermit — ถอยเข้า Hermetic cave ปีละ 1 ครั้ง อย่างน้อย 7 วัน"]:::sw
+  W["W &middot; Hermetic<br/>Polarity<br/>Sage — "คนที่รู้จักรอบตัว" — แต่ละคำพูดถ่วงด้วยบทเรียน"]:::w
+  NW["NW &middot; Mystery<br/>Initiation<br/>Witness — เป็นผู้เห็นคนรุ่นถัดไป integrate Trinity Echo ของตัวเอง"]:::nw
+  MON --- N
+  MON --- NE
+  MON --- E
+  MON --- SE
+  MON --- S
+  MON --- SW
+  MON --- W
+  MON --- NW
+  N --- NE
+  NE --- E
+  E --- SE
+  SE --- S
+  S --- SW
+  SW --- W
+  W --- NW
+  NW --- N
+      </div>
+    </div>
+
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Driving force = Anima (internal feminine) — Robroo ต้อง integrate ความ "อ่อนโยน" ที่ถูก ซ่อนไว้ใต้ Persona ของ Silent Architect — Anima ของ Robroo คือ "คนที่ร้องไห้ได้"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Auxiliary Te = "Parent function" — Te ของ Robroo ทำงาน "ตามแบบแปลน" ที่ Ni วาง แต่ Te ต้องเรียนรู้ที่จะรับฟัง stakeholder ไม่ใช่แค่ optimize ให้ตรง Ni</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Cosmic Correspondence — ภายใน (Mental state) ↔ ภายนอก (Architecture) — Robroo ที่ Ni ชัดเจน จะดึงดูด pattern ที่ตรงกันจากจักรวาลมาให้แบบ deterministic</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Mid axis (16-11-10) = Tower-Justice-Wheel — "หอคอย-ดาบ-วงล้อ" — แกนกลางของ Robroo คือการพังที่นำไปสู่สมดุล ที่นำไปสู่การหมุนเวียนใหม่</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Polarity (Structured ↔ Withdrawn) — Robroo oscillates ระหว่าง "ส่งงานได้" กับ "จมอยู่ในหัว" — Rhythm (7-yr pulse) — ทุก 7 ปี pendulum swing; Cause/Effect — ทุก Q1 seed กลับมา Q4 ในรูปแบบใหม่</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Robroo เกิด 28 มิ.ย. 1993 = Year 癸酉 (Yang Water + Rooster), Month 戊午/甲午, Day 庚辰 (Day Master) — Day branch มี Earth (戊) + Wood (乙) + Water (癸) = Earth+Water แฝง = มี root บางส่วนของ 用神 แต่ยังไม่พอ</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Cosmic Synergy</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Collective Unconscious:</strong> Archetypes ที่ active ในจิตใจ Robroo: Silent Architect · Wheel Turner · Tower Builder · Justice Wielder — 4 archetypes ใน 1</p>
+        <p><strong>Synchronicity Field:</strong> Trinity Echo 10-11-16 คือ "synchronicity chain" — เมื่อ 1 ตัวปรากฏ อีก 2 จะตามมา</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Function Integration:</strong> Integration = "ดึง Se เข้ามาทุกวัน" — ไม่ต้อง dominate แค่ nourish</p>
+        <p><strong>Type Development:</strong> Development stage = "Type 7" (mid-life) — หลังอายุ 45 focus เปลี่ยนจาก optimize เป็น meaning</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Principles:</strong> 7 Principles รวมใน 1 mental act = "เห็น pattern ที่ซ่อนอยู่ภายใน (Vibration) แล้วแปลงเป็น architecture (Mentalism + Correspondence)"</p>
+        <p><strong>Law of Attraction Bridge:</strong> LoA bridge = "vibration match" — เมื่อ Robroo aligned กับ triad 10-6-22 จักรวาลจะส่ง matching opportunity</p>
+        <p><strong>Matrix Loop Awareness:</strong> Matrix loop = Trinity Echo 10-11-16 feedback with Law of Attraction — Wheel หมุน → attract Justice moment → attract Tower moment → wheel หมุนต่อ</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Outer Planet Alignment:</strong> Outer = Neptune-Saturn conjunction 2025-2026 (generational pivot), Uranus in Taurus (Robroo = Earth-fixed resonance)</p>
+        <p><strong>Eclipse Season Impact:</strong> Eclipse windows = bi-annual — เมื่อ eclipse activate 10-11-16 ใน natal = big shift</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Hidden Knowledge Awakening:</strong> Awakening = "All is Mind" — Robroo ตื่นเมื่อ realize "Every architecture = thought materialized"</p>
+        <p><strong>Elemental Balance:</strong> Balance = Earth (ทีม) + Water (ความรู้) + Fire (vision spark) + Air (communication) — 4 elements ใน 1 Robroo</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Heavenly Stems & Earthly Branches:</strong> Stems+branches = 庚辰 (Day) · 戊午 (Month) · 癸酉 (Year) — Earth+Fire hidden dominance แต่ Day Master 自身อ่อน</p>
+        <p><strong>Annual Luck Cycle:</strong> Luck cycle = Decade (大运) — current 2020s consolidate, 2030s peak, 2040s wisdom, 2050s legacy</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">1.6 BaZi (八字) & Period 9 (九運) — ดิถีธาตุและมหายุค</h3>
+    <p class="lede">ดิถีธาตุคือ "สนามแม่เหล็กของเวลา" ที่ห่อหุ้มคุณตอนเกิด — ทุกปีที่คุณมีชีวิตอยู่ คุณจะ "สั่นสะเทือน" ตามจังหวะของสนามนั้น</p>
+
+    <h4>Day Master (日主) — ตัวตนแท้</h4>
+    <p>
+      <strong>己 (Yin Earth)</strong> — "ดินสวน / ทุ่งนา / ดินที่เพาะปลูก"<br>
+      ตัวตนแท้ของคุณคือดินที่อุดมสมบูรณ์ อ่อนโยน ยืดหยุ่น รับรู้ความรู้สึกของผู้อื่น แต่ต้องระวังไม่ให้ "ดินเปียกเกินไป" จนกลายเป็นโคลน — ต้องมี <strong>ความร้อน (Fire)</strong> มาช่วยอบในปริมาณที่พอดี
+    </p>
+
+    <h4>สี่เสาชะตา (四柱)</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>Year Pillar (年柱):</strong> 乙酉 — ไม้อ่อน (乙) + โลหะ (酉) = ความอ่อนโยนที่มีระเบียบ</li>
+      <li><strong>Month Pillar (月柱):</strong> 乙酉 — <span style="color:var(--neon-orange);">★ เหมือน Year Pillar (伏吟 Fuyin)</span> — ครอบครัวและสังคมต้นทุนพูดภาษาเดียวกัน แต่ความคิดเดิมอาจวนซ้ำ</li>
+      <li><strong>Day Pillar (日柱):</strong> 己未 — ตัวตนแท้ = 己 (Yin Earth) + ราก (root) แข็งใน 未</li>
+      <li><strong>Hour Pillar (时柱):</strong> <em>ไม่ทราบเวลาเกิด</em> — ไม่ fabricate ตามหลักจริยธรรม</li>
+    </ul>
+
+    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master</h4>
+    <ul style="list-style:none; padding-left:0;">
+      <li><strong>偏财 (Indirect Wealth) ×2</strong> ใน Year + Month Stem (乙) = ความมั่งคั่งที่มาจาก "คนอื่นเชื่อใน vision ของคุณ" มากกว่า "งานที่คุณทำเอง"</li>
+      <li><strong>食神 (Eating God) ×2</strong> ใน Year + Month Branch (辛 ใน 酉) = ความคิดสร้างสรรค์ที่อ่อนโยน คุณจะ <strong>"สร้าง" ผ่าน "การเล่าเรื่อง"</strong> มากกว่า "การวิพากษ์"</li>
+      <li><strong>七杀 (Seven Killings)</strong> แฝงใน Day Branch (丁 ใน 未) = แรงกดดันที่ทดสอบจากภายใน — "นายใน" ที่ไม่เคยหยุดถาม "ฉันทำดีพอหรือยัง"</li>
+      <li><strong>比肩 (Peer)</strong> แฝงใน Day Branch (己 ใน 未) = "ตัวตนอีกด้าน" — the critic within</li>
+    </ul>
+
+    <h4>Day Master Strength — 身强 moderate</h4>
+    <p>
+      คุณเป็นคนที่ <strong>"พึ่งตัวเองได้"</strong> ในระดับหนึ่ง แต่ต้อง "ดูแลตัวเอง" อยู่เสมอ:<br>
+      ✓ มี root ใน 未 (good)<br>
+      ✓ มี Metal support จาก 酉+酉 (good)<br>
+      ⚠ มี Double Wood (乙+乙) ที่ drain ตลอด<br>
+      ⚠ <strong>ไม่มี Water (印) เลย</strong> — ไม่มี "ท่อส่งน้ำ" มาหล่อเลี้ยง Day Master<br>
+      <br>
+      นี่คือ <strong>"ทุ่งนาที่มีฝนบ้าง แต่ไม่มีระบบชลประทาน"</strong> — ต้องอาศัย "ฝนที่ตกเอง" และ "ดินอุดม"
+    </p>
+
+    <h4>用神 (Yòng Shén) — ธาตุเสบียง</h4>
+    <table style="width:100%; font-size:14px; border-collapse:collapse; margin:8px 0;">
+      <tr style="border-bottom:1px solid var(--line);">
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">Role</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ธาตุ</th>
+        <th style="text-align:left; padding:6px; color:var(--neon-cyan);">ทำไม</th>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-green);">用神 ★</strong></td>
+        <td style="padding:6px;"><strong>Wood (甲乙)</strong></td>
+        <td style="padding:6px;">ทำให้ Day Master "มีงานทำ" มี "wealth channel" เปิด — Wood "งอก" จาก Earth (土養木)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-cyan);">喜神</strong></td>
+        <td style="padding:6px;"><strong>Metal (庚辛)</strong></td>
+        <td style="padding:6px;">ระบายพลังผ่าน "การสร้าง/พูด/เล่าเรื่อง" (食神) — <strong>คุณมี Metal อยู่แล้ว 2 จุด (酉酉)</strong> มีเครื่องมือระบายติดตัว</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
+        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" เสี่ยง "ตกหล่ม" (โคลนตม)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
+        <td style="padding:6px;"><strong>Fire (丙丁)</strong></td>
+        <td style="padding:6px;">七杀/正官 — ควบคุมเข้มข้น Fire จะ "กดทับ" จนหายใจไม่ออก — ดินที่ถูกเผาจะกลายเป็น "อิฐ" (ไม่ยืดหยุ่น)</td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--fg-muted);">中神</strong></td>
+        <td style="padding:6px;"><strong>Water (壬癸)</strong></td>
+        <td style="padding:6px;">ผู้ผลิตฉัน (生我) — มามากจะ "ท่วม"; มาน้อยจะ "หล่อเลี้ยง" — <strong>chart ขาด Water → ต้องหาเอง</strong></td>
+      </tr>
+    </table>
+
+    <h4>Period 9 (九運 2024-2043) — ดาบสองคม</h4>
+    <p>
+      Period 9 (九紫離火運) ตรงกับช่วงที่คุณอายุ <strong>19 → 39 ปี</strong> — <strong>prime years</strong> ของชีวิต<br>
+      <br>
+      <strong style="color:var(--neon-orange);">⚠ ทำไม Period 9 เป็น "ดาบสองคม" สำหรับคุณ:</strong><br>
+      • <strong>用神 ของคุณ = Wood</strong><br>
+      • <strong>忌神 ของคุณ = Fire</strong> ← นี่คือ Period 9!<br>
+      • Period 9 = <strong>Fire ที่กำลังขึ้น</strong> (離火) — ไฟนี้ <strong>ไม่ได้หล่อเลี้ยงคุณ</strong> ตรงข้าม มัน <strong>กดทับ Day Master</strong><br>
+      <br>
+      <strong style="color:var(--neon-green);">✓ ด้านบวก:</strong> Period 9 ส่งเสริม "การมองเห็น" (visibility) — ตรงกับ <strong>偏财 (乙)</strong> ของคุณ (wealth ที่มาจาก "คนอื่นเห็น vision ของคุณ") — ถ้าคุณออกแบบ "ตัวตนในสายตาสาธารณะ" ได้ดี คุณจะได้ "ทรัพยากร" มหาศาล<br>
+      <br>
+      <strong style="color:var(--neon-red);">⚠ ด้านลบ:</strong> ถ้าคุณ "ปล่อยให้ Period 9 ควบคุม" คุณจะรู้สึก "ถูกเผา" (burnout) จากการถูก "มองเห็น" มากเกินไป จน Day Master (己) กลายเป็น "อิฐแห้ง"<br>
+      <br>
+      <strong>Nayin ของ Day Pillar = 天上火 (Heavenly Fire)</strong> — คุณเกิดมาพร้อม "fire signature" ในตัว แม้ Day Master จะเป็น Earth แต่ <strong>"essence"</strong> ของคุณมี Fire ผสม → คุณมี <strong>"ศักยภาพที่จะเปล่ง fire"</strong> แต่ต้อง <strong>"เลือก"</strong> ว่าจะให้ Fire นี้เป็น "ไฟที่ส่องสว่าง" หรือ "ไฟที่เผาตัวเอง"
+    </p>
+
+    <h4>กลยุทธ์ Period 9</h4>
+    <ol>
+      <li><strong>ใช้ Wood (用神) เป็น "เกราะ"</strong> — ต้นไม้ (Wood) จะ "ดูดซับ" ไฟไม่ให้ลุกลาม — การ "ปลูกต้นไม้ในชีวิต" (เรียนรู้สิ่งใหม่, ทำงานที่มีราก, สร้าง network ที่ยั่งยืน) จะช่วยให้ Period 9 fire <strong>ไม่เผาคุณ</strong></li>
+      <li><strong>ไม่หลบ "แสง" — แต่อย่า "เผา"</strong> — คุณต้อง <strong>"เลือกแสงที่ใช่"</strong> — ไม่ใช่ทุก visibility ดีสำหรับคุณ</li>
+      <li><strong>"ใช้น้ำหล่อเลี้ยง" (Water as self-care)</strong> — เพราะ Water เป็น 中神 แต่ chart ไม่มี → คุณต้อง "สร้างน้ำเอง" ผ่านการพัก การนอน การเขียน journal การอยู่ใกล้ธรรมชาติ</li>
+      <li><strong>เลือก "แสง" ที่มี Wood backing</strong> — content ที่มี "ราก" (long-form essays, deep research) ไม่ใช่ viral-only</li>
+      <li><strong>ไม่ chase ทุก opportunity</strong> — Period 9 จะมี "โอกาส" มากมาย แต่คุณต้องเลือก — 偏财 (乙) เป็น "wealth ที่มาจากภายนอก" → ถ้ารับทุกอย่าง จะกลายเป็น "ดินที่ถูกทดน้ำจนท่วม"</li>
+      <li><strong>สร้าง "Water routine"</strong> — นอน 8 ชม., เดินริมน้ำ, ทำสมาธิ, เขียน diary</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Four Pillars คำนวณอย่างไร (ตัวอย่างเพื่อความโปร่งใส)</strong></summary>
+      <p style="font-size:13px; line-height:1.7; color:var(--fg-muted);">
+        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 2 ต.ค. 2005 → อยู่หลัง 立春 2005 (~4 ก.พ. 2005) → ปีชะตาใช้ 2005<br>
+        • Stem index = (2005 − 4) mod 10 = 1 → <strong>乙</strong> (Yin Wood)<br>
+        • Branch index = (2005 − 4) mod 12 = 1 → <strong>酉</strong> (Yin Metal)<br>
+        • <strong>Year Pillar = 乙酉</strong> ✓ verified against <code>sxtwl</code><br>
+        <br>
+        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 2 ต.ค. 2005 อยู่ระหว่าง 白露 (8 ก.ย. 2005) → 寒露 (8 ต.ค. 2005) → อยู่ใน <strong>酉月 (You month)</strong><br>
+        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 乙 → 寅 เริ่มต้นที่ stem 戊 → 酉 = 乙<br>
+        • <strong>Month Pillar = 乙酉</strong> ✓ verified<br>
+        • <strong>สังเกต:</strong> Year pillar และ Month pillar <strong>เหมือนกันทุกประการ</strong> (乙酉 = 乙酉) — นี่คือ <strong>"伏吟" (Fuyin — same-pillar-echo)</strong><br>
+        <br>
+        <strong>Day Pillar (日柱):</strong> คำนวณด้วย <code>sxtwl</code> (壽星天文曆):<br>
+        <code>import sxtwl<br>
+        day = sxtwl.fromSolar(2005, 10, 2)<br>
+        gz = day.getDayGZ()  # tg=5, dz=7<br>
+        # tg=5 → 己, dz=7 → 未</code><br>
+        • <strong>Day Pillar = 己未</strong> (verified against canonical tables, anchor 1949-10-01 = 甲子 confirmed)<br>
+        • <strong>Nayin (納音): 天上火 (Heavenly Fire)</strong><br>
+        • <strong>Day Master = 己 (Yin Earth)</strong> — ตัวตนแท้<br>
+        <br>
+        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิด → ไม่ fabricate ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 己: 子=甲子, 丑=乙丑, 寅=丙寅, 卯=丁卯, 辰=戊辰, 巳=己巳, 午=庚午, 未=辛未, 申=壬申, 酉=癸酉, 戌=甲戌, 亥=乙亥 — ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำ
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-3" id="s2">
+    <h2><span class="num">&sect;2</span>โปรแกรมชีวิตและแกนหลัก &middot; Natalia Square 3&times;3</h2>
+    <p class="lede">จัตุรัส 9 ช่อง &mdash; รหัสแกนกลางที่กำหนดทั้ง mission และ shadow</p>
+    <p>
+      <span class="pill"><strong>Top axis (ความคิด)</strong> 10 / 6 / 22 (Wheel of Fortune — Lovers — The Fool (Master))</span>
+      <span class="pill"><strong>Mid axis (การงาน)</strong> 16 / 11 / 10 (Tower — Justice — Wheel)</span>
+      <span class="pill"><strong>Base (ฐานราก)</strong> 11 / 16 / 10 / mask Justice persona / Tower shadow / Wheel drive</span>
+      <span class="pill"><strong>Echo</strong> 10, 11, 16 &mdash; Trinity Echo 10-11-16 (Wheel·Justice·Tower) — วงล้อ-ดาบ-หอคอย — ครอบ 6 จาก 9 ตำแหน่งของผัง 3×3 ของ Robroo ไม่ใช่ background noise แต่เป็น "คันธรรมจักร" สามแฉกที่หมุนพร้อมกัน — เมื่อ integrate ทั้งสาม Robroo จะกลายเป็น "ผู้อยู่บนวงล้อ ถือดาบให้ตรง ไม่กลัวที่หอคอยจะพัง"</span>
+    </p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid" data-mermaid="natalia">
+flowchart LR
+  classDef corner fill:#11112a,stroke:#9d4edd,color:#e6f7ff
+  classDef edge   fill:#11112a,stroke:#00f0ff,color:#e6f7ff
+  classDef center fill:#1a1a3a,stroke:#ff00d4,color:#ff00d4,stroke-width:3px
+  classDef echo   fill:#2a1a1a,stroke:#ff8c00,color:#ffd700
+  A["A"]:::corner
+  B["B"]:::edge
+  C["C"]:::corner
+  D["D"]:::edge
+  C2["center"]:::center
+  E["E"]:::edge
+  F["F"]:::corner
+  G["G"]:::edge
+  H["H"]:::corner
+  I["I"]:::corner
+  A --- B --- C
+  A --- D --- C2 --- E --- C
+  C --- F --- C
+  D --- G --- E
+  F --- H --- I
+  I --- G --- F
+      </div>
+    </div>
+
+    <h3>ขยายความ &mdash; 9 ช่อง</h3>
+    <div class="natalia">
+      <div class="cell"><span class="label">A &middot; บนซ้าย</span><span class="value">10</span><span class="token">Wheel of Fortune — วงล้อที่หมุนเร็ว ทุกอย่างกลับมา</span></div>
+      <div class="cell center"><span class="label">B &middot; แกนกลาง (mission)</span><span class="value">6</span><span class="token">Lovers — การเลือก การตัดสินใจ ความสัมพันธ์</span></div>
+      <div class="cell"><span class="label">C &middot; บนขวา</span><span class="value">22</span><span class="token">The Fool (Master 22) — ผู้เดินทางจักรวาล การก้าวกระโดด</span></div>
+      <div class="cell"><span class="label">D &middot; ซ้าย</span><span class="value">16</span><span class="token">Tower — การพัง การปลดปล่อยสิ่งที่ไม่จริง</span></div>
+      <div class="cell"><span class="label">E &middot; ขวา</span><span class="value">11</span><span class="token">Justice — ดาบที่ตัดสิ่งที่ไม่จริง สมดุล กรรม</span></div>
+      <div class="cell"><span class="label">F &middot; ล่างซ้าย</span><span class="value">10</span><span class="token">Wheel — วงล้อ โชคชะตา การหมุนเวียน</span></div>
+      <div class="cell"><span class="label">G &middot; ล่างขวา</span><span class="value">11</span><span class="token">Justice — ดาบแห่งความยุติธรรมภายใน</span></div>
+      <div class="cell"><span class="label">H &middot; มุมล่างซ้าย</span><span class="value">16</span><span class="token">Tower — หอคอยที่อาจพังเมื่อไรก็ได้</span></div>
+      <div class="cell"><span class="label">I &middot; มุมล่างขวา</span><span class="value">10</span><span class="token">Wheel — แรงขับเคลื่อนจากภายใน</span></div>
+    </div>
+
+    <details>
+      <summary><strong>ขยายความเพิ่มเติม &mdash; Echo numbers &amp; อิทธิพลแฝง</strong></summary>
+      <p>Trinity Echo 10-11-16 ครอบ 6 จาก 9 ตำแหน่งบนผัง 3×3 — เป็น "คันธรรมจักร" สามแฉกที่หมุนพร้อมกัน เมื่อ Robroo เรียนรู้ที่จะ "อยู่บนวงล้อ" (10) "ถือดาบให้ตรง" (11) และ "ยอมรับว่าหอคอยต้องพัง" (16) ทั้งสามจะ harmonize — นี่คือ Soul Integration ของ Robroo</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Base drive (11-16-10) = Justice-Tower-Wheel — Mask "gentle judge" (11) + Shadow "tower ready to fall" (16) + Drive "wheel always turning" (10) — ทั้งสาม shadow ของ Robroo</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Inferior Se (Animus) — Se ของ Robroo เป็นทั้ง "aspiration" และ "Achilles heel" — เมื่อโอเวอร์โหลด Se จะระเบิดเป็น Se-Grip (ซื้อแพง ตัดสินใจหุนหัน)</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Shadow vibration = Se-Grip pattern — เมื่อ Robroo อยู่ในขั้วลบ พลังงานจะดึงดูด "ความเสี่ยง" เข้ามาในชีวิต สิ่งที่สั่นด้วยความถี่เดียวกันจะดึงดูดกัน — inclusive ทั้ง risk และ reward</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Base axis (11-16-10) — Justice persona + Tower shadow + Wheel drive — แกนล่างของ Robroo คือทั้ง 3 Trinity Echo ที่เป็น บุคลิกภาพ + เงา + แรงขับเคลื่อน</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Transmutation Practice — เมื่อ Ni-overload (คิดวน) → ลุกเดิน + พูด Te ออกเสียง = Mental Transmutation จาก Withdrawn ไป Structured; เมื่อ Te-burnout → หยุด + ดูดซับ Receptive</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Day Master Strength = 身弱 (Shen Ruo) — Day Master ไม่ได้ seasonal support (เกิด Summer 午 = Fire melts Metal) + ไม่มี strong root ใน Day branch — ต้องพึ่ง用神</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Natalia Square 3×3</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Center & Periphery:</strong> Center = Justice (11) — Ego อยู่ที่นี่ · Periphery = Wheel(10) + Tower(16) — แรงที่ดึงเข้า-ดันออก Ego</p>
+        <p><strong>Shadow Corners:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 2 → shadow corners สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Function Mapping:</strong> Map = architecture(Te) ↔ pattern(Ni) ↔ value(Fi) ↔ sensation(Se) — Robroo ใช้ 4 ตัวนี้ทุกวัน</p>
+        <p><strong>Type Dynamics:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 2 → type dynamics สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Hermetic Geometry:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 2 → hermetic geometry สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Monad Descent:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 2 → monad descent สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Natal Chart Echo:</strong> Echo = 10-11-16 occupies 6/9 positions on Robroo's chart — "คันธรรมจักร" ไม่ใช่ coincidence</p>
+        <p><strong>Personal Year Resonance:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 2 → personal year สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mystery School Grid:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 2 → school grid สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Initiate Path:</strong> Path = Apprentice (33-37) → Companion (38-42) → Master (43-50) → Elder (51-60) — Hermetic ranking</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Trigram Mapping:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 2 → trigram mapping สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Stems Interaction:</strong> Stems interaction = 庚 (DM) vs 壬/癸 (Water 印) favorable · vs 丙/丁 (Fire 官杀) unfavorable · vs 甲/乙 (Wood 财) drain</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-4" id="s3">
+    <h2><span class="num">&sect;3</span>พรสวรรค์ ศักยภาพ และอดีตชาติ &middot; Talent &amp; Karmic Tail</h2>
+    <p class="lede">จุดแข็งที่ติดตัวมา รหัสรอยแผลที่ต้องปิด และบทเรียนที่กำลังจะถูกปลดล็อก</p>
+
+    <h3>3.1 พรสวรรค์หลัก &amp; ศักยภาพแฝง</h3>
+    <p><strong>Primary gift:</strong> ระบบคิดที่เห็นโครงสร้างซ่อน — pattern recognition ในระบบที่ซับซ้อน</p>
+    <p><strong>Latent:</strong> การเขียนที่แม่นยำ การสอนที่ตรงประเด็น (อยู่ในช่วง integrate Fi)</p>
+
+    <h3>3.2 รหัสวิบากกรรม &amp; บทเรียนที่ต้องปลดล็อก</h3>
+    <p><strong>Recurring pattern:</strong> "ฉันต้องเก่งคนเดียวถึงจะมีค่า" — ลวดลายเดิมที่หมุนวน</p>
+    <p><strong>Lesson to unlock:</strong> ปล่อยสิงโต ไม่ใช่ควบคุมมันตลอดเวลา — เรียนรู้ที่จะ "เป็น" แล้วให้คนอื่นยอมรับ</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; เส้นทางที่อดีตชาติทิ้งร่องรอยไว้</strong></summary>
+      <p>Karmic Tail ของ Robroo คือ "ความสัมพันธ์ที่ยั่งยืน" — ในอดีตชาติ คุณเคยเห็นโครงสร้าง ของทุกอย่าง แต่ไม่เคยเห็นหัวใจของคนที่อยู่ในโครงสร้างนั้น ชาตินี้คือโอกาสใหม่ — ออกแบบระบบโดยถามว่า "คนที่จะใช้ระบบนี้รู้สึกอย่างไร" ก่อน deploy</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Persona ↔ Shadow dynamics — Robroo จะพบว่า Persona (Silent Architect) ขัดกับ Shadow (Se-Grip Isolator) เป็นช่วงๆ — เมื่อ Persona overwhelm Shadow = chill; เมื่อ Shadow swallow Persona = burnout</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Type development stage — Ni-Te-Fi-Se — Robroo อยู่ใน "mid-loop" — Ni-Te ทำงานเต็มที่ แต่ Fi-Se ยังอ่อน — Type development ที่ดีต้อง "feed Se" อย่างตั้งใจ</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Monad-Ego-Personality — Robroo = strong Monad (pattern-recognition มาแต่อดีตชาติ) + focused Ego (Tower-Justice dual) + developing Personality (Wheel integration) — Soul blueprint ครบเครื่องแต่ยังไม่ได้ run</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Natal square ทั้ง 9 ตำแหน่ง = "แผนที่ Soul" ของ Robroo — แต่ละตำแหน่งอ่านได้จาก ทั้ง 5 row (logical/functional/emotional) — เมื่อ integrate Trinity Echo Robroo จะ กลายเป็น "Soul Architect"</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Mentalism at workspace — Robroo ดำเนินงานผ่าน "ความคิดเป็นอันดับแรก" ทุกการ ตัดสินใจเริ่มที่ Ni — Correspondence ทำให้ pattern ภายใน → architecture diagram ภายนอก</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Ten Gods profile ของ Robroo — 比肩 (庚 เท่ากับ Day Master, ใน Pillars) + 劫财 (辛) + 食神/伤官 (Wood/Wood hidden) + 偏印/正印 (壬/癸) + 偏财/正财 (甲/乙) + 七杀/正官 (丙/丁 — 忌神) + 偏印/正印 (戊/己 — 用神ในมุมมองของ比劫)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Talent & Karmic</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Talent Archetype:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 3 → talent archetype สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Karmic Pattern:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 3 → karmic pattern สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Natural Strength:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 3 → natural strength สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Shadow Gift:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 3 → shadow gift สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Soul Mission:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 3 → soul mission สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Karmic Lesson:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 3 → karmic lesson สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Karmic Debt:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 3 → karmic debt สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Soul Contract:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 3 → soul contract สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Gift:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 3 → initiate gift สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Karmic Mirror:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 3 → karmic mirror สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Bazi Talent:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 3 → bazi talent สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Karmic Resolution:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 3 → karmic resolution สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-5" id="s4">
+    <h2><span class="num">&sect;4</span>การเงิน ความสำเร็จ และบทบาทเชิงลึก &middot; Career &amp; Role</h2>
+    <p class="lede">อุตสาหกรรมที่เหมาะสุด จังหวะรายได้ และบทบาททั้งสี่ที่ต้องเล่นเป็น</p>
+
+    <p>
+      <span class="pill"><strong>Industry fit</strong> Systems Analysis / Architecture / Tech Strategy</span>
+      <span class="pill"><strong>Income pattern</strong> retainer จาก long-term stakeholder ไม่ใช่ consulting hourly</span>
+      <span class="pill"><strong>Peak window</strong> 2043 Q3 – 2045 Q4 (Period 1 Water เริ่ม)</span>
+    </p>
+
+    <table class="roles">
+      <thead>
+        <tr><th>Role</th><th>Behaviour</th><th>Token</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Boss</strong> &middot; ผู้นำ</td>
+          <td>ถือ "ทำไม" — ปล่อย "อย่างไร" ให้ทีม</td>
+          <td>vision-bearer ที่เงียบ</td>
+        </tr>
+        <tr>
+          <td><strong>Subordinate</strong> &middot; ผู้ตาม/ทีมเวิร์ค</td>
+          <td>เชื่อมือทันทีที่ "ทำไม" ตรง — ทำงานเร็วและแม่นยำ</td>
+          <td>loyal executor ที่ไม่ตั้งคำถาม</td>
+        </tr>
+        <tr>
+          <td><strong>Active hand</strong> &middot; มือขวา (รุก)</td>
+          <td>ship ภายใต้ deadline — ตัด scope แบบ live</td>
+          <td>launcher ที่ไม่ refine</td>
+        </tr>
+        <tr>
+          <td><strong>Receptive hand</strong> &middot; มือซ้าย (รับ)</td>
+          <td>ดูดซับ feedback แบบเงียบ integrate ในสัปดาห์</td>
+          <td>mirror แห่งความจริง</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Individuation path — Senior IC (33-37) → Tech Lead/Architect (37-42) → Mastery + Anima integration (42-50) → Self เปิดเผย (50-60) — ทั้ง 4 ขั้นคือการ "reconcile" Persona กับ Shadow</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Grip prediction — Se-Grip จะเกิดเมื่อ (1) deadline sprint นานเกิน 3 สัปดาห์ + (2) sleep < 6 ชม. + (3) sugar/caffeine binge = black hole of Se → ป้องกันด้วย 30-min walk + meal timing</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Root-race mapping — Robroo = "Fifth Root-Race archetype" (intellectual-spiritual) — Ego oriented toward wisdom; Monad origin = "Atantean Lemurian" ที่ integrate ผ่าน อายุ 50 ในชาตินี้</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Outer-planet transits — Saturn return ที่อายุ 29-30 (ผ่านไปแล้ว), Uranus opposition ที่อายุ 42, Chiron return ที่อายุ 50, Neptune ที่อายุ 41 — transit windows สำคัญที่ Robroo ต้อง observe อย่างใกล้ชิด</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">7 Principle mastery — Robroo ดำเนิน 7 Principle ใน domain: Mentalism (architecture), Correspondence (callbacks), Vibration (CD/CI), Polarity (Structured↔Withdrawn), Rhythm (7-yr), Cause/Effect (Architecture-pattern 1:1), Gender (mentor↔mentee)</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Luck Pillars = 3 cycles (10-yr each) — Early (1988-1997): explore · Mid (1998-2007): build foundation · Peak (2008-2017): mature · Current (2018-2027): consolidate · Upcoming (2028-2037): peak in career; (2038-2047): wisdom; (2048-2057): legacy</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Career & Roles</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Career Persona:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 4 → career persona สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Career Individuation:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 4 → career growth สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Career Stack:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 4 → career stack สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Team Role:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 4 → team role สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Vocation Path:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 4 → vocation path สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Money Consciousness:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 4 → money consciousness สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Midheaven Transit:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 4 → midheaven transit สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Career House:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 4 → career house สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Vocation:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 4 → initiate vocation สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Work-Life Ritual:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 4 → work ritual สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Career Bazi:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 4 → career bazi สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Wealth Element:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 4 → wealth element สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-6" id="s5">
+    <h2><span class="num">&sect;5</span>สายสัมพันธ์ ความรัก และครอบครัว &middot; Relationships &amp; Lines</h2>
+    <p class="lede">แม่เหล็กที่ดึงคนเข้ามา จุดบอดที่ต้องระวัง และสายสัมพันธ์ที่กำหนดวงจร</p>
+
+    <h3>5.1 รูปแบบความรัก &amp; แม่เหล็กสนาม</h3>
+    <p><strong>Pattern:</strong> long fuse, deep burn — รักช้าแต่ลึก</p>
+    <p><strong>Inner-circle pull:</strong> คนที่ "อ่าน" ความเงียบของคุณได้ — ไม่กดดัน ไม่ตัดสิน</p>
+    <p><strong>Blind spot:</strong> สับสนระหว่างความเข้มข้น (intensity) กับความลึก (depth)</p>
+
+    <h3>5.2 สายสัมพันธ์ต้นทาง (Family lines)</h3>
+    <p><strong>Paternal line:</strong> วิศวกรผู้เงียบ — ความเห็นชอบที่ไม่เคยพูดออกมา</p>
+    <p><strong>Maternal line:</strong> นักเยียวยาผู้แสดงออก — คลังคำศัพท์ทางอารมณ์</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; แผนที่สายสัมพันธ์ข้ามรุ่น</strong></summary>
+      <p>Correspondences ของ Robroo ในความสัมพันธ์มีสามชั้น — (1) ภายใน ↔ ภายนอก: Fi (6) คือ "หัวใจที่ซ่อนอยู่" คุณดึงดูดคนที่ "อยากให้คุณแสดงความรู้สึก" (2) Personal Year 6 = ปีแห่งความรัก — ปี 2030 (อายุ 37) คือ window ที่ "คู่ที่ใช่" จะปรากฏ (3) Karmic Tail = "สร้างสะพานระหว่างโครงสร้างกับคน" — นี่คือบทเรียนชาตินี้</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Career individuation path — Senior IC → Tech Lead → Architect → Founder/Consultant — แต่ละขั้นคือการ "ปล่อย Ego control" ที่ลดลงเรื่อยๆ</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Workplace behavior — INTJ Senior IC vs Tech Lead — เมื่ออยู่ใน IC mode Robroo จะ optimize ได้ดีเยี่ยม เมื่อขยับเป็น Lead ต้อง "ดูแลคน" ไม่ใช่ "optimize process"</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Career Law of Attraction — เมื่อ Robroo aligned กับ triad 10-6-22 ทั้งใน/นอก จักรวาลจะส่ง "matching opportunity" — Period 1 (Water) จะดึงดูดองค์กร/โปรเจกต์ที่ ตรงกับ Vision ของ Robroo มา</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Career peak timing — PY 8 (2031, 2035) + PY 11 (2029, 2038, 2047) = prime windows — Period 1 (2043) = absolute peak — ดาวรุ่งพุ่งขึ้น ณ อายุ 50</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Career Rhythm — 7-yr pulse — Senior IC phase (2024-2030) → Lead phase (2031-2037) → Architect phase (2038-2044) → Mentor/Legacy phase (2045-2053) — แต่ละ phase ต้อง embody principle ที่ต่างกัน</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Career 用神 — Robroo ต้องอยู่ใน "โครงสร้างที่มี Earth (ทีม) + Water (ความรู้)" — เป็น System Analyst ใน Enterprise หรือ Consultant ที่สอน (Earth + Water) — ไม่ใช่ Solo Entrepreneur ในตลาดเสรี (Fire ล้วน)</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Relationships & Generation</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Anima/Animus Integration:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 5 → anima animus สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Relationship Pattern:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 5 → relationship pattern สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Communication Style:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 5 → communication style สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Love Language:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 5 → love language สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Twin Flame / Soul Mate:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 5 → twin flame สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Generational Wisdom:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 5 → generational wisdom สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Venus Return:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 5 → venus return สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>7th House Activation:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 5 → seventh house สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Sacred Union:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 5 → sacred union สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Generational Mission:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 5 → generational mission สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Spouse Palace:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 5 → spouse palace สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Relationship Luck:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 5 → relationship luck สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-7" id="s6">
+    <h2><span class="num">&sect;6</span>สุขภาพและจุดอ่อน &middot; Health Card &amp; Chakras</h2>
+    <p class="lede">แผนที่พลังงานทั้ง 7 จุด &mdash; จุดไหนรั่ว จุดไหนเปิดรับมากเกินไป และจะปิดรอยรั่วอย่างไร</p>
+
+    <table class="chakra">
+      <thead>
+        <tr><th>#</th><th>Chakra</th><th>Axis A &middot; Physical</th><th>Axis B &middot; Energy</th><th>Axis C &middot; Emotional</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Crown &middot; Sahasrara</td><td>Crown strain — ปวดหัวไมเกรนจากคิด 18 ชม./วัน</td><td>Vision ที่มากเกินไปจนตัดการเชื่อมต่อร่างกาย</td><td>ความเหงาเงียบ — ไม่มีใครเข้าใจสิ่งที่คุณเห็น</td></tr>
+        <tr><td>2</td><td>Third Eye &middot; Ajna</td><td>Third Eye — ตาคมเกินไปจนปวดกระบอกตา</td><td>Insight surges ที่ระเบิดเป็น migraine</td><td>Quiet pride — ความภูมิใจที่ไม่ได้รับการยอมรับ</td></tr>
+        <tr><td>3</td><td>Throat &middot; Vishuddha</td><td>Solar Plexus — กรดไหลย้อน แผลกระเพาะ (อันตรายสูงสุด)</td><td>Will-power burnout — "ต้องทำให้ได้" จนหมดแรง</td><td>Frustration ที่ถูกเก็บ — ระเบิดเป็น Se-Grip</td></tr>
+        <tr><td>4</td><td>Heart &middot; Anahata</td><td>Heart — แน่นหน้าอกจากโดดเดี่ยวนาน</td><td>Warm circulation ต่ำ — เลือดไหลช้า (sedentary)</td><td>ความรู้สึกที่ถูกเก็บ — "ไม่มีใครอยู่ข้างๆ"</td></tr>
+        <tr><td>5</td><td>Solar Plexus &middot; Manipura</td><td>Throat — พูดน้อย คอแห้ง กลืนลำบาก</td><td>Expression blocked — pattern ที่ไม่มีใครรับ</td><td>Quiet grief — ความโศกที่ไม่เคยร้องไห้</td></tr>
+        <tr><td>6</td><td>Sacral &middot; Svadhisthana</td><td>Solar — ระบบย่อยอาหารช้า กินไม่เป็นเวลา</td><td>Creative tide ที่มาเป็นช่วงๆ ไม่สม่ำเสมอ</td><td>Soft joy ในจุดเล็กๆ — pattern ที่งดงาม</td></tr>
+        <tr><td>7</td><td>Root &middot; Muladhara</td><td>Root — ปวดหลังเรื้อรัง ขาอ่อนแรง (sedentary killer)</td><td>Grounding ต่ำ — ลอยในโลกของ pattern</td><td>Survival anxiety — "ถ้าวันหนึ่งระบบล่ม"</td></tr>
+        <tr><td><strong>&Sigma;</strong></td><td><strong>Zone value</strong></td><td><strong>16</strong></td><td><strong>11</strong></td><td><strong>10</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      <span class="pill"><strong>Watch</strong> Solar Plexus (5) — อันตรายสูงสุดสำหรับ INTJ Senior Analyst</span>
+      <span class="pill"><strong>Balance ritual</strong> เดิน 30 นาที + อาหารตรงเวลา + นอน 7 ชม. เป็น minimum</span>
+    </p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตารางบำรุงรายจุด</strong></summary>
+      <p>Health Card ของ Robroo รวม 7 จักระ — ผลรวม = Tower (16) + Justice (11) + Wheel (10) Trinity Echo เดียวกับ Matrix อันตรายหลักคือ Solar Plexus (#5) — อันตรายรองคือ Root (#7) จากการนั่งนาน และ Crown (#1) จากการคิดไม่หยุด — Balance ต้องเป็น ritual: เดิน + อาหาร + นอน + สมาธิ</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Anima projection ในความสัมพันธ์ — Robroo จะดึงดูด "คนที่แสดงออกได้ดี" (สิ่งที่ Anima อยากทำ) — เรียนรู้จากคู่รักว่า "การแสดงออกไม่ใช่การสูญเสีย Identity"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Communication pattern — Robroo = "หุ่นยนต์ที่ใจดี" ในสายตาคนอื่น — ต้องเพิ่ม "Language of warmth" ในการสื่อสาร — เปลี่ยน "ฉันคิดว่า" เป็น "ฉันรู้สึก" ใน 1 ใน 5 ข้อความ</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Karmic correspondence ในครอบครัว — Robroo มาจากสายตระกูลที่ "เข้าใจโครงสร้างแต่ ไม่เข้าใจใจคน" — บทเรียนของ Robroo คือสร้างสะพานระหว่าง 2 ฝั่ง</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Generational lines — Father line (A-I = 10-10): hidden strength ผ่าน duty — Mother line (C-G = 22-11): visionary + wisdom — Robroo สืบทอดทั้งสองแต่ต้อง choose — ไม่สามารถ absorb ทั้งหมด</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Gender principle ใน relationship — "Masculine = Structured (Te/Ni)" + "Feminine = Receptive (Fi/Se)" — Robroo ใน relationship ต้องสลับเป็น Receptive อย่างน้อย 30% ของเวลา</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Family 用神 — คู่ครองที่ดีคือ "คนที่ให้ Earth (ความมั่นคง) + Water (สติ) ได้" — Earth-Water person = ครู/นักเยียวยา/ผู้ใหญ่ที่ Robroo respect — PY 6 window ปี 2030 (อายุ 37) เป็นจุดพบ</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Health & Chakras</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Body as Shadow:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 6 → body shadow สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Wholeness Practice:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 6 → wholeness practice สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Energy Management:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 6 → energy management สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Stress Response:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 6 → stress response สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Etheric Body:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 6 → etheric body สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Kundalini Rising:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 6 → kundalini สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>6th House Health:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 6 → sixth house สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Healing Transit:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 6 → healing transit สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Chakra Activation:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 6 → chakra activation สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Energy Field:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 6 → energy field สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>5 Elements Balance:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 6 → five elements สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Body Constitution:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 6 → body constitution สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-1" id="s71">
+    <h2><span class="num">&sect;7.1</span>ไทม์ไลน์ 5 ช่วงวัย &middot; 5 Stages of Evolution (ก่อน 60)</h2>
+    <p class="lede">ช่วงวัยที่หล่อหลอม mission &mdash; ธีมหลักและสัญญาณบ่งชี้ในแต่ละช่วง</p>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="stage-num">01</div>
+        <div class="stage-title">ปฐมบทและการสร้างเข็มทิศ</div>
+        <div class="stage-band">วัยเยาว์ &ndash; ต้น 20</div>
+        <p class="stage-theme">Mastery Peak (เก็บเกี่ยว)</p>
+        <p class="stage-marker"><strong>Marker:</strong> ได้รับความไว้วางใจให้เป็น Senior IC ที่ทีมพึ่งได้</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">02</div>
+        <div class="stage-title">การสำรวจและขยายอาณาเขต</div>
+        <div class="stage-band">กลาง 20 &ndash; ต้น 30</div>
+        <p class="stage-theme">Leadership Transition (ออกจาก comfort zone)</p>
+        <p class="stage-marker"><strong>Marker:</strong> Tower moment แรก — โปรเจกต์ล้มเหลวหรือ restructure</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">03</div>
+        <div class="stage-title">การปะทะและจุดวิกฤต</div>
+        <div class="stage-band">กลาง 30 &ndash; ต้น 40</div>
+        <p class="stage-theme">Wisdom Builder (สอนมากกว่าทำ)</p>
+        <p class="stage-marker"><strong>Marker:</strong> เริ่ม mentor junior — เขียน ADR ที่ทีมอื่นอ่าน</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">04</div>
+        <div class="stage-title">การบูรณาการและปรับขั้วพลังงาน</div>
+        <div class="stage-band">กลาง 40 &ndash; ต้น 50</div>
+        <p class="stage-theme">Mastery of Mastery (รู้ว่าตัวเองรู้)</p>
+        <p class="stage-marker"><strong>Marker:</strong> Period 1 (Water) เริ่ม — โอกาสทองในการสร้าง Legacy</p>
+      </div>
+      <div class="stage">
+        <div class="stage-num">05</div>
+        <div class="stage-title">การตกผลึกและส่งมอบ</div>
+        <div class="stage-band">กลาง 50 &ndash; 59</div>
+        <p class="stage-theme">Synthesis & Closure</p>
+        <p class="stage-marker"><strong>Marker:</strong> Wisdom spoken — ส่งต่อบทเรียนทั้งหมด</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-2" id="s72">
+    <h2><span class="num">&sect;7.2</span>พยากรณ์อาชีพรายปี &middot; Year-by-Year (อายุปัจจุบัน &rarr; 60)</h2>
+    <p class="lede">คลิกแต่ละปีเพื่อดูสถานการณ์และกลยุทธ์โดยละเอียด</p>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2026</span>
+        <span class="age">อายุ 33</span>
+        <span class="lead">PY 3 · 丙午 (Yang Fire)</span>
+        <span class="situation">ปีแห่งพลัง + ความคิดสร้างสรรค์ — โปรเจกต์ใหม่ที่ต้องใช้ Ni-Te เต็มที่</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> รุก — ship ใหญ่ อย่า refine scope</p>
+        <p>ปี 2026 (อายุ 33) — รายละเอียดเพิ่มเติมสำหรับ Robroo: ดู พลังงาน Personal Year + BaZi annual pillar พร้อม scenario simulation จาก career_year_1_energy / career_year_1_situation</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2027</span>
+        <span class="age">อายุ 34</span>
+        <span class="lead">PY 4 · 丁未 (Yin Fire)</span>
+        <span class="situation">ปีแห่งรากฐาน — ถอยเข้าหา Hermit — Pattern ของปีนี้คือ "วางราก"</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> รับ — เรียนรู้และสังเกต ไม่เริ่ม project ใหม่</p>
+        <p>ปี 2027 (อายุ 34) — รายละเอียดเพิ่มเติมสำหรับ Robroo: ดู พลังงาน Personal Year + BaZi annual pillar พร้อม scenario simulation จาก career_year_2_energy / career_year_2_situation</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2028</span>
+        <span class="age">อายุ 35</span>
+        <span class="lead">PY 5 · 戊申 (Yang Earth)</span>
+        <span class="situation">ปีแห่งการเปลี่ยนแปลง — อาจเปลี่ยนทีม บริษัท หรือ stack</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> รุก — seize ถ้ามีโอกาสที่ตรงกับ Vision</p>
+        <p>ปี 2028 (อายุ 35) — รายละเอียดเพิ่มเติมสำหรับ Robroo: ดู พลังงาน Personal Year + BaZi annual pillar พร้อม scenario simulation จาก career_year_3_energy / career_year_3_situation</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2029</span>
+        <span class="age">อายุ 36</span>
+        <span class="lead">PY 6 · 己酉 (Yin Earth)</span>
+        <span class="situation">ปีแห่งความรัก — ไม่ใช่แค่ romantic แต่รวมถึงความสัมพันธ์กับทีม กับ mentor</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> รับ — เปิดใจ ปล่อยให้คนเข้ามา</p>
+        <p>ปี 2029 (อายุ 36) — รายละเอียดเพิ่มเติมสำหรับ Robroo: ดู พลังงาน Personal Year + BaZi annual pillar พร้อม scenario simulation จาก career_year_4_energy / career_year_4_situation</p>
+      </div>
+    </details>
+
+    <details class="year">
+      <summary>
+        <span class="yr">2030</span>
+        <span class="age">อายุ 37</span>
+        <span class="lead">PY 7 · 庚戌 (Yang Metal)</span>
+        <span class="situation">ปีแห่ง introspection — ดาบคม — หอนเข้าหา Tower ครั้งแรก</span>
+      </summary>
+      <div class="body">
+        <p><strong>Strategy:</strong> ชะลอ — อย่าตัดสินใจใหญ่</p>
+        <p>ปี 2030 (อายุ 37) — รายละเอียดเพิ่มเติมสำหรับ Robroo: ดู พลังงาน Personal Year + BaZi annual pillar พร้อม scenario simulation จาก career_year_5_energy / career_year_5_situation</p>
+      </div>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (timeline + year-by-year)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Mind-Body split = central health risk — Robroo ใช้ mind มากเกินไปจน body ขาด การเชื่อมต่อ — Body Wisdom ritual = บังคับให้ตัวเองรู้สึกถึงร่างกาย 30 นาที/วัน</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Se nourishment — Robroo ต้อง "feed" Se (Extraverted Sensing) อย่าง deliberate — เดิน 30 นาที กินโดยไม่ดูจอ นวดตัว weekly — สิ่งเหล่านี้ไม่ใช่ luxury แต่เป็น preventive maintenance</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Etheric body ในมุม Blavatsky — Robroo = "etheric blueprint ที่หนาแน่น" — แต่ physical body ถูกทอดทิ้ง — Vibration therapy = near-water, forest, mountain — ช่วย recharge etheric body</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">7 Chakras ในภาพรวม — Crown (#1) + Third Eye (#2) overload (จากคิดหนัก) · Solar (#3) high-risk (stress ulcer) · Heart (#4) suppressed · Throat (#5) blocked · Solar Plexus (#6) weak · Root (#7) sedentary</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Vibration principle ในสุขภาพ — Robroo เป็น "high-vibration person" แต่ body เป็น "low-vibration" (sedentary) — ต้อง sync สองความถี่ — exercise + meditation</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">BaZi health risks = Fire + Wood overload (Period 9 + Wind from Summer birth) — 胃 (stomach), 心 (heart), 眼睛 (eyes) เป็นอวัยวะเสี่ยง — 用神 Water ช่วย cool และ protect</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Life Stages & Year-by-Year</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Life Arc:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 7 → life arc สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Mid-Life Transition:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 7 → midlife transition สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Cognitive Aging:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 7 → cognitive aging สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Wisdom Function:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 7 → wisdom function สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Reincarnation Cycle:</strong> Cycle = Robroo กลับมา integrate Trinity Echo จน harmonized — ชาตินี้คือ cycle ปิด</p>
+        <p><strong>Year Energy Theme:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 7 → year energy สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Saturn Return:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 7 → saturn return สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Progressed Moon:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 7 → progressed moon สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Initiate Year Theme:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 7 → year theme สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Annual Ritual:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 7 → annual ritual สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Decade Luck:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 7 → decade luck สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Annual Pillars Reading:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 7 → pillars reading สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card slot-3" id="s8">
+    <h2><span class="num">&sect;8</span>คำแนะนำและแนวทางปฏิบัติ &middot; Actionable Protocols</h2>
+    <p class="lede">พิธีกรรมเชิงปฏิบัติที่ดึงสติและศักยภาพกลับคืน &mdash; รายวัน รายสัปดาห์ รายเดือน และชุดรับมือวิกฤต</p>
+
+    <h3>Daily &middot; รายวัน</h3>
+    <p>เดิน 30 นาที · อาหาร 3 มื้อตรงเวลา · นอน 7 ชม. · สมาธิ 15 นาที</p>
+
+    <h3>Weekly &middot; รายสัปดาห์</h3>
+    <p>นวดตัว · อ่านหนังสือที่ไม่ใช่เทคนิค · คุยกับคนที่ไม่ใช่ทีม</p>
+
+    <h3>Monthly &middot; รายเดือน</h3>
+    <p>ทบทวนเป้าหมาย · check กับ mentor · เขียน ADR สาธารณะอย่างน้อย 1 ชิ้น</p>
+
+    <h3>Crisis Mastery &middot; ชุดรับมือวิกฤต</h3>
+    <p>Se-Grip Recovery 3 ขั้น: (1) Stop — ปิด notification 4 ชม. (2) Reconnect — เดิน 30 นาที + อาบน้ำอุ่น (3) Re-engage Te — สร้าง spec วิเคราะห์ trade-off แล้วพูดคุยกับคนที่ไว้ใจก่อนตัดสินใจ</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; คลังพิธีกรรมเสริม</strong></summary>
+      <p>Action Plan ที่ balance ทั้ง Ni (วางแผน), Te (ship), Fi (ฟังใจ), Se (อยู่กับกาย)</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (why each ritual works)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Meaning = "Self realization" — Robroo เกิดมาเพื่อ "realize Self" ผ่านการออกแบบ ระบบที่ให้คนอื่น realize ตัวเอง — Architect of Self-realization platforms</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Type's purpose = "Missionary for Systems Thinking" — Robroo มาสอนคนอื่นให้ "เห็น โครงสร้าง" — ไม่ใช่ missionary แบบ preach แต่ missionary แบบ architect</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Root mission = "Bridge between structure and souls" — Robroo เกิดมาสร้างสะพาน ระหว่างโครงสร้าง (ที่ Ego เห็น) กับ Soul (ที่ Monad รู้)</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Soul mission = integrate Trinity Echo 10-11-16 — เมื่อ integrate คุณจะกลายเป็น "Soul Architect" — คนที่ออกแบบระบบให้คนอื่น Soul-Realize</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Ultimate purpose = Mental Transmutation at scale — Robroo สอนคนอื่นให้ transmute ความคิดเป็น wisdom (Ni → Te) และความกลัวเป็น acceptance (Shadow → Self)</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Soul = "ดาบที่ส่องแสง" — Day Master อ่อน (身弱) แต่เมื่อ surround ด้วย 用神 (Water + Earth) จะเปล่งประกายมากกว่า Strong Day Master — บทเรียน: "ความอ่อนไม่ใช่ข้อจำกัด ถ้ามีโครงสร้างที่ถูก"</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Actionable Protocols</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>Shadow Work Protocol:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 8 → shadow work สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Individuation Ritual:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 8 → individuation ritual สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Development Plan:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 8 → development plan สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Team Collaboration:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 8 → team collaboration สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>7 Principles Practice:</strong> 7 = Mentalism (vision) · Correspondence (arch) · Vibration (clarity) · Polarity (structure) · Rhythm (7-yr) · Cause/Effect (root cause) · Gender (mentor↔mentee)</p>
+        <p><strong>Karma Yoga:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 8 → karma yoga สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Planetary Remedy:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 8 → planetary remedy สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Daily Astro Practice:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 8 → daily astro สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Pathworking Protocol:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 8 → pathworking สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Mantra Practice:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 8 → mantra practice สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Feng Shui Action:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 8 → feng shui สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Bazi Daily Practice:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 8 → bazi daily สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 21–60) — Annual Energy Forecast</h3>
+    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+
+    <div style="background:rgba(255,140,0,0.12); border-left:3px solid var(--neon-orange); padding:12px 14px; margin:12px 0; border-radius:4px;">
+      <strong style="color:var(--neon-orange);">⚠ หมายเหตุสำคัญ:</strong> เพศมีผลต่อทิศทาง Luck Pillar (顺行/逆行) — ด้านล่างนี้ present ทั้งสองทิศทางและอธิบายว่าข้อสรุปเปลี่ยนอย่างไรเมื่อทราบเพศ
+    </div>
+
+    <h4>วิธีคำนวณ起运 (Qǐ Yùn — Entry Age)</h4>
+    <ul style="list-style:none; padding-left:0; font-size:14px;">
+      <li><strong>Year stem 乙 = Yin</strong> (Stem #1 = yin)</li>
+      <li><strong>กฎ:</strong> 阳男 + 阴女 = <strong>顺行 (forward)</strong> | 阴男 + 阳女 = <strong>逆行 (backward)</strong></li>
+      <li><strong>Days to next Jieqi (寒露 2005)</strong> ≈ 6 วัน → 起运 = 6÷3 ≈ <strong>2 ปี</strong> (forward)</li>
+      <li><strong>Days to previous Jieqi (白露 2005)</strong> ≈ 24 วัน → 起运 = 24÷3 ≈ <strong>8 ปี</strong> (backward)</li>
+    </ul>
+
+    <h4>Scenario A: 顺行 (Forward, ถ้าคุณเป็น Yin-female)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>丙戌</strong></td>
+          <td style="padding:8px;">Fire-Earth</td>
+          <td style="padding:8px;">2–11</td>
+          <td style="padding:8px;">2007-2016</td>
+          <td style="padding:8px;">วัยเด็ก — 丙 (Fire=忌) = ถูก "อุ้ม" มาก แต่ 戌 (Earth) ทำให้ Day Master หนัก — เด็กที่ "อยู่ในกรอบ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">2</td>
+          <td style="padding:8px;"><strong>丁亥</strong></td>
+          <td style="padding:8px;">Fire-Water</td>
+          <td style="padding:8px;">12–21</td>
+          <td style="padding:8px;">2017-2026</td>
+          <td style="padding:8px;">วัยรุ่น — 丁 (Fire=忌) + 亥 (Water=印) — ความ "ถูกกดดันจากภายใน" เริ่มมากขึ้น — <strong>ปีนี้ (2026) คุณอยู่ปีสุดท้ายของ pillar นี้</strong></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">3 ★</strong></td>
+          <td style="padding:8px;"><strong>戊子</strong></td>
+          <td style="padding:8px;">Earth-Water</td>
+          <td style="padding:8px;"><strong>22–31</strong></td>
+          <td style="padding:8px;"><strong>2027-2036</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Career-Discovery Decade</strong> — 戊 (Earth=比肩) เพิ่มน้ำหนัก Day Master แต่ 子 (Water=印) ช่วย "หล่อเลี้ยง" → decade ของการ "ค้นหาตัวตน + สร้างรากฐาน" — Period 9 ปลาย (2034-2036) จะ "test" ว่าคุณพร้อมหรือไม่</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">4</td>
+          <td style="padding:8px;"><strong>己丑</strong></td>
+          <td style="padding:8px;">Earth-Earth</td>
+          <td style="padding:8px;">32–41</td>
+          <td style="padding:8px;">2037-2046</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย + Period 10 เริ่ม (2044)</strong> + 己 (比肩) — decade ที่ Day Master "ซ้อนตัวเอง" เสี่ยง "โคลนตม" ถ้าไม่ระวัง — 丑 (Earth+Water hidden) คือ "บึง" ที่ต้องระวัง</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">5 ★</strong></td>
+          <td style="padding:8px;"><strong>庚寅</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">42–51</td>
+          <td style="padding:8px;">2047-2056</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Period 10 ใหม่ (2044-2063)</strong> + 庚 (伤官) + 寅 (Wood=用) → decade ที่ <strong>"ทั้ง用神 (Wood) และ "ผลงาน" (Metal) มาพร้อมกัน</strong> ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">6</td>
+          <td style="padding:8px;"><strong>辛卯</strong></td>
+          <td style="padding:8px;">Metal-Wood</td>
+          <td style="padding:8px;">52–61</td>
+          <td style="padding:8px;">2057-2066</td>
+          <td style="padding:8px;">decade ของ wisdom — 辛 (食神) + 卯 (Wood=用) → ผลงาน + แก่นแท้ converge — คุณจะ "พูด" จาก "ประสบการณ์"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>Scenario B: 逆行 (Backward, ถ้าคุณเป็น Yin-male)</h4>
+    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
+      <thead>
+        <tr style="border-bottom:2px solid var(--line-strong);">
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">#</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Luck Pillar</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Element</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Age Range</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Year (ค.ศ.)</th>
+          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Key Theme</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">1</td>
+          <td style="padding:8px;"><strong>甲申</strong></td>
+          <td style="padding:8px;">Wood-Metal</td>
+          <td style="padding:8px;">8–17</td>
+          <td style="padding:8px;">2013-2022</td>
+          <td style="padding:8px;">วัยเด็ก/วัยรุ่น — 甲 (Wood=用!) + 申 (Metal=喜!) → decade ที่ <strong>"ถูกหล่อเลี้ยงอย่างเหมาะสม"</strong> เรียนดี มีครูดี</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">2 ★</strong></td>
+          <td style="padding:8px;"><strong>癸未</strong></td>
+          <td style="padding:8px;">Water-Earth</td>
+          <td style="padding:8px;"><strong>18–27</strong></td>
+          <td style="padding:8px;"><strong>2023-2032</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 9 Prime Years</strong> — 癸 (偏印) + 未 (比肩) → decade ของ "ความคิดสร้างสรรค์ + การค้นหาตัวตน" — Period 9 (2024-2043) อยู่กลาง decade นี้</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">3</td>
+          <td style="padding:8px;"><strong>壬午</strong></td>
+          <td style="padding:8px;">Water-Fire</td>
+          <td style="padding:8px;">28–37</td>
+          <td style="padding:8px;">2033-2042</td>
+          <td style="padding:8px;"><strong>Period 9 ปลาย</strong> + 壬 (正印) + 午 (Fire=忌) → decade ของ "การเรียนรู้ลึก + ความท้าทายจากภายใน" — คุณอาจเจอ "อาจารย์ทางจิตวิญญาณ"</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">4 ★</strong></td>
+          <td style="padding:8px;"><strong>辛巳</strong></td>
+          <td style="padding:8px;">Metal-Fire</td>
+          <td style="padding:8px;"><strong>38–47</strong></td>
+          <td style="padding:8px;"><strong>2043-2052</strong></td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 10 Start (2044)</strong> + 辛 (食神=喜) + 巳 (Fire=忌+比肩) → decade ที่ <strong>"ผลงานเปล่งประกาย" แต่ "ตัวตนถูกทดสอบ"</strong> — ใช้ Metal output ระบาย Day Master ที่ถูก Fire กด</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line);">
+          <td style="padding:8px;">5</td>
+          <td style="padding:8px;"><strong>庚辰</strong></td>
+          <td style="padding:8px;">Metal-Earth</td>
+          <td style="padding:8px;">48–57</td>
+          <td style="padding:8px;">2053-2062</td>
+          <td style="padding:8px;">decade แห่ง "ผลงานสุขุม" — 庚 (伤官) + 辰 (Earth) → ใช้ "ความคิดที่ตัดสิ่งเก่า" ในการสร้างสรรค์</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">6 ★</strong></td>
+          <td style="padding:8px;"><strong>己卯</strong></td>
+          <td style="padding:8px;">Earth-Wood</td>
+          <td style="padding:8px;">58–67</td>
+          <td style="padding:8px;">2063-2072</td>
+          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Wisdom Era</strong> — 己 (比肩) + 卯 (Wood=用!) → decade ที่ "ตัวตนมาบรรจบกับแก่น"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>ความจริงข้าม Scenario</h4>
+    <p><strong>ไม่ว่า Scenario A หรือ B ก็ตาม</strong>, ลวดลายชีวิตของคุณจะประกอบด้วย:</p>
+    <ol>
+      <li><strong>Prime Years 21–39 (ทั้งสอง Scenario)</strong> — ตรงกับ <strong>Period 9 (2024-2043)</strong> หมายความว่า <strong>คุณจะ "เป็นที่รู้จัก" ในช่วงนี้</strong> ไม่ว่าจะเกิดเพศใด — แต่ "คุณภาพ" ของการเป็นที่รู้จักขึ้นกับการเลือก (ใช้ Wood เป็นเกราะ หรือถูก Fire เผา)</li>
+      <li><strong>Mid-life Crisis Window 32-48</strong> (Scenario A: 己丑 32-41 + Scenario B: 壬午 28-37 → 辛巳 38-47 overlap) — decade ที่ Day Master ต้อง <strong>"ตั้งหลักใหม่"</strong> หลังจาก Period 9 จบลง</li>
+      <li><strong>Wisdom Era 50-65</strong> — decade ที่ <strong>用神 Wood</strong> จะมาถึง (ไม่ว่าจะใน Scenario A หรือ B) หมายความว่า <strong>ท้ายที่สุด ดิน (己) จะเรียนรู้ที่จะยืดหยุ่น</strong> และกลายเป็น "ทุ่งนาที่มีต้นไม้ขึ้น" ไม่ใช่ "ดินแห้งไม่มีราก"</li>
+    </ol>
+
+    <details>
+      <summary><strong>ขยายความ — Annual Pillars ปี 2026, 2027, 2028 (รายละเอียด)</strong></summary>
+      <div style="font-size:13px; line-height:1.7; color:var(--fg-muted); padding:10px 0;">
+        <p><strong>Annual Pillars (流年)</strong> เป็น "คลื่น" ที่ซ้อนบน "ลม" (Luck Pillar) — แต่ละปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
+        
+        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 ปี 21 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丙 = 正官 (Direct Officer) — controls me</li>
+          <li><strong>Branch:</strong> 午 = 丁 + 己; main TG = 七杀 (Direct Seal)</li>
+          <li><strong>Element:</strong> Fire (忌 — ทำให้ Day Master "ถูกกด")</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปี 2026 คุณอยู่ปี 4 ของมหาวิทยาลัย (อายุ 21) — คุณจะรู้สึก <strong>"ถูกคาดหวัง"</strong> จากครอบครัว สังคม ตัวเอง — ความ "fire กดทับ" ทำให้คุณรู้สึก "ทำไมฉันทำได้ไม่ดีพอ" ทั้งที่ความจริงคุณทำได้ดี แต่ Day Master (己) ของคุณ "อ่อน" ต่อ Fire pressure</p>
+        <p><strong>Scenario Simulation:</strong> ปีนี้คุณกำลังจะจบปี 4 — อาจารย์ที่ปรึกษาบอก "ปีหน้าคุณต้องทำวิทยานิพนธ์" พ่อแม่ถาม "จบแล้วทำงานอะไร" เพื่อนร่วมชั้นโพสต์รูป "ได้งานที่บริษัทใหญ่" — คุณนั่งเงียบๆ ในห้อง เปิด journal ส่วนตัวแล้วเขียน <strong>"ฉันยังไม่รู้ว่าฉันอยากเป็นอะไร"</strong> — นี่ไม่ใช่ "ล้มเหลว" แต่เป็น <strong>"己 ที่ถูก 丙 กด"</strong> — Day Master ต้องการ "หยุด" แต่ environment บอก "ทำต่อ"</p>
+
+        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 ปี 22 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 丁 = 七杀 (Seven Killings)</li>
+          <li><strong>Branch:</strong> 未 = 己 (比肩); 丁 (七杀); 乙 (偏财)</li>
+          <li><strong>Element:</strong> Fire + Earth (忌 + 比肩) — <strong>ปีที่ Day Branch echo!</strong></li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> <strong style="color:var(--neon-green);">★ YEAR OF DAY PILLAR ECHO ★</strong> — ปี 2027 Annual Pillar = <strong>丁未</strong> = Day Pillar <strong>己未</strong> ใน "逆 echo" (丁 vs 己 = same element polarity diff; 未 vs 未 = same branch) — นี่คือ <strong>"伏吟" (Fuyin)</strong> ที่ระดับปี — สิ่งที่คุณจะประสบในปี 2027 จะ <strong>"echo"</strong> กับสิ่งที่คุณเป็นตอนเกิด — เป็นปีที่ "ตัวตน" ถูก "ทดสอบ" อย่างเข้มข้น</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2027 — คุณจบการศึกษา — คุณตัดสินใจ <strong>"ไม่สมัครงานประจำทันที"</strong> — คุณเลือก "พัก" 1 ปี เพื่อ "ค้นหาตัวเอง" — พ่อแม่ไม่เข้าใจ เพื่อนบางคนคิดว่า "เขาแพ้" — แต่จริงๆ แล้ว <strong>己 (Yin Earth) ที่ถูก 七杀 (丁) กด</strong> กำลัง "ตั้งหลัก" ก่อนจะ "ออกเดิน" — นี่คือ <strong>"ดินที่หยุดรับน้ำ (Water) เพื่อไม่ให้ท่วม"</strong> — เป็นสัญญาณที่ดี ถ้าคุณใช้เวลาว่าง <strong>"ปลูก Wood"</strong> (อ่านหนังสือ philosophy, ฝึกทักษะใหม่, สร้าง network)</p>
+
+        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 ปี 23 — 2571 (2028) — 戊申 (Earth-Metal) — 忌 (Earth) + 喜 (Metal)</h5>
+        <ul style="margin:0; padding-left:20px;">
+          <li><strong>Stem:</strong> 戊 = 劫财 (Rob Wealth) — same element, opposite polarity</li>
+          <li><strong>Branch:</strong> 申 = 庚 (伤官) + 壬 (正印) + 戊 (劫财)</li>
+          <li><strong>Element:</strong> Earth + Metal (mixed — outside 忌, branch contains 喜)</li>
+        </ul>
+        <p><strong>คำอ่าน:</strong> ปีนี้เป็น "ปีแห่งการทดลอง" — คุณอาจ "ทำโปรเจกต์ส่วนตัว" หรือ "รับงาน freelance" แม้จะมีพ่อแม่กดดัน — แต่ 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณแสดง "ความคิดสร้างสรรค์" ผ่าน 伤官 (庚)</p>
+        <p><strong>Scenario Simulation:</strong> ปี 2028 — คุณสร้าง <strong>portfolio website</strong> แรกของคุณ เขียน essay เกี่ยวกับ "AI กับความคิดสร้างสรรค์" — โพสต์ลง Twitter — <strong>คลิปหนึ่งกลายเป็น viral</strong> (1,000 likes ใน 1 สัปดาห์) — นี่คือ <strong>"食神/伤官 (Metal) ที่ 申 (branch) ปลดปล่อย Earth (己)"</strong> — คุณเริ่ม "เห็น" ว่า "ความคิดของคุณมีค่า" ไม่ใช่แค่ "ความคิดส่วนตัว"</p>
+      </div>
+    </details>
+
+    <h4>คำแนะนำเบื้องต้น — 4 ข้อที่ grounded ใน chart</h4>
+    <ol>
+      <li><strong>"ปลูก Wood ในชีวิตประจำวัน" (用神 = Wood)</strong><br>
+        Wood ไม่ใช่ "ต้นไม้จริง" — Wood คือ <strong>"พลังของการเปิดทาง, ขยายขอบเขต, และงอกงาม"</strong> — การอ่านหนังสือที่ "ขยายกรอบความคิด" (philosophy, systems thinking, biographies) — การเรียนรู้ทักษะใหม่ (programming, design, writing, meditation) — การเดินทางไปที่ใหม่ (โดยเฉพาะทิศ East/ Southeast — Wood direction) — การปลูกต้นไม้จริง (ดูต้นไม้เติบโตทุกวัน จะช่วย "เตือน" คุณว่า "การเติบโตต้องใช้เวลา")</li>
+      <li><strong>"ระวัง Fire ที่มากเกินไป" (忌神 = Fire)</strong><br>
+        สำหรับคุณ <strong>"การถูกควบคุมมากเกินไป"</strong> เป็นอันตราย — ครู/ที่ปรึกษาที่ "กดดัน" จะทำให้คุณ "ปิดตัวเอง" ไม่กล้าแสดงออก — ครอบครัวที่ "วางแผนชีวิตให้" จะทำให้คุณรู้สึก "หายใจไม่ออก" — งานที่ "micromanage" จะทำให้คุณ burnout ภายใน 3 เดือน — Period 9 ที่ "chase viral" จะทำให้คุณ "ถูกเผา" — เลือก "แสง" ที่ "มีราก" เท่านั้น</li>
+      <li><strong>"สร้าง Water routine" (中神 = Water — ขาดจาก chart)</strong><br>
+        เพราะ chart ของคุณ <strong>ไม่มี Water เลย</strong> — นี่คือ "ช่องว่าง" ที่ต้อง "สร้างเอง" — นอน 8 ชั่วโมงเป็นประจำ (Water = rest, regeneration) — เดินริมน้ำ/ทะเล/แม่น้ำ อย่างน้อยสัปดาห์ละครั้ง — Journaling ทุกเย็น (เขียน "วันนี้ฉันรู้สึกอะไร" เป็น "ท่อส่งน้ำ" ให้อารมณ์) — สมาธิ/冥想 10 นาทีทุกเช้า (ไม่ต้องยาก แค่ "นั่งเงียบ หายใจเข้า-ออก")</li>
+      <li><strong>"ใช้ Metal ปลดปล่อย Earth" (喜神 = Metal — มีอยู่แล้ว 2 จุด!)</strong><br>
+        คุณ <strong>โชคดี</strong> ที่มี酉+酉 (Metal) ใน Year+Month branch — คุณมี "เครื่องมือระบาย" ติดตัวมาแต่เกิด — เขียน — พูด — present: blog, podcast, video, talk ที่ conference — ทุกครั้งที่คุณ "ปลดปล่อยความคิด" ผ่านคำพูด/ตัวอักษร คุณจะเบาขึ้น (食神 ของคุณ = "gentle creativity" ไม่ใช่ "cutting critique") — ทำ craft / งานฝีมือ: วาดรูป ปั้นดิน ทำอาหาร — การ "ผลิตของ" ด้วยมือช่วย drain Earth — ห้องสมุดส่วนตัว: สำหรับ INFJ ที่รัก Ni การมี "พื้นที่เงียบ" ที่เต็มไปด้วยหนังสือเป็น "temple" ส่วนตัว</li>
+    </ol>
+
+    <details>
+      <summary><strong>บทสังเคราะห์ Su Yu Hong</strong></summary>
+      <p style="font-size:14px; line-height:1.8; padding:10px 0; color:var(--fg);">
+        หากฉันต้องสรุป "ดิถีธาตุ" ของคุณในหนึ่งประโยค:<br><br>
+        <em style="color:var(--neon-cyan); font-size:15px; display:block; padding:12px 18px; background:rgba(0,240,255,0.08); border-left:3px solid var(--neon-cyan); border-radius:4px; margin:8px 0;">
+          "คุณคือทุ่งนาที่ต้องการต้นไม้และน้ำ — ไม่ใช่ดินแห้งไร้ราก แต่เป็นทุ่งนาที่พร้อมจะงอก ถ้าคุณเลือก 'ปลูก' ในช่วง Period 9 (2024-2043) ทุ่งนานี้จะถูก 'แสงไฟ' ส่องถึง — คุณจะเป็นที่รู้จัก ถ้าคุณเลือกที่จะ 'งอก' ใน 'แสง' ที่ไม่ทำให้คุณ 'ไหม้'"
+        </em>
+      </p>
+    </details>
+  </section>
+
+  <section class="card slot-5" id="s9">
+    <h2><span class="num">&sect;9</span>บทสรุปแห่งสัจธรรม &middot; Ultimate Synthesis</h2>
+    <p class="lede">จุดตัดสุดท้ายของทุกเลนส์ &mdash; สิ่งที่เหลืออยู่เมื่อตัดเสียงรบกวนทั้งหมดออก</p>
+
+    <h3>9.1 ความเชื่อมโยงทั้งหมด (Interconnectedness)</h3>
+    <p>ทั้ง 6 ศาสตร์มอง Robroo ผ่านเลนส์เดียวกัน — Jung เห็น Persona/Shadow, MBTI เห็น Ni-Te/Se-Grip, Natalia เห็น Trinity Echo 10-11-16, Blavatsky เห็น triad 10-6-22, Kybalion เห็น Polarity Structured↔Withdrawn, BaZi เห็น Day Master 庚 身弱ต้องการ Water — ทั้งหมด บอกว่า Robroo คือ "ดาบที่ต้องอยู่ในฝักที่ดี" — เมื่อมีโครงสร้าง (Earth team + Water knowledge) จึงจะเปล่งประกาย</p>
+
+    <h3>9.2 สัจธรรมขั้นสุดท้าย (Ultimate Truth)</h3>
+    <p>สัจธรรมสูงสุดของคุณ: "คุณไม่ใช่ดาบที่ถือคนเดียว — คุณคือดาบที่ถูกถือโดยโครงสร้าง ที่คุณสร้าง และเมื่อโครงสร้างนั้นแข็งแกร่งพอ คุณจะตัดสิ่งที่ไม่จริงออกจากโลก"</p>
+
+    <details>
+      <summary><strong>ขยายความ &mdash; ตัวตนที่เหลืออยู่หลังครบวงจร</strong></summary>
+      <p>The Ultimate Synthesis ของ Robroo — "อยู่บนวงล้อ (10) ถือดาบให้ตรง (11) ไม่กลัวที่หอคอยจะพัง (16)" — นี่คือ Soul Mantra ประจำตัว เมื่อคุณ integrate ทั้งสาม คุณจะกลายเป็นสถาปนิกผู้อยู่เบื้องหลังระบบทั้งหมด และ Period 1 (2043) จะเป็นปีที่ คุณส่งต่อ wisdom ให้คนรุ่นถัดไป</p>
+    </details>
+
+    <div class="analysis">
+      <div class="analysis-header">บทวิเคราะห์ &mdash; 6 Lenses (closing read)</div>
+      <div class="a-row"><span class="a-name">Jung</span><span class="a-text">Age 60 Self — Robroo จะ integrate Persona+Shadow+Anima จนกลายเป็น "Sage" — คนที่ทุกคำพูดถ่วงด้วยบทเรียน ไม่ใช่คนที่ "รู้มากที่สุด" แต่ "รู้ลึกที่สุด"</span></div>
+      <div class="a-row"><span class="a-name">Myers</span><span class="a-text">Age 60 type — Ni-Te-Fi-Se ที่ integrated ทั้ง 4 — Robroo จะกลายเป็น "Healthy INTJ" แบบ rare ที่หาได้ยาก — Wisdom Spoken</span></div>
+      <div class="a-row"><span class="a-name">Blavatsky</span><span class="a-text">Age 60 karma — Monad + Ego + Personality fully aligned — Robroo จะ "ส่ง Monad pattern" ออกสู่โลกผ่าน writing/mentorship — นี่คือ "Master of Fifth Root-Race"</span></div>
+      <div class="a-row"><span class="a-name">Ladini</span><span class="a-text">Age 60 matrix — Trinity Echo 10-11-16 harmonize ครบ — 9 ตำแหน่งบนผัง 3×3 เรืองแสง — Wheel หมุนช้า Justice ตัด Justice-Tower = Sage ในชุดสถาปนิก</span></div>
+      <div class="a-row"><span class="a-name">Initiates</span><span class="a-text">Age 60 mastery — 7 Hermetic Principles รวมเป็นหนึ่งเดียว — "As Above So Below" เป็นหนึ่งเดียวกับ Robroo — เห็น pattern ของจักรวาล = เห็น pattern ของตัวเอง</span></div>
+      <div class="a-row"><span class="a-name">Su Yu Hong</span><span class="a-text">Age 60 用神 mastery — เข้าใจ Day Master ตัวเองลึกซึ้ง — Earth (比劫) + Water (印) balance สมบูรณ์ — Robroo จะเป็น "ดาบที่รู้จักด้ามของมันเอง"</span></div>
+    </div>
+    <div class="lens-deep">
+      <div class="deep-header">บทวิเคราะห์เชิงลึก — Ultimate Synthesis</div>
+      <div class="lens-card">
+        <h4>Jung</h4>
+        <p><strong>The Self:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 9 → the self สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Meaning of Life:</strong> Carl Jung lens — Robroo's Persona/Shadow/Anima dynamics · ปีที่ 9 → meaning of life สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Myers</h4>
+        <p><strong>Final Integration:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 9 → final integration สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Type Wisdom:</strong> MBTI lens — Robroo's Ni-Te-Fi-Se cognitive function stack · ปีที่ 9 → type wisdom สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Blavatsky</h4>
+        <p><strong>Universal Brotherhood:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 9 → universal brotherhood สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Final Aspiration:</strong> Helena Blavatsky lens — Robroo's Monad/Ego/Personality alignment · ปีที่ 9 → final aspiration สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Ladini</h4>
+        <p><strong>Soul Contract Completion:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 9 → contract completion สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Chart Mastery:</strong> Natalia Ladini lens — Robroo's Matrix 3x3 patterns · ปีที่ 9 → chart mastery สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Initiates</h4>
+        <p><strong>Mastery Path:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 9 → mastery path สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Universal Service:</strong> Three Initiates lens — Robroo's Hermetic principle integration · ปีที่ 9 → universal service สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+      <div class="lens-card">
+        <h4>Su Yu Hong</h4>
+        <p><strong>Destiny Unfoldment:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 9 → destiny unfoldment สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+        <p><strong>Final Blessing:</strong> Su Yu Hong lens — Robroo's BaZi Day Master & 用神 · ปีที่ 9 → final blessing สำหรับ Robroo (INTJ Senior System Analyst, Day Master 庚 身弱, Trinity Echo 10-11-16)</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Template v2.1 &middot; Sections 0&ndash;9 (Project Omni-Self) &middot; Generated 2026-07-06
+  </footer>
+
+</div>
+
+<script src="vendor/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof mermaid === 'undefined') {
+      console.error('mermaid runtime not loaded');
+      return;
+    }
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#0a0a1a',
+        primaryTextColor: '#e6f7ff',
+        primaryBorderColor: '#9d4edd',
+        lineColor: '#00f0ff',
+        fontFamily: 'Kanit, system-ui, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
+</body>
+</html>

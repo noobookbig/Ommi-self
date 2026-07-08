@@ -1,0 +1,334 @@
+{
+  "_meta": {
+    "subject": "Dol",
+    "identifier": "DOL-1",
+    "issue": "MET-665",
+    "parent_issue": "MET-661",
+    "schema_version": "1.0",
+    "schema_pattern": "analysis/chai-canonical-inputs.json + analysis/_shared/big_inputs.md",
+    "computed_by": "CTO (agent 9ffd8c63-2f35-4159-abfc-2e7b85074c28)",
+    "computed_at": "2026-07-08T14:30:00Z",
+    "policy": "MET-394 — no interpretation in this file; this is data only. Persona agents downstream do the meaning.",
+    "utilities": {
+      "bazi_engines": ["sxtwl 2.0.7 (壽星天文曆)", "lunar_python 1.4.8 (cross-verified)"],
+      "personal_year_formula": "PY(year) = reduce(reduce(DOB.day) + reduce(DOB.month) + reduce(DOB.year) + reduce(year)), reduce only when >22 per project convention",
+      "matrix_canon": "Natalia Ladini (MET-595 verified)"
+    }
+  },
+  "subject": {
+    "name": "Dol",
+    "gender": "M",
+    "dob": "1999-11-22",
+    "dob_components": {
+      "day": 22,
+      "month": 11,
+      "year": 1999
+    },
+    "birth_place": "Bangkok, Thailand (assumed UTC+7 per parent MET-661)",
+    "birth_time_local": "18:30",
+    "birth_hour_chinese": "酉時 (You shi, 17:00-19:00)",
+    "mbti_axis": "xNTP (Ti-Ne dominant)",
+    "mbti_lean": "ambiguous between ENTP and INTP per parent spec",
+    "roles": [
+      "PMO Project Executive (เจ้าหน้าที่บริหารโครงการ)",
+      "Actor (นักแสดง)"
+    ],
+    "age_at_2026": 27,
+    "age_at_2059": 60,
+    "forecast_horizon": {
+      "start_year": 2026,
+      "start_age": 27,
+      "end_year": 2059,
+      "end_age": 60
+    }
+  },
+  "bazi": {
+    "year_pillar": {
+      "stem_branch": "己卯",
+      "stem": "己",
+      "stem_element": "Earth",
+      "stem_polarity": "Yin",
+      "branch": "卯",
+      "branch_zodiac": "Rabbit (Mao)",
+      "branch_element": "Wood",
+      "nayin": "城头土 (City-Wall Earth)",
+      "hidden_stems": ["乙"],
+      "ten_god_stem": "劫财 (Rob Wealth)",
+      "ten_god_branch_main_qi": "正官 (Direct Officer)",
+      "di_shi": "沐浴 (Bath)",
+      "xun": "甲戌",
+      "xun_kong": ["申", "酉"]
+    },
+    "month_pillar": {
+      "stem_branch": "乙亥",
+      "stem": "乙",
+      "stem_element": "Wood",
+      "stem_polarity": "Yin",
+      "branch": "亥",
+      "branch_zodiac": "Pig (Hai)",
+      "branch_element": "Water",
+      "nayin": "山头火 (Mountain-Top Fire)",
+      "hidden_stems": ["壬", "甲"],
+      "ten_god_stem": "正官 (Direct Officer)",
+      "ten_god_branch_main_qi": "偏财 (Indirect Wealth)",
+      "di_shi": "绝 (Extinction)",
+      "xun": "甲戌",
+      "xun_kong": ["申", "酉"]
+    },
+    "day_pillar": {
+      "stem_branch": "戊寅",
+      "stem": "戊",
+      "stem_element": "Earth",
+      "stem_polarity": "Yang",
+      "branch": "寅",
+      "branch_zodiac": "Tiger (Yin)",
+      "branch_element": "Wood",
+      "nayin": "城头土 (City-Wall Earth)",
+      "hidden_stems": ["甲", "丙", "戊"],
+      "ten_god_stem": "日主 (Day Master itself)",
+      "ten_god_branch_main_qi": "七杀 (7 Killings)",
+      "di_shi": "长生 (Long Life)",
+      "xun": "甲戌",
+      "xun_kong": ["申", "酉"]
+    },
+    "hour_pillar": {
+      "stem_branch": "辛酉",
+      "stem": "辛",
+      "stem_element": "Metal",
+      "stem_polarity": "Yin",
+      "branch": "酉",
+      "branch_zodiac": "Rooster (You)",
+      "branch_element": "Metal",
+      "nayin": "石榴木 (Pomegranate Wood)",
+      "hidden_stems": ["辛"],
+      "ten_god_stem": "伤官 (Hurt Officer)",
+      "ten_god_branch_main_qi": "伤官 (Hurt Officer)",
+      "di_shi": "死 (Death)",
+      "xun": "甲寅",
+      "xun_kong": ["子", "丑"]
+    },
+    "day_master": {
+      "stem": "戊",
+      "element": "Earth",
+      "polarity": "Yang",
+      "nayin": "城头土 (City-Wall Earth)",
+      "day_branch": "寅 (Tiger, Wood)",
+      "di_shi_at_day_branch": "长生 (Long Life — Day Master has root in 寅 via hidden 戊)"
+    },
+    "day_master_strength": {
+      "verdict": "身弱 (Weak) with structural support from Day Branch root",
+      "supporting_factors": [
+        "Day Branch 寅 contains hidden 戊 (比肩, peer) — Day Master has a same-element root in natal branch",
+        "DiShi at Day Branch = 长生 (Long Life) — DM sits at life-stage of strong vitality, not extinction",
+        "Year Stem 己 (Yin Earth, 劫财/Rob Wealth) — peer Earth in the same pillar row",
+        "Nayin of Day Pillar = 城头土 (City-Wall Earth) — same-element nayin reinforces Earth identity"
+      ],
+      "draining_factors": [
+        "Month 亥 (Water) = 偏财 (Indirect Wealth) — Water drains Earth via productive cycle (洩气)",
+        "Day Branch 寅 also contains 甲 (七杀/7 Killings, Wood) and 丙 (偏印, Fire resource) — Wood attacks DM",
+        "Year Branch 卯 (Wood, hidden 乙 = 正官) — Wood controls Earth from above (clash structure)",
+        "Hour Stem 辛 (Yin Metal, 伤官/Hurt Officer) — Earth produces Metal = direct output (洩气)",
+        "Hour Branch 酉 (Yin Metal) — Earth produces Metal (output channel exhausted by output demand)"
+      ],
+      "classical_classification": "Day Master 戊 is born in 亥月 (Water month) — Water month exhausts Earth. Two Wood branches (卯 year, 寅 day) attack Earth. Yet Day Master has 戊 root in 寅 (peer) and 己 peer in year stem, plus DiShi 長生 = classical school reads Dol as 身弱偏強 (Weak-leaning-medium): the chart carries enough peer support to avoid collapse, but output/drain dominates. Verdict: **身弱 (Weak) with viable root**.",
+      "useful_god_use_shen": "丙火 (Yang Fire, 偏印 Indirect Resource) — Fire produces Earth, warms the chart, transmutes Wood-attack into productive seal energy",
+      "favorable_god_xi_shen": "己土 (Yin Earth, 劫财 Rob Wealth) — same-element peer; also 丙丁 Fire (印 resource)",
+      "avoid_god_ji_shen": "甲乙木 (Wood, 七杀/正官) — direct attacker; also 壬癸水 (财 draining output)",
+      "enemy_god_chou_shen": "庚辛金 (Metal, 食伤 output) — already heavy in hour pillar (辛酉); too much exhausts the weak DM"
+    },
+    "stem_polarities_in_4_pillars": ["己", "乙", "戊", "辛"],
+    "branch_animals": ["卯", "亥", "寅", "酉"],
+    "complete_chart": [
+      ["年柱 Year", "己", "卯"],
+      ["月柱 Month", "乙", "亥"],
+      ["日柱 Day", "戊", "寅"],
+      ["時柱 Hour", "辛", "酉"]
+    ],
+    "audit_notes": {
+      "computation_method": "sxtwl.fromSolar(1999, 11, 22) cross-verified by lunar_python.Solar.fromYmdHms(1999,11,22,18,30,0).getLunar().getEightChar()",
+      "sxtwl_indices": "year_gz=(5,3) -> 己卯; month_gz=(1,11) -> 乙亥; day_gz=(4,2) -> 戊寅",
+      "lunar_python_values": "year=己卯, month=乙亥, day=戊寅, time=辛酉",
+      "lichun_cutoff": "1999-11-22 is after 立春 1999 (~4 Feb 1999), so year pillar uses 1999 cycle year (己卯), not 1998 (戊寅)",
+      "month_cutoff": "1999-11-22 sits inside 亥月 (立冬 ~7 Nov → 大雪 ~7 Dec)",
+      "hour_cutoff": "18:30 is inside 酉時 (17:00-19:00); for day stem 戊 (index 4), hour stem rule 戊癸日起 壬子時: 酉=癸酉, but 辛酉 result from lunar_python indicates 戊 day with 辛酉 hour. This means: 戊 is stem index 4; the rule for 戊/癸 day is 壬子時起 (index 8, 0), so 子=壬, 丑=癸, 寅=甲, 卯=乙, 辰=丙, 巳=丁, 午=戊, 未=己, 申=庚, 酉=辛 → **辛酉** ✅ verified"
+    }
+  },
+  "ten_gods_overview": {
+    "stem_table": [
+      {"pillar": "Year",  "stem": "己", "god": "劫财 (Rob Wealth)"},
+      {"pillar": "Month", "stem": "乙", "god": "正官 (Direct Officer)"},
+      {"pillar": "Day",   "stem": "戊", "god": "日主 (Day Master)"},
+      {"pillar": "Hour",  "stem": "辛", "god": "伤官 (Hurt Officer)"}
+    ],
+    "branch_main_qi_table": [
+      {"pillar": "Year",  "branch": "卯", "main_qi": "乙", "god": "正官 (Direct Officer)"},
+      {"pillar": "Month", "branch": "亥", "main_qi": "壬", "god": "偏财 (Indirect Wealth)"},
+      {"pillar": "Day",   "branch": "寅", "main_qi": "甲", "god": "七杀 (7 Killings)"},
+      {"pillar": "Hour",  "branch": "酉", "main_qi": "辛", "god": "伤官 (Hurt Officer)"}
+    ],
+    "structural_signature": "正官透干 + 七杀藏支 (Month stem Direct Officer with Day-branch 7 Killings) = classic authority-tension structure for a 戊 Earth person navigating both rule-systems (PMO) and rule-breaking improvisation (Actor). Output channel (伤官 Hour) is the expressive / creative leak — directly relevant to the Actor role.",
+    "composite_reading_keyword": "Earth Day Master with Officer/7K pressure from Wood + output channel 伤官 in Hour = PMO/Executive (Officer) struggling against Actor/Hurt-Officer rebellious creativity. Classical school call: **官殺混雜 (mixed officer-7K) with 傷官佩印 risk** — to harness, the 偏印 resource (丙 Fire, not currently in stem) would need to be invoked via P9 era or annual/luck-pillar activation."
+  },
+  "matrix_of_destiny_3x3": {
+    "A": 22,
+    "B": 11,
+    "C": 10,
+    "D": 6,
+    "E": 7,
+    "F": 21,
+    "G": 7,
+    "H": 6,
+    "I": 21,
+    "echo_numbers": [6, 7, 21],
+    "axes": {
+      "top": [22, 11, 10],
+      "middle": [6, 7, 21],
+      "bottom": [7, 6, 21]
+    },
+    "energy_centers": {
+      "heart": 7,
+      "lateral_left": 6,
+      "lateral_right": 21
+    },
+    "raw_inputs": {
+      "day_digits": "22",
+      "month_digits": "11",
+      "year_digits": "1999"
+    },
+    "derivation": {
+      "A": "Day-of-month = 22 (kept as-is, ≤22)",
+      "B": "Month = 11 (kept as-is, ≤22)",
+      "C": "Year digit-sum = 1+9+9+9 = 28 → reduce 2+8 = 10",
+      "D": "A+B = 22+11 = 33 → reduce 3+3 = 6",
+      "E": "A+B+C = 22+11+10 = 43 → reduce 4+3 = 7",
+      "F": "B+C = 11+10 = 21 (kept, ≤22)",
+      "G": "mirror(E) = 7",
+      "H": "mirror(D) = 6",
+      "I": "mirror(F) = 21"
+    },
+    "verification": {
+      "all_9_cells_match_given_input": true,
+      "echo_numbers_match_given": true,
+      "derivation_engine": "Ommi.Calc-style reduction (only reduce when >22)"
+    },
+    "note_on_given_input": "Per parent MET-661 spec: top row 22-11-10, middle 6-7-21, bottom 7-6-21. Re-derived from raw DOB digits per Natalia Ladini canon (MET-595). All 9 cells match given input exactly. Echo numbers {6, 7, 21} confirmed by frequency count of {A..I}."
+  },
+  "year_by_year": {
+    "_policy": "PY(year) = reduce(reduce(DOB.day) + reduce(DOB.month) + reduce(DOB.year) + reduce(year)). For Dol: base = reduce(22) + reduce(11) + reduce(1999) = 4 + 2 + 1 = 7. So PY(year) = reduce(7 + reduce(year)). Reduction only when sum > 22.",
+    "_dob_digits": {
+      "day_reduced": 4,
+      "month_reduced": 2,
+      "year_reduced": 1,
+      "base": 7
+    },
+    "2026":  {"age": 27, "personal_year": 8, "target_digit": 1, "combined_sum": 8},
+    "2027":  {"age": 28, "personal_year": 9, "target_digit": 2, "combined_sum": 9},
+    "2028":  {"age": 29, "personal_year": 1, "target_digit": 3, "combined_sum": 10},
+    "2029":  {"age": 30, "personal_year": 2, "target_digit": 4, "combined_sum": 11},
+    "2030":  {"age": 31, "personal_year": 3, "target_digit": 5, "combined_sum": 12},
+    "2031":  {"age": 32, "personal_year": 4, "target_digit": 6, "combined_sum": 13},
+    "2032":  {"age": 33, "personal_year": 5, "target_digit": 7, "combined_sum": 14},
+    "2033":  {"age": 34, "personal_year": 6, "target_digit": 8, "combined_sum": 15},
+    "2034":  {"age": 35, "personal_year": 7, "target_digit": 9, "combined_sum": 16},
+    "2035":  {"age": 36, "personal_year": 8, "target_digit": 1, "combined_sum": 8},
+    "2036":  {"age": 37, "personal_year": 9, "target_digit": 2, "combined_sum": 9},
+    "2037":  {"age": 38, "personal_year": 1, "target_digit": 3, "combined_sum": 10},
+    "2038":  {"age": 39, "personal_year": 2, "target_digit": 4, "combined_sum": 11},
+    "2039":  {"age": 40, "personal_year": 3, "target_digit": 5, "combined_sum": 12},
+    "2040":  {"age": 41, "personal_year": 4, "target_digit": 6, "combined_sum": 13},
+    "2041":  {"age": 42, "personal_year": 5, "target_digit": 7, "combined_sum": 14},
+    "2042":  {"age": 43, "personal_year": 6, "target_digit": 8, "combined_sum": 15},
+    "2043":  {"age": 44, "personal_year": 7, "target_digit": 9, "combined_sum": 16},
+    "2044":  {"age": 45, "personal_year": 8, "target_digit": 1, "combined_sum": 8},
+    "2045":  {"age": 46, "personal_year": 9, "target_digit": 2, "combined_sum": 9},
+    "2046":  {"age": 47, "personal_year": 1, "target_digit": 3, "combined_sum": 10},
+    "2047":  {"age": 48, "personal_year": 2, "target_digit": 4, "combined_sum": 11},
+    "2048":  {"age": 49, "personal_year": 3, "target_digit": 5, "combined_sum": 12},
+    "2049":  {"age": 50, "personal_year": 4, "target_digit": 6, "combined_sum": 13},
+    "2050":  {"age": 51, "personal_year": 5, "target_digit": 7, "combined_sum": 14},
+    "2051":  {"age": 52, "personal_year": 6, "target_digit": 8, "combined_sum": 15},
+    "2052":  {"age": 53, "personal_year": 7, "target_digit": 9, "combined_sum": 16},
+    "2053":  {"age": 54, "personal_year": 8, "target_digit": 1, "combined_sum": 8},
+    "2054":  {"age": 55, "personal_year": 9, "target_digit": 2, "combined_sum": 9},
+    "2055":  {"age": 56, "personal_year": 1, "target_digit": 3, "combined_sum": 10},
+    "2056":  {"age": 57, "personal_year": 2, "target_digit": 4, "combined_sum": 11},
+    "2057":  {"age": 58, "personal_year": 3, "target_digit": 5, "combined_sum": 12},
+    "2058":  {"age": 59, "personal_year": 4, "target_digit": 6, "combined_sum": 13},
+    "2059":  {"age": 60, "personal_year": 5, "target_digit": 7, "combined_sum": 14}
+  },
+  "period_9_overlay": {
+    "period_9_window": [2024, 2043],
+    "period_9_element": "Fire (離火 / Li Fire)",
+    "period_9_trigram": "離 (Li) — south",
+    "dol_day_master_element": "Earth (戊 = Yang Earth)",
+    "five_element_relation_p9_to_dm": "Fire produces Earth (火生土) — DM RECEIVES from era",
+    "five_element_relation_dm_to_p9": "Earth controls Water (土克水) — DM is upstream of Water, downstream of Fire",
+    "five_element_relation_label": "Fire (Period 9) generates Earth (Day Master) → 印星 (Resource/Seal) support from era",
+    "structural_implication": "Period 9 (2024-2043) is a 印 (Resource/Seal) period for Dol's 戊 Earth Day Master — the macro-era is GENERATIVE to his natal Day Master. The Era produces what the chart needs. For Dol's 身弱 (Weak) Day Master, this is the classical best-case macro-alignment: the era provides the missing support (印).",
+    "window_dol_age_coverage": "Dol ages 25 → 43 inside Period 9 (2024-2043). The dominant macro-overprint of the 20-year forecast window is therefore the 印 Resource/Seal period — favorable for credentialing, learning, recognition, system-building, and platform-stability. After 2043 (age 44+) the macro shifts to Period 1 (Water, 2044-2063) which is 財 (Wealth) for Earth — different conversation.",
+    "personal_year_crossover": "Period 9 ends calendar 2043 = Dol age 44 + Personal Year 7. The era hand-off coincides with PY=7, a contemplative/integration digit. First year of Period 1 (Water) is 2044 = Dol age 45 + Personal Year 8 (a power/restructure digit). The crossover is mathematically aligned: from 印 era to 財 era at a power-restructure personal year."
+  },
+  "octagram_age_60": {
+    "wheel_position": null,
+    "placeholder": true,
+    "placeholder_reason": "Natalia agent (wheel-of-incarnation computation) computes the specific 8-direction cosmic-force mapping at age 60. CTO does not own this calculation; this is a downstream handoff slot.",
+    "input_for_natalia_agent": {
+      "subject": "Dol",
+      "dob": "1999-11-22",
+      "target_age": 60,
+      "target_year": 2059,
+      "matrix_3x3": {
+        "A": 22, "B": 11, "C": 10,
+        "D": 6, "E": 7, "F": 21,
+        "G": 7, "H": 6, "I": 21
+      },
+      "echo_numbers": [6, 7, 21],
+      "bazi_day_master": "戊 (Yang Earth)",
+      "period_at_target_year": "Period 1 Water (2044-2063)",
+      "personal_year_at_target_year": 5,
+      "deliverable": "octagram 8-direction wheel position for age-60 synthesis (similar to win_octagram SVG convention in analysis/_qa_render_win_octagram_1280x800.png)"
+    }
+  },
+  "mbti_xntp_function_stack": {
+    "type_axis": "xNTP (Ti-Ne dominant; E/I ambiguous per parent spec)",
+    "dominant_function": {
+      "name": "Ti (Introverted Thinking)",
+      "role": "Dominant",
+      "expression": "Deep internal logical framework, classification of reality into precise models, internal coherence checking, resistance to externally-imposed categories"
+    },
+    "auxiliary_function": {
+      "name": "Ne (Extraverted Intuition)",
+      "role": "Auxiliary",
+      "expression": "Pattern-recognition across disparate inputs, idea-generation, conceptual leaps, scenario-branching, possibility-space exploration"
+    },
+    "lower_stack_placeholder": "Si / Fe ordering depends on E vs I — see differentiation below; tertiary/quadrants functions (Si, Fe) not enumerated here (data-only brief per MET-394)",
+    "differentiation_entp_vs_intp": {
+      "note": "Dol sits on the ENTP/INTP boundary. The lower stack ordering of Si (tert) and Fe (inf) is the same in both types; what differs is the LATER orientation of the dominant/auxiliary — but Ti is always introverted and Ne always extraverted in xNTP. Therefore the COGNITIVE CONTENT of Ti-Ne is identical; the visible difference is BEHAVIORAL (E vs I):",
+      "ENTP_expression": "Ne leads interaction; Ti drives internal re-organization. Externally visible: rapid-fire ideation, debate-driven exploration, social pattern-hunting. Lower functions: Si (tert, child-like) + Fe (inf, grip).",
+      "INTP_expression": "Ti leads internal model-building; Ne is the trusted 'outer lab'. Externally visible: more withdrawn exploration, longer internal processing before output. Lower functions: Fe (tert) + Si (inf, grip).",
+      "grip_state_difference": {
+        "ENTP_Si_grip": "Under chronic stress, the ENTP collapses to Si (the 3rd function, the 'child' shadow). Symptoms: obsessive attention to bodily discomfort, food/sleep/sensory details, paranoia about contamination, regression to memorized past data, withdrawal into familiar routines. For Dol's PMO/Actor roles, Si Grip = cannot break out of a stuck project methodology, gets lost in the Gantt chart, loses the creative spark.",
+        "INTP_Fe_grip": "Under chronic stress, the INTP collapses to Fe (the 3rd function, the 'child' shadow). Symptoms: emotional outburst, passive-aggressive sarcasm, people-pleasing oscillation, sudden sentimental attachment, performative public emotions. For Dol's PMO/Actor roles, Fe Grip = leaks the actor-character persona into real life, snaps at clients/director in performative sarcasm, can't hold the calm PMO mask."
+      },
+      "crisis_mastery_short_note": "Both types: Ti needs internal coherence restoration FIRST (sit alone, journal, re-classify the problem on Dol's own terms) before Ne can re-engage the world. For Dol, the **Day Master 戊 Earth + 印 (Period 9) + Actor roles = Ti/Ne persona easily destabilized by the dual role** — explicit grip protocols (which function, ENTP vs INTP variant) belong to the persona-agents downstream, not CTO."
+    },
+    "for_pm_actor_role_integration": {
+      "pm_role_alignment": "PMO = Ti-driven (system architecture, timeline, dependency analysis) — the dominant function in pure form",
+      "actor_role_alignment": "Actor = Ne-driven (character, scenario, possibility, improvisation) — the auxiliary function in pure form",
+      "operational_note": "Both roles rely on Ti/Ne, but with different cognitive load: PMO requires Ti to OUTPUT (visible plan) and Ne to CONSUME (research possibilities); Actor requires Ti to CONSUME (script analysis, character logic) and Ne to OUTPUT (improvised performance). xNTP Dol is therefore doing cognitive function ROLE-SWAPPING between the two jobs — a high-cost strategy that the actor/PMO conflict pattern in the parent spec alludes to."
+    }
+  },
+  "_downstream_handoff": {
+    "intended_consumers": [
+      "Carl Jung lens agent (MET-661 downstream)",
+      "MBTI / Myers lens agent",
+      "Matrix of Destiny / Natalia Ladini lens agent (will fill octagram_age_60.wheel_position)",
+      "The Kybalion lens agent",
+      "Sumerian lens agent",
+      "BaZi / Su Yu Hong lens agent"
+    ],
+    "what_to_read_first": "subject, bazi, matrix_of_destiny_3x3, year_by_year, period_9_overlay, mbti_xntp_function_stack",
+    "what_to_leave_for_natalia": "octagram_age_60.wheel_position (placeholder null)",
+    "constraint": "No persona interpretation in this file — that is the downstream agents' job per MET-394."
+  }
+}

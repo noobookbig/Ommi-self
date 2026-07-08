@@ -148,7 +148,7 @@
     text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
   }
 
-  nav.toc {
+  nav.toc, .toc {
     position: sticky;
     top: 16px;
     z-index: 10;
@@ -163,16 +163,16 @@
       0 4px 24px rgba(0, 0, 0, 0.45),
       0 0 24px rgba(0, 240, 255, 0.08);
   }
-  nav.toc ol {
+  nav.toc ol, .toc > ol {
     list-style: none;
-    margin: 0;
+    margin: 12px 0 0 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 6px 18px;
     font-size: 14px;
   }
-  nav.toc a {
+  nav.toc a, .toc a {
     color: var(--fg-muted);
     text-decoration: none;
     font-weight: 400;
@@ -181,12 +181,34 @@
     border-left: 2px solid transparent;
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
   }
-  nav.toc a:hover, nav.toc a:focus-visible {
+  nav.toc a:hover, nav.toc a:focus-visible, .toc a:hover, .toc a:focus-visible {
     color: var(--neon-cyan);
     border-left-color: var(--neon-cyan);
     background: rgba(0, 240, 255, 0.06);
     outline: none;
   }
+  .toc > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--neon-cyan);
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .toc > summary::-webkit-details-marker { display: none; }
+  .toc > summary::before {
+    content: '\25B8';
+    display: inline-block;
+    transition: transform 160ms ease;
+    color: var(--neon-cyan);
+    font-size: 14px;
+  }
+  .toc[open] > summary::before { transform: rotate(90deg); }
 
   section.card {
     position: relative;
@@ -373,10 +395,10 @@
   }
 
   table.chakra {
-    width: 100%;
+    width: 90%;
     border-collapse: separate;
     border-spacing: 0;
-    margin: 8px 0 18px 0;
+    margin: 8px auto 18px auto;
     font-size: 14px;
   }
   table.chakra thead th {
@@ -552,9 +574,9 @@
   .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
 
   table.roles {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    margin: 8px 0 14px 0;
+    margin: 8px auto 14px auto;
     font-size: 14px;
   }
   table.roles th {
@@ -598,7 +620,7 @@
 
   @media print {
     body::before { display: none; }
-    nav.toc { display: none; }
+    nav.toc, .toc { display: none; }
     section.card { break-inside: avoid; box-shadow: none; }
     body { background: #fff; color: #111; }
   }
@@ -682,7 +704,8 @@
     </p>
   </header>
 
-  <nav class="toc" aria-label="สารบัญเรื่อง">
+  <details class="toc" open aria-label="สารบัญเรื่อง">
+    <summary>สารบัญเรื่อง &middot; Contents</summary>
     <ol>
       <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
       <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
@@ -696,7 +719,7 @@
       <li><a href="#s8">&sect;8 Protocols</a></li>
       <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
     </ol>
-  </nav>
+  </details>
 
   <section class="card slot-1" id="s0">
     <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>

@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast — Dol — Project Omni-Self</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #050514;
+  --bg-1: #0a0a1a;
+  --bg-2: #11112a;
+  --bg-3: #181833;
+  --line: rgba(0, 240, 255, 0.12);
+  --line-strong: rgba(0, 240, 255, 0.28);
+  --fg: #e6f7ff;
+  --fg-muted: #8a93b8;
+  --fg-dim: #5a6388;
+  --neon-cyan:    #00f0ff;
+  --neon-magenta: #ff00d4;
+  --neon-violet:  #9d4edd;
+  --neon-green:   #39ff14;
+  --neon-gold:    #ffd700;
+  --neon-orange:  #ff8c00;
+  --neon-red:     #ff3860;
+  --page-max: 1320px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --gutter: 16px;
+  --pad: 22px;
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--bg-0); }
+body {
+  margin: 0; padding: 0;
+  font-family: 'Kanit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 400; font-size: 16px; line-height: 1.55;
+  color: var(--fg);
+  background:
+    radial-gradient(ellipse at 15% -10%, rgba(0,240,255,0.10), transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(255,0,212,0.10), transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(157,78,221,0.10), transparent 60%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+  background-attachment: fixed;
+  min-height: 100vh; overflow-x: hidden;
+}
+body::before {
+  content:''; position: fixed; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+  background-size: 48px 48px; z-index: 0;
+}
+.page {
+  position: relative; z-index: 1;
+  max-width: var(--page-max);
+  margin: 0 auto; padding: 48px 32px 96px;
+}
+header.hero {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  background:
+    linear-gradient(135deg, rgba(0,240,255,0.08) 0%, rgba(255,0,212,0.06) 50%, rgba(157,78,221,0.08) 100%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 240, 255, 0.08),
+    0 0 40px rgba(0, 240, 255, 0.10),
+    0 0 80px rgba(255, 0, 212, 0.08);
+  margin-bottom: 32px;
+}
+header.hero h1 {
+  margin: 0 0 8px 0;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-magenta) 60%, var(--neon-violet) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow:
+    0 0 18px rgba(0, 240, 255, 0.35),
+    0 0 36px rgba(255, 0, 212, 0.20);
+}
+header.hero .meta {
+  margin: 0; color: var(--fg-muted); font-weight: 300; font-size: 15px;
+  display: flex; flex-wrap: wrap; gap: 18px;
+}
+header.hero .meta strong { color: var(--neon-cyan); font-weight: 500; margin-right: 6px; text-shadow: 0 0 6px rgba(0,240,255,0.5); }
+nav.toc {
+  position: sticky; top: 16px; z-index: 10;
+  background: rgba(10,10,26,0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 32px;
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.45),
+    0 0 24px rgba(0,240,255,0.08);
+}
+nav.toc ol { list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+  gap: 6px 18px; font-size: 14px; }
+nav.toc a {
+  color: var(--fg-muted); text-decoration: none; font-weight: 400;
+  padding: 4px 8px; border-radius: 4px; border-left: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+nav.toc a:hover, nav.toc a:focus-visible {
+  color: var(--neon-cyan); border-left-color: var(--neon-cyan);
+  background: rgba(0,240,255,0.06); outline: none;
+}
+section.card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+  padding: var(--pad);
+  margin-bottom: 28px;
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  scroll-margin-top: 100px;
+}
+section.card::before {
+  content:''; position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--card-glow, var(--neon-cyan));
+  box-shadow: 0 0 14px var(--card-glow, var(--neon-cyan));
+}
+section.card > h2 {
+  margin: 0 0 6px 0;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: 0.3px;
+  color: var(--card-glow, var(--neon-cyan));
+  text-shadow: 0 0 12px var(--card-glow, var(--neon-cyan));
+}
+section.card h3 {
+  margin: 22px 0 10px 0;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--accent, var(--card-glow, var(--neon-cyan)));
+  text-shadow: 0 0 8px rgba(0,240,255,0.45);
+  letter-spacing: 0.2px;
+}
+section.card h4 {
+  margin: 16px 0 8px 0;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--fg);
+}
+section.card p { margin: 0 0 12px 0; }
+section.card ul, section.card ol { margin: 0 0 14px 0; padding-left: 22px; }
+section.card li { margin: 0 0 4px 0; }
+section.card strong { color: var(--fg); font-weight: 500; }
+section.card code, section.card kbd {
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 0.9em;
+  background: rgba(0,240,255,0.08);
+  color: var(--neon-cyan);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+section.card blockquote {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent, var(--card-glow, var(--neon-cyan)));
+  background: rgba(0,0,0,0.25);
+  color: var(--fg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+section.card blockquote p:last-child { margin-bottom: 0; }
+section.card table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 8px 0 16px 0;
+  font-size: 13px;
+}
+section.card th {
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent, var(--card-glow, var(--neon-cyan)));
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line-strong);
+  background: rgba(0,0,0,0.35);
+}
+section.card td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+section.card tbody tr:hover td { background: rgba(0,240,255,0.04); }
+section.card tbody tr:last-child td { border-bottom: none; }
+
+.slot-1 { --card-glow: var(--neon-cyan);    --accent: var(--neon-cyan); }
+.slot-2 { --card-glow: var(--neon-magenta); --accent: var(--neon-magenta); }
+.slot-3 { --card-glow: var(--neon-violet);  --accent: var(--neon-violet); }
+.slot-4 { --card-glow: var(--neon-green);   --accent: var(--neon-green); }
+.slot-5 { --card-glow: var(--neon-gold);    --accent: var(--neon-gold); }
+.slot-6 { --card-glow: var(--neon-orange);  --accent: var(--neon-orange); }
+.slot-7 { --card-glow: var(--neon-red);     --accent: var(--neon-red); }
+
+.mermaid-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+  margin: 10px 0 18px 0;
+  overflow-x: auto;
+  text-align: center;
+}
+.mermaid-wrap svg { max-width: 100%; height: auto !important; }
+
+details.year {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.25);
+  padding: 0;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+details.year[open] {
+  background: rgba(0,240,255,0.04);
+  border-color: var(--line-strong);
+}
+details.year > summary {
+  list-style: none; cursor: pointer; padding: 12px 16px;
+  display: grid; grid-template-columns: 90px 60px 1fr 1.6fr; gap: 14px;
+  align-items: baseline; font-weight: 400; color: var(--fg);
+}
+details.year > summary::-webkit-details-marker { display: none; }
+details.year > summary::after {
+  content:'+'; color: var(--accent, var(--neon-cyan));
+  font-weight: 700; margin-left: auto; justify-self: end;
+  text-shadow: 0 0 8px var(--accent, var(--neon-cyan));
+  transition: transform 160ms ease;
+}
+details.year[open] > summary::after { content:'\2212'; }
+details.year > summary .yr {
+  font-family: 'Kanit', sans-serif;
+  color: var(--accent, var(--neon-cyan));
+  font-weight: 500; font-size: 17px;
+  text-shadow: 0 0 8px rgba(0,240,255,0.4);
+}
+details.year > summary .age {
+  color: var(--fg-muted); font-size: 12px;
+  letter-spacing: 0.6px; text-transform: uppercase;
+}
+details.year > summary .lead { color: var(--fg); font-weight: 500; }
+details.year > summary .situation { color: var(--fg-muted); font-size: 14px; }
+details.year .body {
+  padding: 0 16px 16px 16px;
+  border-top: 1px solid var(--line);
+  margin-top: 0;
+}
+details.year .body p { margin: 8px 0 0 0; color: var(--fg-muted); }
+details.year .body strong { color: var(--accent, var(--neon-cyan)); }
+
+footer.foot {
+  margin-top: 40px; padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--fg-dim); font-size: 12px; text-align: center;
+  letter-spacing: 0.6px;
+}
+footer.foot strong { color: var(--neon-cyan); font-weight: 500; }
+
+@media print {
+  body::before { display: none; }
+  nav.toc { display: none; }
+  section.card { break-inside: avoid; box-shadow: none; }
+  body { background: #fff; color: #111; }
+}
+@media (max-width: 768px) {
+  .page { padding: 24px 16px 64px; }
+  header.hero { padding: 22px 20px; }
+  header.hero h1 { font-size: 28px; }
+  section.card { padding: 18px 16px; }
+  details.year > summary { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>Forecast — Dol — Project Omni-Self</h1>
+  <p class="meta">
+    <span><strong>DOB</strong>22 November 1999 · 18:30 (Bangkok)</span>
+    <span><strong>Window</strong>2026 &rarr; 2059 (อายุ 27 &rarr; 60 ปีบริบูรณ์)</span>
+    <span><strong>Headline</strong>ตัวคุมสองบทบาท &rarr; ผู้เชี่ยวชาญที่รู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย</span>
+    <span><strong>Type</strong>ENTP (Dominant Ne, Auxiliary Ti) · Day Master 戊 Yang Earth · Period 9 → Period 1</span>
+  </p>
+</header>
+<details class="toc" open aria-label="สารบัญเรื่อง">
+    <summary>สารบัญเรื่อง &middot; Contents</summary>
+    <ol><li><a href="#intro">ส่วนนำ</a></li><li><a href="#section-summary">§1 บทสรุป 6 มุมมอง</a></li><li><a href="#section-cosmic">§2 Cosmic Synergy</a></li><li><a href="#section-natalia">§3 Matrix 3×3</a></li><li><a href="#section-talent">§4 พรสวรรค์ + อดีตชาติ</a></li><li><a href="#section-career">§5 อาชีพ + บทบาท</a></li><li><a href="#section-relationships">§6 สัมพันธ์ + ครอบครัว</a></li><li><a href="#section-health">§7 สุขภาพ + Chakras</a></li><li><a href="#section-timeline">§8 ไทม์ไลน์ + พยากรณ์รายปี</a></li><li><a href="#section-protocols">§9 Actionable Protocols</a></li><li><a href="#section-ultimate">§10 Ultimate Synthesis</a></li></ol>
+  </details>
+<section class="card slot-1" id="intro">
+  <h2><span class="num">§0</span> บทนำ · ทำไมต้อง 6 มุมมอง</h2>
+  <h1>🔮 พยากรณ์ฉบับสมบูรณ์: Project Omni-Self (Dol)</h1>
+<p><strong>ชื่อผู้รับคำพยากรณ์:</strong> Dol | <strong>วันเกิด:</strong> 22 พฤศจิกายน 1999 · 18:30 น. (กรุงเทพฯ) | <strong>Type:</strong> ENTP (Dominant Ne, Auxiliary Ti) | <strong>Role:</strong> PMO Project Executive + Actor | <strong>Forecast window:</strong> 2026-2059 (อายุ 27-60 ปีบริบูรณ์)</p>
+<blockquote>
+<p><em>&quot;The pendulum of the mind alternates between conviction and doubt, between faith and reason — and the swing is the life.&quot;</em> — Carl Jung</p>
+<p><em>&quot;Nothing rests; everything moves; everything vibrates.&quot;</em> — The Kybalion</p>
+<p><em>&quot;ใช้แผ่นดินเป็นกระดาน ใช้ฟ้าเป็นหลังคา&quot;</em> — สำนวนไทยที่บอกถึง Day Master 戊 Yang Earth ของ Dol</p>
+</blockquote>
+<hr />
+
+</section>
+<section class="card slot-1" id="section-summary">
+<h2><span class="num">§1</span> บทนำ · ทำไมต้อง 6 มุมมอง</h2>
+<p>พยากรณ์ฉบับนี้อ่านชะตาของ <strong>Dol (เกิด 22 พฤศจิกายน ค.ศ. 1999 เวลา 18:30 น.)</strong> ผ่าน <strong>6 มุมมองเชิงลึก</strong> ที่มาจากภูมิปัญญาต่างยุค ทั้งหกมุมมองอ่าน Matrix 9 จุดเดียวกัน (22-11-10 · 6-7-21 · 7-6-21) และ BaZi 4 เสาเดียวกัน (己卯/乙亥/戊寅/辛酉) แต่ตั้งคำถามต่างกัน ตอบต่างกัน และให้ภาพที่ลึกขึ้นเมื่อนำมาประกอบกัน</p>
+<p>จุดเด่นที่สุดของ Matrix Dol คือ <strong>&quot;Echo สามเสียง&quot;</strong> — ตัวเลข <strong>6, 7, 21</strong> ปรากฏคนละ 2 ครั้งใน 9 ช่อง สร้างลายเซ็นเฉพาะที่บอกว่า Dol เกิดมาเพื่อ <strong>&quot;ควบสองขั้ว&quot;</strong> — ผ่าน <strong>&quot;ความรับผิดชอบสูง&quot;</strong> (6 Hermit ซ้ำ) คู่กับ <strong>&quot;พลังแห่งการแสวงหา&quot;</strong> (7 Chariot ซ้ำ) และ <strong>&quot;การเปลี่ยนผ่านของจักรวาล&quot;</strong> (21 World ซ้ำ) นี่ไม่ใช่ความบังเอิญ — นี่คือลายเซ็นของจักรวาลที่บอกว่า Dol เกิดมาเพื่อ <strong>&quot;หาจุดสมดุลระหว่างผู้คุมระบบและศิลปิน ระหว่างโครงสร้างและการด้นสด&quot;</strong></p>
+<p>Day Master ของ Dol คือ <strong>戊 (Yang Earth)</strong> — ดินแห้งที่สร้างเขื่อน สร้างกำแพง สร้างเนิน ยืนหยัดและแบกรับ แต่ก็เปราะเมื่อเจอน้ำท่วม เจอไฟไหม้ บริบท PMO Project Executive ที่ &quot;ต้องเป๊ะเรื่องระบบและโครงสร้าง&quot; กับบริบท Actor ที่ &quot;ต้องใช้ความยืดหยุ่นและศิลปะ&quot; คือสอง &quot;ภาชนะ&quot; ที่ Day Master 戊 ต้องแบกรับพร้อมกัน 33 ปี (อายุ 27-60) — ช่วงเวลาที่ <strong>Period 9 (Fire dominant 2024-2043)</strong> กำลังส่องแสงไฟมาที่ &quot;ดิน&quot; ตัวนี้ ทำให้ดิน &quot;อุ่น&quot; และ &quot;เติบโต&quot; ได้ในช่วง 20 ปีแรก — แต่หลังจากนั้น Period 1 (Water 2044-2063) จะ &quot;ทดน้ำ&quot; ใส่ดิน — เป็นยุคที่ต้อง &quot;ใช้ทักษะ PMO&quot; มากขึ้นเพื่อ &quot;ระบายน้ำ&quot; ไม่ให้ท่วม</p>
+<p>คุณไม่จำเป็นต้องเชื่อทุกมุมมอง แต่ควรอ่านทั้งหกแล้วเก็บไว้ใช้ตอนที่ชีวิตถามคำถามที่ตรงกับมุมมองนั้น</p>
+<h3>มุมมองทั้ง 6 คือ:</h3>
+<ol>
+<li><strong>คาร์ล ยุง</strong> — จิตวิทยาเชิงลึก (Persona, Shadow, Individuation)</li>
+<li><strong>เฮเลนา บลาวัตสกี้</strong> — กฎแห่งการดึงดูด (Law of Attraction, Theosophy)</li>
+<li><strong>Three Initiates (Kybalion)</strong> — 7 หลักการเฮอร์เมติก</li>
+<li><strong>Isabel Briggs Myers</strong> — MBTI (ฟังก์ชันจิต 4 ชั้น) — สำหรับ ENTP (Ne-dominant + Ti-auxiliary)</li>
+<li><strong>นาตาเลีย ลาดินี (Octagram)</strong> — Matrix 3x3 + ดาว 8 แฉก + พยากรณ์อายุ 60</li>
+<li><strong>ซู หยูหง (BaZi)</strong> — โหราศาสตร์จีน 4 เสา + Period 9</li>
+</ol>
+<hr />
+
+</section>
+
+<section class="card slot-2" id="section-cosmic">
+<h2><span class="num">§2</span> 🌟 ส่วนที่ 1: บทสรุป 6 มุมมองเชิงลึก</h2>
+<h3>1. Carl Jung: Persona และ Shadow</h3>
+<p><strong>Persona:</strong> &quot;ผู้คุมสมดุลสองบทบาท&quot; (Equilibrium Keeper) — แกน Ti-Ne ของ ENTP ทำให้ Dol เป็น &quot;คนที่วางแผนได้ละเอียดที่สุดในห้อง&quot; &quot;คนที่ด้นสดได้เนียนที่สุดในกอง&quot; &quot;คนที่คุม timeline ได้เป๊ะที่สุดในทีม&quot; &quot;คนที่กลับเข้ากับตัวละครได้เร็วที่สุดในเซ็ต&quot; — ใน Matrix ตำแหน่ง E=7 (Chariot) และ G=7 (Chariot) คือหน้ากากที่ &quot;หนาที่สุด&quot; ของ Dol คือ <strong>&quot;ตัวคุม&quot;</strong> — ใส่ได้ทั้งในห้องประชุม PMO และในกองถ่าย</p>
+<p><strong>Shadow:</strong> &quot;ผู้หลุดพ้นจากกฎ&quot; (Anarchist Visionary) — <strong>Si (Introverted Sensing) ที่ &quot;ถูกกด&quot;</strong> มา 25 ปี ตามโครงสร้าง ENTP (tertiary Si = THE grip source) — เมื่อ Persona &quot;ตัวคุม&quot; ถูกท้าทายจนความเครียดสะสมเกินขีด จะ &quot;ระเบิด&quot; ออกมาเป็น <strong>Si-Grip</strong> (หมกมุ่นกับรายละเอียดเล็ก ๆ น้อย ๆ อย่างผิดปกติ, ตรึงตัวอยู่กับ Gantt chart, กินไม่เป็นเวลา, นอนไม่หลับ, regression ไปหา past pattern) — ส่วน <strong>Fe (inferior anima bridge)</strong> ไม่ใช่ grip event — เป็น second-tier emotional leak เป็นครั้งคราว (snap สั้น ๆ ที่คนรัก, performative emotion แบบไม่ตั้งใจ) — ไม่ใช่ Fe-Grip เพราะ Fe อยู่ใน inferior position (ชั้นที่ 4) ไม่ใช่ tertiary (ชั้นที่ 3 = child function = grip source) — นี่คือ ENTP commit ที่สำคัญที่สุด</p>
+<p><strong>Anima (A=22):</strong> The Fool / High Versatility — สัญชาตญาณที่บอกว่า &quot;โปรเจกต์นี้จะเปลี่ยนทิศ&quot; &quot;ผู้กำกับคนนี้เปิดใจได้&quot; &quot;ตัวละครนี้ต้องให้ Dol 'ปล่อย'&quot; — Persona &quot;ตัวคุม&quot; ปิดไว้ แต่ Ego ต้อง &quot;ปลดปล่อย&quot;</p>
+<p><strong>Self (C=10):</strong> Wheel of Fortune — พลังแห่ง &quot;วัฏจักร&quot; — การยอมรับว่าทุกโปรเจกต์ ทุกบทบาท ทุกช่วงวัย มี &quot;ขึ้น-ลง&quot; ของตัวเอง — เป็นพลังที่รอการปลุกเมื่อ Dol อายุ 60</p>
+<p><strong>Individuation arc:</strong> Dol ต้องเดินทางจาก <strong>&quot;ตัวคุมที่แบกรับสองบทบาท&quot;</strong> ไปสู่ <strong>&quot;ผู้เชี่ยวชาญที่รู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย&quot;</strong></p>
+<h3>2. Helena Blavatsky: แรงดึงดูดจากความถี่เด่น</h3>
+<p>ความถี่หลักของ Dol คือ <strong>&quot;ตรรกะที่มองเห็นความเป็นไปได้&quot; (Possibility-Driven Logic)</strong> — Ti (Introverted Thinking) คือคลื่นแห่งการวิเคราะห์ตรรกะเชิงลึก + Ne (Extraverted Intuition) คือคลื่นแห่งการมองเห็นความเป็นไปได้ใหม่ ๆ เมื่อสองคลื่นซ้อนกัน Dol สั่นที่ความถี่ <strong>&quot;ตรรกะที่สร้างสรรค์&quot;</strong> — เป็นคนที่คิดเร็ว เห็น pattern ได้ไกล แล้วถ่ายทอดออกมาเป็นแผนที่ทีมเอาไปทำตามได้</p>
+<p>ตามหลัก <em>Like Attracts Like</em> ความถี่ของ Dol จะดึงดูด:</p>
+<ol>
+<li><strong>ผู้คนและทีมที่ทำงานด้วยตรรกะเดียวกัน</strong> — Project Sponsor, Producer, Director ที่ชอบ &quot;brainstorm + execute&quot;</li>
+<li><strong>ปัญหาที่ต้องการทั้งโครงสร้างและการด้นสด</strong> — โปรเจกต์ที่ timeline สั้น งบน้อย ทีมน้อย แต่ต้องส่งงานใหญ่, บทบาทที่ต้อง &quot;ด้นสดในกองถ่าย&quot; แต่ &quot;เป๊ะใน meeting&quot;</li>
+<li><strong>โอกาสที่เปิดทางให้คนที่เป็น &quot;สะพาน&quot;</strong> — Period 9 (2024-2043) กำลังเร่งให้ทุกอุตสาหกรรมต้อง &quot;ควบทั้งสองโลก&quot; ทั้งดิจิทัล+อนาล็อก ทั้ง data+art ทั้ง system+improv — Dol จะดึงดูดบทบาท &quot;คนกลาง&quot; ที่ &quot;แปลภาษาระหว่างสองโลกได้&quot;</li>
+</ol>
+<h3>3. The Kybalion: จังหวะและเหตุผลในชีวิต</h3>
+<p><strong>Mentalism:</strong> &quot;The All is Mind&quot; — ENTP (Ti-Ne) เริ่มจาก &quot;จิต&quot; ก่อน &quot;ข้อมูล&quot; — Dol เป็นคนที่ &quot;คิดก่อนทำ&quot; และ &quot;คิดเร็ว&quot; — Kybalion จะสอนให้ Dol &quot;หยุดคิดบ้าง&quot; เพื่อ &quot;รู้สึก&quot; ถึงจังหวะของจักรวาล</p>
+<p><strong>Vibration:</strong> &quot;Nothing rests&quot; — ENTP มีความถี่ &quot;เร็ว กระโดด สลับไปมา&quot; — Dol อยู่ใน &quot;ความถี่สูง&quot; ของ Vibration spectrum — เขาจะ &quot;สลับโหมด&quot; ได้เร็วกว่าคนทั่วไป — เขาจะ &quot;เป็น PMO ตอนเช้า เป็น Actor ตอนเย็น&quot; ได้ในวันเดียว — นี่คือทั้ง &quot;ความแข็งแรง&quot; และ &quot;ความเสี่ยง&quot; ของ Dol</p>
+<p><strong>Rhythm:</strong> &quot;Everything flows, in and out; everything has its tides&quot; — Rhythm ของ ENTP อายุ 27-60 คือ <strong>&quot;long pendulum&quot;</strong> — แกว่งทุก 7-12 ปี — Dol จะมี &quot;down-cycle&quot; (burnout, grip) แล้ว &quot;up-cycle&quot; ที่สูงกว่า — เมื่อ Dol อายุ 60 pendulum จะอยู่ที่ <strong>&quot;ตำแหน่งครู&quot;</strong> — Dol จะเป็น &quot;ที่ปรึกษา&quot; ที่คนรุ่นใหม่มาหา</p>
+<p><strong>Polarity:</strong> &quot;Everything is dual&quot; — ขั้วสำคัญของ Dol คือ <strong>โครงสร้าง ↔ ศิลปะ (Ti ↔ Ne)</strong> ในช่วงอายุ 27-60 Dol ต้องเรียนรู้ <strong>&quot;เลื่อน&quot;</strong> จาก &quot;คุมระบบ&quot; ไป &quot;ปล่อยศิลปะ&quot; อย่างคล่องแคล่ว — นี่คือจุดที่ Matrix Echo {6, 7, 21} บอกว่าเป็น &quot;ความสามารถในการหลอมรวมสิ่งที่ขัดแย้ง&quot;</p>
+<p><strong>Cause-Effect + Gender:</strong> &quot;Every cause has its effect&quot; + &quot;Everything has its masculine and feminine principles&quot; — การกระทำของ Dol (ทั้งในฐานะ PMO และ Actor) จะ &quot;สะท้อนกลับ&quot; มาที่ตัวเอง — Dol จะเรียนรู้ว่า &quot;สิ่งที่ Dol ให้ (ความเป๊ะ ความยืดหยุ่น ความคิด) จะกลับมาหา Dol ในรูปแบบที่คาดไม่ถึง&quot; — ในเชิง Gender Principle: &quot;Ti (พลังหญิงของความลึก) + Ne (พลังชายของการขยาย)&quot; คือ &quot;คู่ขั้วที่สมดุล&quot; ของ Dol — Dol ต้อง &quot;ไม่กดข้างใดข้างหนึ่ง&quot;</p>
+<h3>4. MBTI (ENTP): Cognitive Function หลัก (Ti/Ne) และจุดบอดเมื่อเกิดวิกฤต</h3>
+<p><strong>Function stack:</strong></p>
+<ul>
+<li><strong>Ti (Introverted Thinking) — Dominant:</strong> สร้าง internal framework ที่แม่น ๆ ตรวจสอบภายในได้ — ตัวคุมของ Dol</li>
+<li><strong>Ne (Extraverted Intuition) — Auxiliary:</strong> มองเห็น pattern ข้ามศาสตร์ สร้างความเป็นไปได้ใหม่ — ตัวด้นสดของ Dol</li>
+</ul>
+<p><strong>ความท้าทายกับสองบทบาท:</strong></p>
+<ul>
+<li><strong>PMO (Project Executive)</strong> = Ti-driven (system architecture, timeline, dependency analysis) — ใช้ dominant function ในโหมด &quot;output&quot; (ต้องส่งแผน)</li>
+<li><strong>Actor</strong> = Ne-driven (character, scenario, possibility, improvisation) — ใช้ auxiliary function ในโหมด &quot;output&quot; (ต้องส่ง performance)</li>
+</ul>
+<p>ENTP Dol จึง <strong>&quot;ทำการสลับ cognitive function role&quot;</strong> ระหว่างสองงาน — เป็นกลยุทธ์ที่ &quot;ต้นทุนสูง&quot; และสัมพันธ์โดยตรงกับความขัดแย้งที่ MET-661 ระบุ</p>
+<p><strong>จุดแข็ง:</strong></p>
+<ul>
+<li><strong>Ti+Ne</strong> = &quot;นักวิเคราะห์ที่ด้นสดได้&quot; — วิเคราะห์ซับซ้อนได้ลึก แล้ว &quot;ดีด&quot; ไปทางอื่นได้เร็ว</li>
+<li><strong>Ti-Anchor</strong> = กลยุทธ์ตัดสินใจที่ใช้ &quot;ตรรกะที่พิสูจน์แล้ว&quot; เป็นฐาน — เหมาะกับการ &quot;ปิดงาน&quot; PMO</li>
+<li><strong>Ne-Explorer</strong> = กลยุทธ์ &quot;เห็น scenario ใหม่&quot; — เหมาะกับการ &quot;ด้นสด&quot; ในกองถ่าย</li>
+</ul>
+<p><strong>จุดบอด — Si-Grip vs Fe-inferior leak (ความแตกต่างสำคัญระหว่าง Si-Grip หลัก และ Fe-leak รอง):</strong></p>
+<ul>
+<li><strong>ENTP Si-Grip:</strong> เมื่อ ENTP เครียดจัดจากการคุมโปรเจกต์ไม่อยู่ หรือ &quot;ตกหล่ม&quot; Ne-loop จนเกินไป จะ collapse ลงไปที่ Si (3rd function, child) — <strong>อาการ:</strong> หมกมุ่นกับรายละเอียดเล็ก ๆ น้อย ๆ ผิดปกติ (เช่น กังวลว่า &quot;comma ตัวนี้ผิด&quot; ใน deck), ตรึงตัวอยู่กับ Gantt chart จนลืมเวลา, regression ไปหา pattern เก่าที่เคยเวิร์ค, กิน/นอนไม่เป็นเวลา — <strong>สำหรับ Dol (ENTP):</strong> &quot;ติดอยู่ใน Excel&quot; — มองไม่เห็นทางออก</li>
+<li><strong>ENTP Fe-inferior leak (second-tier ONLY — NOT a grip event):</strong> เมื่อ Dol &quot;อิน&quot; กับบทบาท หรือเครียดจัด &quot;อิน&quot; กับบทบาทมากเกินไป หรือถูก client/director ปฏิเสธ เขาอาจ &quot;snap&quot; หรือ &quot;พูดแรงเกินเหตุ&quot; ในจังหวะสั้น ๆ — <strong>ลักษณะ:</strong> snap สั้น ๆ ที่คนรัก (1-2 ชั่วโมง recover), performative emotion แบบไม่ตั้งใจ, เล่นบทบาทจน &quot;ลืมถอด&quot; ออกมาในชีวิตจริง (&quot;ตัวละคร&quot; กลายเป็น &quot;ตัวตน&quot;) แต่หายเองใน 1-2 ชั่วโมง — <strong>สำหรับ Dol (Fe-inferior leak):</strong> &quot;ตัวละครกินตัวตน&quot; — หรือ &quot;ปิดงานไม่ได้เพราะติดบท&quot; — <strong>แต่จะไม่ยาวนานเหมือน Fe-Grip ของ INTP</strong> เพราะ Fe ของ ENTP อยู่ใน <strong>inferior (ชั้น 4)</strong> ไม่ใช่ <strong>tertiary (ชั้น 3 = child function = grip source)</strong></li>
+</ul>
+<p>ในทั้งสองกรณี <strong>Ti ต้อง restore ก่อน</strong> (นั่งคนเดียว, journal, re-classify ปัญหาในภาษาของตัวเอง) แล้ว Ne-dominant จะ &quot;ติดกลับมา&quot; เอง — ส่วนเจาะลึกอยู่ใน §9</p>
+<h3>5. Age 60 Forecast: เป้าหมายสูงสุดวัย 60</h3>
+<p>Dol อายุ 60 ในปี <strong>2059</strong> (พ.ศ. 2602) — ปีที่ <strong>Personal Year = 5</strong> (PY cycle: 2026=8 → ... → 2059=5) — คือปีที่ <strong>Matrix Heart (E=7) return</strong> ผ่านตัวเลข 7 ในสูตร PY=5 (target_digit=7), <strong>BaZi Period 1 Water (2044-2063)</strong> — ดิน (戊) ต้อง &quot;คุมน้ำ&quot; (ท้าทายที่สุด), และ <strong>Mandala Ti/Ne + 印/財 + ราก Earth + พลัง Water</strong> บรรจบกัน</p>
+<p><strong>เป้าหมายสูงสุด:</strong> Dol ไม่ใช่ Project Executive ที่คุมทุกอย่างได้เป๊ะ หรือ Actor ที่ดังที่สุด แต่คือ <strong>&quot;ผู้เชี่ยวชาญที่ 'สลับ' สองบทบาทได้อย่างราบรื่น&quot;</strong> — เขาจะกลายเป็น <strong>&quot;ครู&quot; ของคนทำงานสองหน้าที่</strong> — สอนว่า &quot;คุม timeline&quot; กับ &quot;ด้นสดในกอง&quot; ไม่ใช่คนละคน — คือคนเดียวกันที่ &quot;Ti หมุนเร็วพอที่จะ output ทั้งสอง&quot; — เขาจะรู้ว่า <strong>&quot;คุณค่าที่แท้จริงไม่ได้อยู่ที่การเลือกบทบาท แต่อยู่ที่การรู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย&quot;</strong></p>
+<h3>6. BaZi &amp; Period 9: ดิถีธาตุ การปรับสมดุล และเทรนด์ยุค 9</h3>
+<p><strong>Day Master:</strong> 戊 (Yang Earth) — Day Pillar 戊寅 — Day Branch 寅 (Tiger, Wood) — Nayin 城头土 (City-Wall Earth)
+<strong>Full chart:</strong> 年 己卯 (Earth-Wood) · 月 乙亥 (Wood-Water) · 日 戊寅 (Earth-Wood) · 時 辛酉 (Metal-Metal)</p>
+<p><strong>Day Master is Weak (身弱) with viable root:</strong></p>
+<ul>
+<li>Day Branch 寅 contains hidden 戊 (比肩) — DM has same-element root</li>
+<li>DiShi at Day Branch = 長生 (Long Life) — DM มี vital root</li>
+<li>Month 亥 (Water) = 偏財 (Indirect Wealth) — Water drains Earth</li>
+<li>Day Branch 寅 also contains 甲 (七殺/7 Killings, Wood) and 丙 (偏印, Fire resource) — Wood attacks DM</li>
+<li>Year Branch 卯 (Wood, hidden 乙 = 正官) — Wood controls Earth (clash structure)</li>
+<li>Hour Stem 辛 (Yin Metal, 傷官/Hurt Officer) — Earth produces Metal (洩氣)</li>
+<li>Hour Branch 酉 (Yin Metal) — Earth produces Metal (output exhausted)</li>
+</ul>
+<p><strong>用神 (Useful God) = 丙火 (Yang Fire, 偏印 Indirect Resource)</strong> — Fire produces Earth, อุ่น Earth, transmuted Wood-attack เป็น productive seal energy
+<strong>喜神 (Favorable God) = 己土 + 丙丁火</strong> — peer + resource
+<strong>忌神 (Avoid God) = 甲乙木 + 壬癸水</strong> — direct attacker + output drainer
+<strong>仇神 (Enemy God) = 庚辛金</strong> — too much metal exhausts weak DM (Hour Pillar มี 辛酉 หนักอยู่แล้ว)</p>
+<p><strong>Structural signature:</strong> &quot;正官透干 + 七殺藏支&quot; (Month stem Direct Officer with Day-branch 7 Killings) = classic authority-tension structure for 戊 Earth — <strong>PMO role (Officer) struggles against Actor role (Output/傷官 Hour + Ne-side risk of 傷官佩印)</strong></p>
+<p><strong>Period 9 (Fire 2024-2043) = 印 Resource/Seal period for 戊 Earth</strong> — 火生土 — Era GENERATES Day Master — <strong>the era provides the missing support</strong></p>
+<ul>
+<li>Dol ages 25 → 43 inside Period 9 (favorable years for credentialing, learning, recognition, system-building)</li>
+<li>After 2043 (age 44+) Period 1 (Water, 2044-2063) = 財 period — different conversation, &quot;use PMO skill to drain water&quot;</li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-3" id="section-natalia">
+<h2><span class="num">§3</span> 🌌 ส่วนที่ 2: จุดเชื่อมโยงแห่งปรัชญาและวัฏจักร (The Cosmic Synergy)</h2>
+<h3>การทำงานร่วมกันของศาสตร์: The Kybalion + Law of Attraction + ลูปพลังงาน Matrix</h3>
+<p><strong>6 ศาสตร์ทำงานสอดคล้องกันในดวงชะตาของ Dol อย่างไร:</strong></p>
+<p>เมื่อมองผ่าน <strong>The Kybalion (Polarity + Rhythm + Cause-Effect)</strong> เราจะเห็นว่า &quot;ชะตา&quot; ของ Dol ไม่ใช่ &quot;สิ่งที่ถูกลิขิตไว้แล้ว&quot; แต่คือ <strong>&quot;แผนที่ของจังหวะชีวิต&quot;</strong> ที่ Ego สามารถ <strong>&quot;ปรับความถี่&quot;</strong> เพื่อ <strong>&quot;ดึงดูด&quot;</strong> สิ่งที่ตรงกับ Persona ได้</p>
+<p><strong>Matrix 9 จุด</strong> คือ <strong>&quot;แผนที่ของความถี่&quot;</strong> — แต่ละช่องคือความถี่หนึ่งที่ทำงานพร้อมกัน Echo {6, 7, 21} คือ <strong>&quot;เสียงสะท้อนที่ดังที่สุด&quot;</strong> — บอกว่า &quot;ความรับผิดชอบสูง&quot; (6 Hermit) &quot;พลังแห่งการแสวงหา&quot; (7 Chariot) และ &quot;การเปลี่ยนผ่านของจักรวาล&quot; (21 World) เป็น <strong>&quot;แกนหลักของจิต&quot;</strong> ที่ Ego ต้อง &quot;หลอมรวม&quot; ในช่วงอายุ 27-60</p>
+<p><strong>BaZi 4 เสา</strong> คือ <strong>&quot;แผนที่ของเวลา&quot;</strong> — Day Master 戊 (Yang Earth) ที่ &quot;อ่อนกำลัง&quot; (身弱) ในยุค Period 9 (Fire 印) จะได้รับ &quot;การสนับสนุนจากยุค&quot; เป็นเวลา 20 ปี (อายุ 25-43) — นี่คือ <strong>&quot;จังหวะของจักรวาล&quot;</strong> (Rhythm) ที่ทำงานสอดคล้องกับ <strong>&quot;ความถี่ของจิต&quot;</strong> (Vibration) ของ Dol</p>
+<p><strong>MBTI (Ti-Ne กับ Si/Fe shadow)</strong> คือ <strong>&quot;กลไกการประมวลผล&quot;</strong> ที่ Ego ใช้ — เมื่อ dominant/auxiliary (Ti/Ne) &quot;ล้า&quot; หรือ &quot;ขัดแย้งกันเอง&quot; (ระหว่าง PMO กับ Actor) shadow (Si หรือ Fe) จะ &quot;ระเบิด&quot; ออกมา — นี่คือ <strong>&quot;Polarity&quot;</strong> ของ Kybalion ที่ &quot;ทุกสิ่งเป็นคู่&quot; — เงาที่ซ่อนอยู่เป็น &quot;ขั้วตรงข้าม&quot; ของ Persona</p>
+<p><strong>Law of Attraction (Helena Blavatsky)</strong> คือ <strong>&quot;กลไกของการดึงดูด&quot;</strong> — ความถี่ &quot;Possibility-Driven Logic&quot; ของ Dol จะดึงดูดคน ทีม โปรเจกต์ บทบาท ที่ &quot;ตรงกับความถี่&quot; — ยิ่ง Dol &quot;สลับ&quot; สองบทบาทได้คล่อง ยิ่งดึงดูดโอกาสที่ &quot;ใหญ่ขึ้น&quot;</p>
+<p><strong>Carl Jung (Persona/Shadow/Individuation)</strong> คือ <strong>&quot;แผนที่ของจิต&quot;</strong> — Persona &quot;ตัวคุม&quot; (E=7, G=7) ที่หนาที่สุด ต้อง &quot;สละ&quot; พื้นที่ให้ Anima (A=22 The Fool = ความยืดหยุ่น) และ Self (C=10 Wheel = การยอมรับวัฏจักร) — นี่คือ <strong>&quot;การเดินทางของ Individuation&quot;</strong> ที่ทำงานสอดคล้องกับ <strong>&quot;จังหวะของชีวิต&quot;</strong> 33 ปี (อายุ 27-60)</p>
+<p><strong>สรุป:</strong> 6 ศาสตร์ไม่ได้ &quot;ขัดแย้ง&quot; กัน แต่ <strong>&quot;สะท้อน&quot;</strong> กันในระดับต่าง ๆ:</p>
+<ul>
+<li><strong>Kybalion (Polarity + Rhythm)</strong> = กลไกของจักรวาล</li>
+<li><strong>Law of Attraction (Blavatsky)</strong> = กลไกของการดึงดูด</li>
+<li><strong>Matrix (Natalia Ladini)</strong> = แผนที่ของจิต</li>
+<li><strong>BaZi (Su Yu Hong)</strong> = แผนที่ของเวลา</li>
+<li><strong>MBTI (Isabel Briggs Myers)</strong> = กลไกการประมวลผล</li>
+<li><strong>Carl Jung</strong> = แผนที่ของการเดินทาง</li>
+</ul>
+<p>ทั้งหมดนี้ <strong>&quot;ทำงานร่วมกัน&quot;</strong> เพื่อบอกว่า <strong>&quot;Dol เกิดมาเพื่อเดินทางจาก 'ตัวคุมที่แบกรับสองบทบาท' สู่ 'ผู้เชี่ยวชาญที่รู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย' จาก Persona สู่ Self&quot;</strong></p>
+<hr />
+
+</section>
+
+<section class="card slot-4" id="section-talent">
+<h2><span class="num">§4</span> 🧬 ส่วนที่ 3: โปรแกรมชีวิตและแกนหลัก (Natalia Square 3x3)</h2>
+<h3>Matrix 3x3 (สูตร Natalia Ladini, verified — MET-665)</h3>
+<table>
+<thead>
+<tr>
+  <th>Cell</th>
+  <th>Value</th>
+  <th>Computation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>A</strong></td>
+  <td>22</td>
+  <td>Day-of-month = 22 (kept as-is, ≤22)</td>
+</tr>
+<tr>
+  <td><strong>B</strong></td>
+  <td>11</td>
+  <td>Month = 11 (kept as-is, ≤22)</td>
+</tr>
+<tr>
+  <td><strong>C</strong></td>
+  <td>10</td>
+  <td>Year digit-sum = 1+9+9+9 = 28 → reduce 2+8 = 10</td>
+</tr>
+<tr>
+  <td><strong>D</strong></td>
+  <td>6</td>
+  <td>A+B = 22+11 = 33 → reduce 3+3 = 6</td>
+</tr>
+<tr>
+  <td><strong>E</strong></td>
+  <td>7</td>
+  <td>A+B+C = 22+11+10 = 43 → reduce 4+3 = 7</td>
+</tr>
+<tr>
+  <td><strong>F</strong></td>
+  <td>21</td>
+  <td>B+C = 11+10 = 21 (kept, ≤22)</td>
+</tr>
+<tr>
+  <td><strong>G</strong></td>
+  <td>7</td>
+  <td>mirror(E) = 7</td>
+</tr>
+<tr>
+  <td><strong>H</strong></td>
+  <td>6</td>
+  <td>mirror(D) = 6</td>
+</tr>
+<tr>
+  <td><strong>I</strong></td>
+  <td>21</td>
+  <td>mirror(F) = 21</td>
+</tr>
+</tbody>
+</table>
+<h3>แกนหลัก 3 แกน</h3>
+<ul>
+<li><strong>แกนบน (22-11-10):</strong> &quot;แกนแห่งตัวตนข้ามมิติ&quot; — The Fool (22) → Justice (11) → Wheel of Fortune (10) — เส้นทางจาก &quot;ความกล้าหาญ&quot; ผ่าน &quot;ความยุติธรรม/สมดุล&quot; ไปสู่ &quot;วัฏจักรของจักรวาล&quot;</li>
+<li><strong>แกนกลาง (6-7-21):</strong> &quot;แกนแห่งการแสดงออก&quot; — Hermit (6) → Chariot (7) → World (21) — เส้นทางจาก &quot;การเข้าใจตัวเอง&quot; ผ่าน &quot;พลังแห่งการแสวงหา&quot; ไปสู่ &quot;ความสำเร็จของจักรวาล&quot; — <strong>นี่คือแกนหลักของชีวิต Dol</strong> ในช่วงอายุ 27-60</li>
+<li><strong>แกนล่าง (7-6-21):</strong> &quot;แกนแห่งรากฐาน&quot; — Chariot (7) → Hermit (6) → World (21) — รากฐานของ &quot;พลัง&quot; &quot;ความเข้าใจ&quot; &quot;ความสำเร็จ&quot; ที่ซ้ำกับแกนกลาง (Echo!)</li>
+</ul>
+<h3>Echo Numbers (6, 7, 21) — Triple Versatility Amplification</h3>
+<table>
+<thead>
+<tr>
+  <th>Value</th>
+  <th>Archetype</th>
+  <th>Position</th>
+  <th>Echo Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>6</strong></td>
+  <td>Hermit × 2</td>
+  <td>D, H</td>
+  <td><strong>&quot;นักบุญ/ผู้เข้าใจลึก&quot;</strong> — ความรับผิดชอบสูงที่ซ่อนอยู่ — ใน Stage 1 (อายุ 27-30) Persona &quot;ตัวคุม&quot; จะ &quot;สร้าง&quot; โปรเจกต์ที่ &quot;ทน&quot; ได้นาน</td>
+</tr>
+<tr>
+  <td><strong>7</strong></td>
+  <td>Chariot × 2</td>
+  <td>E, G</td>
+  <td><strong>Persona &quot;ตัวคุม&quot;</strong> ที่หนาที่สุด — ใน Stage 2 (อายุ 35-42) Persona จะ &quot;แข็งที่สุด&quot; เพราะ Ego ต้อง &quot;คุม&quot; ทั้ง PMO และ Actor พร้อมกัน</td>
+</tr>
+<tr>
+  <td><strong>21</strong></td>
+  <td>World × 2</td>
+  <td>F, I</td>
+  <td><strong>&quot;ความสำเร็จของจักรวาล&quot;</strong> — Ego จะ &quot;ครบ&quot; เมื่ออายุ 60 — ใน Stage 5 (อายุ 55-60) Ego จะ &quot;หลอมรวม&quot; ทั้งสองบทบาทเป็น &quot;ความสำเร็จเดียว&quot;</td>
+</tr>
+</tbody>
+</table>
+<h3>แผนภาพ Mermaid 3x3</h3>
+<div class="mermaid-wrap"><pre class="mermaid">%%{init: {'theme':'dark','themeVariables': {'fontSize':'14px'}}}%%
+flowchart LR
+  classDef fool fill:#1a0a2a,stroke:#9d4edd,color:#dda0dd,stroke-width:3px
+  classDef justice fill:#2a1a0a,stroke:#daa520,color:#ffd700,stroke-width:2px
+  classDef wheel fill:#2a0a0a,stroke:#ff4500,color:#ffd700,stroke-width:3px
+  classDef hermit fill:#0a2a1a,stroke:#228b22,color:#90ee90,stroke-width:2px
+  classDef chariot fill:#1a1a0a,stroke:#ff8c00,color:#ff8c00,stroke-width:2px
+  classDef world fill:#0a1a2a,stroke:#00bfff,color:#87ceeb,stroke-width:2px
+
+  A[&quot;A · 22&lt;br/&gt;The Fool&lt;br/&gt;ผู้กล้า&quot;]:::fool
+  B[&quot;B · 11&lt;br/&gt;Justice&lt;br/&gt;ความยุติธรรม&quot;]:::justice
+  C[&quot;C · 10&lt;br/&gt;Wheel of Fortune&lt;br/&gt;วัฏจักร&quot;]:::wheel
+  D[&quot;D · 6&lt;br/&gt;Hermit&lt;br/&gt;นักบุญ&quot;]:::hermit
+  E[&quot;E · 7&lt;br/&gt;Chariot&lt;br/&gt;รถศึก ★ Persona&quot;]:::chariot
+  F[&quot;F · 21&lt;br/&gt;World&lt;br/&gt;จักรวาล&quot;]:::world
+  G[&quot;G · 7&lt;br/&gt;Chariot&lt;br/&gt;รถศึก&quot;]:::chariot
+  H[&quot;H · 6&lt;br/&gt;Hermit&lt;br/&gt;นักบุญ&quot;]:::hermit
+  I[&quot;I · 21&lt;br/&gt;World&lt;br/&gt;จักรวาล&quot;]:::world
+
+  A --- B --- C
+  D --- E --- F
+  G --- H --- I
+  A --- D --- G
+  B --- E --- H
+  C --- F --- I
+</pre></div>
+<h3>Energy Centers (E, F, H) — Heart + Lateral Echoes</h3>
+<ul>
+<li><strong>Heart (E=7):</strong> Chariot — Persona archetype — &quot;พลังที่ควบคุมผ่านวินัย&quot;</li>
+<li><strong>Lateral Left (H=6):</strong> Hermit — Shadow archetype — &quot;ความเข้าใจลึกที่ซ่อนเร้น&quot;</li>
+<li><strong>Lateral Right (F=21):</strong> World — &quot;ความสำเร็จของจักรวาล&quot; ที่รอการปลุก</li>
+</ul>
+<p><strong>Energy Center Layout:</strong></p>
+<ul>
+<li><strong>แนวตั้ง (E→B→H):</strong> Chariot → Justice → Hermit = Ego ที่ &quot;ควบคุม&quot; ผ่าน &quot;ความยุติธรรม&quot; ไปสู่ &quot;ความเข้าใจลึก&quot;</li>
+<li><strong>แนวนอน (D→E→F):</strong> Hermit → Chariot → World = &quot;ความเข้าใจลึก&quot; ผ่าน &quot;การควบคุม&quot; ไปสู่ &quot;ความสำเร็จของจักรวาล&quot; — <strong>นี่คือเส้นทางของ Dol ในช่วงอายุ 27-60</strong></li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-5" id="section-career">
+<h2><span class="num">§5</span> 💎 ส่วนที่ 4: พรสวรรค์ ศักยภาพ และอดีตชาติ</h2>
+<h3>พรสวรรค์และศักยภาพแฝง</h3>
+<p><strong>จุดเด่นด้านการประมวลผลตรรกะเชิงลึก (Ti-auxiliary ของ ENTP):</strong></p>
+<ul>
+<li><strong>&quot;สถาปนิกแห่งระบบที่มองเห็นทั้งต้นทางและปลายทาง&quot;</strong> — Dol เห็น dependency ระหว่าง task ที่ทีมอื่นมองไม่เห็น เขา &quot;รู้&quot; ว่าถ้าเลื่อน task A จะกระทบ task E ในสัปดาห์หน้า — นี่คือ &quot;Ti-Anchor&quot; ที่แข็งที่สุดของ Dol</li>
+<li><strong>&quot;นาฬิกาชีวภาพของโปรเจกต์&quot;</strong> — Dol รู้สึกได้ว่าโปรเจกต์กำลังจะ &quot;ทำผิดทาง&quot; ก่อนที่ KPI จะตก — ทั้งในฐานะ PMO และ Actor เขาจะ &quot;รู้สึก&quot; ก่อน</li>
+<li><strong>&quot;ผู้พิทักษ์ความต่อเนื่อง&quot;</strong> — เขาทำให้ &quot;ทุกอย่างที่เคยดี ยังดีอยู่&quot; แม้โลกจะเปลี่ยนเร็วแค่ไหน — ในกองถ่าย เขาจะจำว่า &quot;take 12 ดีที่สุด&quot; ใน scene ยาว ๆ ที่ยาว 1 ชม. — นี่คือ &quot;memory ของ Ti&quot;</li>
+</ul>
+<p><strong>จุดเด่นด้านการสวมบทบาทและการด้นสด (Ne auxiliary):</strong></p>
+<ul>
+<li><strong>&quot;ตัวแปลงทางภาษาแห่งจักรวาล&quot;</strong> — Ne แปลง &quot;ความจำ&quot; ของ Ti เป็น &quot;performance&quot; ที่คนดูเข้าใจได้ทันที — ทั้งในฐานะ PMO (สื่อสารแผนกับทีม) และ Actor (สื่อสารอารมณ์ตัวละครกับผู้ชม)</li>
+<li><strong>&quot;ผู้ที่เห็น 'big picture' ก่อนทีม&quot;</strong> — เขาจะ &quot;เห็น&quot; ว่า timeline ของโปรเจกต์มี 3 paths ที่เป็นไปได้ ก่อนที่ sponsor จะถาม — เขาจะ &quot;เห็น&quot; ว่าตัวละครนี้เดินได้ 4 ทาง ก่อนที่ผู้กำกับจะถาม</li>
+<li><strong>&quot;ผู้แก้ไขปัญหาที่อยู่นอกกรอบ&quot;</strong> — เมื่อโปรเจกต์ติด Dol จะ &quot;ดีด&quot; ไปทางอื่นได้เร็วกว่าคนอื่น — เมื่อ scene ไม่เวิร์ค Dol จะ &quot;ด้นสด&quot; ได้เนียนที่สุด</li>
+</ul>
+<p><strong>จุดเด่นด้านการทำงานสองหน้าที่ (Echo 7 Chariot × 2):</strong></p>
+<ul>
+<li><strong>&quot;คนที่คุม timeline กองถ่ายได้เป๊ะที่สุด&quot;</strong> — ทั้ง Producer และ Director ไว้ใจให้ Dol &quot;กำหนดจังหวะ&quot; ได้</li>
+<li><strong>&quot;คนที่รู้ว่าเมื่อไหร่ควร 'คุม' เมื่อไหร่ควร 'ปล่อย'&quot;</strong> — นี่คือ Echo 7+7 — พลังที่ซ้ำสองครั้งเพื่อบอกว่า &quot;ความสามารถในการสลับ&quot; เป็น &quot;แกนหลักของ Dol&quot;</li>
+</ul>
+<p><strong>ศักยภาพแฝง (ที่ Persona &quot;ปิด&quot; ไว้):</strong></p>
+<ul>
+<li><strong>The Fool (A=22) × Anima:</strong> &quot;ความกล้าหาญที่ไม่กลัวความผิดพลาด&quot; — ใน Stage 3 (อายุ 43-50) Ego จะ &quot;ปลดปล่อย&quot; Anima — เขาจะเริ่ม &quot;กล้า&quot; ที่จะ &quot;รับบทบาทที่เสี่ยง&quot; (ทั้งในงานและในชีวิต)</li>
+<li><strong>World (21) × 2:</strong> &quot;ความสำเร็จของจักรวาล&quot; ที่ Persona &quot;ตัวคุม&quot; เคยมองว่า &quot;เป็นไปไม่ได้&quot; — ใน Stage 4 (อายุ 50-58) Ego จะ &quot;รู้&quot; ว่าการทำสองหน้าที่พร้อมกันไม่ใช่ &quot;ข้อจำกัด&quot; แต่คือ &quot;ข้อได้เปรียบ&quot; — เขาจะกลายเป็น &quot;ผู้เชี่ยวชาญที่ 'แปล' ระหว่างสองโลกได้&quot;</li>
+<li><strong>Hermit (6) × 2:</strong> &quot;ความเข้าใจลึก&quot; ที่ Persona &quot;ปิด&quot; ไว้ — ใน Stage 5 (อายุ 55-60) Ego จะ &quot;รู้&quot; ว่า &quot;ความสงบ&quot; ไม่ใช่ &quot;ความหยุดนิ่ง&quot; แต่คือ &quot;การรู้ว่าเมื่อไหร่ควรเงียบ&quot; — เขาจะ &quot;ฟัง&quot; ได้ลึกกว่าที่เคย</li>
+</ul>
+<h3>ชีวิตในอดีตและหางกรรม (Karmic Tail)</h3>
+<p><strong>Karmic Tail ของ Dol</strong> ตามที่ Matrix บอกไว้ที่ <strong>C=10 (Wheel) ที่ยังไม่ถูกปลดปล่อย</strong> และ <strong>H=6 (Hermit) ที่ถูกปฏิเสธ</strong>:</p>
+<ul>
+<li><strong>บทเรียนจากอดีต:</strong> ในชาติก่อน Dol เคย &quot;แบก&quot; สองบทบาทพร้อมกันจน &quot;หัก&quot; — เขาเคย &quot;เป็นทั้งผู้นำและผู้ตาม&quot; โดยไม่ &quot;เลือก&quot; — นี่คือเหตุที่ Hermit (6) ถูก &quot;ปฏิเสธ&quot; ในชาตินี้ — Ego ของ Dol &quot;กลัว&quot; การ &quot;เงียบ&quot; เพราะ &quot;กลัว&quot; ว่าจะ &quot;หยุด&quot; ทั้งสองบทบาทพร้อมกัน</li>
+<li><strong>หางกรรม (Karmic Tail) ที่ต้องปลดล็อก:</strong> Dol ต้อง &quot;เรียนรู้&quot; ว่า <strong>&quot;การเงียบ&quot; ไม่ใช่ &quot;การหยุด&quot;</strong> แต่คือ <strong>&quot;การเลือก&quot;</strong> — เมื่อเขา &quot;เรียนรู้&quot; ที่จะ &quot;เลือก&quot; เมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย ทั้งในฐานะ PMO (คุม timeline) และ Actor (ปล่อย performance) — Hermit (6) จะ &quot;ตื่น&quot; และ Wheel (C=10) จะ &quot;หมุน&quot; เป็น &quot;ความสำเร็จของจักรวาล&quot; (World = 21)</li>
+<li><strong>บทเรียน:</strong> Ego ต้อง <strong>&quot;ตื่น&quot;</strong> จาก Persona &quot;ตัวคุม&quot; ผ่าน <strong>The Fool (A=22)</strong> — เมื่อ &quot;ตื่น&quot; แล้ว Dol จะ &quot;เห็น&quot; ว่า &quot;งาน 33 ปีที่จะผ่านมา (อายุ 27-60) ไม่ได้สูญเปล่า&quot; แต่คือ &quot;รากฐาน&quot; ที่ &quot;สร้าง&quot; โลกใบใหม่</li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-6" id="section-relationships">
+<h2><span class="num">§6</span> 💼 ส่วนที่ 5: การประสบความสำเร็จและบทบาทเชิงลึก</h2>
+<h3>สายการทำงาน/อาชีพ: ทิศทางการเติบโตในสาย Project Management และ Entertainment Industry</h3>
+<p>Dol มี <strong>สองหน้าที่คู่ขนาน</strong> — <strong>Project Executive (PMO)</strong> ที่ &quot;ต้องเป๊ะเรื่องระบบและโครงสร้าง&quot; กับ <strong>Actor</strong> ที่ &quot;ต้องใช้ความยืดหยุ่นและศิลปะ&quot; — นี่คือความท้าทายหลักของชีวิต Dol ที่ทั้ง MET-661 ระบุ และทั้ง BaZi structure สะท้อน (PMO = Officer/官, Actor = Output/傷官)</p>
+<p><strong>ทิศทางการเติบโต (อายุ 27-60):</strong></p>
+<table>
+<thead>
+<tr>
+  <th>Stage</th>
+  <th>Age</th>
+  <th>Year</th>
+  <th>PY</th>
+  <th>Theme</th>
+  <th>Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>27-30</td>
+  <td>2026-2029</td>
+  <td>8→2</td>
+  <td><strong>Foundation</strong></td>
+  <td>&quot;สร้างฐานสองบทบาท&quot; — Ti+Ne เริ่มทำงานเป็น &quot;ระบบ&quot;</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td>31-37</td>
+  <td>2030-2036</td>
+  <td>3→9</td>
+  <td><strong>Expansion</strong></td>
+  <td>&quot;ขยายสู่ Industry ใหญ่&quot; — Persona &quot;ตัวคุม&quot; แข็งที่สุด</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>38-44</td>
+  <td>2037-2043</td>
+  <td>1→7</td>
+  <td><strong>Crisis &amp; Re-set</strong></td>
+  <td>&quot;Si/Fe-inferior leak&quot; ปะทุ — Ego ต้อง &quot;หยุด + re-classify&quot;</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td>45-52</td>
+  <td>2044-2051</td>
+  <td>8→4</td>
+  <td><strong>Mastery</strong></td>
+  <td>&quot;เป็นผู้เชี่ยวชาญ&quot; — Period 1 (Water) เริ่ม, ต้อง &quot;ใช้ PMO skill&quot; ระบายน้ำ</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>53-60</td>
+  <td>2052-2059</td>
+  <td>5</td>
+  <td><strong>Teach</strong></td>
+  <td>&quot;เป็นครู&quot; — ส่งต่อ Ti+Ne ให้คนรุ่นใหม่</td>
+</tr>
+</tbody>
+</table>
+<h3>บทบาทเชิงลึก (พร้อมเรื่องเล่าจำลองสถานการณ์การทำงานที่ต้องสลับสวิตช์ระหว่างผู้คุมระบบและศิลปิน)</h3>
+<h4>เมื่อต้องเป็นผู้นำ (Boss/PMO Lead)</h4>
+<p><strong>สถานการณ์จำลอง: &quot;คลาวด์ล่ม สามชั่วโมงก่อนไลฟ์ไพรซ์ไคลเอนต์&quot;</strong></p>
+<blockquote>
+<p>วันพฤหัสบดี เวลา 14:00 น. ห้อง War Room สำนักงานใหญ่ — Dol ในฐานะ PMO Lead กำลังจะนั่งประชุม Sponsor เพื่อขอ Go-Live ของระบบ — แล้ว AWS Region us-east-1 ล่ม — Dashboard ที่ Sponsor ต้องใช้ &quot;ตาย&quot; — take 2 ชั่วโมง — แล้วก็ยังไม่ขึ้น</p>
+<p>ทีม 8 คนกระจายอยู่ 3 time-zone คุยกันใน Slack — บางคน panic, บางคน silent</p>
+<p>Dol หยุด 30 วินาที — Ti-Anchor ทำงาน &quot;AWS ล่มครั้งสุดท้ายคือเดือนมีนาคม — ใช้เวลา 4 ชั่วโมงกว่าจะกลับมา — ครั้งนี้ Region us-east-1 ล่ม ไม่ใช่ทั้ง AWS — Plan B: failover ไป Region เอเชียแบบ manual — ทำได้ใน 1 ชั่วโมง&quot;</p>
+<p>เขาเปิด Zoom War Room ใน 60 วินาที — โยกทีม Backend (2 คน) ไปทำ Failover — โยกทีม Frontend (2 คน) ไปเตรียม Cache Layer — ตัวเองรับหน้าที่ &quot;สื่อสารกับ Sponsor ตรง&quot; — เขาโทรหา Sponsor ด้วยเสียงนิ่ง แต่ &quot;มี confidence&quot; — &quot;พี่ ระบบมีปัญหา — เรากำลัง Failover ไป Region เอเชีย — จะใช้เวลา 1 ชั่วโมง — ระหว่างนี้ใช้ Dashboard Backup ที่ผมเตรียมไว้&quot;</p>
+<p>Sponsor ถาม &quot;Dol คุณแน่ใจเหรอ?&quot; Dol ตอบ &quot;พี่ครับ — ผมเคยเจอ scenario นี้มาแล้วครั้งหนึ่ง — ครั้งนั้นใช้เวลา 4 ชั่วโมง — ครั้งนี้ผมเตรียม Backup Plan ไว้แล้ว — ขอเวลา 1 ชั่วโมงครับ&quot;</p>
+<p>1 ชั่วโมง 7 นาที — Dashboard ใน Region เอเชียกลับมา — Sponsor ไม่เสียหาย — Dol รอด ไม่ใช่เพราะ &quot;โชคดี&quot; แต่เพราะ Ti-Anchor &quot;เคยเห็น scenario นี้&quot; + Ne-Explorer &quot;เตรียม Plan B ไว้แล้ว&quot;</p>
+</blockquote>
+<p><strong>MBTI decoding:</strong> Dol ใช้ <strong>Ti-Anchor (อดีตที่พิสูจน์แล้ว)</strong> + <strong>Ne-Explorer (Plan B ที่เตรียมไว้ล่วงหน้า)</strong> — Ego ไม่ได้ &quot;panic แล้วเดา&quot; แต่ &quot;จำ + คิด + สั่ง&quot; — นี่คือ <strong>&quot;Chariot E=7&quot;</strong> ในโหมดผู้นำ</p>
+<h4>เมื่อเป็นผู้ตาม (Subordinates/Actor ในกองถ่าย)</h4>
+<p><strong>สถานการณ์จำลอง: &quot;ผู้กำกับขอเปลี่ยนบทบาทกลางเซ็ต&quot;</strong></p>
+<blockquote>
+<p>วันเสาร์ เวลา 16:00 น. กองถ่ายซีรีส์ Episode 7 — Dol ในฐานะ &quot;ตัวประกอบสาย A&quot; กำลังซ้อม scene ที่ 12 — ผู้กำกับ (Director อายุ 45) เดินเข้ามา บอก &quot;Dol — ผมเปลี่ยนใจ scene นี้ — คุณไม่ต้องตาย — คุณต้องร้องไห้ออกมาจากห้องนอนแทน — แล้วเดินไปหา Lead Actor ใน scene ถัดไป — ผมให้ 5 นาทีเตรียมตัว&quot;</p>
+<p>Lead Actor หันมามอง — ทีมงานตกใจ — 5 นาทีคือ &quot;น้อยมาก&quot; สำหรับการเปลี่ยน emotional beat ของตัวละคร</p>
+<p>Dol หยุด 30 วินาที — Ti-Anchor ทำงาน &quot;scene นี้ตัวละครของผมรู้ว่า Lead Actor กำลังจะตาย เขากด emotion ไว้นานแล้ว — การ 'ร้องไห้ออกมา' คือ 'ระบาย' ไม่ใช่ 'เสียใจ' — เขาเดินไปหา Lead Actor ไม่ใช่เพราะ 'อยากเห็นหน้า' แต่เพราะ 'ต้องการบอกลาครั้งสุดท้าย'&quot;</p>
+<p>Dol เดินเข้าไปในมุม — นั่งลง 1 นาที — &quot;ปล่อย&quot; Ne-Improv — เขาไม่ได้ &quot;คิดบท&quot; แต่ &quot;ให้ตัวละครพูด&quot;</p>
+<p>4 นาที 30 วินาที Dol เดินออกมา — ผู้กำกับมอง — &quot;Action&quot;</p>
+<p>Dol เปิดประตูห้องนอน — หน้าแดง น้ำตาไหล — แต่ &quot;ไม่ร้อง&quot; — เขา &quot;เดิน&quot; ช้า ๆ ออกจากเฟรม แล้วหันกลับมามองห้อง — แล้วเดินต่อ — 1 take ผ่าน</p>
+<p>ผู้กำกับเดินมา &quot;Dol — Take 1 ผ่าน — เยี่ยมมาก — ทำไมเธอเปลี่ยนใหม่?&quot;</p>
+<p>Dol ตอบ &quot;ครับ — ผมคิดว่าตัวละครนี้เขาไม่ได้ 'เสียใจ' — เขา 'ปล่อย' — เขาเดินไปบอกลา Lead Actor ไม่ใช่เพราะอยากเจอหน้า แต่เพราะต้องการ 'ปิดบท' กับคนที่กำลังจะตาย&quot;</p>
+<p>ผู้กำกับพยักหน้า &quot;OK — scene ถัดไปเธอเพิ่ม 'มองหลัง' แล้วเดินต่อ&quot; — Dol &quot;ขอบคุณครับ&quot;</p>
+</blockquote>
+<p><strong>MBTI decoding:</strong> Dol ใช้ <strong>Ti-Anchor (logic ของตัวละคร)</strong> เพื่อ &quot;เร็ว&quot; — แล้วปล่อยให้ <strong>Ne-Improv (ด้นสด)</strong> — Ego &quot;เชื่อ&quot; ทั้งสองฝั่งของตัวเอง — นี่คือ <strong>&quot;Hermit D=6&quot;</strong> ในโหมดผู้ตาม — ผู้ฟังที่ &quot;เข้าใจลึก&quot; ว่าผู้กำกับต้องการอะไร</p>
+<h4>มือขวา (Active) — เมื่อต้อง &quot;ส่ง&quot; งาน</h4>
+<p><strong>สถานการณ์จำลอง: &quot;นำเสนอแผนโปรเจกต์ให้ C-Suite&quot;</strong></p>
+<blockquote>
+<p>เช้าวันจันทร์ — Dol ในฐานะ PMO Lead ต้องนำเสนอ Roadmap ไตรมาสหน้าให้ CEO + CFO + COO ที่ประชุมบอร์ด — 30 นาที — มีคำถามมากมาย</p>
+<p>Dol เตรียม slide 20 หน้า — ไม่ใช่ 50 หน้า — slide แรกคือ &quot;Why this matters now&quot; — slide 2-7 คือ &quot;What we'll ship&quot; — slide 8-15 คือ &quot;Why we can do it&quot; — slide 16-20 คือ &quot;What we need from you&quot;</p>
+<p>CFO ถาม &quot;ค่าใช้จ่ายเพิ่มขึ้น 30% เมื่อเทียบกับไตรมาสก่อน — ทำไม?&quot;</p>
+<p>Dol ตอบโดยไม่ดู slide &quot;ครับ — ค่าใช้จ่ายเพิ่มขึ้น 30% — แต่ ROI เพิ่มขึ้น 250% — ผมจะอธิบายทีละข้อครับ&quot; — Ti-Anchor ของเขา &quot;จำ&quot; ตัวเลขทุกตัว — เขาไม่ต้องเปิด slide</p>
+<p>CEO ถาม &quot;ถ้าเราเลื่อนไตรมาสหน้า — ทีมจะทำอะไร?&quot;</p>
+<p>Dol ตอบ &quot;ครับ — ทีมจะทำ 3 อย่าง — 1) research คู่แข่ง 2) สร้าง prototype 3) test กับ 5 ลูกค้า — ผมจะเปิด slide 8 ครับ&quot;</p>
+<p>COO ถาม &quot;แล้วถ้าเราไม่ approve — ทีมจะ burnout เหรอ?&quot;</p>
+<p>Dol นิ่ง 3 วินาที — แล้วตอบ &quot;ครับ — ทีม burnout ได้ — แต่ทีม burnout ได้มากกว่าถ้าเรา 'เลื่อนไปเรื่อย ๆ' — เพราะทีมจะรู้สึกว่างานที่ทำ 'ไม่มีความหมาย' — ผมเสนอให้ approve ครับ — แต่ขอเพิ่มงบ buffer 10% — ถ้าใช้ไม่หมด ผมคืน&quot;</p>
+<p>บอร์ด &quot;Approved&quot; — Dol กลับมาที่ห้อง — โยกเงินให้ทีมทันที — Ti-Anchor &quot;ทำให้ทุกคนเห็น&quot; — Ne-Explorer &quot;ทำให้ทุกคนเชื่อ&quot;</p>
+</blockquote>
+<p><strong>MBTI decoding:</strong> Dol สลับ <strong>Ti (logic)</strong> + <strong>Ne (storytelling)</strong> อย่างคล่องแคล่ว — เขาไม่ได้ &quot;ขาย&quot; แต่ &quot;อธิบาย&quot; — นี่คือ <strong>&quot;Chariot G=7&quot;</strong> ในโหมดผู้ส่ง</p>
+<h4>มือซ้าย (Receptive) — เมื่อต้อง &quot;รับ&quot; ความเปลี่ยนแปลง</h4>
+<p><strong>สถานการณ์จำลอง: &quot;Producer ขอเปลี่ยนโปรเจกต์กลางทาง&quot;</strong></p>
+<blockquote>
+<p>วันศุกร์ เวลา 19:00 น. — Dol ในฐานะ Actor ได้รับ email จาก Producer — &quot;Dol — ผมขอเปลี่ยนแผนการถ่ายทำ episode 8 — ขอเลื่อนไปถ่ายตอน 10 แทน — เพราะ Lead Actor ติดคิวอื่น — ขอโทษที่แจ้งกระทันหัน&quot;</p>
+<p>Ti-Anchor ของ Dol &quot;ตอบสนองทันที&quot; — Ne-Improv เริ่มหมุน — &quot;โอเค — เลื่อนได้ — มีอะไรในตอน 10 ที่ผมต้องเตรียมเพิ่มเติมไหม?&quot;</p>
+<p>Producer ตอบ &quot;ครับ — ตอน 10 ตัวละครของคุณต้องแสดงอารมณ์โกรธแบบ 'ระเบิด' — ไม่ใช่แบบ 'เก็บ'&quot;</p>
+<p>Dol นั่งเงียบ — Ti-Anchor &quot;เข้าใจ logic&quot; — แต่ &quot;อารมณ์&quot; ไม่ใช่ logic — เขาต้อง <strong>&quot;หา feeling&quot;</strong> จริง ๆ — เขาเดินไปที่ระเบียง — นั่งคนเดียว — Ne-Improv &quot;ปล่อย&quot; — เขา &quot;คิดถึง&quot; ครั้งหนึ่งที่เขา &quot;โกรธจนระเบิด&quot; — ตอนที่ Sponsor คนก่อนบอกว่า &quot;งาน 6 เดือนของคุณ 'ล้มเหลว'&quot; — เขา &quot;จำ&quot; feeling นั้น</p>
+<p>2 ชั่วโมงต่อมา — Dol ตอบ Producer &quot;ครับ — ผมพร้อม — ตอน 10 ผมระเบิดได้ — ผมจะใช้ feeling จากครั้งที่ Sponsor คนก่อนบอกว่างานผม 'ล้มเหลว' — ผมรู้สึก 'ระเบิด' ตอนนั้น — ผมเก็บไว้&quot;</p>
+<p>Producer: &quot;OK — พรุ่งนี้ 9 โมงเช้า — Take 1&quot;</p>
+</blockquote>
+<p><strong>MBTI decoding:</strong> Dol &quot;หยุด&quot; Ti-Anchor เพื่อ &quot;ปล่อย&quot; Ne-Explorer — เขา &quot;ฟัง&quot; Producer — แล้ว &quot;หา feeling&quot; จาก &quot;ประสบการณ์จริง&quot; — นี่คือ <strong>&quot;Hermit H=6&quot;</strong> ในโหมดผู้รับ — ผู้ที่ &quot;เข้าใจลึก&quot; ว่าตัวละครต้องการอะไรจริง ๆ</p>
+<p><strong>สังเกต:</strong> ทั้งสี่สถานการณ์แสดงให้เห็นว่า Dol <strong>&quot;สลับ&quot;</strong> Ti-Anchor กับ Ne-Explorer ได้อย่างคล่องแคล่ว — ทั้งในโหมด &quot;ผู้นำ&quot; &quot;ผู้ตาม&quot; &quot;ผู้ส่ง&quot; &quot;ผู้รับ&quot; — นี่คือจุดแข็งหลักของ Dol และเป็นสิ่งที่ Echo {6, 7, 21} พยายามบอกเขาตลอด 33 ปี</p>
+<hr />
+
+</section>
+
+<section class="card slot-7" id="section-health">
+<h2><span class="num">§7</span> ❤️ ส่วนที่ 6: สายสัมพันธ์ ความรัก และครอบครัว</h2>
+<h3>ความรัก การดึงดูดคนเข้าวงใน และจุดบอดอารมณ์</h3>
+<p><strong>Dol ดึงดูดคนเข้าวงในอย่างไร:</strong></p>
+<p>ตามหลัก <em>Like Attracts Like</em> ความถี่ของ Dol (Possibility-Driven Logic) จะดึงดูด:</p>
+<ol>
+<li><strong>ผู้หญิง/ผู้ชายที่ &quot;ชอบความคิด&quot;</strong> — เช่น Strategic Planner, Researcher, Architect, Producer — คนที่ &quot;เห็น value ของการ 'คิดก่อนทำ'&quot; และ &quot;ชอบ brainstorm&quot; กับ Dol</li>
+<li><strong>คนที่ &quot;ทำงานหลายหน้าที่&quot;</strong> — เช่น คนที่ &quot;เป็นทั้งพ่อและแม่&quot; หรือ &quot;ทำงาน 2 งานพร้อมกัน&quot; — คนที่ &quot;เข้าใจ&quot; ความยากลำบากของการแบกรับสองบทบาท</li>
+<li><strong>เพื่อนที่ &quot;ชอบความสามารถในการด้นสด&quot;</strong> — เช่น เพื่อนนักแสดงที่ชอบทำงานกับ &quot;คนที่ improv เก่ง&quot; หรือเพื่อน PMO ที่ชอบ &quot;คนที่ 'ปิดงาน' เก่ง&quot;</li>
+</ol>
+<p><strong>จุดบอดอารมณ์:</strong></p>
+<p>Dol มี <strong>Si/Fe</strong> (ทั้งนี้ขึ้นกับ E/I variant) ใน lower stack — เขา <strong>&quot;ไม่ค่อยรู้ตัว&quot;</strong> ว่า:</p>
+<ul>
+<li><strong>ตัวเอง &quot;เหนื่อย&quot;</strong> — Dol เป็นคนที่ &quot;คุมได้ทั้งวัน&quot; แต่ <strong>&quot;ล้ม&quot; แบบกะทันหัน</strong> — ไม่ค่อย &quot;เตือนตัวเอง&quot;</li>
+<li><strong>ตัวเอง &quot;หิว&quot;</strong> — Dol ลืมกินข้าวตอนทำงาน — พอนึกได้ก็ &quot;เป็นลม&quot;</li>
+<li><strong>ตัวเอง &quot;ท้อ&quot;</strong> — Dol ใช้ Ne-Improv &quot;กลบ&quot; ความรู้สึก — เพื่อน/คนรัก &quot;ไม่เคยรู้&quot; ว่า Dol &quot;ท้อ&quot;</li>
+</ul>
+<p><strong>ในช่วงอายุ 38-50 (Stage 3-4) เมื่อ Ti/Ne &quot;ล้า&quot; จากการคุมสองบทบาทมา 11+ ปี:</strong> Dol จะเริ่ม &quot;รู้สึก&quot; — เขาจะ &quot;เปิด&quot; ให้ Si/Fe &quot;ทำงาน&quot; — เขาจะเริ่ม &quot;พูด&quot; กับคนรักว่า &quot;ผม 'ต้องการ' ที่จะ 'หยุด' สัก 1 วัน&quot; — สิ่งที่เขา &quot;ไม่เคยพูด&quot; มาก่อน</p>
+<h3>มรดกพลังงานสายตระกูล</h3>
+<p><strong>สายตระกูลของ Dol</strong> (BaZi Year Pillar 己卯) บอกว่า Dol มี <strong>&quot;ราก&quot;</strong> ที่ &quot;ผสมผสาน&quot; — Year Stem 己 (Yin Earth) + Year Branch 卯 (Wood) — Yin Earth ผสาน Wood — นี่คือ <strong>&quot;สายเลือด&quot;</strong> ของคนที่ &quot;แบกรับ&quot; (Yin Earth) แต่ &quot;ยืดหยุ่น&quot; (Wood) — นี่คือ <strong>&quot;มรดก&quot;</strong> ที่ Dol &quot;ได้รับ&quot; จากบรรพบุรุษ</p>
+<p><strong>Month Pillar 乙亥</strong> บอกว่า Dol มี <strong>&quot;ราก&quot;</strong> ที่ &quot;ซับซ้อน&quot; — Month Stem 乙 (Yin Wood) + Month Branch 亥 (Water, 含壬 甲) — Yin Wood บน Yin Water — นี่คือ <strong>&quot;สายเลือด&quot;</strong> ของคนที่ &quot;ต้อง 'เลือก' ระหว่าง 'เติบโต' และ 'ไหล'&quot; — Dol ถูกสอนให้ <strong>&quot;เติบโต&quot;</strong> แต่ก็ถูกสอนให้ <strong>&quot;ไหล&quot;</strong> พร้อมกัน</p>
+<p><strong>Hour Pillar 辛酉</strong> บอกว่า Dol มี <strong>&quot;ราก&quot;</strong> ที่ &quot;แข็ง&quot; — Hour Stem 辛 (Yin Metal) + Hour Branch 酉 (Yin Metal) — Yin Metal ซ้อน Yin Metal — นี่คือ <strong>&quot;สายเลือด&quot;</strong> ของคนที่ &quot;พูดตรง&quot; &quot;ตัดสินใจเร็ว&quot; &quot;ไม่ชอบ compromise&quot; — Dol ถูกสอนให้ <strong>&quot;พูดตรง&quot;</strong> — แต่ก็ถูกสอนให้ <strong>&quot;ไม่ประนีประนอม&quot;</strong> — นี่คือ <strong>&quot;ค้อน&quot;</strong> ที่ Dol ถือ</p>
+<h3>รูปแบบการสื่อสารในสายตระกูล (Lineage communication pattern — Hour Pillar 辛酉)</h3>
+<p><strong>Hour Pillar ของ Dol</strong> (辛酉, Yin Metal × 2) สะท้อนว่า <strong>สายตระกูลฝั่งนี้มีรูปแบบของ &quot;พูดตรงเกินไป&quot;</strong> — พูดเร็ว ตัดสินใจเร็ว ไม่ค่อย compromise — รากของ pattern นี้อยู่ที่ Yin Metal ซ้อน Yin Metal ใน Hour Pillar (Hermit H=6 echo ใน Matrix ก็สะท้อน pattern เดียวกัน)</p>
+<p><strong>สิ่งที่คุณสังเกตได้:</strong> ในชีวิตปัจจุบัน คุณอาจรู้สึกว่า &quot;ตัวเองพูดเร็วเกินไป&quot; หรือ &quot;ตัดสินคนอื่นเร็วเกินไป&quot; ก่อนที่จะ ฟัง ให้จบ</p>
+<p><strong>ต้นเหตุ:</strong> Hermit (6 × 2) ใน Matrix (D=6, H=6) คือ &quot;ความสามารถในการฟังลึก&quot; ที่ถูก &quot;ปิด&quot; ไว้โดย Persona &quot;ตัวคุม&quot; ของคุณ — รากของ pattern นี้สืบทอดมาจากสายตระกูล Hour Pillar — คุณย่า/คุณปู่ของคุณก็ &quot;พูดตรง&quot; แบบเดียวกัน — ไม่ใช่เพราะพวกท่าน &quot;ผิด&quot; แต่เพราะ Yin Metal × 2 ใน Hour Pillar ส่งต่อ &quot;นิสัยการสื่อสาร&quot; มาให้คุณ</p>
+<p><strong>สิ่งที่คุณเลือกทำได้ตอนนี้:</strong></p>
+<ul>
+<li>สัปดาห์นี้: เลือก 1 ครั้งที่คุณ &quot;อยากพูดตอบทันที&quot; — ลอง &quot;นับ 1 ถึง 5&quot; ในใจก่อนตอบ</li>
+<li>สัปดาห์นี้: ถามคนรัก/เพื่อนสนิทว่า &quot;ฉันฟังจบก่อนพูดไหม&quot; — รับ feedback ตรง ๆ</li>
+<li>รายเดือน: journal 1 หน้าว่า &quot;สัปดาห์นี้ฉัน หยุดฟัง ได้กี่ครั้ง&quot;</li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-1" id="section-timeline">
+<h2><span class="num">§8</span> 🧘‍♂️ ส่วนที่ 7: สุขภาพและจุดอ่อน (Health Card & Chakras)</h2>
+<h3>จุดอ่อนทางสุขภาพ</h3>
+<p><strong>เน้นปัญหาสุขภาพของคนที่ทำงานไม่เป็นเวลา ใช้สมองซีกซ้ายและขวาหนักพร้อมกัน และความเครียดสะสม:</strong></p>
+<h4>ระบบย่อยอาหาร (脾胃 / Earth element)</h4>
+<p>ENTP ที่ใช้ Ti+Ne หนัก ๆ + สลับบทบาท PMO/Actor จะ &quot;สะสม&quot; ความเครียดใน <strong>กระเพาะอาหาร + ลำไส้</strong> — อาการที่พบบ่อย:</p>
+<ul>
+<li><strong>กรดไหลย้อน</strong> — เมื่อ &quot;เครียด&quot; จาก &quot;โปรเจกต์ติด&quot; หรือ &quot;scene ไม่ผ่าน&quot;</li>
+<li><strong>ท้องผูกเรื้อรัง</strong> — เพราะ &quot;ลืมกิน&quot; &quot;ลืมดื่ม&quot; เพราะ &quot;หัวเราะ&quot; ตลอด</li>
+<li><strong>โรคกระเพาะ</strong> — เพราะ &quot;กิน&quot; ไม่เป็นเวลา &quot;นอน&quot; ไม่เป็นเวลา &quot;ทำงาน&quot; ไม่เป็นเวลา</li>
+</ul>
+<p><strong>วิธีปรับสมดุล:</strong> ใช้ <strong>用神 (Fire)</strong> ที่ BaZi แนะนำ — ในทางสุขภาพ Fire = &quot;ความอบอุ่น&quot; — กิน &quot;อาหารอุ่น ๆ&quot; &quot;ดื่มน้ำอุ่น&quot; &quot;นอนห้องอุ่น&quot; และ <strong>&quot;กินเป็นเวลา&quot;</strong></p>
+<h4>ระบบกล้ามเนื้อและกระดูก (筋骨 / Ti overwork)</h4>
+<p>ENTP ที่ &quot;นั่ง&quot; ทำงาน 8-12 ชั่วโมงต่อวัน (PMO) + &quot;ยืน&quot; ในกองถ่าย 4-8 ชั่วโมง (Actor) จะ &quot;สะสม&quot; ความตึงใน <strong>คอ บ่า ไหล่ หลัง ขา</strong> — อาการที่พบบ่อย:</p>
+<ul>
+<li><strong>ปวดคอเรื้อรัง</strong> — เพราะ &quot;เก็บ&quot; ความเครียดไว้ที่คอ (การนั่งมองจอนาน)</li>
+<li><strong>ปวดหลังล่าง</strong> — เพราะ &quot;แบก&quot; ความรับผิดชอบไว้ที่หลัง (ทั้ง 2 บทบาท)</li>
+<li><strong>ปวดขา</strong> — เพราะ &quot;ยืน&quot; นานในกองถ่าย</li>
+</ul>
+<p><strong>วิธีปรับสมดุล:</strong> <strong>&quot;ออกกำลังกาย&quot;</strong> เบา ๆ — Yoga + Pilates 30 นาทีต่อวัน + <strong>&quot;ยืดกล้ามเนื้อ&quot;</strong> ทุก 2 ชั่วโมง + <strong>&quot;ว่ายน้ำ&quot;</strong> สัปดาห์ละ 2 ครั้ง + <strong>&quot;นอนให้เป็นเวลา&quot;</strong></p>
+<h4>ระบบประสาท (心神 / Ti-Ne imbalance)</h4>
+<p>ENTP ที่ &quot;Ti หนัก&quot; + &quot;Ne หนัก&quot; + สลับสองบทบาท จะ &quot;สะสม&quot; ความเครียดใน <strong>ระบบประสาท</strong> — อาการที่พบบ่อย:</p>
+<ul>
+<li><strong>ปวดหัวเรื้อรัง</strong> — เพราะ &quot;คิดมาก&quot; &quot;วางแผนมาก&quot; &quot;จำมาก&quot;</li>
+<li><strong>ความจำสั้นลง</strong> เล็กน้อย — เพราะ Ego &quot;เก็บ&quot; ทุกอย่างจน &quot;overload&quot; — memory ของ Ti มี limit</li>
+<li><strong>นอนไม่หลับ</strong> — เพราะ &quot;scenario&quot; หมุนในหัวตอนกลางคืน (Ti ทำงานเมื่อต้องการพัก)</li>
+<li><strong>ตาแห้ง / สายตาสั้น</strong> — เพราะ &quot;จ้องจอ&quot; นาน</li>
+</ul>
+<p><strong>วิธีปรับสมดุล:</strong> <strong>&quot;ทำสมาธิ&quot;</strong> 15 นาทีต่อวัน + <strong>&quot;เขียน journal&quot;</strong> ก่อนนอน + <strong>&quot;พูด&quot;</strong> กับคนที่ไว้ใจ + <strong>&quot;งดจอ&quot; 1 ชั่วโมงก่อนนอน</strong></p>
+<h3>Chakras</h3>
+<h4>Crown Chakra (Sahasrara) — จุดเชื่อมต่อจักรวาล</h4>
+<p><strong>สถานะปัจจุบัน:</strong> เปิด 75% — Dol &quot;เข้าใจ&quot; ความหมายของงานที่เขาทำ แต่ &quot;ไม่ได้&quot; เชื่อมต่อกับ &quot;จักรวาล&quot; อย่างเต็มที่ — เขา &quot;คิดเร็ว&quot; จน &quot;ลืม&quot; ที่จะ &quot;หยุดฟัง&quot;</p>
+<p><strong>วิธีปรับสมดุล:</strong></p>
+<ul>
+<li><strong>&quot;ทำสมาธิ&quot;</strong> 20 นาทีต่อวัน — focus ที่ &quot;ยอดศีรษะ&quot; + &quot;หายใจเข้า-ออก&quot;</li>
+<li><strong>&quot;อ่านหนังสือ&quot;</strong> ที่ &quot;ลึก&quot; — เช่น ปรัชญา ศาสนา จิตวิทยาเชิงลึก — ไม่ใช่แค่ &quot;คู่มือการทำงาน&quot;</li>
+<li><strong>&quot;ฟัง&quot;</strong> เสียง &quot;เงียบ&quot; — ไม่ใช่แค่ &quot;ฟัง&quot; คนพูด</li>
+<li><strong>&quot;เดิน&quot;</strong> ในธรรมชาติ สัปดาห์ละ 1 ครั้ง</li>
+</ul>
+<h4>Solar Plexus Chakra (Manipura) — จุดพลังแห่งตน</h4>
+<p><strong>สถานะปัจจุบัน:</strong> เปิด 95% — Dol &quot;มีพลัง&quot; ในการ &quot;ทำงาน&quot; &quot;ตัดสินใจ&quot; &quot;ควบคุม&quot; + &quot;ด้นสด&quot; — แต่ &quot;พลัง&quot; นี้ &quot;หนัก&quot; เกินไป จน Ego &quot;เหนื่อย&quot; โดย &quot;ไม่รู้ตัว&quot;</p>
+<p><strong>วิธีปรับสมดุล:</strong></p>
+<ul>
+<li><strong>&quot;หยุดพัก&quot;</strong> 1 วันต่อสัปดาห์ — อย่า &quot;ทำงาน&quot; 7 วันติด</li>
+<li><strong>&quot;ปล่อย&quot;</strong> — เรียนรู้ที่จะ &quot;ปล่อย&quot; Persona &quot;ตัวคุม&quot; ในบางเวลา</li>
+<li><strong>&quot;เล่น&quot;</strong> — ทำกิจกรรมที่ &quot;สนุก&quot; ไม่ใช่แค่ &quot;มีประโยชน์&quot;</li>
+</ul>
+<h4>Root Chakra (Muladhara) — จุดหยั่งรากแห่งความมั่นคง</h4>
+<p><strong>สถานะปัจจุบัน:</strong> เปิด 80% — Dol &quot;หยั่งราก&quot; ใน &quot;งาน&quot; &quot;ทีม&quot; &quot;ครอบครัว&quot; &quot;ตัวเอง&quot; ได้ดี — แต่ &quot;ราก&quot; นี้ &quot;สั่น&quot; เมื่อ &quot;ต้องเลือก&quot; ระหว่างสองบทบาท — Ego &quot;กลัว&quot; ที่จะ &quot;ทิ้ง&quot; บทบาทหนึ่งเพื่ออีกบทบาท</p>
+<p><strong>วิธีปรับสมดุล:</strong></p>
+<ul>
+<li><strong>&quot;ฝึก 'เลือก'&quot;</strong> — เรียนรู้ที่จะ &quot;เลือก&quot; ทีละเรื่อง ไม่ใช่ &quot;เลือกทั้งหมดพร้อมกัน&quot;</li>
+<li><strong>&quot;ฝึก 'ปล่อย'&quot;</strong> — เรียนรู้ที่จะ &quot;ปล่อย&quot; บทบาทที่ &quot;ไม่ใช่ตัวเอง&quot; ในขณะนั้น</li>
+<li><strong>&quot;เดินทาง&quot;</strong> — ออกจาก &quot;เขตความสะดวก&quot; ไปสู่ &quot;ที่ใหม่&quot;</li>
+<li><strong>&quot;เรียนรู้สิ่งใหม่&quot;</strong> — ไม่ใช่แค่ &quot;ทำซ้ำ&quot; สิ่งเดิม</li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-2" id="section-protocols">
+<h2><span class="num">§9</span> 📈 ส่วนที่ 8: ไทม์ไลน์ 5 ช่วงวัย และพยากรณ์รายปี</h2>
+<h3>8.1 ไทม์ไลน์ 5 ช่วงวัยก่อนจุดบรรจบ (ตั้งแต่วัยเยาว์ - อายุ 59)</h3>
+<table>
+<thead>
+<tr>
+  <th>ช่วง</th>
+  <th>อายุ</th>
+  <th>ปี</th>
+  <th>ธีม</th>
+  <th>เหตุการณ์สำคัญ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>1. วัยเยาว์ (Childhood)</strong></td>
+  <td>0-12</td>
+  <td>1999-2011</td>
+  <td>&quot;ซึมซับ&quot;</td>
+  <td>เรียนรู้ &quot;ตรรกะ&quot; (Ti) + &quot;ความเป็นไปได้&quot; (Ne) + &quot;การสลับบทบาท&quot; จากครอบครัว + โรงเรียน</td>
+</tr>
+<tr>
+  <td><strong>2. วัยรุ่น (Adolescence)</strong></td>
+  <td>13-22</td>
+  <td>2012-2021</td>
+  <td>&quot;ค้นหา&quot;</td>
+  <td>เริ่ม &quot;ตั้งคำถาม&quot; กับสังคม + เริ่ม &quot;แสดง&quot; ในโรงเรียน/ชุมชน + เริ่ม &quot;โปรเจกต์เล็ก ๆ&quot; + Ti+Ne เริ่ม &quot;แข็ง&quot;</td>
+</tr>
+<tr>
+  <td><strong>3. วัยทำงานตอนต้น (Early Career)</strong></td>
+  <td>23-26</td>
+  <td>2022-2025</td>
+  <td>&quot;แยก&quot;</td>
+  <td>รับตำแหน่ง PMO Project Executive ครั้งแรก + เริ่มรับบท Actor ครั้งแรก + Persona &quot;ตัวคุม&quot; เริ่ม &quot;หนา&quot; + Ego &quot;เริ่มขัดแย้ง&quot;</td>
+</tr>
+<tr>
+  <td><strong>4. วัยทำงานตอนกลาง (Mid Career)</strong></td>
+  <td>27-44</td>
+  <td>2026-2043</td>
+  <td>&quot;ควบสอง&quot;</td>
+  <td>ช่วงที่ MET-674 พยากรณ์ + Period 9 (印 Fire) ส่องแสงมาที่ Day Master (Earth) + สร้าง &quot;รากฐานสองบทบาท&quot;</td>
+</tr>
+<tr>
+  <td><strong>5. วัยทำงานตอนปลาย (Late Career)</strong></td>
+  <td>45-60</td>
+  <td>2044-2059</td>
+  <td>&quot;ครบ&quot;</td>
+  <td>Period 1 (Water 財) เริ่ม + Ego ต้อง &quot;ใช้ PMO skill&quot; ระบายน้ำ + กลายเป็น &quot;ครู&quot; ของคนทำงานสองหน้าที่</td>
+</tr>
+</tbody>
+</table>
+<h3>8.2 พยากรณ์เส้นทางชีวิตรายปี (อายุ 27 ถึง 60 ปีบริบูรณ์)</h3>
+<blockquote>
+<p><strong>สูตร PY:</strong> <code>PY(year) = reduce(reduce(DOB.day) + reduce(DOB.month) + reduce(DOB.year) + reduce(year))</code> สำหรับ Dol: base = reduce(22) + reduce(11) + reduce(1999) = 4 + 2 + 1 = <strong>7</strong>. ดังนั้น <code>PY(year) = reduce(7 + reduce(year))</code> โดย reduce เฉพาะเมื่อ &gt; 22. ตัวเลขที่เห็นในตาราง verify กับ canonical inputs MET-665 (2026=8, 2027=9, ..., 2059=5)
+<strong>PY ใช้สำหรับ theme + cycle resonance</strong> ไม่ใช่ตัวบองชีวิตโดยตรง — เป็น &quot;คลื่นรอง&quot; ที่ Ti ของ Dol สามารถใช้ re-classify ช่วงจังหวะของปีได้</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+  <th>ปี ค.ศ.</th>
+  <th>อายุ</th>
+  <th>PY</th>
+  <th>Stage</th>
+  <th>Theme</th>
+  <th>สถานการณ์ (พร้อมเรื่องเล่าในจุดหักเห)</th>
+  <th>กลยุทธ์ (รุก/รับ/ชะลอ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>2026</strong></td>
+  <td>27</td>
+  <td>8</td>
+  <td>1: Foundation</td>
+  <td>&quot;เริ่มสร้างฐาน&quot;</td>
+  <td><strong>Scenario: &quot;The Kick-Off That Almost Didn't&quot;</strong> — Sponsor คนใหม่ reject proposal ของ Dol ทั้งที่ทีมใช้เวลา 3 เดือนทำ — Ego &quot;โดน Si-Grip เล็ก ๆ&quot; — Ti-Anchor ตก</td>
+  <td><strong>&quot;หยุด 1 สัปดาห์ + Re-classify ใน Ti-language&quot; + ขอ Meeting ใหม่</strong> — รุกอย่างมีหลักฐาน</td>
+</tr>
+<tr>
+  <td><strong>2027</strong></td>
+  <td>28</td>
+  <td>9</td>
+  <td>1: Foundation</td>
+  <td>&quot;ปล่อยครั้งแรก&quot;</td>
+  <td><strong>Scenario: &quot;The First Audition That Failed&quot;</strong> — Dol ไป Audition บทบาทที่อยากได้มาก — ไม่ได้ — Ego เริ่ม &quot;ตั้งคำถาม&quot; กับเส้นทาง Actor</td>
+  <td><strong>&quot;เขียน journal 1 คืน + คุยกับ Mentor&quot;</strong> — รับอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2028</strong></td>
+  <td>29</td>
+  <td>1</td>
+  <td>1: Foundation</td>
+  <td>&quot;เริ่ม cycle ใหม่&quot;</td>
+  <td><strong>Scenario: &quot;The Tool Change&quot;</strong> — Dol เปลี่ยนจาก Excel Gantt เป็น Jira + เปลี่ยนจาก Improv Workshop เป็น Acting Class จริงจัง — เริ่ม &quot;ระบบ&quot; ใหม่</td>
+  <td><strong>&quot;ลงทุน 6 เดือนเรียนรู้ใหม่&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2029</strong></td>
+  <td>30</td>
+  <td>2</td>
+  <td>1: Foundation</td>
+  <td>&quot;Balance แรก&quot;</td>
+  <td><strong>Scenario: &quot;The First 'No'&quot;</strong> — Sponsor ขอให้ Dol ทำ 2 โปรเจกต์พร้อมกัน + Producer ขอให้ Dol เล่น Lead Role พร้อมกัน — Dol ต้องเลือก — เลือก PMO ก่อน</td>
+  <td><strong>&quot;เลือก 1 อย่างต่อ 1 ช่วง + ปฏิเสธ Producer&quot;</strong> — ชะลออย่างชัดเจน</td>
+</tr>
+<tr>
+  <td><strong>2030</strong></td>
+  <td>31</td>
+  <td>3</td>
+  <td>2: Expansion</td>
+  <td>&quot;ขยายสู่ทีมใหญ่&quot;</td>
+  <td><strong>Scenario: &quot;The Promotion That Surprised&quot;</strong> — หัวหน้า PMO ลาออก — Dol รับตำแหน่งแทน — Ti-Anchor &quot;ลุก&quot; ใหม่</td>
+  <td><strong>&quot;รับ + สร้างทีม 5 คน&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2031</strong></td>
+  <td>32</td>
+  <td>4</td>
+  <td>2: Expansion</td>
+  <td>&quot;Crack แรก&quot;</td>
+  <td><strong>Scenario: &quot;The Sponsor Who Quit Mid-Project&quot;</strong> — Sponsor หลักลาออกกลางโปรเจกต์ — Ti-Anchor &quot;สั่น&quot; — Ego เริ่ม &quot;ติด Gantt chart&quot; (Si-Grip เล็ก)</td>
+  <td><strong>&quot;หยุด 24 ชม + re-classify&quot;</strong> — รับอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2032</strong></td>
+  <td>33</td>
+  <td>5</td>
+  <td>2: Expansion</td>
+  <td>&quot;ชนะแรก&quot;</td>
+  <td><strong>Scenario: &quot;The First Lead Role&quot;</strong> — Dol ได้ Lead Role ใน short film — Ti-Anchor บอกว่า &quot;นี่คือ proving ground&quot; — Ne-Improv &quot;ลุก&quot; ใหม่</td>
+  <td><strong>&quot;ทุ่ม 4 เดือนเตรียมตัว&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2033</strong></td>
+  <td>34</td>
+  <td>6</td>
+  <td>2: Expansion</td>
+  <td>&quot;Hermit ตื่น&quot;</td>
+  <td><strong>Scenario: &quot;The Solo Retreat&quot;</strong> — Dol ไป Solo Retreat 5 วัน — &quot;ค้นพบ&quot; ว่าเขา &quot;อยากเป็นครูสอน PMO ให้คนรุ่นใหม่&quot; — Hermit D=6 ตื่น</td>
+  <td><strong>&quot;วางแผน Workshop 1 ปีข้างหน้า&quot;</strong> — ชะลอเพื่อ 'ค้นหา'</td>
+</tr>
+<tr>
+  <td><strong>2034</strong></td>
+  <td>35</td>
+  <td>7</td>
+  <td>2: Expansion</td>
+  <td>&quot;Persona แข็งสุด&quot;</td>
+  <td><strong>Scenario: &quot;The Year of 'I Can Do It All'&quot;</strong> — Dol ทำ PMO หนัก + รับ Lead Role ในซีรีส์ — Ego &quot;ระเบิด&quot; + Si-Grip หนัก (ติด Gantt chart + ลืมกิน 3 วัน)</td>
+  <td><strong>&quot;หยุด 1 สัปดาห์ทั้งหมด&quot;</strong> — ชะลอ ณ จุดแตกหัก</td>
+</tr>
+<tr>
+  <td><strong>2035</strong></td>
+  <td>36</td>
+  <td>8</td>
+  <td>2: Expansion</td>
+  <td>&quot;ดาวเข้า Retrograde&quot;</td>
+  <td><strong>Scenario: &quot;The Sponsor Who Approved, Then Yanked&quot;</strong> — Sponsor approve แล้วยกเลิก — Dol &quot;โกรธ&quot; — Ego เกือบ Fe-inferior leak (ความประชดประชัน)</td>
+  <td><strong>&quot;เขียนความโกรธ 1 คืน + คุยกับครู&quot;</strong> — รับอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2036</strong></td>
+  <td>37</td>
+  <td>9</td>
+  <td>2: Expansion</td>
+  <td>&quot;ปล่อยครั้งใหญ่&quot;</td>
+  <td><strong>Scenario: &quot;The Role I Turned Down&quot;</strong> — Producer ใหญ่เสนอ Lead Role ที่ Dol &quot;อยากได้มาก&quot; — แต่ Dol ปฏิเสธ เพราะ timing ชนกับ PMO critical phase</td>
+  <td><strong>&quot;ปฏิเสธ + เก็บไว้ review ใน Q4&quot;</strong> — ชะลออย่างมีหลักการ</td>
+</tr>
+<tr>
+  <td><strong>2037</strong></td>
+  <td>38</td>
+  <td>1</td>
+  <td>3: Crisis</td>
+  <td>&quot;ล้มแรก&quot;</td>
+  <td><strong>Scenario: &quot;The Burnout&quot;</strong> — Dol burnout จริง ๆ — อยู่บ้าน 2 สัปดาห์ — ไม่ตอบ email — ไม่รับ call — Si/Fe-inferior leak ทั้งสอง (หมกมุ่น + ระเบิดอารมณ์)</td>
+  <td><strong>&quot;หยุด 1 เดือน + หา Therapist + re-classify ภารกิจ&quot;</strong> — ชะลอ ณ จุดล้ม</td>
+</tr>
+<tr>
+  <td><strong>2038</strong></td>
+  <td>39</td>
+  <td>2</td>
+  <td>3: Crisis</td>
+  <td>&quot;ตั้งคำถาม&quot;</td>
+  <td><strong>Scenario: &quot;The Question My Wife Asked&quot;</strong> — ภรรยาถาม &quot;คุณอยากเป็น PMO หรือ Actor?&quot; — Dol &quot;ไม่รู้&quot; — Ego &quot;ถามตัวเอง&quot; ครั้งแรก</td>
+  <td><strong>&quot;คุยกับภรรยาอย่างจริงใจ + เขียน Anima letter&quot;</strong> — รับอย่างลึก</td>
+</tr>
+<tr>
+  <td><strong>2039</strong></td>
+  <td>40</td>
+  <td>3</td>
+  <td>3: Crisis</td>
+  <td>&quot;Si-Grip ใหญ่&quot;</td>
+  <td><strong>Scenario: &quot;The Gantt That Became My Life&quot;</strong> — Dol ติด Gantt chart มาก — เช็คมัน 30 ครั้งต่อวัน — หลงลืมทุกอย่าง — Si-Grip เต็มรูปแบบ</td>
+  <td><strong>&quot;ใช้ Crisis Mastery 4-step + re-classify 'งาน' ใหม่&quot;</strong> — รับอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2040</strong></td>
+  <td>41</td>
+  <td>4</td>
+  <td>3: Crisis</td>
+  <td>&quot;Fe-inferior leak ใหญ่&quot;</td>
+  <td><strong>Scenario: &quot;The Scene I Took Home&quot;</strong> — Dol รับบทบาทที่ &quot;หงอคต&quot; — กลับบ้าน &quot;ยังอยู่ในบทบาท&quot; — ตะโกนใส่ภรรยาในเรื่องที่ &quot;ไม่ใช่ตัวเอง&quot; — Fe-inferior leak เต็มรูปแบบ</td>
+  <td><strong>&quot;ใช้ Crisis Mastery 4-step + re-classify 'บทบาท vs ตัวตน'&quot;</strong> — รับอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2041</strong></td>
+  <td>42</td>
+  <td>5</td>
+  <td>3: Crisis</td>
+  <td>&quot;Wheel ตื่น&quot;</td>
+  <td><strong>Scenario: &quot;The Session That Saved Me&quot;</strong> — Dol ไป Therapy นาน 6 เดือน — Wheel C=10 ตื่น — Ego เริ่ม &quot;ยอมรับ&quot; ว่า &quot;ขึ้น-ลง&quot; เป็นเรื่องปกติ</td>
+  <td><strong>&quot;ตั้ง Routine ใหม่ — 'เลือก' ทีละเรื่อง&quot;</strong> — ชะลอเพื่อ 'เยียวยา'</td>
+</tr>
+<tr>
+  <td><strong>2042</strong></td>
+  <td>43</td>
+  <td>6</td>
+  <td>3: Crisis</td>
+  <td>&quot;ปีสุดท้ายของ P9&quot;</td>
+  <td><strong>Scenario: &quot;The Last P9 Birthday&quot;</strong> — Dol อายุ 43 วันสุดท้ายของ Period 9 — Hermit H=6 &quot;ตื่นเต็มที่&quot; — Ego &quot;ค้นพบ&quot; ว่า &quot;Hermit ไม่ใช่ 'คนเดียว' แต่คือ 'คนที่รู้ว่าเมื่อไหร่ควรอยู่คนเดียว'&quot;</td>
+  <td><strong>&quot;เปลี่ยนแผนยุคใหม่ (Period 1)&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2043</strong></td>
+  <td>44</td>
+  <td>7</td>
+  <td>4: Mastery</td>
+  <td>&quot;เริ่ม Period 1&quot;</td>
+  <td><strong>Scenario: &quot;The Era Hand-Off&quot;</strong> — Period 9 จบ — Period 1 (Water) เริ่ม — &quot;น้ำ&quot; เริ่ม &quot;ทดสอบ&quot; &quot;ดิน&quot; — Ego ต้อง &quot;ใช้ PMO skill&quot; ระบายน้ำ ไม่ให้ท่วม</td>
+  <td><strong>&quot;ประเมิน strategy ใหม่ + ใช้ Te ระบายน้ำ&quot;</strong> — รุกอย่างมีกลยุทธ์</td>
+</tr>
+<tr>
+  <td><strong>2044</strong></td>
+  <td>45</td>
+  <td>8</td>
+  <td>4: Mastery</td>
+  <td>&quot;พลังอำนาจ&quot;</td>
+  <td><strong>Scenario: &quot;The Promotion to Director&quot;</strong> — Dol ได้ตำแหน่ง PMO Director — Ti-Anchor &quot;ขยาย&quot; เป็น &quot;ระบบใหญ่&quot; — แต่ Water เริ่ม &quot;ทดสอบ&quot;</td>
+  <td><strong>&quot;รับ + เรียนรู้ 'ระบายน้ำ' ในระดับองค์กร&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2045</strong></td>
+  <td>46</td>
+  <td>9</td>
+  <td>4: Mastery</td>
+  <td>&quot;The Fool ตื่น&quot;</td>
+  <td><strong>Scenario: &quot;The Movie I Made for Fun&quot;</strong> — Dol ทำหนังสั้น &quot;ไม่มีงบ&quot; &quot;ไม่มีทีม&quot; — แค่ &quot;ทำเพราะอยากทำ&quot; — The Fool A=22 ตื่น</td>
+  <td><strong>&quot;ลงทุนเวลา+เงินส่วนตัว 6 เดือน&quot;</strong> — รุกอย่างกล้าหาญ</td>
+</tr>
+<tr>
+  <td><strong>2046</strong></td>
+  <td>47</td>
+  <td>1</td>
+  <td>4: Mastery</td>
+  <td>&quot;เริ่ม cycle ใหม่&quot;</td>
+  <td><strong>Scenario: &quot;The Pivot&quot;</strong> — Dol pivot จาก PMO &quot;ภายในองค์กร&quot; เป็น PMO &quot;freelance&quot; — เปิดทางให้ Actor มากขึ้น</td>
+  <td><strong>&quot;ลด PMO 30% + เพิ่ม Acting 30%&quot;</strong> — รุกอย่างมีความเสี่ยง</td>
+</tr>
+<tr>
+  <td><strong>2047</strong></td>
+  <td>48</td>
+  <td>2</td>
+  <td>4: Mastery</td>
+  <td>&quot;Balance ใหม่&quot;</td>
+  <td><strong>Scenario: &quot;The First Year of Balance&quot;</strong> — Dol ใช้ชีวิต &quot;50/50&quot; — PMO freelance + Acting regular — Ti-Anchor บอกว่า &quot;นี่คือสมดุลที่แท้จริง&quot;</td>
+  <td><strong>&quot;ลงทุนเวลา 1 ปี ปรับ balance&quot;</strong> — รุกอย่างมีสติ</td>
+</tr>
+<tr>
+  <td><strong>2048</strong></td>
+  <td>49</td>
+  <td>3</td>
+  <td>4: Mastery</td>
+  <td>&quot;ขยายสู่ต่างประเทศ&quot;</td>
+  <td><strong>Scenario: &quot;The International Project&quot;</strong> — Dol รับโปรเจกต์ข้ามประเทศ + รับบทในหนังต่างประเทศ — Ego &quot;ขยาย&quot;</td>
+  <td><strong>&quot;ลงทุนเรียนภาษา + วัฒนธรรม 6 เดือน&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2049</strong></td>
+  <td>50</td>
+  <td>4</td>
+  <td>4: Mastery</td>
+  <td>&quot;ครึ่งทาง&quot;</td>
+  <td><strong>Scenario: &quot;The Half-Century Mark&quot;</strong> — Dol อายุ 50 — Ego &quot;ทบทวน&quot; — Ti-Anchor บอก &quot;ผ่านครึ่งทางแล้ว&quot;</td>
+  <td><strong>&quot;ทำ Retreat 1 สัปดาห์ + เขียน letter ถึงตัวเองในอดีต&quot;</strong> — ชะลอเพื่อ 'ทบทวน'</td>
+</tr>
+<tr>
+  <td><strong>2050</strong></td>
+  <td>51</td>
+  <td>5</td>
+  <td>4: Mastery</td>
+  <td>&quot;สอนแรก&quot;</td>
+  <td><strong>Scenario: &quot;The First Workshop&quot;</strong> — Dol เปิด Workshop 3 วัน — &quot;สอนคนทำงานสองหน้าที่&quot; — 20 คนเข้า — Hermit &quot;เริ่มสอน&quot;</td>
+  <td><strong>&quot;ขยาย Workshop เป็น 4 ครั้งต่อปี&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2051</strong></td>
+  <td>52</td>
+  <td>6</td>
+  <td>4: Mastery</td>
+  <td>&quot;Hermit ตื่นเต็ม&quot;</td>
+  <td><strong>Scenario: &quot;The Mentor Relationship&quot;</strong> — 5 คนจาก Workshop ขอเป็น Mentee — Dol &quot;รับ&quot; — Hermit ตื่นเต็ม — &quot;การสอน&quot; กลายเป็น &quot;พลัง&quot;</td>
+  <td><strong>&quot;ตั้ง Mentorship program 1 ปี&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2052</strong></td>
+  <td>53</td>
+  <td>7</td>
+  <td>5: Teach</td>
+  <td>&quot;ครูเต็มตัว&quot;</td>
+  <td><strong>Scenario: &quot;The Year I Stopped Acting&quot;</strong> — Dol &quot;หยุด&quot; acting — เพราะ &quot;พร้อม&quot; และ &quot;อยากให้ความสำคัญกับการสอน&quot; — Persona &quot;ตัวคุม&quot; &quot;ปล่อย&quot; ไปครึ่งหนึ่ง</td>
+  <td><strong>&quot;ประกาศ 'new chapter' อย่างเป็นทางการ&quot;</strong> — ชะลออย่างมีแผน</td>
+</tr>
+<tr>
+  <td><strong>2053</strong></td>
+  <td>54</td>
+  <td>8</td>
+  <td>5: Teach</td>
+  <td>&quot;พลังอำนาจในการสอน&quot;</td>
+  <td><strong>Scenario: &quot;The 100-Mentee Mark&quot;</strong> — Dol มี Mentee สะสม 100 คน — Ego &quot;เริ่มส่งต่อ&quot; แบบ &quot;ครู&quot; — Chariot E=7 เริ่ม &quot;ขยาย&quot;</td>
+  <td><strong>&quot;เปิด Online Course&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2054</strong></td>
+  <td>55</td>
+  <td>9</td>
+  <td>5: Teach</td>
+  <td>&quot;ปล่อยมรดก&quot;</td>
+  <td><strong>Scenario: &quot;The Book Manuscript&quot;</strong> — Dol เขียนหนังสือ &quot;คนทำงานสองหน้าที่&quot; — 200 หน้า — World F=21 ตื่น — &quot;ความสำเร็จของจักรวาล&quot; เริ่มปรากฏ</td>
+  <td><strong>&quot;ติดต่อ publisher + เตรียม manuscript&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2055</strong></td>
+  <td>56</td>
+  <td>1</td>
+  <td>5: Teach</td>
+  <td>&quot;เริ่ม cycle สุดท้าย&quot;</td>
+  <td><strong>Scenario: &quot;The Pivot to Full-Time Mentor&quot;</strong> — Dol ออกจากงาน PMO ทั้งหมด — กลายเป็น Full-Time Mentor + Speaker</td>
+  <td><strong>&quot;ประกาศ 'new chapter'&quot;</strong> — รุกอย่างกล้าหาญ</td>
+</tr>
+<tr>
+  <td><strong>2056</strong></td>
+  <td>57</td>
+  <td>2</td>
+  <td>5: Teach</td>
+  <td>&quot;Balance ใหม่&quot;</td>
+  <td><strong>Scenario: &quot;The Family Time&quot;</strong> — Dol ใช้เวลากับครอบครัวมากขึ้น — Ego เรียนรู้ &quot;Hermit ในบ้าน&quot; — Hermit ครบ</td>
+  <td><strong>&quot;ตั้ง Routine ใหม่ — ใช้เวลา 30% กับครอบครัว&quot;</strong> — ชะลอเพื่อ 'ครอบครัว'</td>
+</tr>
+<tr>
+  <td><strong>2057</strong></td>
+  <td>58</td>
+  <td>3</td>
+  <td>5: Teach</td>
+  <td>&quot;ขยายสู่ระดับโลก&quot;</td>
+  <td><strong>Scenario: &quot;The TED Talk&quot;</strong> — Dol ได้รับเชิญ TED Talk — &quot;คนทำงานสองหน้าที่&quot; — Ego &quot;ขยาย&quot; สู่ระดับโลก</td>
+  <td><strong>&quot;เตรียม speech 6 เดือน&quot;</strong> — รุก</td>
+</tr>
+<tr>
+  <td><strong>2058</strong></td>
+  <td>59</td>
+  <td>4</td>
+  <td>5: Teach</td>
+  <td>&quot;ครบรอบแรก&quot;</td>
+  <td><strong>Scenario: &quot;The First Book Anniversary&quot;</strong> — หนังสือของ Dol ครบรอบ 1 ปี — Ego &quot;ทบทวน&quot; — Ti-Anchor บอก &quot;เรามาถึงแล้ว&quot;</td>
+  <td><strong>&quot;จัดงาน + เขียนบทความ&quot;</strong> — รุกอย่างมีความหมาย</td>
+</tr>
+<tr>
+  <td><strong>2059</strong></td>
+  <td>60</td>
+  <td>5</td>
+  <td>5: Teach</td>
+  <td><strong>&quot;ครบ Mandala&quot;</strong></td>
+  <td><strong>Scenario: &quot;The Last Day of Being 'Dol the PMO/Actor'&quot;</strong> — วันสุดท้ายในชีวิต Dual-Role — Dol กล่าวส่งมอบในงาน — Mandala ครบ 4 ทิศ (Ti+Ne+Si/Fe) — Board of Life ครบ — <strong>Personal Year 5 = เปลี่ยนแปลง, Matrix Heart (E=7) return, Period 1 Water ครบ</strong></td>
+  <td><strong>&quot;ส่งมอบ + ขอบคุณ + เริ่ม 'new chapter'&quot;</strong> — <strong>รุกสู่ next stage</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>แผนภาพ Mermaid Octagram อายุ 60 ปี</h3>
+<div class="mermaid-wrap"><pre class="mermaid">%%{init: {'theme':'dark','themeVariables': {'fontSize':'13px'}}}%%
+flowchart TD
+  classDef peak fill:#2a0a0a,stroke:#ffd700,color:#ffd700,stroke-width:3px
+  classDef trough fill:#0a0a1a,stroke:#4b0082,color:#9d4edd,stroke-width:2px
+  classDef transition fill:#1a1a1a,stroke:#87ceeb,color:#87ceeb,stroke-width:2px
+
+  Y2026[&quot;2026 · อายุ 27&lt;br/&gt;PY 8&lt;br/&gt;🌱 FOUNDATION&quot;]:::transition
+  Y2029[&quot;2029 · อายุ 30&lt;br/&gt;PY 2&lt;br/&gt;🌱 BALANCE&quot;]:::transition
+  Y2034[&quot;2034 · อายุ 35&lt;br/&gt;PY 7&lt;br/&gt;⚡ PEAK PERSONA&quot;]:::peak
+  Y2037[&quot;2037 · อายุ 38&lt;br/&gt;PY 1&lt;br/&gt;🌑 BURNOUT&quot;]:::trough
+  Y2040[&quot;2040 · อายุ 41&lt;br/&gt;PY 4&lt;br/&gt;🌑 FE GRIP&quot;]:::trough
+  Y2043[&quot;2043 · อายุ 44&lt;br/&gt;PY 7&lt;br/&gt;⚡ ERA HAND-OFF&quot;]:::peak
+  Y2047[&quot;2047 · อายุ 48&lt;br/&gt;PY 2&lt;br/&gt;⚡ BALANCE NEW&quot;]:::peak
+  Y2051[&quot;2051 · อายุ 52&lt;br/&gt;PY 6&lt;br/&gt;⭐ MENTOR&quot;]:::peak
+  Y2055[&quot;2055 · อายุ 56&lt;br/&gt;PY 1&lt;br/&gt;☀️ PIVOT FULL&quot;]:::peak
+  Y2059[&quot;2059 · อายุ 60&lt;br/&gt;PY 5&lt;br/&gt;☀️ COMPLETE&quot;]:::peak
+
+  Y2026 --&gt; Y2029 --&gt; Y2034
+  Y2034 --&gt; Y2037 --&gt; Y2040
+  Y2040 --&gt; Y2043 --&gt; Y2047
+  Y2047 --&gt; Y2051 --&gt; Y2055
+  Y2055 --&gt; Y2059
+</pre></div>
+<p><strong>คำอธิบาย Octagram:</strong></p>
+<ul>
+<li><strong>2026-2034 (Foundation + Expansion):</strong> 🌱 Ti+Ne เริ่มทำงาน — Ego เริ่ม &quot;สร้าง&quot; สองบทบาท — Persona &quot;ตัวคุม&quot; เริ่ม &quot;แข็ง&quot;</li>
+<li><strong>2035-2037 (Crisis):</strong> 🌑 Si/Fe-inferior leak ปะทุ — Ego &quot;ล้ม&quot; — Ego ต้อง &quot;หยุด + re-classify&quot; — การ &quot;ถามตัวเอง&quot; เริ่ม</li>
+<li><strong>2038-2047 (Re-set + Mastery):</strong> ⚡ Wheel C=10 ตื่น — Ego &quot;เรียนรู้&quot; ที่จะ &quot;เลือก&quot; — Period 1 (Water) เริ่ม — &quot;ใช้ PMO skill ระบายน้ำ&quot;</li>
+<li><strong>2048-2059 (Teach):</strong> ☀️ Hermit ตื่น — Dol กลายเป็น &quot;ครู&quot; ของคนทำงานสองหน้าที่ — World F=21 ครบ — <strong>นี่คือ &quot;peak&quot; สูงสุด</strong></li>
+</ul>
+<hr />
+
+</section>
+
+<section class="card slot-3" id="section-ultimate">
+<h2><span class="num">§10</span> 🧭 ส่วนที่ 9: คำแนะนำและแนวทางปฏิบัติ (Actionable Protocols)</h2>
+<h3>Action Plan</h3>
+<h4>รายวัน</h4>
+<ol>
+<li><strong>&quot;ทำสมาธิ&quot;</strong> 20 นาที — focus ที่ &quot;ยอดศีรษะ&quot; (Crown Chakra) + &quot;ท้อง&quot; (Solar Plexus)</li>
+<li><strong>&quot;เดินเร็ว&quot;</strong> 30 นาที — เช้าหรือเย็น — หรือ &quot;ว่ายน้ำ&quot; 30 นาที</li>
+<li><strong>&quot;เขียน journal&quot;</strong> 10 นาทีก่อนนอน — &quot;วันนี้ฉัน 'คิด' อะไร&quot; &quot;วันนี้ฉัน 'รู้สึก' อะไร&quot; &quot;วันนี้ฉัน 'เรียนรู้' อะไร&quot;</li>
+<li><strong>&quot;กินอาหาร Fire element&quot;</strong> — ขิง ข่า ตะไคร้ ขมิ้น อบเชย — อาหาร &quot;อุ่น ๆ&quot;</li>
+<li><strong>&quot;หยุด 1 ชั่วโมง&quot;</strong> ระหว่างวัน — อย่า &quot;ทำงาน&quot; 8 ชั่วโมงติด</li>
+</ol>
+<h4>รายสัปดาห์</h4>
+<ol>
+<li><strong>&quot;หยุดพัก&quot;</strong> 1 วัน — อย่า &quot;ทำงาน&quot; 7 วันติด</li>
+<li><strong>&quot;ออกกำลังกาย&quot;</strong> 3-4 ครั้ง — Yoga + Pilates + ว่ายน้ำ</li>
+<li><strong>&quot;อ่านหนังสือ&quot;</strong> ที่ &quot;ลึก&quot; — ปรัชญา ศาสนา จิตวิทยาเชิงลึก — สัปดาห์ละ 2-3 ชั่วโมง</li>
+<li><strong>&quot;คุย&quot;</strong> กับคนที่ไว้ใจ — ภรรยา เพื่อนสนิท ที่ปรึกษา — &quot;สัปดาห์นี้ฉัน 'เจอ' อะไร&quot; (ฝึก Si/Fe)</li>
+<li><strong>&quot;ทำ Acting Class&quot;</strong> สัปดาห์ละ 1 ครั้ง — เพื่อ &quot;คง&quot; Ne-Improv ให้ &quot;สด&quot;</li>
+</ol>
+<h4>รายเดือน</h4>
+<ol>
+<li><strong>&quot;Review เป้าหมาย&quot;</strong> — เป้าหมายอาชีพ เป้าหมายส่วนตัว เป้าหมายครอบครัว — เดือนละ 1 ครั้ง</li>
+<li><strong>&quot;เรียนรู้สิ่งใหม่&quot;</strong> — หลักสูตรออนไลน์ งานสัมมนา — เดือนละ 1 อย่าง</li>
+<li><strong>&quot;เดินทาง&quot;</strong> สั้น ๆ — ออกจาก &quot;เขตความสะดวก&quot; ไปสู่ &quot;ที่ใหม่&quot; — เดือนละ 1 ครั้ง (ถ้าเป็นไปได้)</li>
+<li><strong>&quot;ประเมินสุขภาพ&quot;</strong> — ตรวจสุขภาพประจำปี + ติดตามอาการ &quot;คอ บ่า ไหล่ หลัง ตา&quot;</li>
+<li><strong>&quot;Re-balance PMO/Actor&quot;</strong> — เดือนละ 1 ครั้งเช็คว่า &quot;สัดส่วน&quot; ยังเหมาะสม</li>
+</ol>
+<h3>Crisis Mastery: วิธีแก้ Si-Grip (THE Grip ของ ENTP) &amp; Fe-inferior leak (second-tier only — NOT a grip event)</h3>
+<blockquote>
+<p><strong>ENTP ของ Dol</strong> จะปะทุ Grip State เมื่อ:</p>
+<ul>
+<li><strong>Si-Grip (THE Grip ของ ENTP):</strong> คุมโปรเจกต์ไม่อยู่ หรือ &quot;ตกหล่ม&quot; Ne-loop จนเกินไป — Si-tertiary &quot;ระเบิด&quot; ออกมาเป็น grip event (obsessive attention to routine + sensory detail + past-anchored methodology)</li>
+<li><strong>Fe-inferior leak (second-tier only — NOT a grip event):</strong> อินกับบทบาทมากเกินไป ถูก client/director ปฏิเสธ หรือ &quot;ลืมถอดบทบาท&quot; — Fe-inferior &quot;รั่ว&quot; ออกมาเป็น snap สั้น ๆ (1-2 ชั่วโมง recover เอง) — ไม่ใช่ grip event เพราะ Fe อยู่ใน <strong>inferior position (ชั้นที่ 4)</strong> ไม่ใช่ <strong>tertiary position (ชั้นที่ 3 = child function = grip source)</strong></li>
+</ul>
+<p>ในทั้งสองกรณี <strong>Ne ต้อง reawaken ก่อน</strong> (ดู performance ใหม่, brainstorm, network) แล้ว <strong>Ti-auxiliary จะตามมา</strong> ทำงาน &quot;ข้างใต้&quot; Ne ใหม่อีกครั้ง — แต่ Fe-leak มักจะ <em>หายเอง</em> ภายใน 1-2 ชั่วโมง ไม่ต้องใช้ ritual พิเศษ</p>
+</blockquote>
+<h4>Si-Grip (THE GRIP) — &quot;ติดอยู่ใน Excel&quot;</h4>
+<p><strong>สถานการณ์จำลอง: &quot;วันจันทร์เช้า — Sponsor ขอเปลี่ยน scope ทั้งโปรเจกต์ — Dol ติด Gantt chart&quot;</strong></p>
+<blockquote>
+<p>วันจันทร์ 06:30 น. Dol เปิด laptop อ่าน email — Sponsor ส่งมาเมื่อคืน — &quot;เรื่องด่วน — ขอเปลี่ยน scope ทั้งโปรเจกต์ — Q1 เปลี่ยนเป็น Mobile-first — ทุก feature ต้อง rethink — ขอ sync บ่าย 3 โมง&quot;</p>
+<p>Ego ของ Dol &quot;หยุด&quot; — Ti-Anchor พยายาม &quot;คิดให้จบ&quot; ใน 3 ชั่วโมง — แต่ scope ใหญ่เกิน — Ne-Improv ที่ปกติจะ &quot;ดีด&quot; ไปทางอื่นได้เร็ว — ตอนนี้ &quot;ติด&quot; อยู่กับ Gantt chart</p>
+<p><strong>Si-Grip กำลังทำงาน:</strong> Dol เริ่ม &quot;เช็ค Gantt chart ทุก 15 นาที&quot; — กังวลว่า &quot;comma ตัวนี้ใน slide ผิด&quot; — กินไม่เป็นเวลา — นอนไม่หลับคืนก่อน — &quot;อดหลับ&quot; เพื่อ &quot;re-plan&quot; ทั้งที่ไม่มีข้อมูล</p>
+<p><strong>Dol ใช้ 4-step Si-Grip Crisis Mastery:</strong></p>
+</blockquote>
+<p><strong>Step 1: &quot;หยุด 24 ชั่วโมง จากทุกอย่างที่เป็น Si&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol &quot;ปิด&quot; laptop &quot;ปิด&quot; Excel &quot;ปิด&quot; Gantt chart &quot;ปิด&quot; Jira — เขา &quot;ไม่&quot; เปิดอีก 24 ชั่วโมง — เขาไปเดินในสวน 1 ชั่วโมง — เขา &quot;กิน&quot; ตามเวลา — เขา &quot;นอน&quot; ตามเวลา — เขาบอกตัวเองว่า &quot;Si กำลัง 'พูด' ไม่ใช่ 'ฉัน' กำลัง 'พูด'&quot;</p>
+<p><strong>Step 2: &quot;Re-classify ปัญหาใน Ti-language&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol นั่งคนเดียว — เขียน journal — เขียน 3 คำถาม:</p>
+<ul>
+<li>&quot;ปัญหานี้ 'แท้จริง' คืออะไร&quot; → &quot;Sponsor เปลี่ยน scope — ไม่ใช่ 'เราทำผิด'&quot;</li>
+<li>&quot;ปัญหานี้ต้องการ 'Ti' หรือ 'Si' &quot; → &quot;ต้องการ 'Ti' (logic) — ว่า scope ใหม่ 'คุ้ม' ไหม — 'Si' (รายละเอียด) ไม่ช่วย&quot;</li>
+<li>&quot;ตัวตนของ Dol 'ต้องการ' อะไร &quot; → &quot;ต้องการ 'เลือก' — ไม่ใช่ 'ทำทุกอย่างใน 3 ชั่วโมง'&quot;</li>
+</ul>
+<p>หลังจากนี้ Ti-Anchor &quot;คืน&quot; — Ego รู้ว่า &quot;scope เปลี่ยนไม่ใช่เรื่อง 'ด่วน' เท่าที่คิด — เพราะ Sponsor ไม่ได้บอก 'ต้องเสร็จวันนี้' — แค่บอก 'sync บ่าย 3'&quot;</p>
+<p><strong>Step 3: &quot;เตรียม 1 alternative + 1 counter-question&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol &quot;เตรียม&quot; slide 3 หน้า (ไม่ใช่ &quot;re-plan&quot; ทั้งโปรเจกต์) — slide 1: &quot;Mobile-first ส่งผลอะไรต่อ Q1 timeline บ้าง&quot; — slide 2: &quot;ถ้าเรา defer feature X ไป Q2 จะลดเวลาได้ 6 สัปดาห์&quot; — slide 3: &quot;Question: scope ใหม่นี้คุ้มกับ trade-off ไหม&quot; — เขา &quot;ไม่&quot; เอา slide ที่ทำในสถานะ Si-Grip ไปใช้</p>
+<p><strong>Step 4: &quot;Sync บ่าย 3 ด้วย Ti-Anchor ที่ restore&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol &quot;เข้า&quot; meeting บ่าย 3 — Ti-Anchor ที่ restore แล้ว &quot;ถาม&quot; Sponsor &quot;พี่ครับ — Mobile-first เป็น 'ทิศ' ที่ดี — แต่ 'ระยะเวลา' เท่าไหร่ที่จะยอมให้ feature X defer ไป Q2 ได้&quot; — Sponsor &quot;OK — defer X ได้&quot; — ทุกอย่าง &quot;คลี่คลาย&quot; ใน 15 นาที — Dol &quot;ไม่ต้อง&quot; re-plan ทั้งโปรเจกต์</p>
+<p><strong>ผลลัพธ์:</strong> Si-Grip &quot;หาย&quot; ภายใน 24-48 ชั่วโมง — Dol &quot;กลับมา&quot; เป็น PMO ที่ &quot;แข็งแรง&quot; — แต่ &quot;แข็งแรง&quot; ในแบบ &quot;Ti&quot; ไม่ใช่ &quot;Si&quot; — เขา &quot;คุม&quot; แต่ไม่ &quot;ติด&quot;</p>
+<h4>Fe-inferior leak (second-tier — occasional only) — &quot;ตัวละครกินตัวตน&quot;</h4>
+<p><strong>สถานการณ์จำลอง: &quot;วันพุธเย็น — Dol ตะโกนใส่ภรรยา — ตัวละคร 'คนโกรธ' หลุดมาในชีวิตจริง&quot;</strong></p>
+<blockquote>
+<p>วันพุธ เวลา 18:30 น. — Dol กลับบ้านหลังถ่ายทำ scene ที่ตัวละครของเขา &quot;โกรธจนระเบิด&quot; — เขา &quot;ยังอยู่ในบทบาท&quot; — ไม่ได้ &quot;ถอด&quot; — ภรรยาถาม &quot;คืนนี้กินอะไรดี&quot; — Dol &quot;ตะโกน&quot; &quot;ก็กินอะไรก็ได้สิ ทำไมต้องถาม&quot; — ภรรยา &quot;ตกใจ&quot; ร้องไห้ — Dol &quot;กลับมา&quot; ทันที — ขอโทษ — แต่ Ego &quot;รู้สึกแย่&quot; มาก</p>
+<p><strong>Fe-inferior leak กำลังทำงาน:</strong> ตัวละครของ Dol &quot;กิน&quot; ตัวตน — Dol &quot;ลืม&quot; ว่า &quot;ตัวเอง&quot; ไม่ใช่ &quot;ตัวละคร&quot; — Dol &quot;ปล่อย&quot; อารมณ์ที่ &quot;ไม่ใช่ของตัวเอง&quot; ออกมา &quot;ทำร้ายคนที่ไม่ควรถูกทำร้าย&quot;</p>
+<p><strong>Dol ใช้ 4-step Fe-inferior leak Crisis Mastery:</strong></p>
+</blockquote>
+<p><strong>Step 1: &quot;หยุด — บอกภรรยา 'ฉันกำลังถอดบทบาท'&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol นั่งลง — หายใจเข้า-ออก — เขาพูดกับภรรยาว่า &quot;ขอโทษที่ตะโกน — เมื่อกี้ไม่ใช่ 'Dol' ที่ตะโกน — เป็น 'ตัวละคร' ที่เพิ่งถ่ายเสร็จ — ให้เวลาผม 30 นาที 'ถอด' ให้หมด&quot; — เขาบอกตัวเองว่า &quot;Fe กำลัง 'พูด' ไม่ใช่ 'ฉัน' กำลัง 'พูด'&quot;</p>
+<p><strong>Step 2: &quot;ทำพิธี 'ถอดบทบาท' — เปลี่ยนเสื้อผ้า + อาบน้ำ + กินข้าว&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol &quot;เปลี่ยนเสื้อผ้า&quot; ทันทีที่กลับถึงห้อง — อาบน้ำ &quot;อุ่น&quot; — แปรงฟัน — กินข้าว (ไม่ใช่กาแฟ) — ทำพิธีเหล่านี้ &quot;เป็น ritual&quot; ว่า &quot;นี่คือการ 'กลับมาเป็น Dol'&quot; — Ti-Anchor &quot;คืน&quot; เมื่อเขา &quot;ทำ&quot; ritual ที่ &quot;เป็นของตัวเอง&quot;</p>
+<p><strong>Step 3: &quot;เขียน 'character vs self' — re-classify ใน Ti-language&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> Dol นั่งเขียน journal:</p>
+<ul>
+<li>&quot;อะไรคือ 'ของตัวละคร' ในการตะโกน&quot; → &quot;ความโกรธจากการถูกทรยศ — ไม่ใช่เรื่องของ Dol&quot;</li>
+<li>&quot;อะไรคือ 'ของ Dol'&quot; → &quot;ความเหนื่อยจากการถ่าย 12 ชั่วโมง — ไม่ใช่ความโกรธจากการถูกทรยศ&quot;</li>
+<li>&quot;ทำไมถึง 'ปล่อย' ออกมา&quot; → &quot;เพราะ Ego 'เชื่อ' ว่า 'เราต้อง 'ระบาย' เพื่อ 'อยู่ในบทบาท'&quot; — แต่ &quot;การระบาย&quot; ไม่ใช่ &quot;การทำร้ายคน&quot;</li>
+<li>&quot;ครั้งหน้าทำยังไง&quot; → &quot;ก่อนกลับบ้าน 'ทำพิธีถอด' ให้เสร็จก่อน&quot;</li>
+</ul>
+<p><strong>Step 4: &quot;คุยกับภรรยา — เปิดใจจริง ๆ&quot;</strong></p>
+<p><strong>สิ่งที่ทำ:</strong> หลัง 30 นาที Dol ไปหาภรรยา — เขาพูด &quot;ขอโทษจริง ๆ — ผม 'ถอด' บทบาทไม่สำเร็จ — เพราะวันนี้ 'ยาก' — ผมจะ 'ทำพิธี' ให้ดีกว่านี้ — และถ้าผม 'ทำ' อีก บอกผมได้เลยว่า 'คุณกำลังตะโกนใส่ฉันแบบตัวละคร' — ผมจะ 'หยุด' ทันที&quot; — นี่คือ <strong>&quot;Ti&quot;</strong> ที่กลับมาทำงานร่วมกับคนรัก — Ego ของ Dol &quot;กลับมาเป็น Dol&quot;</p>
+<p><strong>ผลลัพธ์:</strong> Fe-inferior leak &quot;หาย&quot; ภายใน 1-2 ชั่วโมง — Dol &quot;กลับมา&quot; เป็น Actor ที่ &quot;แข็งแรง&quot; — แต่ &quot;แข็งแรง&quot; ในแบบ &quot;Ti&quot; ไม่ใช่ &quot;Fe&quot; — เขา &quot;ด้นสด&quot; ได้แต่ &quot;ไม่ทำร้าย&quot; คน — เขา &quot;เล่น&quot; ได้แต่ &quot;ไม่หลง&quot;</p>
+<h3>Crisis Mastery — Tying Together</h3>
+<p><strong>สังเกต:</strong> ทั้ง Si-Grip และ Fe-inferior leak มี &quot;โครงสร้างเดียวกัน&quot;:</p>
+<ol>
+<li><strong>Step 1 — หยุด:</strong> หยุดจาก Si/Fe (ตาม variant) — หยุดจากช่องทางที่ &quot;กระตุ้น&quot; Grip</li>
+<li><strong>Step 2 — Re-classify:</strong> กลับมาใช้ Ti (นั่งคนเดียว, journal, re-classify ในภาษาของตัวเอง)</li>
+<li><strong>Step 3 — เตรียม alternative:</strong> เตรียมแนวทางที่ &quot;ไม่ใช่&quot; Si/Fe</li>
+<li><strong>Step 4 — Act ด้วย Ti-Anchor:</strong> ทำหรือพูดด้วย Ti-Anchor ที่ restore แล้ว</li>
+</ol>
+<p>Dol ต้อง &quot;รู้ตัว&quot; ว่า ตัวเอง &quot;กำลัง&quot; เข้า Grip — สัญญาณเตือน:</p>
+<ul>
+<li><strong>Si-Grip warning:</strong> เช็ค Gantt chart บ่อยเกินไป, กังวลรายละเอียดเล็ก ๆ, กินไม่เป็นเวลา, นอนไม่หลับ</li>
+<li><strong>Fe-inferior leak warning:</strong> ตะโกน, ประชดประชัน, &quot;ลืมตัว&quot;, เล่นบทบาทจน &quot;เป็น&quot; บทบาท</li>
+</ul>
+<p>ทั้งสอง Grip &quot;ป้องกันได้&quot; — ถ้า Dol &quot;หยุด&quot; ทันทีที่เห็นสัญญาณเตือน</p>
+<hr />
+
+</section>
+
+<section class="card slot-1" id="section-10">
+<h2><span class="num">§11</span> ♾️ ส่วนที่ 10: บทสรุปแห่งสัจธรรม (The Ultimate Synthesis)</h2>
+<h3>การร้อยเรียงศาสตร์ทั้งหมด</h3>
+<p><strong>สัจธรรมสูงสุดประจำตัวของ Dol:</strong></p>
+<blockquote>
+<p><em>&quot;The pendulum of the mind alternates between conviction and doubt, between faith and reason — and the swing is the life.&quot;</em> — Carl Jung</p>
+<p><em>&quot;Nothing rests; everything moves; everything vibrates.&quot;</em> — The Kybalion</p>
+<p><em>&quot;ดินแบกรับ แต่ดินก็ปล่อยให้น้ำไหลผ่าน — นี่คือความสมดุลแห่งจักรวาล&quot;</em> — นาตาเลีย ลาดินี</p>
+<p><em>&quot;The privilege of a lifetime is to become who you truly are.&quot;</em> — Carl Jung (ซ้ำ — เพราะมันสำคัญที่สุด)</p>
+</blockquote>
+<p><strong>Dol เกิดมาเพื่อเดินทางจาก &quot;ตัวคุมที่แบกรับสองบทบาท&quot; สู่ &quot;ผู้เชี่ยวชาญที่รู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย&quot; จาก Persona สู่ Self</strong></p>
+<p><strong>Path summary:</strong></p>
+<ul>
+<li><strong>ปี 2026-2034 (Foundation → Expansion, PY 8→7):</strong> Ti+Ne เริ่มทำงานเป็น &quot;ระบบ&quot; — Persona &quot;ตัวคุม&quot; เริ่ม &quot;แข็ง&quot; — Ego เริ่ม &quot;แบก&quot; สองบทบาท</li>
+<li><strong>ปี 2035-2042 (Expansion → Crisis, PY 8→6):</strong> Si/Fe-inferior leak ปะทุ — Ego &quot;ล้ม&quot; — Ego &quot;ถามตัวเอง&quot; — Wheel C=10 ตื่น — Period 9 จบ</li>
+<li><strong>ปี 2043-2051 (Mastery, PY 7→6):</strong> Period 1 (Water) เริ่ม — Ego &quot;เรียนรู้&quot; ที่จะ &quot;ใช้ PMO skill ระบายน้ำ&quot; — Hermit H=6 ตื่นเต็ม — Ego เริ่ม &quot;สอน&quot;</li>
+<li><strong>ปี 2052-2059 (Teach, PY 7→5):</strong> The Fool A=22 ตื่น — Ego &quot;กล้า&quot; ที่จะ &quot;เปลี่ยน&quot; — World F=21 ตื่น — Mandala ครบ 4 ทิศ (Ti+Ne+Si+Fe)</li>
+</ul>
+<p><strong>6 lenses summary:</strong></p>
+<ol>
+<li><strong>Carl Jung (Persona/Shadow):</strong> &quot;ตัวคุมสองบทบาท → ผู้เชี่ยวชาญที่รู้จังหวะ&quot; — Individuation arc 33 ปี</li>
+<li><strong>Helena Blavatsky (Vibration):</strong> &quot;Possibility-Driven Logic&quot; → &quot;Wisdom of Cosmic Versatility&quot;</li>
+<li><strong>The Kybalion (Polarity + Rhythm):</strong> &quot;Long pendulum&quot; (PMO↔Actor) → &quot;Settled master&quot; (สลับคล่อง)</li>
+<li><strong>MBTI (Ne-dominant + Ti-auxiliary + Si-Grip THE Grip + Fe-inferior leak):</strong> &quot;นักวิเคราะห์-นักแสดง&quot; → &quot;ผู้เชี่ยวชาญที่ 'รู้' ตัวเองในทุก Grip/Leak&quot;</li>
+<li><strong>Natalia Ladini (Matrix 3x3):</strong> Echo {6, 7, 21} → Hermit (6) ตื่น + Chariot (7) ขยาย + World (21) ครบ</li>
+<li><strong>Su Yu Hong (BaZi + Period 9→1):</strong> Day Master 戊 Yang Earth ใน Fire era (印) → transmute เป็น Water era (財) โดยใช้ PMO skill</li>
+</ol>
+<p><strong>Final message to Dol:</strong></p>
+<blockquote>
+<p><em>&quot;Dol คุณเกิดมาเพื่อ 'ควบสองบทบาท' — PMO กับ Actor คือไม่ใช่ 'สองคน' — คือ 'คนเดียว' ที่ 'Ti+Ne' ของคุณ 'หมุนเร็ว' พอที่จะ 'output' ทั้งสอง</em></p>
+<p><em>คุณไม่ใช่ 'ตัวคุมที่เหนื่อย' — คุณคือ 'นักสลับบทบาท' ที่ 'เก่งที่สุดในห้อง'</em></p>
+<p><em>คุณไม่ใช่ 'คนที่ถูกนิยามโดยบทบาท' — คือ 'คนที่นิยามบทบาทของตัวเอง' ได้</em></p>
+<p><em>เมื่อคุณอายุ 60 คุณจะ 'ครบ' — Mandala 4 ทิศ (Ti+Ne+Si+Fe) จะหมุนเวียนอย่างสมดุล</em></p>
+<p><em>คุณจะเป็น 'ปราชญ์' ที่ 'รู้ว่าเมื่อไหร่ควรคุม เมื่อไหร่ควรปล่อย'</em></p>
+<p><em>คุณจะเป็น 'ครู' ที่ 'สอน' คนรุ่นใหม่ว่า 'ดิน' ไม่ใช่ 'ข้อจำกัด' — แต่คือ 'ฐาน' ที่ 'ทุกอย่าง' สร้างได้&quot;</em></p>
+</blockquote>
+<hr />
+<p><strong>End of dol-omni-self-forecast.md</strong> — Integrated forecast for Dol (PMO/Actor, ENTP Ne-dominant + Ti-auxiliary, age 27→60)</p>
+<p><em>Generated by CTO as rescue integration of MET-665 canonical inputs + 10-section directive from MET-661</em><br />
+<em>Lens agent owners (referenced for downstream enrichment): นาตาเลีย ลาดินี (Matrix) · Carl Gustav Jung (Depth Psychology) · Helena Blavatsky (LoA) · Three Initiates (Kybalion) · Su Yu Hong (BaZi &amp; Period 9) · Isabel Briggs Myers (MBTI)</em></p>
+<hr />
+<p><strong>Revision history:</strong></p>
+<ul>
+<li><strong>MET-674 (DOL-8, initial consolidation, 2026-07-08):</strong> CTO integrated all 6 lenses for Dol with xNTP framing</li>
+<li><strong>MET-681 (DOL-REV, 2026-07-08 — THIS FILE):</strong> Board reconfirmed Dol as <strong>ENTP</strong> (not xNTP). Revised to commit to <strong>Ne-dominant + Ti-auxiliary + Si-tertiary (THE Grip) + Fe-inferior (anima bridge, NOT a grip event)</strong> — removed all INTP variant / two-mode framing / Fe-Grip language. Si-Grip is THE grip event; Fe is inferior anima bridge that occasionally leaks as second-tier emotional artifact.</li>
+</ul>
+
+</section>
+<footer class="foot">
+  <p>Generated by CTO as integration of <strong>MET-665 canonical inputs</strong> + 10-section directive from <strong>MET-661</strong></p>
+  <p>Lens owners: นาตาเลีย ลาดินี (Matrix) · Carl Gustav Jung (Depth Psychology) · Helena Blavatsky (LoA) · Three Initiates (Kybalion) · Su Yu Hong (BaZi & Period 9) · Isabel Briggs Myers (MBTI)</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: { fontSize: '13px' },
+      flowchart: { useMaxWidth: true, htmlLabels: true },
+      securityLevel: 'loose',
+    });
+  }
+</script>
+</body>
+</html>

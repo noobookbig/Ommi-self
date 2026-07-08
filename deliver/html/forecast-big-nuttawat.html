@@ -10,7 +10,7 @@
   Layout differences vs compact (forecast-template.html):
     - Top-level wrapper:    <div class="page">              → <div class="big-layout">
     - Top hero banner:      <header class="hero">           → <header class="big-head">  (slim, no gradient, no glow)
-    - TOC location:         <nav class="toc">               → <aside class="big-toc"> (sticky LEFT sidebar, 220px wide, vertical list)
+    - TOC location:         <nav class="toc">               → <details class="big-toc" open> (sticky LEFT sidebar, 220px wide, vertical list, collapsible via <summary>)
     - Content column:       (full width, sibling of hero)   → <main class="big-main">  (right of sidebar)
     - Section markers:      <section class="card slot-N">   → <section class="big-card big-slot-N" data-section="N">
     - Footer:               <footer class="foot">           → <footer class="big-foot"> (extended with extra rows: TOC mirror, ID hash, generated time)
@@ -178,7 +178,7 @@
   }
 
   /* Sidebar TOC */
-  aside.big-toc {
+  aside.big-toc, .big-toc {
     grid-area: toc;
     position: sticky;
     top: 16px;
@@ -195,7 +195,7 @@
       0 4px 24px rgba(0, 0, 0, 0.45),
       0 0 24px rgba(0, 240, 255, 0.08);
   }
-  aside.big-toc .toc-title {
+  aside.big-toc .toc-title, .big-toc > summary {
     margin: 0 0 10px 0;
     padding: 0 4px 8px 4px;
     font-size: 11px;
@@ -204,8 +204,25 @@
     text-transform: uppercase;
     letter-spacing: 1.6px;
     border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  aside.big-toc ol {
+  aside.big-toc .toc-title::-webkit-details-marker,
+  .big-toc > summary::-webkit-details-marker { display: none; }
+  aside.big-toc .toc-title::before,
+  .big-toc > summary::before {
+    content: '\25B8';
+    font-size: 12px;
+    transition: transform 160ms ease;
+    display: inline-block;
+  }
+  details.big-toc[open] > summary::before,
+  .big-toc[open] > summary::before { transform: rotate(90deg); }
+  aside.big-toc ol, .big-toc > ol {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -213,7 +230,7 @@
     flex-direction: column;
     gap: 2px;
   }
-  aside.big-toc a {
+  aside.big-toc a, .big-toc a {
     display: block;
     color: var(--fg-muted);
     text-decoration: none;
@@ -224,7 +241,7 @@
     border-left: 2px solid transparent;
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
   }
-  aside.big-toc a:hover, aside.big-toc a:focus-visible {
+  aside.big-toc a:hover, aside.big-toc a:focus-visible, .big-toc a:hover, .big-toc a:focus-visible {
     color: var(--neon-cyan);
     border-left-color: var(--neon-cyan);
     background: rgba(0, 240, 255, 0.06);
@@ -477,9 +494,9 @@
   }
 
   .year-table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    margin: 10px 0 18px 0;
+    margin: 10px auto 18px auto;
     font-size: 13.5px;
   }
   .year-table th, .year-table td {
@@ -579,12 +596,12 @@
         "main"
         "foot";
     }
-    aside.big-toc {
+    aside.big-toc, .big-toc {
       position: relative;
       top: 0;
       max-height: none;
     }
-    aside.big-toc ol {
+    aside.big-toc ol, .big-toc > ol {
       flex-direction: row;
       flex-wrap: wrap;
     }
@@ -604,8 +621,8 @@
     </p>
   </header>
 
-  <aside class="big-toc" aria-label="สารบัญเรื่อง">
-    <p class="toc-title">สารบัญ · Contents</p>
+  <details class="big-toc" open aria-label="สารบัญเรื่อง">
+    <summary>สารบัญ · Contents</summary>
     <ol>
       <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
       <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
@@ -619,7 +636,7 @@
       <li><a href="#s8">&sect;8 Protocols</a></li>
       <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
     </ol>
-  </aside>
+  </details>
 
   <main class="big-main">
 

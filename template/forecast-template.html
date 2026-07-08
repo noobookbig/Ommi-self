@@ -148,7 +148,7 @@
     text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
   }
 
-  nav.toc {
+  nav.toc, .toc {
     position: sticky;
     top: 16px;
     z-index: 10;
@@ -163,16 +163,16 @@
       0 4px 24px rgba(0, 0, 0, 0.45),
       0 0 24px rgba(0, 240, 255, 0.08);
   }
-  nav.toc ol {
+  nav.toc ol, .toc > ol {
     list-style: none;
-    margin: 0;
+    margin: 12px 0 0 0;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 6px 18px;
     font-size: 14px;
   }
-  nav.toc a {
+  nav.toc a, .toc a {
     color: var(--fg-muted);
     text-decoration: none;
     font-weight: 400;
@@ -181,12 +181,34 @@
     border-left: 2px solid transparent;
     transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
   }
-  nav.toc a:hover, nav.toc a:focus-visible {
+  nav.toc a:hover, nav.toc a:focus-visible, .toc a:hover, .toc a:focus-visible {
     color: var(--neon-cyan);
     border-left-color: var(--neon-cyan);
     background: rgba(0, 240, 255, 0.06);
     outline: none;
   }
+  .toc > summary {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--neon-cyan);
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .toc > summary::-webkit-details-marker { display: none; }
+  .toc > summary::before {
+    content: '\25B8';
+    display: inline-block;
+    transition: transform 160ms ease;
+    color: var(--neon-cyan);
+    font-size: 14px;
+  }
+  .toc[open] > summary::before { transform: rotate(90deg); }
 
   section.card {
     position: relative;
@@ -373,10 +395,10 @@
   }
 
   table.chakra {
-    width: 100%;
+    width: 90%;
     border-collapse: separate;
     border-spacing: 0;
-    margin: 8px 0 18px 0;
+    margin: 8px auto 18px auto;
     font-size: 14px;
   }
   table.chakra thead th {
@@ -552,9 +574,9 @@
   .stage .stage-marker strong { color: var(--accent, var(--neon-cyan)); }
 
   table.roles {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    margin: 8px 0 14px 0;
+    margin: 8px auto 14px auto;
     font-size: 14px;
   }
   table.roles th {
@@ -598,7 +620,7 @@
 
   @media print {
     body::before { display: none; }
-    nav.toc { display: none; }
+    nav.toc, .toc { display: none; }
     section.card { break-inside: avoid; box-shadow: none; }
     body { background: #fff; color: #111; }
   }
@@ -682,7 +704,8 @@
     </p>
   </header>
 
-  <nav class="toc" aria-label="สารบัญเรื่อง">
+  <details class="toc" open aria-label="สารบัญเรื่อง">
+    <summary>สารบัญเรื่อง &middot; Contents</summary>
     <ol>
       <li><a href="#s0">&sect;0 บทสรุป 6 มุมมอง</a></li>
       <li><a href="#s1">&sect;1 Cosmic Synergy</a></li>
@@ -696,7 +719,7 @@
       <li><a href="#s8">&sect;8 Protocols</a></li>
       <li><a href="#s9">&sect;9 Ultimate Synthesis</a></li>
     </ol>
-  </nav>
+  </details>
 
   <section class="card slot-1" id="s0">
     <h2><span class="num">&sect;0</span>บทสรุป 6 มุมมอง &middot; Summary</h2>
@@ -865,35 +888,36 @@ flowchart TD
 
     <h4>Day Master (日主) — ตัวตนแท้</h4>
     <p>
-      <strong>己 (Yin Earth)</strong> — "ดินสวน / ทุ่งนา / ดินที่เพาะปลูก"<br>
-      ตัวตนแท้ของคุณคือดินที่อุดมสมบูรณ์ อ่อนโยน ยืดหยุ่น รับรู้ความรู้สึกของผู้อื่น แต่ต้องระวังไม่ให้ "ดินเปียกเกินไป" จนกลายเป็นโคลน — ต้องมี <strong>ความร้อน (Fire)</strong> มาช่วยอบในปริมาณที่พอดี
+      <strong>戊 (Yang Earth)</strong> — "ภูเขา / ดินแข็ง / กำแพง"<br>
+      ตัวตนแท้ของคุณคือภูเขาที่มั่นคง รับน้ำหนักได้มาก เป็นที่พึ่งของคนรอบข้าง แต่ต้องระวังไม่ให้ "ภูเขาถูกกัดเซาะ" จากน้ำ (Water) ที่ซัดมาไม่หยุด — ต้องมี <strong>ไม้ (Wood)</strong> มาช่วยคลายดิน และ <strong>ไฟ (Fire)</strong> มาหล่อเลี้ยง
     </p>
 
     <h4>สี่เสาชะตา (四柱)</h4>
     <ul style="list-style:none; padding-left:0;">
-      <li><strong>Year Pillar (年柱):</strong> 乙酉 — ไม้อ่อน (乙) + โลหะ (酉) = ความอ่อนโยนที่มีระเบียบ</li>
-      <li><strong>Month Pillar (月柱):</strong> 乙酉 — <span style="color:var(--neon-orange);">★ เหมือน Year Pillar (伏吟 Fuyin)</span> — ครอบครัวและสังคมต้นทุนพูดภาษาเดียวกัน แต่ความคิดเดิมอาจวนซ้ำ</li>
-      <li><strong>Day Pillar (日柱):</strong> 己未 — ตัวตนแท้ = 己 (Yin Earth) + ราก (root) แข็งใน 未</li>
-      <li><strong>Hour Pillar (时柱):</strong> <em>ไม่ทราบเวลาเกิด</em> — ไม่ fabricate ตามหลักจริยธรรม</li>
+      <li><strong>Year Pillar (年柱):</strong> 丙寅 — ไฟยางค์ (丙) + เสือ (寅) = ไฟป่าที่เริ่มลุกโชติช่วง พลังงานแห่งการเริ่มต้น</li>
+      <li><strong>Month Pillar (月柱):</strong> 壬辰 — น้ำยางค์ (壬) + มังกร (辰) = น้ำทะเลที่ลึกและแข็งแกร่ง ความมั่นคงที่ไหลเวียน</li>
+      <li><strong>Day Pillar (日柱):</strong> 戊子 — ดินยางค์ (戊) + หนู (子) = <span style="color:var(--neon-cyan);">★ ภูเขากลางทะเล</span> — ตัวตนแท้ที่มั่นคงแต่ถูกท้าทาย</li>
+      <li><strong>Hour Pillar (时柱):</strong> 戊午 (placeholder เวลา 12:00 น.) — ดินยางค์ (戊) + ม้า (午) = ภูเขาใต้แสงตะวันเที่ยง <em>(หมายเหตุ: เวลาเกิดที่แน่นอนไม่ทราบ ใช้เที่ยงเป็นค่า placeholder ตามหลักจริยธรรม)</em></li>
     </ul>
 
-    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master</h4>
+    <h4>Ten Gods (十神) — ความสัมพันธ์รอบ Day Master 戊 (Yang Earth)</h4>
     <ul style="list-style:none; padding-left:0;">
-      <li><strong>偏财 (Indirect Wealth) ×2</strong> ใน Year + Month Stem (乙) = ความมั่งคั่งที่มาจาก "คนอื่นเชื่อใน vision ของคุณ" มากกว่า "งานที่คุณทำเอง"</li>
-      <li><strong>食神 (Eating God) ×2</strong> ใน Year + Month Branch (辛 ใน 酉) = ความคิดสร้างสรรค์ที่อ่อนโยน คุณจะ <strong>"สร้าง" ผ่าน "การเล่าเรื่อง"</strong> มากกว่า "การวิพากษ์"</li>
-      <li><strong>七杀 (Seven Killings)</strong> แฝงใน Day Branch (丁 ใน 未) = แรงกดดันที่ทดสอบจากภายใน — "นายใน" ที่ไม่เคยหยุดถาม "ฉันทำดีพอหรือยัง"</li>
-      <li><strong>比肩 (Peer)</strong> แฝงใน Day Branch (己 ใน 未) = "ตัวตนอีกด้าน" — the critic within</li>
+      <li><strong>偏印 (Indirect Resource)</strong> ใน Year Stem (丙) = พลังสร้างสรรค์ที่มาจาก "การเผชิญหน้ากับไฟ" — คุณเรียนรู้จากวิกฤต ไม่ใช่จากตำรา</li>
+      <li><strong>偏官 (Seven Killings)</strong> ใน Month Stem (壬) = แรงกดดันจากภายนอก — ความคาดหวังจากสังคม ครอบครัว ธุรกิจ ที่ทำให้คุณต้อง "แข็งแกร่ง" ตลอดเวลา</li>
+      <li><strong>比肩 (Peer)</strong> ใน Day Stem + Hour Stem (戊×2) = "ภูเขาคู่" — คุณมีพลังรับน้ำหนักสองเท่า แต่ก็เหงาสองเท่าเพราะไม่มีใครเข้าใจภาระที่คุณแบก</li>
+      <li><strong>正官 (Direct Officer)</strong> แฝงใน Month Branch (癸 ใน 辰) = ความรับผิดชอบที่ "ถูกต้อง" และ "จำเป็น" — คุณไม่สามารถปฏิเสธได้</li>
+      <li><strong>偏財 (Indirect Wealth)</strong> แฝงใน Year Branch (甲 ใน 寅) = ความมั่งคั่งที่มาจาก "การลงทุนในคน" และ "การสร้างระบบ"</li>
     </ul>
 
-    <h4>Day Master Strength — 身强 moderate</h4>
+    <h4>Day Master Strength — 身旺 ปานกลาง</h4>
     <p>
-      คุณเป็นคนที่ <strong>"พึ่งตัวเองได้"</strong> ในระดับหนึ่ง แต่ต้อง "ดูแลตัวเอง" อยู่เสมอ:<br>
-      ✓ มี root ใน 未 (good)<br>
-      ✓ มี Metal support จาก 酉+酉 (good)<br>
-      ⚠ มี Double Wood (乙+乙) ที่ drain ตลอด<br>
-      ⚠ <strong>ไม่มี Water (印) เลย</strong> — ไม่มี "ท่อส่งน้ำ" มาหล่อเลี้ยง Day Master<br>
+      คุณเป็นคน <strong>"พอเพียงพอดี"</strong> — ไม่อ่อนแอจนล้มง่าย แต่ก็ไม่แข็งแกร่งจนรับทุกอย่างได้:<br>
+      ✓ มี Fire resource จาก 丙 (Year) + 午 (Hour) ที่หล่อเลี้ยง Earth (火生土)<br>
+      ✓ มี Earth peer จาก 戊+戊 ที่ช่วยพยุง<br>
+      ⚠ มี Water killing energy จาก 壬 (Month) + 子 (Day Branch) ที่กดดันตลอด (水克土)<br>
+      ⚠ <strong>ขาด Wood (財)</strong> ที่ชัดเจน — "ไม้" คือช่องทางทำเงิน แต่คุณต้อง "หา" Wood ด้วยตัวเอง<br>
       <br>
-      นี่คือ <strong>"ทุ่งนาที่มีฝนบ้าง แต่ไม่มีระบบชลประทาน"</strong> — ต้องอาศัย "ฝนที่ตกเอง" และ "ดินอุดม"
+      นี่คือ <strong>"ภูเขากลางทะเล"</strong> — คุณยืนมั่นได้ แต่คลื่นซัดตลอดเวลา ถ้าคุณไม่ดูแลตัวเอง "ภูเขา" จะถูกกัดเซาะจนพังทลาย
     </p>
 
     <h4>用神 (Yòng Shén) — ธาตุเสบียง</h4>
@@ -906,79 +930,56 @@ flowchart TD
       <tr>
         <td style="padding:6px;"><strong style="color:var(--neon-green);">用神 ★</strong></td>
         <td style="padding:6px;"><strong>Wood (甲乙)</strong></td>
-        <td style="padding:6px;">ทำให้ Day Master "มีงานทำ" มี "wealth channel" เปิด — Wood "งอก" จาก Earth (土養木)</td>
+        <td style="padding:6px;">ทำให้ภูเขา "มีต้นไม้" — Wood คลายดิน (木疏土) และเป็นช่องทางทำเงิน (財) — <strong>คุณต้องการคนที่มีความคิดสร้างสรรค์มาช่วย</strong></td>
       </tr>
       <tr>
         <td style="padding:6px;"><strong style="color:var(--neon-cyan);">喜神</strong></td>
-        <td style="padding:6px;"><strong>Metal (庚辛)</strong></td>
-        <td style="padding:6px;">ระบายพลังผ่าน "การสร้าง/พูด/เล่าเรื่อง" (食神) — <strong>คุณมี Metal อยู่แล้ว 2 จุด (酉酉)</strong> มีเครื่องมือระบายติดตัว</td>
-      </tr>
-      <tr>
-        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
-        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
-        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" เสี่ยง "ตกหล่ม" (โคลนตม)</td>
-      </tr>
-      <tr>
-        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
         <td style="padding:6px;"><strong>Fire (丙丁)</strong></td>
-        <td style="padding:6px;">七杀/正官 — ควบคุมเข้มข้น Fire จะ "กดทับ" จนหายใจไม่ออก — ดินที่ถูกเผาจะกลายเป็น "อิฐ" (ไม่ยืดหยุ่น)</td>
+        <td style="padding:6px;">หล่อเลี้ยงดิน (火生土) และคอยระบายน้ำ (Fire evaporates Water) — <strong>คุณมี Fire อยู่แล้ว (丙+午) ต้องดูแลให้ลุกไหม้อยู่เสมอ</strong></td>
       </tr>
       <tr>
-        <td style="padding:6px;"><strong style="color:var(--fg-muted);">中神</strong></td>
+        <td style="padding:6px;"><strong style="color:var(--neon-red);">忌神</strong></td>
         <td style="padding:6px;"><strong>Water (壬癸)</strong></td>
-        <td style="padding:6px;">ผู้ผลิตฉัน (生我) — มามากจะ "ท่วม"; มาน้อยจะ "หล่อเลี้ยง" — <strong>chart ขาด Water → ต้องหาเอง</strong></td>
+        <td style="padding:6px;">Water overwhelms Earth (水克土) — ถ้า Water มากเกินไป "ภูเขา" จะกลายเป็น "โคลน" — <strong>หลีกเลี่ยงสถานการณ์ที่ท่วมท้นจนควบคุมไม่ได้</strong></td>
+      </tr>
+      <tr>
+        <td style="padding:6px;"><strong style="color:var(--neon-orange);">慎用</strong></td>
+        <td style="padding:6px;"><strong>Earth (戊己)</strong></td>
+        <td style="padding:6px;">比肩/劫财 — "ดินซ้อนดิน" ทำให้หนักเกินแบก — <strong>อย่ารับภาระซ้ำซ้อนจากคนที่คิดเหมือนคุณ</strong></td>
       </tr>
     </table>
 
-    <h4>Period 9 (九運 2024-2043) — ดาบสองคม</h4>
+    <h4>Nayin (納音) — เสียงแห่งชะตา</h4>
     <p>
-      Period 9 (九紫離火運) ตรงกับช่วงที่คุณอายุ <strong>19 → 39 ปี</strong> — <strong>prime years</strong> ของชีวิต<br>
-      <br>
-      <strong style="color:var(--neon-orange);">⚠ ทำไม Period 9 เป็น "ดาบสองคม" สำหรับคุณ:</strong><br>
-      • <strong>用神 ของคุณ = Wood</strong><br>
-      • <strong>忌神 ของคุณ = Fire</strong> ← นี่คือ Period 9!<br>
-      • Period 9 = <strong>Fire ที่กำลังขึ้น</strong> (離火) — ไฟนี้ <strong>ไม่ได้หล่อเลี้ยงคุณ</strong> ตรงข้าม มัน <strong>กดทับ Day Master</strong><br>
-      <br>
-      <strong style="color:var(--neon-green);">✓ ด้านบวก:</strong> Period 9 ส่งเสริม "การมองเห็น" (visibility) — ตรงกับ <strong>偏财 (乙)</strong> ของคุณ (wealth ที่มาจาก "คนอื่นเห็น vision ของคุณ") — ถ้าคุณออกแบบ "ตัวตนในสายตาสาธารณะ" ได้ดี คุณจะได้ "ทรัพยากร" มหาศาล<br>
-      <br>
-      <strong style="color:var(--neon-red);">⚠ ด้านลบ:</strong> ถ้าคุณ "ปล่อยให้ Period 9 ควบคุม" คุณจะรู้สึก "ถูกเผา" (burnout) จากการถูก "มองเห็น" มากเกินไป จน Day Master (己) กลายเป็น "อิฐแห้ง"<br>
-      <br>
-      <strong>Nayin ของ Day Pillar = 天上火 (Heavenly Fire)</strong> — คุณเกิดมาพร้อม "fire signature" ในตัว แม้ Day Master จะเป็น Earth แต่ <strong>"essence"</strong> ของคุณมี Fire ผสม → คุณมี <strong>"ศักยภาพที่จะเปล่ง fire"</strong> แต่ต้อง <strong>"เลือก"</strong> ว่าจะให้ Fire นี้เป็น "ไฟที่ส่องสว่าง" หรือ "ไฟที่เผาตัวเอง"
+      <strong>Day Pillar Nayin:</strong> <span style="color:var(--neon-orange);">霹雳火</span> (Thunderbolt Fire / ฟ้าผ่า)<br>
+      คุณมีพลังที่ "ปะทุ" ทันทีทันใดเมื่อถึงจุดหนึ่ง — ไม่ใช่ไฟที่ลุกค่อย ๆ แต่เป็นฟ้าผ่าที่ฟาดลงมาทีเดียวแล้วเปลี่ยนทุกอย่าง นี่คือ "จุดเปลี่ยนครั้งใหญ่" ที่จะเกิดในชีวิตคุณ — เมื่อมันมาถึง คุณจะรู้ว่า "นี่แหละ" และทุกอย่างจะไม่เหมือนเดิมอีกต่อไป
     </p>
 
-    <h4>กลยุทธ์ Period 9</h4>
-    <ol>
-      <li><strong>ใช้ Wood (用神) เป็น "เกราะ"</strong> — ต้นไม้ (Wood) จะ "ดูดซับ" ไฟไม่ให้ลุกลาม — การ "ปลูกต้นไม้ในชีวิต" (เรียนรู้สิ่งใหม่, ทำงานที่มีราก, สร้าง network ที่ยั่งยืน) จะช่วยให้ Period 9 fire <strong>ไม่เผาคุณ</strong></li>
-      <li><strong>ไม่หลบ "แสง" — แต่อย่า "เผา"</strong> — คุณต้อง <strong>"เลือกแสงที่ใช่"</strong> — ไม่ใช่ทุก visibility ดีสำหรับคุณ</li>
-      <li><strong>"ใช้น้ำหล่อเลี้ยง" (Water as self-care)</strong> — เพราะ Water เป็น 中神 แต่ chart ไม่มี → คุณต้อง "สร้างน้ำเอง" ผ่านการพัก การนอน การเขียน journal การอยู่ใกล้ธรรมชาติ</li>
-      <li><strong>เลือก "แสง" ที่มี Wood backing</strong> — content ที่มี "ราก" (long-form essays, deep research) ไม่ใช่ viral-only</li>
-      <li><strong>ไม่ chase ทุก opportunity</strong> — Period 9 จะมี "โอกาส" มากมาย แต่คุณต้องเลือก — 偏财 (乙) เป็น "wealth ที่มาจากภายนอก" → ถ้ารับทุกอย่าง จะกลายเป็น "ดินที่ถูกทดน้ำจนท่วม"</li>
-      <li><strong>สร้าง "Water routine"</strong> — นอน 8 ชม., เดินริมน้ำ, ทำสมาธิ, เขียน diary</li>
-    </ol>
-
-    <details>
+    <details style="margin-top:16px;">
       <summary><strong>ขยายความ — Four Pillars คำนวณอย่างไร (ตัวอย่างเพื่อความโปร่งใส)</strong></summary>
       <p style="font-size:13px; line-height:1.7; color:var(--fg-muted);">
-        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 2 ต.ค. 2005 → อยู่หลัง 立春 2005 (~4 ก.พ. 2005) → ปีชะตาใช้ 2005<br>
-        • Stem index = (2005 − 4) mod 10 = 1 → <strong>乙</strong> (Yin Wood)<br>
-        • Branch index = (2005 − 4) mod 12 = 1 → <strong>酉</strong> (Yin Metal)<br>
-        • <strong>Year Pillar = 乙酉</strong> ✓ verified against <code>sxtwl</code><br>
+        <strong>Year Pillar (年柱):</strong> ปีเปลี่ยนที่ 立春 (Liqchun, ~4 กุมภาพันธ์) ไม่ใช่ที่วันขึ้นปีใหม่ — คุณเกิด 14 เมษายน 1986 → อยู่หลัง 立春 1986 (~4 ก.พ. 1986) → ปีชะตาใช้ 1986<br>
+        • Stem index = (1986 − 4) mod 10 = 2 → <strong>丙</strong> (Yang Fire)<br>
+        • Branch index = (1986 − 4) mod 12 = 2 → <strong>寅</strong> (Tiger / Wood)<br>
+        • <strong>Year Pillar = 丙寅</strong> ✓ verified against <code>sxtwl</code><br>
         <br>
-        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 2 ต.ค. 2005 อยู่ระหว่าง 白露 (8 ก.ย. 2005) → 寒露 (8 ต.ค. 2005) → อยู่ใน <strong>酉月 (You month)</strong><br>
-        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 乙 → 寅 เริ่มต้นที่ stem 戊 → 酉 = 乙<br>
-        • <strong>Month Pillar = 乙酉</strong> ✓ verified<br>
-        • <strong>สังเกต:</strong> Year pillar และ Month pillar <strong>เหมือนกันทุกประการ</strong> (乙酉 = 乙酉) — นี่คือ <strong>"伏吟" (Fuyin — same-pillar-echo)</strong><br>
+        <strong>Month Pillar (月柱):</strong> เดือนเปลี่ยนตาม 节气 (jieqi) 24 จุด ของดวงอาทิตย์ — 14 เมษายน 1986 อยู่หลัง 清明 (5 เมษายน 1986) → อยู่ใน <strong>辰月 (Dragon month)</strong><br>
+        • Stem ของเดือนคำนวณจาก year stem ตามกฎ <strong>"五虎遁" (Five Tigers Escape)</strong>: ปี stem 丙 → 寅 เริ่มต้นที่ stem 庚 → 辰 = 壬<br>
+        • <strong>Month Pillar = 壬辰</strong> ✓ verified<br>
         <br>
         <strong>Day Pillar (日柱):</strong> คำนวณด้วย <code>sxtwl</code> (壽星天文曆):<br>
         <code>import sxtwl<br>
-        day = sxtwl.fromSolar(2005, 10, 2)<br>
-        gz = day.getDayGZ()  # tg=5, dz=7<br>
-        # tg=5 → 己, dz=7 → 未</code><br>
-        • <strong>Day Pillar = 己未</strong> (verified against canonical tables, anchor 1949-10-01 = 甲子 confirmed)<br>
-        • <strong>Nayin (納音): 天上火 (Heavenly Fire)</strong><br>
-        • <strong>Day Master = 己 (Yin Earth)</strong> — ตัวตนแท้<br>
+        day = sxtwl.fromSolar(1986, 4, 14)<br>
+        gz = day.getDayGZ()  # tg=4, dz=0<br>
+        # tg=4 → 戊, dz=0 → 子</code><br>
+        • <strong>Day Pillar = 戊子</strong> (verified against canonical computation in <code>bazi_calc_nuttawat.py</code>)<br>
+        • <strong>Nayin (納音): 霹雳火 (Thunderbolt Fire)</strong><br>
+        • <strong>Day Master = 戊 (Yang Earth)</strong> — ตัวตนแท้<br>
         <br>
-        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิด → ไม่ fabricate ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 己: 子=甲子, 丑=乙丑, 寅=丙寅, 卯=丁卯, 辰=戊辰, 巳=己巳, 午=庚午, 未=辛未, 申=壬申, 酉=癸酉, 戌=甲戌, 亥=乙亥 — ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำ
+        <strong>Hour Pillar (时柱):</strong> ไม่ทราบเวลาเกิดที่แน่นอน → ใช้ 12:00 น. (午 hour) เป็น placeholder ตามหลักจริยธรรม — กฎ <strong>五鼠遁 (Five Rats Escape)</strong> สำหรับ Day Stem 戊: 子=壬子, 丑=癸丑, 寅=甲寅, 卯=乙卯, 辰=丙辰, 巳=丁巳, 午=戊午, 未=己未, 申=庚申, 酉=辛酉, 戌=壬戌, 亥=癸亥<br>
+        • <strong>Hour Pillar = 戊午</strong> (placeholder — จะปรับเมื่อได้เวลาเกิดที่แน่นอน)<br>
+        <br>
+        ผลกระทบ: Hour Pillar บอก "บทบาทที่แสดงออกต่อสังคม" (social persona / career expression) — ถ้าไม่ทราบ hour เราจะอ่านได้แค่ "แก่นแท้" และ "อารมณ์ลึก" แต่ไม่สามารถ map ไปยังอาชีพเฉพาะได้แม่นยำที่สุด
       </p>
     </details>
   </section>
@@ -1580,188 +1581,40 @@ flowchart LR
       </div>
     </div>
 
-    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 21–60) — Annual Energy Forecast</h3>
-    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
-
-    <div style="background:rgba(255,140,0,0.12); border-left:3px solid var(--neon-orange); padding:12px 14px; margin:12px 0; border-radius:4px;">
-      <strong style="color:var(--neon-orange);">⚠ หมายเหตุสำคัญ:</strong> เพศมีผลต่อทิศทาง Luck Pillar (顺行/逆行) — ด้านล่างนี้ present ทั้งสองทิศทางและอธิบายว่าข้อสรุปเปลี่ยนอย่างไรเมื่อทราบเพศ
-    </div>
-
-    <h4>วิธีคำนวณ起运 (Qǐ Yùn — Entry Age)</h4>
-    <ul style="list-style:none; padding-left:0; font-size:14px;">
-      <li><strong>Year stem 乙 = Yin</strong> (Stem #1 = yin)</li>
-      <li><strong>กฎ:</strong> 阳男 + 阴女 = <strong>顺行 (forward)</strong> | 阴男 + 阳女 = <strong>逆行 (backward)</strong></li>
-      <li><strong>Days to next Jieqi (寒露 2005)</strong> ≈ 6 วัน → 起运 = 6÷3 ≈ <strong>2 ปี</strong> (forward)</li>
-      <li><strong>Days to previous Jieqi (白露 2005)</strong> ≈ 24 วัน → 起运 = 24÷3 ≈ <strong>8 ปี</strong> (backward)</li>
-    </ul>
-
-    <h4>Scenario A: 顺行 (Forward, ถ้าคุณเป็น Yin-female)</h4>
-    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
-      <thead>
-        <tr style="border-bottom:2px solid var(--line-strong);">
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">#</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Luck Pillar</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Element</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Age Range</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Year (ค.ศ.)</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-cyan);">Key Theme</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">1</td>
-          <td style="padding:8px;"><strong>丙戌</strong></td>
-          <td style="padding:8px;">Fire-Earth</td>
-          <td style="padding:8px;">2–11</td>
-          <td style="padding:8px;">2007-2016</td>
-          <td style="padding:8px;">วัยเด็ก — 丙 (Fire=忌) = ถูก "อุ้ม" มาก แต่ 戌 (Earth) ทำให้ Day Master หนัก — เด็กที่ "อยู่ในกรอบ"</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">2</td>
-          <td style="padding:8px;"><strong>丁亥</strong></td>
-          <td style="padding:8px;">Fire-Water</td>
-          <td style="padding:8px;">12–21</td>
-          <td style="padding:8px;">2017-2026</td>
-          <td style="padding:8px;">วัยรุ่น — 丁 (Fire=忌) + 亥 (Water=印) — ความ "ถูกกดดันจากภายใน" เริ่มมากขึ้น — <strong>ปีนี้ (2026) คุณอยู่ปีสุดท้ายของ pillar นี้</strong></td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
-          <td style="padding:8px;"><strong style="color:var(--neon-green);">3 ★</strong></td>
-          <td style="padding:8px;"><strong>戊子</strong></td>
-          <td style="padding:8px;">Earth-Water</td>
-          <td style="padding:8px;"><strong>22–31</strong></td>
-          <td style="padding:8px;"><strong>2027-2036</strong></td>
-          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Career-Discovery Decade</strong> — 戊 (Earth=比肩) เพิ่มน้ำหนัก Day Master แต่ 子 (Water=印) ช่วย "หล่อเลี้ยง" → decade ของการ "ค้นหาตัวตน + สร้างรากฐาน" — Period 9 ปลาย (2034-2036) จะ "test" ว่าคุณพร้อมหรือไม่</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">4</td>
-          <td style="padding:8px;"><strong>己丑</strong></td>
-          <td style="padding:8px;">Earth-Earth</td>
-          <td style="padding:8px;">32–41</td>
-          <td style="padding:8px;">2037-2046</td>
-          <td style="padding:8px;"><strong>Period 9 ปลาย + Period 10 เริ่ม (2044)</strong> + 己 (比肩) — decade ที่ Day Master "ซ้อนตัวเอง" เสี่ยง "โคลนตม" ถ้าไม่ระวัง — 丑 (Earth+Water hidden) คือ "บึง" ที่ต้องระวัง</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line); background:rgba(57,255,20,0.08);">
-          <td style="padding:8px;"><strong style="color:var(--neon-green);">5 ★</strong></td>
-          <td style="padding:8px;"><strong>庚寅</strong></td>
-          <td style="padding:8px;">Metal-Wood</td>
-          <td style="padding:8px;">42–51</td>
-          <td style="padding:8px;">2047-2056</td>
-          <td style="padding:8px;"><strong style="color:var(--neon-green);">★ Period 10 ใหม่ (2044-2063)</strong> + 庚 (伤官) + 寅 (Wood=用) → decade ที่ <strong>"ทั้ง用神 (Wood) และ "ผลงาน" (Metal) มาพร้อมกัน</strong> ★</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">6</td>
-          <td style="padding:8px;"><strong>辛卯</strong></td>
-          <td style="padding:8px;">Metal-Wood</td>
-          <td style="padding:8px;">52–61</td>
-          <td style="padding:8px;">2057-2066</td>
-          <td style="padding:8px;">decade ของ wisdom — 辛 (食神) + 卯 (Wood=用) → ผลงาน + แก่นแท้ converge — คุณจะ "พูด" จาก "ประสบการณ์"</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4>Scenario B: 逆行 (Backward, ถ้าคุณเป็น Yin-male)</h4>
-    <table style="width:100%; font-size:13px; border-collapse:collapse; margin:12px 0;">
-      <thead>
-        <tr style="border-bottom:2px solid var(--line-strong);">
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">#</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Luck Pillar</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Element</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Age Range</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Year (ค.ศ.)</th>
-          <th style="text-align:left; padding:8px; color:var(--neon-magenta);">Key Theme</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">1</td>
-          <td style="padding:8px;"><strong>甲申</strong></td>
-          <td style="padding:8px;">Wood-Metal</td>
-          <td style="padding:8px;">8–17</td>
-          <td style="padding:8px;">2013-2022</td>
-          <td style="padding:8px;">วัยเด็ก/วัยรุ่น — 甲 (Wood=用!) + 申 (Metal=喜!) → decade ที่ <strong>"ถูกหล่อเลี้ยงอย่างเหมาะสม"</strong> เรียนดี มีครูดี</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">2 ★</strong></td>
-          <td style="padding:8px;"><strong>癸未</strong></td>
-          <td style="padding:8px;">Water-Earth</td>
-          <td style="padding:8px;"><strong>18–27</strong></td>
-          <td style="padding:8px;"><strong>2023-2032</strong></td>
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 9 Prime Years</strong> — 癸 (偏印) + 未 (比肩) → decade ของ "ความคิดสร้างสรรค์ + การค้นหาตัวตน" — Period 9 (2024-2043) อยู่กลาง decade นี้</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">3</td>
-          <td style="padding:8px;"><strong>壬午</strong></td>
-          <td style="padding:8px;">Water-Fire</td>
-          <td style="padding:8px;">28–37</td>
-          <td style="padding:8px;">2033-2042</td>
-          <td style="padding:8px;"><strong>Period 9 ปลาย</strong> + 壬 (正印) + 午 (Fire=忌) → decade ของ "การเรียนรู้ลึก + ความท้าทายจากภายใน" — คุณอาจเจอ "อาจารย์ทางจิตวิญญาณ"</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">4 ★</strong></td>
-          <td style="padding:8px;"><strong>辛巳</strong></td>
-          <td style="padding:8px;">Metal-Fire</td>
-          <td style="padding:8px;"><strong>38–47</strong></td>
-          <td style="padding:8px;"><strong>2043-2052</strong></td>
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Period 10 Start (2044)</strong> + 辛 (食神=喜) + 巳 (Fire=忌+比肩) → decade ที่ <strong>"ผลงานเปล่งประกาย" แต่ "ตัวตนถูกทดสอบ"</strong> — ใช้ Metal output ระบาย Day Master ที่ถูก Fire กด</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line);">
-          <td style="padding:8px;">5</td>
-          <td style="padding:8px;"><strong>庚辰</strong></td>
-          <td style="padding:8px;">Metal-Earth</td>
-          <td style="padding:8px;">48–57</td>
-          <td style="padding:8px;">2053-2062</td>
-          <td style="padding:8px;">decade แห่ง "ผลงานสุขุม" — 庚 (伤官) + 辰 (Earth) → ใช้ "ความคิดที่ตัดสิ่งเก่า" ในการสร้างสรรค์</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--line); background:rgba(255,0,212,0.08);">
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">6 ★</strong></td>
-          <td style="padding:8px;"><strong>己卯</strong></td>
-          <td style="padding:8px;">Earth-Wood</td>
-          <td style="padding:8px;">58–67</td>
-          <td style="padding:8px;">2063-2072</td>
-          <td style="padding:8px;"><strong style="color:var(--neon-magenta);">★ Wisdom Era</strong> — 己 (比肩) + 卯 (Wood=用!) → decade ที่ "ตัวตนมาบรรจบกับแก่น"</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h4>ความจริงข้าม Scenario</h4>
-    <p><strong>ไม่ว่า Scenario A หรือ B ก็ตาม</strong>, ลวดลายชีวิตของคุณจะประกอบด้วย:</p>
-    <ol>
-      <li><strong>Prime Years 21–39 (ทั้งสอง Scenario)</strong> — ตรงกับ <strong>Period 9 (2024-2043)</strong> หมายความว่า <strong>คุณจะ "เป็นที่รู้จัก" ในช่วงนี้</strong> ไม่ว่าจะเกิดเพศใด — แต่ "คุณภาพ" ของการเป็นที่รู้จักขึ้นกับการเลือก (ใช้ Wood เป็นเกราะ หรือถูก Fire เผา)</li>
-      <li><strong>Mid-life Crisis Window 32-48</strong> (Scenario A: 己丑 32-41 + Scenario B: 壬午 28-37 → 辛巳 38-47 overlap) — decade ที่ Day Master ต้อง <strong>"ตั้งหลักใหม่"</strong> หลังจาก Period 9 จบลง</li>
-      <li><strong>Wisdom Era 50-65</strong> — decade ที่ <strong>用神 Wood</strong> จะมาถึง (ไม่ว่าจะใน Scenario A หรือ B) หมายความว่า <strong>ท้ายที่สุด ดิน (己) จะเรียนรู้ที่จะยืดหยุ่น</strong> และกลายเป็น "ทุ่งนาที่มีต้นไม้ขึ้น" ไม่ใช่ "ดินแห้งไม่มีราก"</li>
-    </ol>
+    <h3 class="sub-title">8.2 พลังงานรายปี (อายุ 40–60) — Annual Energy Forecast</h3>
+    <p class="lede">ไทม์ไลน์ชีวิตอิง Luck Pillars + Annual Pillars + Period 9 — ทุกปีมี theme เฉพาะ grounded ใน用神/喜神/忌神 — เฉพาะผู้ชาย (阳男) ตาม raw input sex=ชาย</p>
 
     <details>
       <summary><strong>ขยายความ — Annual Pillars ปี 2026, 2027, 2028 (รายละเอียด)</strong></summary>
       <div style="font-size:13px; line-height:1.7; color:var(--fg-muted); padding:10px 0;">
         <p><strong>Annual Pillars (流年)</strong> เป็น "คลื่น" ที่ซ้อนบน "ลม" (Luck Pillar) — แต่ละปีมี theme เฉพาะ grounded ใน用神/喜神/忌神</p>
-        
-        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 ปี 21 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
+
+        <h5 style="color:var(--neon-orange); margin:16px 0 8px 0;">🟡 อายุ 40 — 2569 (2026) — 丙午 (Fire) — 忌</h5>
         <ul style="margin:0; padding-left:20px;">
           <li><strong>Stem:</strong> 丙 = 正官 (Direct Officer) — controls me</li>
           <li><strong>Branch:</strong> 午 = 丁 + 己; main TG = 七杀 (Direct Seal)</li>
           <li><strong>Element:</strong> Fire (忌 — ทำให้ Day Master "ถูกกด")</li>
         </ul>
-        <p><strong>คำอ่าน:</strong> ปี 2026 คุณอยู่ปี 4 ของมหาวิทยาลัย (อายุ 21) — คุณจะรู้สึก <strong>"ถูกคาดหวัง"</strong> จากครอบครัว สังคม ตัวเอง — ความ "fire กดทับ" ทำให้คุณรู้สึก "ทำไมฉันทำได้ไม่ดีพอ" ทั้งที่ความจริงคุณทำได้ดี แต่ Day Master (己) ของคุณ "อ่อน" ต่อ Fire pressure</p>
-        <p><strong>Scenario Simulation:</strong> ปีนี้คุณกำลังจะจบปี 4 — อาจารย์ที่ปรึกษาบอก "ปีหน้าคุณต้องทำวิทยานิพนธ์" พ่อแม่ถาม "จบแล้วทำงานอะไร" เพื่อนร่วมชั้นโพสต์รูป "ได้งานที่บริษัทใหญ่" — คุณนั่งเงียบๆ ในห้อง เปิด journal ส่วนตัวแล้วเขียน <strong>"ฉันยังไม่รู้ว่าฉันอยากเป็นอะไร"</strong> — นี่ไม่ใช่ "ล้มเหลว" แต่เป็น <strong>"己 ที่ถูก 丙 กด"</strong> — Day Master ต้องการ "หยุด" แต่ environment บอก "ทำต่อ"</p>
+        <p><strong>คำอ่าน:</strong> ปี 2026 Nuttawat อยู่ในปีที่ 40 ของชีวิต (ปี เถ้าแก่ ปีที่ 1 ของรอบอายุ 40-60) — เป็นปีของการ <strong>"เตรียมปิดรอบ"</strong> — Introspection year ที่ต้อง <strong>"หยุดฟัง"</strong> ตัวเองให้ได้ก่อนจะขยาย — Day Master (戊) ของคุณ (Yang Earth = ภูเขา) เผชิญ Fire pressure อย่างระมัดระวัง — ใช้ Si (ความจำที่สั่งสม) ทบทวน 10 ปีที่ผ่านมาให้ดีก่อนตัดสินใจใหญ่</p>
+        <p><strong>Scenario Simulation:</strong> {{scenario_year_1}}</p>
 
-        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 ปี 22 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
+        <h5 style="color:var(--neon-green); margin:16px 0 8px 0;">🟢 อายุ 41 — 2570 (2027) — 丁未 (Fire-Earth) — 忌/忌</h5>
         <ul style="margin:0; padding-left:20px;">
           <li><strong>Stem:</strong> 丁 = 七杀 (Seven Killings)</li>
           <li><strong>Branch:</strong> 未 = 己 (比肩); 丁 (七杀); 乙 (偏财)</li>
           <li><strong>Element:</strong> Fire + Earth (忌 + 比肩) — <strong>ปีที่ Day Branch echo!</strong></li>
         </ul>
-        <p><strong>คำอ่าน:</strong> <strong style="color:var(--neon-green);">★ YEAR OF DAY PILLAR ECHO ★</strong> — ปี 2027 Annual Pillar = <strong>丁未</strong> = Day Pillar <strong>己未</strong> ใน "逆 echo" (丁 vs 己 = same element polarity diff; 未 vs 未 = same branch) — นี่คือ <strong>"伏吟" (Fuyin)</strong> ที่ระดับปี — สิ่งที่คุณจะประสบในปี 2027 จะ <strong>"echo"</strong> กับสิ่งที่คุณเป็นตอนเกิด — เป็นปีที่ "ตัวตน" ถูก "ทดสอบ" อย่างเข้มข้น</p>
-        <p><strong>Scenario Simulation:</strong> ปี 2027 — คุณจบการศึกษา — คุณตัดสินใจ <strong>"ไม่สมัครงานประจำทันที"</strong> — คุณเลือก "พัก" 1 ปี เพื่อ "ค้นหาตัวเอง" — พ่อแม่ไม่เข้าใจ เพื่อนบางคนคิดว่า "เขาแพ้" — แต่จริงๆ แล้ว <strong>己 (Yin Earth) ที่ถูก 七杀 (丁) กด</strong> กำลัง "ตั้งหลัก" ก่อนจะ "ออกเดิน" — นี่คือ <strong>"ดินที่หยุดรับน้ำ (Water) เพื่อไม่ให้ท่วม"</strong> — เป็นสัญญาณที่ดี ถ้าคุณใช้เวลาว่าง <strong>"ปลูก Wood"</strong> (อ่านหนังสือ philosophy, ฝึกทักษะใหม่, สร้าง network)</p>
+        <p><strong>คำอ่าน:</strong> ปี 2027 Annual Pillar = <strong>丁未</strong> — Day Pillar <strong>戊子</strong> — ไม่มี direct echo แต่ 丁 (Fire) = 偏印 (Indirect Resource) ที่หล่อเลี้ยง 戊 Earth — นี่คือปีที่ <strong>"ได้รับการสนับสนุนจากพลังงานภายนอก"</strong> แต่ในบริบท Nuttawat เป็นปีที่ <strong>ทดสอบ "ระบบ" ของธุรกิจ</strong> — เงินทุนหมุนเวียน ลูกค้า ทีมงาน จะถูก stress test — ใช้ Te+Si วางแผน backup 3 ชั้น</p>
+        <p><strong>Scenario Simulation:</strong> {{scenario_year_2}}</p>
 
-        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 ปี 23 — 2571 (2028) — 戊申 (Earth-Metal) — 忌 (Earth) + 喜 (Metal)</h5>
+        <h5 style="color:var(--neon-cyan); margin:16px 0 8px 0;">🟡 อายุ 42 — 2571 (2028) — 戊申 (Earth-Metal) — Earth=比肩 + Metal=喜</h5>
         <ul style="margin:0; padding-left:20px;">
           <li><strong>Stem:</strong> 戊 = 劫财 (Rob Wealth) — same element, opposite polarity</li>
           <li><strong>Branch:</strong> 申 = 庚 (伤官) + 壬 (正印) + 戊 (劫财)</li>
-          <li><strong>Element:</strong> Earth + Metal (mixed — outside 忌, branch contains 喜)</li>
+          <li><strong>Element:</strong> Earth + Metal (mixed — branch contains 喜 Metal)</li>
         </ul>
-        <p><strong>คำอ่าน:</strong> ปีนี้เป็น "ปีแห่งการทดลอง" — คุณอาจ "ทำโปรเจกต์ส่วนตัว" หรือ "รับงาน freelance" แม้จะมีพ่อแม่กดดัน — แต่ 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณแสดง "ความคิดสร้างสรรค์" ผ่าน 伤官 (庚)</p>
-        <p><strong>Scenario Simulation:</strong> ปี 2028 — คุณสร้าง <strong>portfolio website</strong> แรกของคุณ เขียน essay เกี่ยวกับ "AI กับความคิดสร้างสรรค์" — โพสต์ลง Twitter — <strong>คลิปหนึ่งกลายเป็น viral</strong> (1,000 likes ใน 1 สัปดาห์) — นี่คือ <strong>"食神/伤官 (Metal) ที่ 申 (branch) ปลดปล่อย Earth (己)"</strong> — คุณเริ่ม "เห็น" ว่า "ความคิดของคุณมีค่า" ไม่ใช่แค่ "ความคิดส่วนตัว"</p>
+        <p><strong>คำอ่าน:</strong> ปี 2028 คุณอยู่ปีอายุ 42 — Personal Year 9 = <strong>"Closure"</strong> — เป็นปีแห่งการ <strong>"ปล่อยวางสิ่งที่ไม่จำเป็น"</strong> ในธุรกิจ (ลูกค้าที่ขาดทุน สายงานที่ตาย พนักงานที่ burn out) — 申 (Metal=喜) ใน branch จะ "เปิดช่อง" ให้คุณ "ผลิตงานใหม่" (伤官 = creativity, public expression) โดยใช้ประสบการณ์ 20 ปีที่สั่งสม — ใช้ Tonglen + grounding ceremony ก่อนตัดสินใจใหญ่</p>
+        <p><strong>Scenario Simulation:</strong> {{scenario_year_3}}</p>
       </div>
     </details>
 
